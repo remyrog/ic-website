@@ -531,3 +531,30 @@ a.accent, .accent a{ color: var(--accent-color) !important; opacity:1 !important
   bottom: calc(-1 * var(--theme-bleed));
 }
 
+/* ===== Fix "100vw" (marges latérales) : utiliser l'unité viewport dynamique ===== */
+:root{ --vw: 100vw; }                 /* fallback */
+@supports (width: 100dvw){
+  :root{ --vw: 100dvw; }              /* 100dvw = viewport SANS barre de scroll */
+}
+
+/* Tous les fonds full-bleed utilisent désormais var(--vw) */
+.section.theme::before,
+.section.theme::after{
+  left: 50%;
+  width: var(--vw);
+  margin-left: calc(-0.5 * var(--vw));
+}
+
+/* Starfield canvas idem */
+.section.theme-stars > canvas.bg-stars{
+  left: 50%;
+  width: var(--vw);
+  margin-left: calc(-0.5 * var(--vw));
+}
+
+/* Route en pleine largeur (démarche/expertise) idem */
+.section-road.fullwidth{
+  left: 50%;
+  width: var(--vw);
+  transform: translateX(-50%);
+}
