@@ -1,0 +1,22 @@
+{
+  "reviews": [
+    {
+      "author": "Claudine P.",
+      "rating": 5,
+      "text": "Service impeccable, très pédagogue et patient. Mon ordinateur revit !",
+      "relativeTime": "il y a 2 semaines"
+    },
+    {
+      "author": "Marc L.",
+      "rating": 5,
+      "text": "Réactif, ponctuel et honnête. Je recommande sans hésiter.",
+      "relativeTime": "il y a 1 mois"
+    },
+    {
+      "author": "J. Fernandez",
+      "rating": 5,
+      "text": "Conseils au top pour l’achat, installation parfaite et explications claires.",
+      "relativeTime": "il y a 3 mois"
+    }
+  ]
+}

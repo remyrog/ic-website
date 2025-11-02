@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Informatique Cerdagne – Dépannage, Conseil & Relation Humaine</title>
+  <meta name="description" content="Dépannage, sécurité, sauvegardes, formations, création de site et conseils en Cerdagne. Un service technique, patient et pédagogue." />
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Libs -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+
+  <!-- Transition overlay -->
+  <div id="pageTransition" aria-hidden="true"></div>
+
+  <!-- PRELOADER -->
+  <div id="preloader" aria-hidden="true">
+    <div class="spinner"><span></span><span></span><span></span></div>
+    <p>Chargement de la magie…</p>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#hero" class="logo" data-scrolllink aria-label="Haut de page">
+      <img src="img/logo-cerdagne.png" class="logo__img" alt="Informatique Cerdagne" />
+    </a>
+    <div class="nav__links">
+      <a data-scrolllink href="#demarche">Démarche</a>
+      <a data-scrolllink href="#prestations">Prestations</a>
+      <a data-scrolllink href="#expertise">Expertise</a>
+      <a data-scrolllink href="#avis">Avis</a>
+      <a data-scrolllink href="#contact" class="btn btn-primary btn-magnet">Contact</a>
+    </div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="hero" class="section hero" aria-label="Introduction">
+    <div class="hero__pin">
+
+      <!-- Canvas montagnes -->
+      <canvas id="mountainCanvas" aria-hidden="true"></canvas>
+
+      <!-- Scène SVG locale (route + soleil + voiture HERO) -->
+      <svg class="scene" viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Montagnes, route et soleil">
+        <defs>
+          <linearGradient id="grad-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1E1E1E"/><stop offset="100%" stop-color="#111217"/>
+          </linearGradient>
+          <linearGradient id="grad-road" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2b2d3a"/><stop offset="100%" stop-color="#1b1d27"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width="1440" height="810" fill="url(#grad-sky)"/>
+
+        <!-- Trajectoire du soleil -->
+        <path id="sunPath" d="M 220 110 C 520 40 900 70 1240 190" fill="none" stroke="transparent" />
+
+        <!-- Soleil avec rayons -->
+        <g id="sun">
+          <g id="sunRays">
+            <line x1="0" y1="-100" x2="0" y2="-140" stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
+            <line x1="0" y1="100"  x2="0" y2="140"  stroke="#F7C600" stroke-width="10" stroke-linecap="round" transform="rotate(180)"/>
+            <line x1="-100" y1="0" x2="-140" y2="0" stroke="#F7C600" stroke-width="10" stroke-linecap="round" transform="rotate(180)"/>
+            <line x1="100"  y1="0" x2="140"  y2="0" stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
+            <line x1="-70" y1="-70" x2="-98" y2="-98" stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
+            <line x1="70"  y1="70"  x2="98"  y2="98"  stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
+            <line x1="-70" y1="70"  x2="-98" y2="98"  stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
+            <line x1="70"  y1="-70" x2="98"  y2="-98" stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
+          </g>
+          <circle r="60" fill="#F7C600"></circle>
+          <circle class="eyeL" cx="-20" cy="-10" r="6" fill="#111"/>
+          <circle class="eyeR" cx="20" cy="-10" r="6" fill="#111"/>
+          <path class="smile" d="M -25 20 Q 0 40 25 20" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+        </g>
+
+        <!-- Route HERO -->
+        <g id="road">
+          <path id="roadBg" d="M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
+                fill="none" stroke="url(#grad-road)" stroke-width="120" stroke-linecap="round" opacity="0.93"/>
+          <path id="roadDash" d="M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
+                fill="none" stroke="#F7F7F7" stroke-width="8" stroke-linecap="round" stroke-dasharray="36 28" opacity="0.85"/>
+          <path id="roadPathHero" d="M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660" fill="none" />
+        </g>
+
+        <!-- 🚗 Voiture HERO -->
+        <g id="carHero" transform="translate(-100,720) scale(1)">
+          <rect x="-40" y="-20" rx="10" ry="10" width="90" height="38" fill="#FF5E8E" stroke="#fff" stroke-width="3"/>
+          <rect x="-25" y="-36" rx="8" ry="8" width="60" height="22" fill="#ffd6e2" stroke="#fff" stroke-width="3"/>
+          <circle cx="-20" cy="20" r="12" fill="#111" stroke="#eee" stroke-width="3"/>
+          <circle cx="35"  cy="20" r="12" fill="#111" stroke="#eee" stroke-width="3"/>
+          <rect x="40" y="-12" width="12" height="10" fill="#F7C600" />
+        </g>
+      </svg>
+
+      <div class="hero__content container">
+        <div class="hero__badge">Informatique Cerdagne</div>
+        <h1>Le service informatique à domicile <span class="accent">avec le sourire</span></h1>
+        <p class="hero__sub">Amoureux de la relation client, c'est un grand plaisir de vous accompagner !</p>
+        <div class="cta">
+          <a data-scrolllink href="#contact" class="btn btn-primary btn-magnet">Demander un devis</a>
+          <a data-scrolllink href="#prestations" class="btn btn-ghost btn-magnet">Voir les prestations</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- DÉMARCHE -->
+  <section id="demarche" class="section demarche container theme theme-dots">
+    <div class="split">
+      <div>
+        <h2 data-split>Ma <span class="accent">démarche</span></h2>
+        <p class="lead">Je conçois le service comme une relation humaine : <strong>sourire, empathie, patience, persévérance, respect, ponctualité, générosité</strong>, <strong>transparence, pédagogie, soin, adaptabilité</strong>.</p>
+        <ul class="values">
+          <li><span>😊</span> Sourire & pédagogie</li>
+          <li><span>🕐</span> Ponctualité & fiabilité</li>
+          <li><span>🧩</span> Adaptabilité & clarté</li>
+          <li><span>🛡️</span> Transparence & sécurité</li>
+        </ul>
+      </div>
+      <div class="card profile">
+        <img src="img/profile.jpg" alt="Rémy Roger – Informatique Cerdagne" loading="lazy" />
+        <div class="profile__txt">
+          <h3>Rémy ROGER</h3>
+          <p>Un amoureux de la relation client, à votre service en Cerdagne.</p>
+          <a data-scrolllink href="#contact" class="btn btn-primary small btn-magnet">Me contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESTATIONS -->
+  <section id="prestations" class="section prestations theme theme-aurora">
+    <div class="container">
+      <h2 data-split>Prestations <span class="accent">sur-mesure</span></h2>
+      <p class="lead">Amélioration des performances & protection • Installations (Windows, Linux, macOS, composants) • Périphériques • Sites web & SEO local • Applications de gestion • Sauvegardes & récupération • Aide en ligne • Formation</p>
+      <div class="grid-cards">
+        <article class="service"><h3>🔧 Dépannage & Optimisation</h3><p>Diagnostic, réparations, SSD/RAM, optimisation système, virus & malwares.</p></article>
+        <article class="service"><h3>🛡️ Sécurité & Sauvegardes</h3><p>Antivirus, pare-feu, chiffrement, stratégies locales & cloud.</p></article>
+        <article class="service"><h3>📦 Installations</h3><p>Windows, Linux, macOS, pilotes, imprimantes, écrans, NAS.</p></article>
+        <article class="service"><h3>💡 Conseils & Achat</h3><p>Accompagnement objectif pour choisir le matériel adapté.</p></article>
+        <article class="service"><h3>🖥️ Sites & Visibilité</h3><p>Sites statiques rapides, référencement local, réseaux sociaux.</p></article>
+        <article class="service"><h3>📚 Formation</h3><p>Initiation & prise en main à domicile ou à distance.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section id="expertise" class="section expertise container theme theme-grid">
+    <div class="split reverse">
+      <div class="card glow">
+        <h3>Technique</h3>
+        <ul class="tick">
+          <li>Matériel (Windows, macOS, Linux, périphériques)</li>
+          <li>Réseaux, sauvegardes, sécurité</li>
+          <li>Sites statiques (HTML/CSS/JS), performance</li>
+          <li>Automatisation & pédagogie d’usage</li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-split>Expertise <span class="accent">tech + humaine</span></h2>
+        <p class="lead">Au-delà de la technique, je prends le temps d’expliquer, de rassurer et de rendre l’outil **utile**. Objectif : votre autonomie.</p>
+        <div class="chips"><span>Transparence</span><span>Patience</span><span>Clarté</span><span>Suivi</span><span>Résultats</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVIS -->
+  <section id="avis" class="section avis theme theme-stars">
+    <div class="container">
+      <h2 data-split>Votre satisfaction : <span class="accent">ma plus grande récompense !</span></h2>
+      <p class="lead">Avis Google de mes clients (JSON local — API possible plus tard).</p>
+      <div class="reviews" aria-live="polite"></div>
+      <div class="reviews__controls">
+        <button class="prev" aria-label="Avis précédent">←</button>
+        <button class="next" aria-label="Avis suivant">→</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <h2 data-split>On démarre ? <span class="accent">J'ai hâte.</span></h2>
+      <p class="lead">Intervention à domicile en Cerdagne, conseils et accompagnement sur-mesure.</p>
+      <div class="contact__grid">
+        <a class="cta-tile btn-magnet" href="tel:+33698998001"><span>📞</span><strong>06&nbsp;98&nbsp;99&nbsp;80&nbsp;01</strong><small>Appel direct</small></a>
+        <a class="cta-tile btn-magnet" href="mailto:contact@informatique-cerdagne.fr"><span>✉️</span><strong>contact@informatique-cerdagne.fr</strong><small>Réponse rapide</small></a>
+        <a class="cta-tile btn-magnet" href="https://www.google.com/maps/search/?api=1&query=Cerdagne" target="_blank" rel="noopener"><span>📍</span><strong>Cerdagne</strong><small>Zone d’intervention</small></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <div class="logo footer__logo"><img src="img/logo-cerdagne.png" class="logo__img" alt="Informatique Cerdagne" /></div>
+        <p>© <span id="year"></span> – Tous droits réservés. Site statique ultra-rapide.</p>
+      </div>
+      <div class="footer__links">
+        <a data-scrolllink href="#hero">Haut de page</a>
+        <a href="mailto:contact@informatique-cerdagne.fr">Email</a>
+        <a href="tel:+33698998001">Téléphone</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
