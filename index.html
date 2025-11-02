@@ -6,15 +6,16 @@
   <title>Informatique Cerdagne</title>
   <meta name="description" content="Dépannage, sécurité, sauvegardes, formations, création de site et conseils en Cerdagne. Un service technique, patient et pédagogue." />
 
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <!-- CSS -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="css/styles.css" />
 
-  <!-- Libs -->
+  <!-- Libs: GSAP (+ plugins) -->
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
+  <!-- App -->
   <script defer src="js/main.js"></script>
 </head>
 <body>
@@ -24,13 +25,15 @@
 
   <!-- PRELOADER -->
   <div id="preloader" aria-hidden="true">
-    <div class="spinner"><span></span><span></span><span></span></div>
+    <div class="spinner" aria-label="Chargement">
+      <span></span><span></span><span></span>
+    </div>
     <p>Chargement de la magie…</p>
   </div>
 
   <!-- NAV -->
-  <nav class="nav">
-    <a href="#hero" class="logo" data-scrolllink aria-label="Haut de page">
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="#hero" class="logo btn-magnet" data-scrolllink aria-label="Haut de page">
       <img src="img/logo-cerdagne.png" class="logo__img" alt="Informatique Cerdagne" />
     </a>
     <div class="nav__links">
@@ -47,11 +50,8 @@
   <header id="hero" class="section hero" aria-label="Introduction">
     <div class="hero__pin">
 
-      <!-- Canvas montagnes -->
-      <canvas id="mountainCanvas" aria-hidden="true"></canvas>
-
-      <!-- Scène SVG locale (route + soleil + voiture HERO) -->
-      <svg class="scene" viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Montagnes, route et soleil">
+      <!-- Scène SVG (ciel/route/soleil/voiture) -->
+      <svg class="scene" viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Montagnes stylisées, route et soleil">
         <defs>
           <linearGradient id="grad-sky" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#1E1E1E"/><stop offset="100%" stop-color="#111217"/>
@@ -66,9 +66,9 @@
         <!-- Trajectoire du soleil -->
         <path id="sunPath" d="M 220 110 C 520 40 900 70 1240 190" fill="none" stroke="transparent" />
 
-        <!-- Soleil avec rayons -->
+        <!-- Soleil -->
         <g id="sun">
-          <g id="sunRays">
+          <g id="sunRays" aria-hidden="true">
             <line x1="0" y1="-100" x2="0" y2="-140" stroke="#F7C600" stroke-width="10" stroke-linecap="round"/>
             <line x1="0" y1="100"  x2="0" y2="140"  stroke="#F7C600" stroke-width="10" stroke-linecap="round" transform="rotate(180)"/>
             <line x1="-100" y1="0" x2="-140" y2="0" stroke="#F7C600" stroke-width="10" stroke-linecap="round" transform="rotate(180)"/>
@@ -93,7 +93,7 @@
           <path id="roadPathHero" d="M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660" fill="none" />
         </g>
 
-        <!-- 🚗 Voiture HERO -->
+        <!-- 🚗 Voiture -->
         <g id="carHero" transform="translate(-100,720) scale(1)">
           <rect x="-40" y="-20" rx="10" ry="10" width="90" height="38" fill="#FF5E8E" stroke="#fff" stroke-width="3"/>
           <rect x="-25" y="-36" rx="8" ry="8" width="60" height="22" fill="#ffd6e2" stroke="#fff" stroke-width="3"/>
@@ -105,21 +105,27 @@
 
       <div class="hero__content container">
         <div class="hero__badge">Informatique Cerdagne</div>
-        <h1>Le service informatique à domicile <span class="accent">avec le sourire</span></h1>
+        <h1 class="speed-title">
+          Le service informatique à domicile <span class="accent">avec le sourire</span>
+          <span class="trail" aria-hidden="true"></span>
+          <span class="glow" aria-hidden="true"></span>
+          <span class="spark" aria-hidden="true"></span>
+        </h1>
         <p class="hero__sub">Amoureux de la relation client, c'est un grand plaisir de vous accompagner !</p>
         <div class="cta">
           <a data-scrolllink href="#contact" class="btn btn-primary btn-magnet">Demander un devis</a>
           <a data-scrolllink href="#prestations" class="btn btn-ghost btn-magnet">Voir les prestations</a>
         </div>
+        <p class="hero__credits small">Site statique rapide, sans prise en main à distance.</p>
       </div>
     </div>
   </header>
 
   <!-- DÉMARCHE -->
-  <section id="demarche" class="section demarche container theme theme-dots">
+  <section id="demarche" class="section demarche container" aria-labelledby="h-demarche">
     <div class="split">
       <div>
-        <h2 data-split>Ma <span class="accent">démarche</span></h2>
+        <h2 id="h-demarche" data-split>Ma <span class="accent">démarche</span></h2>
         <p class="lead">Je conçois le service comme une relation humaine : <strong>sourire, empathie, patience, persévérance, respect, ponctualité, générosité</strong>, <strong>transparence, pédagogie, soin, adaptabilité</strong>.</p>
         <ul class="values">
           <li><span>😊</span> Sourire & pédagogie</li>
@@ -140,9 +146,9 @@
   </section>
 
   <!-- PRESTATIONS -->
-  <section id="prestations" class="section prestations theme theme-aurora">
+  <section id="prestations" class="section prestations" aria-labelledby="h-prestations">
     <div class="container">
-      <h2 data-split>Prestations <span class="accent">sur-mesure</span></h2>
+      <h2 id="h-prestations" data-split>Prestations <span class="accent">sur-mesure</span></h2>
       <p class="lead">Amélioration des performances & protection • Installations (Windows, Linux, macOS, composants) • Périphériques • Sites web & SEO local • Applications de gestion • Sauvegardes & récupération • Aide en ligne • Formation</p>
       <div class="grid-cards">
         <article class="service"><h3>🔧 Dépannage & Optimisation</h3><p>Diagnostic, réparations, SSD/RAM, optimisation système, virus & malwares.</p></article>
@@ -156,7 +162,7 @@
   </section>
 
   <!-- EXPERTISE -->
-  <section id="expertise" class="section expertise container theme theme-grid">
+  <section id="expertise" class="section expertise container" aria-labelledby="h-expertise">
     <div class="split reverse">
       <div class="card glow">
         <h3>Technique</h3>
@@ -168,30 +174,30 @@
         </ul>
       </div>
       <div>
-        <h2 data-split>Expertise <span class="accent">tech + humaine</span></h2>
-        <p class="lead">Au-delà de la technique, je prends le temps d’expliquer, de rassurer et de rendre l’outil **utile**. Objectif : votre autonomie.</p>
+        <h2 id="h-expertise" data-split>Expertise <span class="accent">tech + humaine</span></h2>
+        <p class="lead">Au-delà de la technique, je prends le temps d’expliquer, de rassurer et de rendre l’outil <strong>utile</strong>. Objectif : votre autonomie.</p>
         <div class="chips"><span>Transparence</span><span>Patience</span><span>Clarté</span><span>Suivi</span><span>Résultats</span></div>
       </div>
     </div>
   </section>
 
   <!-- AVIS -->
-  <section id="avis" class="section avis theme theme-stars">
+  <section id="avis" class="section avis" aria-labelledby="h-avis">
     <div class="container">
-      <h2 data-split>Votre satisfaction : <span class="accent">ma plus grande récompense !</span></h2>
+      <h2 id="h-avis" data-split>Votre satisfaction : <span class="accent">ma plus grande récompense !</span></h2>
       <p class="lead">Avis Google de mes clients (JSON local — API possible plus tard).</p>
       <div class="reviews" aria-live="polite"></div>
-      <div class="reviews__controls">
-        <button class="prev" aria-label="Avis précédent">←</button>
-        <button class="next" aria-label="Avis suivant">→</button>
+      <div class="reviews__controls" aria-controls="reviews">
+        <button class="prev" type="button" aria-label="Avis précédent">←</button>
+        <button class="next" type="button" aria-label="Avis suivant">→</button>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="section contact">
+  <section id="contact" class="section contact" aria-labelledby="h-contact">
     <div class="container">
-      <h2 data-split>On démarre ? <span class="accent">J'ai hâte.</span></h2>
+      <h2 id="h-contact" data-split>On démarre ? <span class="accent">J'ai hâte.</span></h2>
       <p class="lead">Intervention à domicile en Cerdagne, conseils et accompagnement sur-mesure.</p>
       <div class="contact__grid">
         <a class="cta-tile btn-magnet" href="tel:+33698998001"><span>📞</span><strong>06&nbsp;98&nbsp;99&nbsp;80&nbsp;01</strong><small>Appel direct</small></a>
@@ -208,11 +214,11 @@
         <div class="logo footer__logo"><img src="img/logo-cerdagne.png" class="logo__img" alt="Informatique Cerdagne" /></div>
         <p>© <span id="year"></span> – Tous droits réservés. Site statique ultra-rapide.</p>
       </div>
-      <div class="footer__links">
+      <nav class="footer__links" aria-label="Liens de pied de page">
         <a data-scrolllink href="#hero">Haut de page</a>
         <a href="mailto:contact@informatique-cerdagne.fr">Email</a>
         <a href="tel:+33698998001">Téléphone</a>
-      </div>
+      </nav>
     </div>
   </footer>
 
