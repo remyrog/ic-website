@@ -558,3 +558,39 @@ a.accent, .accent a{ color: var(--accent-color) !important; opacity:1 !important
   width: var(--vw);
   transform: translateX(-50%);
 }
+
+/* ====== ESPACEMENT UNIFORME AUTOUR DES ROUTES ====== */
+/* 1) Normalise le padding vertical des sections */
+.section{
+  --padY: clamp(80px, 12vw, 140px);   /* même valeur qu'actuellement */
+  padding: var(--padY) 0;
+}
+
+/* 2) Espace AU-DESSUS de chaque route (contenu de la section qui porte la route) */
+.section.has-road,
+.hero__content{                        /* Hero garde son comportement */
+  padding-bottom: calc(var(--roadH) + var(--roadGap));
+}
+
+/* 3) Espace SOUS la route précédente (début de la section suivante) */
+.section.has-road + .section{
+  --padY: calc(var(--padY) + var(--roadGap));
+}
+
+/* 4) Cas particulier : la toute première section après le Hero
+      (pour respecter le même espace sous la route du Hero) */
+#hero + .section{
+  --padY: calc(var(--padY) + var(--roadGap));
+}
+
+/* 5) Dernière route avant le footer (contact) → même espace avant le footer */
+.section.has-road + .footer{
+  padding-top: calc(40px + var(--roadGap));
+}
+
+/* 6) Sécu : la route pleine largeur reste centrée au pixel près */
+.section-road.fullwidth{
+  left: 50%;
+  width: 100dvw;                       /* évite l'effet 100vw + scrollbar */
+  transform: translateX(-50%);
+}
