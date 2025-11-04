@@ -352,3 +352,37 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important }
 }
+
+/* =========================
+   PATCH : Neon rose global pour tous les [data-magnet]
+   ========================= */
+:root {
+  /* Tokens d'ombre pour garder la même intensité partout */
+  --neon-outer: 0 10px 30px rgba(255,94,142,.12);
+  --neon-inset: inset 0 0 0 1px rgba(255,94,142,.12);
+  --neon-inset-quiet: inset 0 0 0 1px rgba(255,94,142,.08);
+}
+
+/* Base : léger "sertissage" rose */
+[data-magnet] {
+  box-shadow: var(--neon-inset-quiet);
+  transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
+  will-change: transform, box-shadow;
+}
+
+/* Hover / Focus : glow néon rose (même rendu que les tuiles Contact) */
+[data-magnet]:hover,
+[data-magnet]:focus-visible {
+  box-shadow: var(--neon-outer), var(--neon-inset);
+  outline: none;
+}
+
+/* Active : mini "tap" (mobile + clavier) */
+[data-magnet]:active {
+  transform: translateY(1px) scale(.98);
+}
+
+/* Option : variante plus sage au besoin → data-neon="soft" */
+[data-magnet][data-neon="soft"] { box-shadow: var(--neon-inset-quiet) }
+[data-magnet][data-neon="soft"]:hover,
+[data-magnet][data-neon="soft"]:focus-visible { box-shadow: var(--neon-inset) }
