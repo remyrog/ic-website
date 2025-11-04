@@ -71,8 +71,9 @@
   });
 
   /* ---------- Magnet buttons ---------- */
-  const MAGNET_STRENGTH = 18; // px
-  $$('.btn-magnet').forEach(el => {
+
+  const MAGNET_STRENGTH = 18; // ajuste à 16–24 selon ton goût
+  $$('.btn-magnet, [data-magnet]').forEach(el => {
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
       const x = (e.clientX - (r.left + r.width/2)) / (r.width/2);
@@ -81,6 +82,7 @@
     });
     el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
   });
+
 
   /* ---------- GSAP animations (guarded by reduce-motion) ---------- */
   if (!prefersReduce && window.gsap) {
