@@ -7,10 +7,10 @@
   if (y) y.textContent = new Date().getFullYear();
 
   // 2) Preloader : disparaît dès que tout est prêt
-  window.addEventListener("load", () => {
-    const pre = $("#preloader");
-    if (pre) pre.remove();
-  });
+  setTimeout(() => {
+    const pre = document.getElementById("preloader");
+    if (pre) pre.classList.add("is-done");
+  }, 5000);
 
   // 3) Scroll doux sur les liens internes (offset géré par scroll-padding-top en CSS)
   $$(".nav [data-scrolllink], [data-scrolllink]").forEach(a => {
