@@ -10,7 +10,7 @@
   setTimeout(() => {
     const pre = document.getElementById("preloader");
     if (pre) pre.classList.add("is-done");
-  }, 5000);
+  }, 3000);
 
   // 3) Scroll doux sur les liens internes (offset géré par scroll-padding-top en CSS)
   $$(".nav [data-scrolllink], [data-scrolllink]").forEach(a => {
