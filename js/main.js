@@ -90,7 +90,7 @@ magnets.forEach(el => {
   const duration = parseFloat(sun.dataset.sunDuration || '30'); // secondes pour l’aller (gauche -> droite)
   const arc      = parseFloat(sun.dataset.sunArc || '22');      // amplitude de l’arc vertical
   const marginR  = parseFloat(sun.dataset.sunMargin || '12');   // marge à droite
-  const offsetY  = parseFloat(sun.dataset.offsetY || '36');     // “marge haute” (pousse vers le bas)
+  const offsetY  = parseFloat(sun.dataset.offsetY || '48');     // “marge haute” (pousse vers le bas)
 
   let maxX = 0;
 
