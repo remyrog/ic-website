@@ -86,11 +86,25 @@ gsap.to("#sun", {
   scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom bottom", scrub: true }
 });
 
-gsap.to("#carHero", {
-  motionPath: { path: "#roadPathHero", align: "#roadPathHero", autoRotate: true, alignOrigin: [0.5, 0.5] },
-  ease: "none",
-  scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom bottom", scrub: true }
-});
+const endEl =
+  document.querySelector("#hero + .section") ||
+  document.querySelectorAll(".section")[1];
 
+gsap.to("#carHero", {
+  motionPath: {
+    path: "#roadPathHero",
+    align: "#roadPathHero",
+    autoRotate: true,
+    alignOrigin: [0.5, 0.5]
+  },
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#hero",
+    start: "top top",
+    endTrigger: endEl,           // la 2e section
+    end: "top top",              // fin quand son haut touche le haut du viewport
+    scrub: true
+  }
+});
 
 })();
