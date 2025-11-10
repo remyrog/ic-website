@@ -78,13 +78,65 @@ magnets.forEach(el => {
   });
 });
 
-gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
+// Soleil : dérive lente indépendante du scroll (aller-retour)
+(() => {
+  const sun = document.getElementById('sun');
+  if (!sun) return;
 
-gsap.to("#sun", {
-  motionPath: { path: "#sunPath", align: "#sunPath", autoRotate: true, alignOrigin: [0.5, 0.5] },
-  ease: "none",
-  scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom bottom", scrub: true }
-});
+  const svg = sun.ownerSVGElement;
+  const base = sun.getAttribute('transform') || '';
+
+  // Réglages (modifiable aussi via data-attrs)
+  const duration = parseFloat(sun.dataset.sunDuration || '30'); // secondes pour l’aller (gauche -> droite)
+  const arc      = parseFloat(sun.dataset.sunArc || '22');      // amplitude de l’arc vertical
+  const marginR  = parseFloat(sun.dataset.sunMargin || '12');   // marge à droite
+  const offsetY  = parseFloat(sun.dataset.offsetY || '36');     // “marge haute” (pousse vers le bas)
+
+  let maxX = 0;
+
+  function computeBounds() {
+    if (!svg) return;
+    const vb = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
+    const width = vb ? vb.width : svg.clientWidth;
+
+    const bb = sun.getBBox();
+    // Distance restante vers la droite avant de toucher le bord (en tenant compte de la marge)
+    maxX = Math.max(0, (width - marginR) - (bb.x + bb.width));
+  }
+
+  // anim: on part de x=0 (position actuelle), on va jusqu’à maxX, puis on revient (ping-pong)
+  let x = 0;
+  let dir = 1;
+  let last = 0;
+
+  function step(t) {
+    if (!last) last = t;
+    const dt = (t - last) / 1000; // secondes
+    last = t;
+
+    const speed = maxX / duration; // px/s
+    x += dir * speed * dt;
+
+    if (x >= maxX) { x = maxX; dir = -1; }
+    if (x <= 0)    { x = 0;    dir =  1; }
+
+    const p = maxX > 0 ? (x / maxX) : 0;                  // 0..1 sur l’aller
+    const y = offsetY + Math.sin(p * Math.PI) * -arc;     // petit arc solaire
+    const r = p * 180;                                    // rotation légère
+
+    // Concatène à la transform d’origine (ne casse pas la position de base)
+    sun.setAttribute('transform', `${base} translate(${x},${y}) rotate(${r})`);
+
+    requestAnimationFrame(step);
+  }
+
+  computeBounds();
+  window.addEventListener('resize', () => { computeBounds(); });
+
+  requestAnimationFrame(step);
+})();
+
+gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
 const endEl =
   document.querySelector("#hero + .section") ||
