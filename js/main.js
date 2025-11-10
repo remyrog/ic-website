@@ -1,176 +1,82 @@
-/* ==========================================================================
-   Informatique Cerdagne — JS “clean”
-   - Préloader + transition
-   - Progress bar scroll
-   - Liens ancre (offset natif via scroll-padding-top)
-   - Effets “magnet” sur boutons
-   - Car & Sun animés (GSAP MotionPath)
-   - Carousel d’avis (JSON local)
-   - Respect prefers-reduced-motion
-   ========================================================================== */
-
 (() => {
-  const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- Helpers ---------- */
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
-  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-  /* ---------- Préloader & transition ---------- */
-  const preloader = $('#preloader');
-  const pageTrans = $('#pageTransition');
+  // 1) Année footer
+  const y = $("#year");
+  if (y) y.textContent = new Date().getFullYear();
 
-  function hidePreloader() {
-    if (!preloader) return;
-    preloader.style.display = 'none';
-  }
-
-  function revealTransition() {
-    if (!pageTrans || prefersReduce) return;
-    // simple slide-down / slide-up
-    pageTrans.style.transform = 'translateY(0)';
-    pageTrans.style.transition = 'transform .6s cubic-bezier(.2,.8,.2,1)';
-    requestAnimationFrame(() => {
-      pageTrans.style.transform = 'translateY(0)';
-      setTimeout(() => {
-        pageTrans.style.transform = 'translateY(-100%)';
-      }, 60);
-    });
-  }
-
-  window.addEventListener('load', () => {
-    hidePreloader();
-    revealTransition();
+  // 2) Preloader : disparaît dès que tout est prêt
+  window.addEventListener("load", () => {
+    const pre = $("#preloader");
+    if (pre) pre.remove();
   });
 
-  /* ---------- Scroll progress ---------- */
-  const progressBar = $('.progress span');
-  function updateProgress() {
-    if (!progressBar) return;
-    const doc = document.documentElement;
-    const scrollTop = doc.scrollTop || document.body.scrollTop;
-    const scrollHeight = doc.scrollHeight - doc.clientHeight;
-    const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    progressBar.style.width = pct + '%';
-  }
-  document.addEventListener('scroll', updateProgress, { passive: true });
+  // 3) Scroll doux sur les liens internes (offset géré par scroll-padding-top en CSS)
+  $$(".nav [data-scrolllink], [data-scrolllink]").forEach(a => {
+    a.addEventListener("click", e => {
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      e.preventDefault();
+      const target = $(href);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  // 4) Barre de progression en bas de la nav
+  const bar = $(".progress span");
+  const updateProgress = () => {
+    if (!bar) return;
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop || document.body.scrollTop);
+    const height = h.scrollHeight - h.clientHeight;
+    const pct = height > 0 ? Math.min(100, Math.max(0, (scrolled / height) * 100)) : 0;
+    bar.style.width = pct + "%";
+  };
+  window.addEventListener("scroll", updateProgress, { passive: true });
   updateProgress();
 
-  /* ---------- Liens ancre (lissage natif) ---------- */
-  $$('[data-scrolllink]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href') || '';
-      if (href.startsWith('#')) {
-        const target = $(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }
-    });
+  // 5) Effet “magnet” léger (optionnel)
+// 5) Effet “magnet” — inertie + rotation
+const isTouch = "ontouchstart" in window;
+const magnets = document.querySelectorAll("[data-magnet]");
+magnets.forEach(el => {
+  if (isTouch) return; // évite les saccades sur mobile
+
+  const strength = parseFloat(el.dataset.magnet) || 30; // translation max (px)
+  const maxRot   = parseFloat(el.dataset.rotate) || 6;  // rotation max (deg)
+  const damp     = 0.14; // 0.10–0.20 = plus ou moins “ressort”
+
+  let tx = 0, ty = 0, rx = 0;            // valeurs actuelles
+  let txT = 0, tyT = 0, rxT = 0;         // cibles
+  let raf = 0;
+
+  const animate = () => {
+    tx += (txT - tx) * damp;
+    ty += (tyT - ty) * damp;
+    rx += (rxT - rx) * damp;
+    el.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rx}deg)`;
+    if (Math.abs(txT - tx) > 0.1 || Math.abs(tyT - ty) > 0.1 || Math.abs(rxT - rx) > 0.1) {
+      raf = requestAnimationFrame(animate);
+    } else {
+      raf = 0;
+    }
+  };
+
+  el.addEventListener("mousemove", e => {
+    const r = el.getBoundingClientRect();
+    const nx = ((e.clientX - r.left) / r.width  - 0.5) * 2; // -1..1
+    const ny = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+    txT = nx * strength;
+    tyT = ny * strength;
+    rxT = -nx * maxRot; // tourne légèrement selon l’axe X
+    if (!raf) raf = requestAnimationFrame(animate);
   });
 
-  /* ---------- Magnet buttons ---------- */
-
-  const MAGNET_STRENGTH = 18; // ajuste à 16–24 selon ton goût
-  $$('.btn-magnet, [data-magnet]').forEach(el => {
-    el.addEventListener('mousemove', (e) => {
-      const r = el.getBoundingClientRect();
-      const x = (e.clientX - (r.left + r.width/2)) / (r.width/2);
-      const y = (e.clientY - (r.top + r.height/2)) / (r.height/2);
-      el.style.transform = `translate(${x * MAGNET_STRENGTH}px, ${y * MAGNET_STRENGTH}px)`;
-    });
-    el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+  el.addEventListener("mouseleave", () => {
+    txT = 0; tyT = 0; rxT = 0;
+    if (!raf) raf = requestAnimationFrame(animate);
   });
+});
 
-
-  /* ---------- GSAP animations (guarded by reduce-motion) ---------- */
-  if (!prefersReduce && window.gsap) {
-    const { gsap } = window;
-    const MotionPathPlugin = window.MotionPathPlugin;
-    if (MotionPathPlugin) gsap.registerPlugin(MotionPathPlugin, window.ScrollTrigger);
-
-    // Car along path
-    const car = $('#carHero');
-    const road = $('#roadPathHero');
-    if (car && road && MotionPathPlugin) {
-      gsap.set(car, { transformOrigin: '50% 50%' });
-      gsap.to(car, {
-        duration: 16,
-        repeat: -1,
-        ease: 'none',
-        motionPath: {
-          path: road,
-          align: road,
-          autoRotate: true,
-          alignOrigin: [0.5, 0.5]
-        }
-      });
-    }
-
-    // Sun along its arc
-    const sun = $('#sun');
-    const sunPath = $('#sunPath');
-    if (sun && sunPath && MotionPathPlugin) {
-      gsap.to(sun, {
-        duration: 18,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        motionPath: { path: sunPath, align: sunPath, autoRotate: false }
-      });
-    }
-
-    // Light “trail” on the title on scroll enter
-    const speedTitle = $('.speed-title');
-    if (speedTitle) {
-      const trail = $('.trail', speedTitle);
-      const glow  = $('.glow', speedTitle);
-      const spark = $('.spark', speedTitle);
-      gsap.timeline({
-        scrollTrigger: { trigger: speedTitle, start: 'top 70%', once: true }
-      })
-      .set([trail, glow, spark], { opacity: 1 })
-      .fromTo(trail, { xPercent: -30 }, { xPercent: 80, duration: 1.2, ease: 'power3.out' }, 0)
-      .fromTo(glow,  { width: 0 },      { width: '60%', duration: 1.2, ease: 'power3.out' }, 0)
-      .fromTo(spark, { scaleX: 0 },     { scaleX: 1, x: 80, duration: 1.0, ease: 'power2.out' }, 0)
-      .to([trail, glow, spark], { opacity: 0, duration: 0.4 }, '<0.2');
-    }
-  }
-
-  /* ---------- Avis (carousel minimal) ---------- */
-  const REVIEWS = [
-    { initials: 'JR', stars: 5, text: 'Intervention rapide et efficace, explications claires. Je recommande.' },
-    { initials: 'ML', stars: 5, text: 'Très pédagogue, mise en service aux petits oignons. Merci !' },
-    { initials: 'AS', stars: 4, text: 'Bon conseil matériel et sécurisation après arnaque, rassurant.' }
-  ];
-
-  const reviewsHost = $('.reviews');
-  const prevBtn = $('.reviews__controls .prev');
-  const nextBtn = $('.reviews__controls .next');
-
-  if (reviewsHost) {
-    reviewsHost.setAttribute('id', 'reviews');
-    reviewsHost.innerHTML = REVIEWS.map((r, i) => `
-      <article class="review${i===0 ? ' active' : ''}">
-        <div class="review__avatar" aria-hidden="true">${r.initials}</div>
-        <div>
-          <div class="review__stars" aria-label="${r.stars} étoiles">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
-          <p>${r.text}</p>
-        </div>
-      </article>
-    `).join('');
-    let idx = 0;
-    const $items = $$('.review', reviewsHost);
-    const show = (n) => {
-      $items[idx].classList.remove('active');
-      idx = (n + $items.length) % $items.length;
-      $items[idx].classList.add('active');
-    };
-    prevBtn && prevBtn.addEventListener('click', () => show(idx - 1));
-    nextBtn && nextBtn.addEventListener('click', () => show(idx + 1));
-  }
-
-  /* ---------- Year in footer ---------- */
-  const y = $('#year'); if (y) y.textContent = new Date().getFullYear();
 })();

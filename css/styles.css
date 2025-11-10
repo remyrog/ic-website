@@ -8,6 +8,7 @@ html {
   overflow-y: scroll;
   background: #0c0d12;
 }
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -35,24 +36,11 @@ body {
   /* Layout */
   --roadGap: clamp(16px, 3vw, 42px);
   --roadH: clamp(200px, 18.75vw, 420px);
-
-  /* Car scaling (sections) */
-  --carScaleSections: 1;
-  --carScaleSectionsSm: 1;
-  --carYOffset: 0px;
 }
 
 /* =========================
-   Transition & Preloader
+   Preloader
    ========================= */
-#pageTransition {
-  position: fixed; inset: 0; z-index: 2000; pointer-events: none;
-  transform: translateY(-100%);
-  background:
-    repeating-linear-gradient(110deg, rgba(255,255,255,.05) 0 18px, rgba(255,255,255,.12) 18px 36px),
-    linear-gradient(135deg, var(--pink), var(--yellow));
-  filter: saturate(120%);
-}
 #preloader {
   position: fixed; inset: 0; z-index: 1999;
   background: radial-gradient(1200px 600px at 50% 20%, #1e2030 0%, #0c0d12 60%);
@@ -77,7 +65,7 @@ body {
    Layout
    ========================= */
 .container { width: min(1120px, 92vw); margin-inline: auto }
-.section { padding: clamp(80px, 12vw, 140px) 0; position: relative; z-index: 4 }
+.section { padding: clamp(48px, 8vw, 96px) 0; position: relative; z-index: 4 }
 
 /* =========================
    Navigation
@@ -122,7 +110,7 @@ body {
 .hero { padding: 0; min-height: 100svh }
 .hero__pin { position: relative; min-height: 100svh; contain: paint }
 .scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1 }
-.hero__content { position: relative; z-index: 5; text-align: center; margin-top: min(26vh, 240px) }
+.hero__content { position: relative; z-index: 5; text-align: center; margin-top: min(26vh, 240px); padding-bottom: calc(var(--roadH) + var(--roadGap)) }
 .hero__badge {
   display: inline-block; padding: 8px 12px; border-radius: 999px;
   background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
@@ -142,22 +130,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 .accent svg { color: var(--accent-color) !important }
 .accent svg [fill]:not([fill="none"]) { fill: currentColor !important }
 .accent svg [stroke]:not([stroke="none"]) { stroke: currentColor !important }
-
-/* =========================
-   Route (HERO + sections)
-   ========================= */
-.section-road {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  height: var(--roadH); z-index: 3; pointer-events: none; isolation: isolate;
-}
-.section-road svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: hidden; background: transparent }
-.section-road svg path { fill: none !important }
-.section-road .bg { stroke: #2b2d3a; stroke-linecap: round; stroke-width: 120; opacity: .93 }
-.section-road .dash { stroke: #F7F7F7; stroke-linecap: round; stroke-width: 8; stroke-dasharray: 36 28; opacity: .85 }
-.section-road.fullwidth { width: 100vw; left: 50%; right: auto; transform: translateX(-50%) }
-
-/* Marge partagée route */
-.section.has-road, .hero__content { padding-bottom: calc(var(--roadH) + var(--roadGap)) }
 
 /* =========================
    Content blocks
@@ -269,60 +241,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   color: transparent !important;
 }
 .small { font-size: .9rem }
-
-/* =========================
-   Effet "speed-title" — ruban néon rose
-   ========================= */
-.speed-title {
-  --speed-c1: var(--pink);
-  --speed-c2: color-mix(in srgb, var(--pink), white 18%);
-  --speed-glow: color-mix(in srgb, var(--pink), white 70%);
-  display: inline-block; position: relative; will-change: transform, filter, letter-spacing;
-}
-.speed-title .trail {
-  position: absolute; top: 50%; left: -16%;
-  height: 1.05em; width: 38%;
-  transform: translateY(-50%) skewX(-16deg);
-  opacity: 0; pointer-events: none;
-  background: linear-gradient(90deg,
-    color-mix(in srgb, var(--speed-c1), #fff 10%),
-    color-mix(in srgb, var(--speed-c2), #fff 10%)
-  );
-  border-radius: 14px; filter: blur(3px) saturate(130%);
-  -webkit-mask:
-    radial-gradient(140% 100% at 90% 50%, #000 60%, transparent 62%),
-    linear-gradient(90deg, transparent 0 8%, #000 20% 82%, transparent 100%);
-          mask:
-    radial-gradient(140% 100% at 90% 50%, #000 60%, transparent 62%),
-    linear-gradient(90deg, transparent 0 8%, #000 20% 82%, transparent 100%);
-}
-.speed-title .trail::before,
-.speed-title .trail::after {
-  content: ""; position: absolute; inset: 18% auto 18% -6%;
-  width: 36%; border-radius: 8px;
-  background: linear-gradient(90deg, rgba(255,255,255,.45), rgba(255,255,255,0));
-  transform: skewX(-8deg); filter: blur(1px);
-}
-.speed-title .trail::after { inset: auto auto 26% -3%; top: 26%; width: 28%; opacity: .75; filter: blur(.6px) }
-.speed-title .glow {
-  position: absolute; top: -14%; bottom: -18%; left: -10%;
-  width: 0; pointer-events: none; opacity: 0;
-  background: linear-gradient(90deg, transparent, var(--speed-glow), transparent);
-  mix-blend-mode: overlay; filter: blur(8px); border-radius: 14px;
-}
-.speed-title .spark {
-  position: absolute; top: 50%; left: -6%;
-  width: 14px; height: 2px; opacity: 0; pointer-events: none;
-  background: linear-gradient(90deg, #fff, rgba(255,255,255,0));
-  transform-origin: left center; border-radius: 2px;
-  filter: drop-shadow(0 0 4px rgba(255,255,255,.35));
-}
-
-/* Fallback sans color-mix */
-@supports not (color: color-mix(in srgb, red, white)) {
-  .speed-title { --speed-c1: #FF5E8E; --speed-c2: #FF8FB0; --speed-glow: rgba(255,150,190,.75) }
-}
-
 /* =========================
    Responsive
    ========================= */
@@ -334,19 +252,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 }
 
 /* =========================
-   Car sprites (sections)
-   ========================= */
-.section-road .car { transform-box: fill-box; transform-origin: center }
-.section-road .carSprite {
-  transform-box: fill-box; transform-origin: center;
-  transform: translateY(var(--carYOffset)) scale(var(--carScaleSections));
-  will-change: transform;
-}
-@media (max-width: 560px) {
-  .section-road .carSprite { transform: translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm)) }
-}
-
-/* =========================
    Motion preferences
    ========================= */
 @media (prefers-reduced-motion: reduce) {
@@ -354,7 +259,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 }
 
 /* =========================
-   PATCH : Neon rose global pour tous les [data-magnet]
+   [data-magnet]
    ========================= */
 :root {
   /* Tokens d'ombre pour garder la même intensité partout */
@@ -367,7 +272,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 [data-magnet] {
   box-shadow: var(--neon-inset-quiet);
   transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
-  will-change: transform, box-shadow;
+  will-change: transform; transform: translateZ(0);
 }
 
 /* Hover / Focus : glow néon rose (même rendu que les tuiles Contact) */
@@ -381,8 +286,3 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 [data-magnet]:active {
   transform: translateY(1px) scale(.98);
 }
-
-/* Option : variante plus sage au besoin → data-neon="soft" */
-[data-magnet][data-neon="soft"] { box-shadow: var(--neon-inset-quiet) }
-[data-magnet][data-neon="soft"]:hover,
-[data-magnet][data-neon="soft"]:focus-visible { box-shadow: var(--neon-inset) }
