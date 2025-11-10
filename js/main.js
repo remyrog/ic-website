@@ -36,7 +36,6 @@
   window.addEventListener("scroll", updateProgress, { passive: true });
   updateProgress();
 
-  // 5) Effet “magnet” léger (optionnel)
 // 5) Effet “magnet” — inertie + rotation
 const isTouch = "ontouchstart" in window;
 const magnets = document.querySelectorAll("[data-magnet]");
@@ -78,5 +77,51 @@ magnets.forEach(el => {
     if (!raf) raf = requestAnimationFrame(animate);
   });
 });
+
+// 6) Parallax "sun" + léger mouvement de la voiture
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const sun = $('[data-sun], .scene__sun, .sun, #sun');         // essaie plusieurs sélecteurs
+  const car = $('[data-car], .scene .carSprite, .scene .car');   // idem pour la voiture
+
+  if (!sun && !car) return;
+
+  let raf = 0;
+  const setT = (el, tx, ty, rotDeg = 0) => {
+    if (!el) return;
+    if (el.ownerSVGElement) {
+      // Élément SVG → via l’attribut transform
+      el.setAttribute('transform', `translate(${tx}, ${ty}) rotate(${rotDeg})`);
+    } else {
+      // Élément HTML classique
+      el.style.transform = `translate3d(${tx}px, ${ty}px,0) rotate(${rotDeg}deg)`;
+    }
+  };
+
+  const tick = () => {
+    raf = 0;
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop || document.body.scrollTop);
+    const height = h.scrollHeight - h.clientHeight;
+    const p = height > 0 ? Math.min(1, Math.max(0, scrolled / height)) : 0;
+
+    // Soleil : arc + légère rotation
+    const sunX = -40 + p * 80;                 // traverse l’écran
+    const sunY = Math.sin(p * Math.PI) * -22;  // arc discret
+    const sunR = p * 180;                      // un demi-tour sur la page
+    setT(sun, sunX, sunY, sunR);
+
+    // Voiture : petit défilement + tangage subtil
+    const carX = p * 120;
+    const carY = Math.sin(p * 6.283) * 1.5;
+    const carR = Math.sin(p * 6.283) * 1.2;
+    setT(car, carX, carY, carR);
+  };
+
+  const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  tick();
+})();
+
 
 })();

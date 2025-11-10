@@ -286,3 +286,30 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 [data-magnet]:active {
   transform: translateY(1px) scale(.98);
 }
+
+/* === Road + Car (restored minimal) === */
+:root {
+  --roadGap: clamp(16px, 3vw, 42px);
+  --roadH: clamp(200px, 18.75vw, 420px);
+  --carScaleSections: 1;
+  --carScaleSectionsSm: 1;
+  --carYOffset: 0px;
+}
+
+.section-road{position:absolute;left:0;right:0;bottom:0;height:var(--roadH);z-index:3;pointer-events:none;isolation:isolate}
+.section-road svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;background:transparent}
+.section-road svg path{fill:none!important}
+.section-road .bg{stroke:#2b2d3a;stroke-linecap:round;stroke-width:120;opacity:.93}
+.section-road .dash{stroke:#F7F7F7;stroke-linecap:round;stroke-width:8;stroke-dasharray:36 28;opacity:.85}
+.section-road.fullwidth{width:100vw;left:50%;right:auto;transform:translateX(-50%)}
+
+/* Car sprites */
+.section-road .car{transform-box:fill-box;transform-origin:center}
+.section-road .carSprite{
+  transform-box:fill-box;transform-origin:center;
+  transform:translateY(var(--carYOffset)) scale(var(--carScaleSections));
+  will-change:transform;
+}
+@media (max-width:560px){
+  .section-road .carSprite{transform:translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm))}
+}
