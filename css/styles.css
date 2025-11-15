@@ -141,8 +141,19 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    Content blocks
    ========================= */
 .lead { color: var(--muted); max-width: 980px }
-.split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center }
-.split.reverse { grid-template-columns: .9fr 1.1fr }
+
+/* Layout 2 colonnes réutilisable (démarche / expertise) */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.split.reverse {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+
 .values { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px }
 .values li {
   background: var(--glass); border: 1px solid rgba(255,255,255,.08);
@@ -254,6 +265,12 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   .grid-cards { grid-template-columns: 1fr 1fr }
   .service { grid-column: auto }
   .contact__grid { grid-template-columns: 1fr }
+
+  .split,
+  .split.reverse {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 /* =========================
