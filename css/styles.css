@@ -67,7 +67,11 @@ body {
    Layout
    ========================= */
 .container { width: min(1120px, 92vw); margin-inline: auto }
-.section { padding: clamp(48px, 8vw, 96px) 0; position: relative; z-index: 4 }
+.section {
+  padding: clamp(28px, 5vw, 56px) 0;
+  position: relative;
+  z-index: 4;
+}
 
 /* =========================
    Navigation
