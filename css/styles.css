@@ -137,6 +137,8 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    Content blocks
    ========================= */
 .lead { color: var(--muted); max-width: 980px }
+.split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center }
+.split.reverse { grid-template-columns: .9fr 1.1fr }
 .values { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px }
 .values li {
   background: var(--glass); border: 1px solid rgba(255,255,255,.08);
