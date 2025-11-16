@@ -593,3 +593,54 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   margin: 0;
 }
 
+/* PRESTATIONS – mise en forme du contenu */
+.prestations .grid-cards {
+  align-items: stretch;
+}
+
+.prestations .service {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.prestations .service h3 {
+  margin: 0;
+}
+
+.prestations .service-tagline {
+  margin: 0;
+  font-weight: 500;
+  color: rgba(248, 250, 252, 0.88);
+}
+
+.prestations .service-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.prestations .service-list li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 0.95rem;
+}
+
+/* petit point lumineux au lieu des virgules/points médians */
+.prestations .service-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--yellow), var(--pink));
+  box-shadow: 0 0 6px rgba(248, 250, 252, 0.6);
+}
+
