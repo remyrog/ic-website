@@ -572,3 +572,24 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   }
 }
 
+/* PRESTATIONS – cartes harmonisées */
+.prestations .grid-cards {
+  align-items: stretch;
+}
+
+.prestations .service {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.prestations .service h3 {
+  margin: 0 0 6px;
+}
+
+.prestations .service p {
+  margin: 0;
+}
+
