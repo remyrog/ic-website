@@ -68,9 +68,12 @@ body {
    ========================= */
 .container { width: min(1120px, 92vw); margin-inline: auto }
 .section {
-  padding: clamp(28px, 5vw, 56px) 0;
+  padding: clamp(20px, 3vw, 36px) 0 clamp(56px, 7vw, 88px);
   position: relative;
   z-index: 4;
+}
+.section:not(.hero) h2 {
+  margin-top: 12px;
 }
 
 /* =========================

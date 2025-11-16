@@ -159,4 +159,143 @@ gsap.to("#carHero", {
   }
 });
 
+
+// =========================
+//  Avis (JSON local simplifié)
+// =========================
+(function initLocalReviews() {
+  const section = document.getElementById("avis");
+  if (!section) return;
+
+  const reviewsContainer = section.querySelector(".reviews");
+  const prevBtn = section.querySelector(".reviews__controls .prev");
+  const nextBtn = section.querySelector(".reviews__controls .next");
+
+  if (!reviewsContainer || !prevBtn || !nextBtn) return;
+
+  // Stats globales (tous les avis, même ceux sans texte)
+  const TOTAL_REVIEWS_COUNT = 52;
+  const AVERAGE_RATING = 5;
+
+  let reviews = [];
+  let currentIndex = 0;
+
+  function createReviewElement(review, index) {
+    const article = document.createElement("article");
+    article.className = "review";
+    if (index === currentIndex) {
+      article.classList.add("active");
+    }
+
+    // Avatar simple avec initiales
+    const avatar = document.createElement("div");
+    avatar.className = "review__avatar";
+
+    const name = review.author || "Client Google";
+    const initials =
+      name
+        .split(" ")
+        .filter(Boolean)
+        .map((p) => p[0].toUpperCase())
+        .slice(0, 2)
+        .join("") || "★";
+    avatar.textContent = initials;
+
+    const body = document.createElement("div");
+    body.className = "review__body";
+
+    const header = document.createElement("div");
+    header.className = "review__header";
+
+    const authorEl = document.createElement("p");
+    authorEl.className = "review__author";
+    authorEl.textContent = name;
+
+    const metaEl = document.createElement("p");
+    metaEl.className = "review__meta";
+    if (review.date) {
+      const d = new Date(review.date);
+      metaEl.textContent = `Avis Google • ${d.toLocaleDateString("fr-FR")}`;
+    } else {
+      metaEl.textContent = "Avis Google";
+    }
+
+    header.appendChild(authorEl);
+    header.appendChild(metaEl);
+
+    const starsEl = document.createElement("div");
+    starsEl.className = "review__stars";
+
+    const rating = parseInt(review.rating, 10) || 0;
+    const full = "★★★★★".slice(0, rating);
+    const empty = "☆☆☆☆☆".slice(rating);
+    starsEl.textContent = full + empty;
+
+    const textEl = document.createElement("p");
+    textEl.className = "review__text";
+    textEl.textContent =
+      review.comment && review.comment.trim().length
+        ? review.comment.trim()
+        : "Avis sans commentaire texte.";
+
+    body.appendChild(header);
+    body.appendChild(starsEl);
+    body.appendChild(textEl);
+
+    article.appendChild(avatar);
+    article.appendChild(body);
+
+    return article;
+  }
+
+  function renderAll() {
+    reviewsContainer.innerHTML = "";
+    reviews.forEach((review, index) => {
+      const el = createReviewElement(review, index);
+      reviewsContainer.appendChild(el);
+    });
+  }
+
+  function updateActive(newIndex) {
+    if (!reviews.length) return;
+    currentIndex = (newIndex + reviews.length) % reviews.length;
+    const cards = reviewsContainer.querySelectorAll(".review");
+    cards.forEach((card, idx) => {
+      card.classList.toggle("active", idx === currentIndex);
+    });
+  }
+
+  prevBtn.addEventListener("click", () => {
+    updateActive(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    updateActive(currentIndex + 1);
+  });
+
+  // Charge les avis depuis le JSON local
+  fetch("/reviews.json")
+    .then((res) => res.json())
+    .then((data) => {
+      reviews = Array.isArray(data.reviews) ? data.reviews : [];
+
+      if (!reviews.length) {
+        reviewsContainer.textContent = "Pas encore d'avis à afficher.";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+      }
+
+      renderAll();
+      updateActive(0);
+    })
+    .catch((err) => {
+      console.error("Erreur chargement avis :", err);
+      reviewsContainer.textContent =
+        "Impossible de charger les avis Google pour le moment.";
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+    });
+})();
+
 })();
