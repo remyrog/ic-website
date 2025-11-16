@@ -653,9 +653,9 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   overflow: hidden;
   background:
     /* petit halo doré côté titre */
-    radial-gradient(circle at 70% 35%, rgba(247, 198, 0, 0.35), transparent 60%),
+    radial-gradient(circle at 70% 35%, rgba(247, 198, 0, 0.28), transparent 60%),
     /* halo plus doux côté bloc de gauche */
-    radial-gradient(circle at 20% 45%, rgba(253, 186, 44, 0.20), transparent 65%),
+    radial-gradient(circle at 20% 45%, rgba(253, 186, 44, 0.14), transparent 65%),
     /* fond nuit, proche du reste du site */
     linear-gradient(180deg, #020617 0%, #020617 40%, #050816 100%);
 }
@@ -664,6 +664,8 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   position: relative;
   z-index: 1;
 }
+
+
 
 
 
