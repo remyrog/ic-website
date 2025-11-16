@@ -202,6 +202,8 @@ gsap.to("#carHero", {
   let autoplayId = null;
   let countersStarted = false;
   let summaryLoopId = null;
+  let countersLoopId = null;
+
 
   function createAvatarNode() {
     return avatarTemplate.content.firstElementChild.cloneNode(true);
@@ -349,6 +351,13 @@ gsap.to("#carHero", {
 
   function animateStars(starsNodeList, max) {
     const stars = Array.from(starsNodeList);
+
+    // reset
+    stars.forEach((star) => {
+      star.classList.remove("is-active");
+    });
+
+    // puis on rallume 1 par 1
     stars.forEach((star, index) => {
       if (index < max) {
         setTimeout(() => {
@@ -356,6 +365,22 @@ gsap.to("#carHero", {
         }, 180 * index);
       }
     });
+  }
+
+  function runCountersOnce() {
+    animateCounter(countEl, TOTAL_REVIEWS_COUNT, 1100);
+    animateCounter(ratingEl, AVERAGE_RATING, 800);
+    animateStars(summaryStars, AVERAGE_RATING);
+  }
+
+  function startCountersLoop() {
+    if (countersLoopId) return;
+
+    // premier run immédiat
+    runCountersOnce();
+
+    // puis relance toutes les 9 secondes
+    countersLoopId = setInterval(runCountersOnce, 4000);
   }
 
   function startSummaryLoop() {
@@ -372,13 +397,13 @@ gsap.to("#carHero", {
   }
 
   function startCountersOnce() {
-    if (countersStarted) return;
-    countersStarted = true;
-    animateCounter(countEl, TOTAL_REVIEWS_COUNT, 1100);
-    animateCounter(ratingEl, AVERAGE_RATING, 800);
-    animateStars(summaryStars, AVERAGE_RATING);
-    startSummaryLoop(); // lance le rebond en boucle une fois les compteurs terminés
+  if (countersStarted) return;
+  countersStarted = true;
+
+  startCountersLoop(); // compteurs + étoiles en boucle
+  startSummaryLoop();  // rebond en boucle du badge
   }
+
 
   function setupCountersTrigger() {
     if (!countEl || !ratingEl || !summaryStars.length) {
