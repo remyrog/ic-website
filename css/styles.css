@@ -645,14 +645,32 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 }
 
 /* =========================
-   Section Expertise – fond distinct
+   Section Expertise – fond doré intense
    ========================= */
 
 .expertise {
+  position: relative;
+  background: #050816; /* base très sombre */
+  overflow: hidden;
+}
+
+.expertise::before {
+  content: "";
+  position: absolute;
+  inset: -15%; /* déborde un peu pour éviter les coupures */
+  pointer-events: none;
   background:
-    radial-gradient(circle at 0% 0%, rgba(247, 198, 0, 0.16), transparent 55%),
-    radial-gradient(circle at 100% 100%, rgba(253, 186, 44, 0.16), transparent 55%),
-    #050816;
+    /* halo doré derrière le texte de droite */
+    radial-gradient(circle at 70% 40%, rgba(247, 198, 0, 0.55), transparent 60%),
+    /* halo plus doux derrière les cartes de gauche */
+    radial-gradient(circle at 20% 50%, rgba(253, 186, 44, 0.38), transparent 60%),
+    /* léger violet en bas pour la profondeur */
+    radial-gradient(circle at 50% 110%, rgba(129, 140, 248, 0.18), transparent 65%);
+}
+
+.expertise .container {
+  position: relative;
+  z-index: 1; /* contenu au-dessus du glow */
 }
 
 
