@@ -343,7 +343,9 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   .section-road .carSprite{transform:translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm))}
 }
 
-/* ====== Section Avis : lien Google + avatar animé + lisibilité ====== */
+/* =========================
+   Section Avis – layout & style
+   ========================= */
 
 /* Lien vers les avis Google : style plus premium */
 .avis .lead a {
@@ -374,6 +376,42 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   transform: scaleX(1);
 }
 
+/* Multi-avis : 5 cartes par page */
+.avis .reviews {
+  position: relative;
+  overflow: visible;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Chaque avis = une carte */
+.avis .review {
+  position: relative;
+  inset: auto;
+  opacity: 1;
+  transform: none;
+  transition: none;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 18px;
+  align-items: flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.avis .review.active {
+  opacity: 1;
+  transform: none;
+}
+
 /* Avatar : personnage SVG qui fait coucou */
 .review__avatar {
   width: 72px;
@@ -398,8 +436,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 }
 
 @keyframes avatarWave {
-  0%,
-  100% {
+  0%, 100% {
     transform: rotate(0deg);
   }
   30% {
@@ -410,7 +447,8 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   }
 }
 
-/* Texte des avis : on assume des avis longs */
+/* Texte des avis : lisible même long */
 .review__text {
   max-width: 980px;
+  line-height: 1.6;
 }

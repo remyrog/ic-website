@@ -160,7 +160,7 @@ gsap.to("#carHero", {
 });
 
 // =========================
-//  Avis 
+//  Avis (JSON local simplifié, 5 par 5)
 // =========================
 (function initLocalReviews() {
   const section = document.getElementById("avis");
@@ -173,27 +173,22 @@ gsap.to("#carHero", {
 
   if (!reviewsContainer || !prevBtn || !nextBtn || !avatarTemplate) return;
 
-  // Stats globales (tous les avis, même ceux sans texte)
-  const TOTAL_REVIEWS_COUNT = 52;
+  const TOTAL_REVIEWS_COUNT = 52;  // info disponible si tu veux l'afficher
   const AVERAGE_RATING = 5;
+  const REVIEWS_PER_PAGE = 5;
 
   let reviews = [];
-  let currentIndex = 0;
+  let currentPage = 0;
   let autoplayId = null;
 
   function createAvatarNode() {
-    const clone = avatarTemplate.content.firstElementChild.cloneNode(true);
-    return clone;
+    return avatarTemplate.content.firstElementChild.cloneNode(true);
   }
 
-  function createReviewElement(review, index) {
+  function createReviewElement(review) {
     const article = document.createElement("article");
     article.className = "review";
-    if (index === currentIndex) {
-      article.classList.add("active");
-    }
 
-    // Avatar : clone du template SVG
     const avatar = createAvatarNode();
 
     const body = document.createElement("div");
@@ -203,25 +198,19 @@ gsap.to("#carHero", {
     header.className = "review__header";
 
     const name = review.author || "Client Google";
-
     const metaEl = document.createElement("p");
     metaEl.className = "review__meta";
+
+    const rating = parseInt(review.rating, 10) || 0;
+    const stars = "★★★★★".slice(0, rating);
+
     if (review.date) {
       const d = new Date(review.date);
       const formatted = d.toLocaleDateString("fr-FR");
-      metaEl.textContent = `${name} • ${formatted}`;
+      metaEl.textContent = `${name} • ${formatted} • ${stars}`;
     } else {
-      metaEl.textContent = name;
+      metaEl.textContent = `${name} • ${stars}`;
     }
-
-    header.appendChild(metaEl);
-
-    const starsEl = document.createElement("div");
-    starsEl.className = "review__stars";
-    const rating = parseInt(review.rating, 10) || 0;
-    const full = "★★★★★".slice(0, rating);
-    const empty = "☆☆☆☆☆".slice(rating);
-    starsEl.textContent = full + empty;
 
     const textEl = document.createElement("p");
     textEl.className = "review__text";
@@ -230,8 +219,8 @@ gsap.to("#carHero", {
         ? review.comment.trim()
         : "Avis sans commentaire texte.";
 
+    header.appendChild(metaEl);
     body.appendChild(header);
-    body.appendChild(starsEl);
     body.appendChild(textEl);
 
     article.appendChild(avatar);
@@ -240,46 +229,38 @@ gsap.to("#carHero", {
     return article;
   }
 
-  function renderAll() {
+  function renderPage() {
     reviewsContainer.innerHTML = "";
-    reviews.forEach((review, index) => {
-      const el = createReviewElement(review, index);
+
+    const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
+    const start = currentPage * REVIEWS_PER_PAGE;
+    const end = start + REVIEWS_PER_PAGE;
+    const slice = reviews.slice(start, end);
+
+    slice.forEach((review) => {
+      const el = createReviewElement(review);
       reviewsContainer.appendChild(el);
     });
   }
 
-  function updateHeight() {
-    const active = reviewsContainer.querySelector(".review.active");
-    if (!active) return;
-    const h = active.offsetHeight;
-    if (h) {
-      reviewsContainer.style.height = h + "px";
-    }
+  function nextPage() {
+    const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
+    if (!totalPages) return;
+    currentPage = (currentPage + 1) % totalPages;
+    renderPage();
   }
 
-  function updateActive(newIndex) {
-    if (!reviews.length) return;
-    currentIndex = (newIndex + reviews.length) % reviews.length;
-    const cards = reviewsContainer.querySelectorAll(".review");
-    cards.forEach((card, idx) => {
-      card.classList.toggle("active", idx === currentIndex);
-    });
-    updateHeight();
+  function prevPage() {
+    const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
+    if (!totalPages) return;
+    currentPage = (currentPage - 1 + totalPages) % totalPages;
+    renderPage();
   }
-
-  prevBtn.addEventListener("click", () => {
-    updateActive(currentIndex - 1);
-  });
-
-  nextBtn.addEventListener("click", () => {
-    updateActive(currentIndex + 1);
-  });
 
   function startAutoplay() {
-    if (autoplayId || reviews.length <= 1) return;
-    autoplayId = setInterval(() => {
-      updateActive(currentIndex + 1);
-    }, 8000);
+    const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
+    if (autoplayId || totalPages <= 1) return;
+    autoplayId = setInterval(nextPage, 8000); // toutes les 8s
   }
 
   function stopAutoplay() {
@@ -288,14 +269,29 @@ gsap.to("#carHero", {
     autoplayId = null;
   }
 
+  function resetAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+
+  prevBtn.addEventListener("click", () => {
+    prevPage();
+    resetAutoplay();
+  });
+
+  nextBtn.addEventListener("click", () => {
+    nextPage();
+    resetAutoplay();
+  });
+
   section.addEventListener("mouseenter", stopAutoplay);
   section.addEventListener("mouseleave", startAutoplay);
   section.addEventListener("focusin", stopAutoplay);
   section.addEventListener("focusout", startAutoplay);
 
-  window.addEventListener("resize", updateHeight);
-
-  fetch("/reviews.json") // adapte si tu l'as mis ailleurs
+  // Charge les avis depuis le JSON local
+  // Adapte le chemin si tu l'as mis ailleurs : "/data/reviews.json"
+  fetch("/reviews.json")
     .then((res) => res.json())
     .then((data) => {
       reviews = Array.isArray(data.reviews) ? data.reviews : [];
@@ -307,8 +303,8 @@ gsap.to("#carHero", {
         return;
       }
 
-      renderAll();
-      updateActive(0);
+      currentPage = 0;
+      renderPage();
       startAutoplay();
     })
     .catch((err) => {
