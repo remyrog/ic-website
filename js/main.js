@@ -201,6 +201,7 @@ gsap.to("#carHero", {
   let currentPage = 0;
   let autoplayId = null;
   let countersStarted = false;
+  let summaryLoopId = null;
 
   function createAvatarNode() {
     return avatarTemplate.content.firstElementChild.cloneNode(true);
@@ -357,12 +358,26 @@ gsap.to("#carHero", {
     });
   }
 
+  function startSummaryLoop() {
+    if (summaryLoopId) return;
+    const summaryBlock = section.querySelector(".reviews__summary");
+    if (!summaryBlock) return;
+
+    summaryLoopId = setInterval(() => {
+      summaryBlock.classList.add("reviews__summary--bounce");
+      setTimeout(() => {
+        summaryBlock.classList.remove("reviews__summary--bounce");
+      }, 700);
+    }, 12000); // toutes les 12 secondes environ
+  }
+
   function startCountersOnce() {
     if (countersStarted) return;
     countersStarted = true;
     animateCounter(countEl, TOTAL_REVIEWS_COUNT, 1100);
     animateCounter(ratingEl, AVERAGE_RATING, 800);
     animateStars(summaryStars, AVERAGE_RATING);
+    startSummaryLoop(); // lance le rebond en boucle une fois les compteurs terminés
   }
 
   function setupCountersTrigger() {
