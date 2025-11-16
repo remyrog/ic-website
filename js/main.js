@@ -174,7 +174,7 @@ gsap.to("#carHero", {
 });
 
 // =========================
-//  Avis (JSON local simplifié, 5 par 5)
+//  Avis locaux Google
 // =========================
 (function initLocalReviews() {
   const section = document.getElementById("avis");
@@ -187,13 +187,20 @@ gsap.to("#carHero", {
 
   if (!reviewsContainer || !prevBtn || !nextBtn || !avatarTemplate) return;
 
-  const TOTAL_REVIEWS_COUNT = 52;  // info disponible si tu veux l'afficher
+  // Élément du résumé (compteurs + étoiles)
+  const countEl = section.querySelector('[data-counter="count"]');
+  const ratingEl = section.querySelector('[data-counter="rating"]');
+  const summaryStars = section.querySelectorAll(".reviews__summary-star");
+
+  // Stats globales
+  const TOTAL_REVIEWS_COUNT = 52;
   const AVERAGE_RATING = 5;
   const REVIEWS_PER_PAGE = 5;
 
   let reviews = [];
   let currentPage = 0;
   let autoplayId = null;
+  let countersStarted = false;
 
   function createAvatarNode() {
     return avatarTemplate.content.firstElementChild.cloneNode(true);
@@ -244,24 +251,24 @@ gsap.to("#carHero", {
     return article;
   }
 
-function renderPage() {
-  reviewsContainer.innerHTML = "";
+  function renderPage() {
+    reviewsContainer.innerHTML = "";
 
-  const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
-  const start = currentPage * REVIEWS_PER_PAGE;
-  const end = start + REVIEWS_PER_PAGE;
-  const slice = reviews.slice(start, end);
+    const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
+    const start = currentPage * REVIEWS_PER_PAGE;
+    const end = start + REVIEWS_PER_PAGE;
+    const slice = reviews.slice(start, end);
 
-  slice.forEach((review) => {
-    const el = createReviewElement(review);
-    reviewsContainer.appendChild(el);
-  });
+    slice.forEach((review) => {
+      const el = createReviewElement(review);
+      reviewsContainer.appendChild(el);
+    });
 
-  // ➜ applique les effets "magnet" aux nouveaux blocs
-  if (typeof initMagnets === "function") {
-    initMagnets(reviewsContainer);
+    // Applique les effets "magnet" aux nouveaux blocs si la fonction existe
+    if (typeof initMagnets === "function") {
+      initMagnets(reviewsContainer);
+    }
   }
-}
 
   function nextPage() {
     const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
@@ -313,15 +320,77 @@ function renderPage() {
     scrollToSectionTop();
   });
 
-
   section.addEventListener("mouseenter", stopAutoplay);
   section.addEventListener("mouseleave", startAutoplay);
   section.addEventListener("focusin", stopAutoplay);
   section.addEventListener("focusout", startAutoplay);
 
+  // ---- Compteurs + étoiles ----
+
+  function animateCounter(el, target, duration) {
+    if (!el) return;
+    const start = 0;
+    const startTime = performance.now();
+
+    function frame(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      // easing type "easeOutCubic"
+      const eased = 1 - Math.pow(1 - t, 3);
+      const value = Math.round(start + (target - start) * eased);
+      el.textContent = value.toString();
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  function animateStars(starsNodeList, max) {
+    const stars = Array.from(starsNodeList);
+    stars.forEach((star, index) => {
+      if (index < max) {
+        setTimeout(() => {
+          star.classList.add("is-active");
+        }, 180 * index);
+      }
+    });
+  }
+
+  function startCountersOnce() {
+    if (countersStarted) return;
+    countersStarted = true;
+    animateCounter(countEl, TOTAL_REVIEWS_COUNT, 1100);
+    animateCounter(ratingEl, AVERAGE_RATING, 800);
+    animateStars(summaryStars, AVERAGE_RATING);
+  }
+
+  function setupCountersTrigger() {
+    if (!countEl || !ratingEl || !summaryStars.length) {
+      return;
+    }
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              startCountersOnce();
+              io.disconnect();
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      io.observe(section);
+    } else {
+      // fallback : on lance directement
+      startCountersOnce();
+    }
+  }
+
   // Charge les avis depuis le JSON local
-  // Adapte le chemin si tu l'as mis ailleurs : "/data/reviews.json"
-  fetch("/reviews.json")
+  fetch("/reviews.json") // adapte si tu l'as mis ailleurs
     .then((res) => res.json())
     .then((data) => {
       reviews = Array.isArray(data.reviews) ? data.reviews : [];
@@ -336,6 +405,7 @@ function renderPage() {
       currentPage = 0;
       renderPage();
       startAutoplay();
+      setupCountersTrigger();
     })
     .catch((err) => {
       console.error("Erreur chargement avis :", err);
@@ -345,6 +415,5 @@ function renderPage() {
       nextBtn.disabled = true;
     });
 })();
-
 
 })();

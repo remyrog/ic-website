@@ -453,3 +453,88 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   max-width: 980px;
   line-height: 1.6;
 }
+
+/* =========================
+   Section Avis – Résumé 52 avis / 5
+   ========================= */
+
+.reviews__summary {
+  margin: 18px 0 26px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(247, 198, 0, 0.35), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.18), transparent 55%);
+  border: 1px solid rgba(248, 250, 252, 0.16);
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+.reviews__summary-left,
+.reviews__summary-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reviews__summary-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.75);
+  margin: 0;
+}
+
+.reviews__summary-line {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.reviews__summary-number {
+  font-size: clamp(24px, 2.7vw, 30px);
+  font-weight: 800;
+  color: #fefce8;
+}
+
+.reviews__summary-unit {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.88);
+}
+
+/* Étoiles qui peuvent apparaître une par une */
+.reviews__summary-stars {
+  display: flex;
+  gap: 4px;
+  font-size: 1.3rem;
+}
+
+.reviews__summary-star {
+  opacity: 0.25;
+  transform: scale(0.7) translateY(4px);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
+  transition: opacity 0.25s ease-out, transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  color: rgba(248, 250, 252, 0.7);
+}
+
+.reviews__summary-star.is-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  color: #f7c600;
+}
+
+/* Avatar déjà centré verticalement dans les cartes */
+.review__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 20%, #ffe9c9, #fbbf77);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  align-self: center;
+}
