@@ -188,6 +188,7 @@ gsap.to("#carHero", {
   function createReviewElement(review) {
     const article = document.createElement("article");
     article.className = "review";
+    article.setAttribute("data-magnet", "");
 
     const avatar = createAvatarNode();
 
@@ -274,15 +275,25 @@ gsap.to("#carHero", {
     startAutoplay();
   }
 
+  function scrollToSectionTop() {
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
   prevBtn.addEventListener("click", () => {
     prevPage();
     resetAutoplay();
+    scrollToSectionTop();
   });
 
   nextBtn.addEventListener("click", () => {
     nextPage();
     resetAutoplay();
+    scrollToSectionTop();
   });
+
 
   section.addEventListener("mouseenter", stopAutoplay);
   section.addEventListener("mouseleave", startAutoplay);
