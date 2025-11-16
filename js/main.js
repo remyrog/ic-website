@@ -159,9 +159,8 @@ gsap.to("#carHero", {
   }
 });
 
-
 // =========================
-//  Avis (JSON local simplifié)
+//  Avis 
 // =========================
 (function initLocalReviews() {
   const section = document.getElementById("avis");
@@ -170,8 +169,9 @@ gsap.to("#carHero", {
   const reviewsContainer = section.querySelector(".reviews");
   const prevBtn = section.querySelector(".reviews__controls .prev");
   const nextBtn = section.querySelector(".reviews__controls .next");
+  const avatarTemplate = document.getElementById("review-avatar-template");
 
-  if (!reviewsContainer || !prevBtn || !nextBtn) return;
+  if (!reviewsContainer || !prevBtn || !nextBtn || !avatarTemplate) return;
 
   // Stats globales (tous les avis, même ceux sans texte)
   const TOTAL_REVIEWS_COUNT = 52;
@@ -179,6 +179,12 @@ gsap.to("#carHero", {
 
   let reviews = [];
   let currentIndex = 0;
+  let autoplayId = null;
+
+  function createAvatarNode() {
+    const clone = avatarTemplate.content.firstElementChild.cloneNode(true);
+    return clone;
+  }
 
   function createReviewElement(review, index) {
     const article = document.createElement("article");
@@ -187,19 +193,8 @@ gsap.to("#carHero", {
       article.classList.add("active");
     }
 
-    // Avatar simple avec initiales
-    const avatar = document.createElement("div");
-    avatar.className = "review__avatar";
-
-    const name = review.author || "Client Google";
-    const initials =
-      name
-        .split(" ")
-        .filter(Boolean)
-        .map((p) => p[0].toUpperCase())
-        .slice(0, 2)
-        .join("") || "★";
-    avatar.textContent = initials;
+    // Avatar : clone du template SVG
+    const avatar = createAvatarNode();
 
     const body = document.createElement("div");
     body.className = "review__body";
@@ -207,25 +202,22 @@ gsap.to("#carHero", {
     const header = document.createElement("div");
     header.className = "review__header";
 
-    const authorEl = document.createElement("p");
-    authorEl.className = "review__author";
-    authorEl.textContent = name;
+    const name = review.author || "Client Google";
 
     const metaEl = document.createElement("p");
     metaEl.className = "review__meta";
     if (review.date) {
       const d = new Date(review.date);
-      metaEl.textContent = `Avis Google • ${d.toLocaleDateString("fr-FR")}`;
+      const formatted = d.toLocaleDateString("fr-FR");
+      metaEl.textContent = `${name} • ${formatted}`;
     } else {
-      metaEl.textContent = "Avis Google";
+      metaEl.textContent = name;
     }
 
-    header.appendChild(authorEl);
     header.appendChild(metaEl);
 
     const starsEl = document.createElement("div");
     starsEl.className = "review__stars";
-
     const rating = parseInt(review.rating, 10) || 0;
     const full = "★★★★★".slice(0, rating);
     const empty = "☆☆☆☆☆".slice(rating);
@@ -256,6 +248,15 @@ gsap.to("#carHero", {
     });
   }
 
+  function updateHeight() {
+    const active = reviewsContainer.querySelector(".review.active");
+    if (!active) return;
+    const h = active.offsetHeight;
+    if (h) {
+      reviewsContainer.style.height = h + "px";
+    }
+  }
+
   function updateActive(newIndex) {
     if (!reviews.length) return;
     currentIndex = (newIndex + reviews.length) % reviews.length;
@@ -263,6 +264,7 @@ gsap.to("#carHero", {
     cards.forEach((card, idx) => {
       card.classList.toggle("active", idx === currentIndex);
     });
+    updateHeight();
   }
 
   prevBtn.addEventListener("click", () => {
@@ -273,8 +275,27 @@ gsap.to("#carHero", {
     updateActive(currentIndex + 1);
   });
 
-  // Charge les avis depuis le JSON local
-  fetch("/reviews.json")
+  function startAutoplay() {
+    if (autoplayId || reviews.length <= 1) return;
+    autoplayId = setInterval(() => {
+      updateActive(currentIndex + 1);
+    }, 8000);
+  }
+
+  function stopAutoplay() {
+    if (!autoplayId) return;
+    clearInterval(autoplayId);
+    autoplayId = null;
+  }
+
+  section.addEventListener("mouseenter", stopAutoplay);
+  section.addEventListener("mouseleave", startAutoplay);
+  section.addEventListener("focusin", stopAutoplay);
+  section.addEventListener("focusout", startAutoplay);
+
+  window.addEventListener("resize", updateHeight);
+
+  fetch("/reviews.json") // adapte si tu l'as mis ailleurs
     .then((res) => res.json())
     .then((data) => {
       reviews = Array.isArray(data.reviews) ? data.reviews : [];
@@ -288,6 +309,7 @@ gsap.to("#carHero", {
 
       renderAll();
       updateActive(0);
+      startAutoplay();
     })
     .catch((err) => {
       console.error("Erreur chargement avis :", err);
@@ -297,5 +319,6 @@ gsap.to("#carHero", {
       nextBtn.disabled = true;
     });
 })();
+
 
 })();

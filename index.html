@@ -193,32 +193,58 @@
     </div>
   </section>
 
-  <!-- AVIS -->
   <section id="avis" class="section avis" aria-labelledby="h-avis">
-    <div class="container">
-      <h2 id="h-avis">
-        Votre satisfaction : <span class="accent">ma plus grande récompense !</span>
-      </h2>
+  <div class="container">
+    <h2 id="h-avis">
+      Votre satisfaction : <span class="accent">ma plus grande récompense !</span>
+    </h2>
 
-      <p class="lead">
-        Avis Google de mes clients.
-        <a
-          href="https://www.google.com/maps/place/Informatique+Cerdagne+-+Rémy+ROGER/@42.4626447,1.9389666,15z/data=!4m6!3m5!1s0xff50f70f4b9a303:0xff407f2d8556019c!8m2!3d42.4626447!4d1.9389666!16s%2Fg%2F11shllyt86?entry=ttu"
-          target="_blank"
-          rel="noopener"
-        >
-          Voir tous les avis sur Google
-        </a>
-      </p>
+    <p class="lead">
+      Avis Google de mes clients.
+      <a
+        href="https://www.google.com/maps/place/Informatique+Cerdagne+-+Rémy+ROGER/@42.4626447,1.9389666,15z/data=!4m6!3m5!1s0xff50f70f4b9a303:0xff407f2d8556019c!8m2!3d42.4626447!4d1.9389666!16s%2Fg%2F11shllyt86?entry=ttu"
+        target="_blank"
+        rel="noopener"
+      >
+        Voir tous les avis sur Google
+      </a>
+    </p>
 
-      <div class="reviews" aria-live="polite" data-magnet></div>
-
-      <div class="reviews__controls" aria-controls="reviews">
-        <button class="prev" type="button" aria-label="Avis précédent" data-magnet>←</button>
-        <button class="next" type="button" aria-label="Avis suivant" data-magnet>→</button>
+    <!-- Template avatar SVG qui fait coucou -->
+    <template id="review-avatar-template">
+      <div class="review__avatar">
+        <svg viewBox="0 0 80 80" class="review__avatar-svg" aria-hidden="true">
+          <circle cx="40" cy="40" r="36" fill="rgba(15,23,42,0.95)" />
+          <!-- T-shirt -->
+          <rect x="26" y="38" width="28" height="22" rx="10" fill="#4F46E5" />
+          <!-- Tête -->
+          <circle cx="40" cy="28" r="11.5" fill="#FDE0C2" />
+          <!-- Cheveux -->
+          <path d="M30 26 Q40 16 50 26 Q48 18 40 18 Q32 18 30 26Z" fill="#111827" />
+          <!-- Yeux -->
+          <circle cx="36" cy="27" r="1.4" fill="#111827" />
+          <circle cx="44" cy="27" r="1.4" fill="#111827" />
+          <!-- Sourire -->
+          <path d="M36 31 Q40 34 44 31" stroke="#111827" stroke-width="1.7" stroke-linecap="round" fill="none" />
+          <!-- Bras gauche (fixe) -->
+          <path d="M30 40 Q22 44 20 52" stroke="#FDE0C2" stroke-width="3.6" stroke-linecap="round" fill="none" />
+          <!-- Bras droit (animé) -->
+          <g class="avatar-arm">
+            <path d="M50 38 Q58 34 62 28" stroke="#FDE0C2" stroke-width="3.6" stroke-linecap="round" fill="none" />
+            <circle cx="63.5" cy="26" r="3.3" fill="#FDE0C2" />
+          </g>
+        </svg>
       </div>
+    </template>
+
+    <div class="reviews" aria-live="polite" data-magnet></div>
+    <div class="reviews__controls" aria-controls="reviews">
+      <button class="prev" type="button" aria-label="Avis précédent" data-magnet>←</button>
+      <button class="next" type="button" aria-label="Avis suivant" data-magnet>→</button>
     </div>
-  </section>
+  </div>
+</section>
+
 
 
   <!-- CONTACT -->

@@ -342,3 +342,75 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 @media (max-width:560px){
   .section-road .carSprite{transform:translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm))}
 }
+
+/* ====== Section Avis : lien Google + avatar animé + lisibilité ====== */
+
+/* Lien vers les avis Google : style plus premium */
+.avis .lead a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  color: var(--pink);
+}
+
+.avis .lead a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--pink), var(--yellow));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.25s ease-out;
+}
+
+.avis .lead a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Avatar : personnage SVG qui fait coucou */
+.review__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 20%, #ffe9c9, #fbbf77);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.review__avatar-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Bras qui s'agite */
+.review__avatar-svg .avatar-arm {
+  transform-origin: 52px 34px;
+  animation: avatarWave 2.2s ease-in-out infinite;
+}
+
+@keyframes avatarWave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-16deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+}
+
+/* Texte des avis : on assume des avis longs */
+.review__text {
+  max-width: 980px;
+}
