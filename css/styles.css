@@ -422,7 +422,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  align-self: center; /* centrage vertical dans la grille de l'avis */
+  align-self: center; /* centre verticalement dans la grille de la carte */
 }
 
 .review__avatar-svg {

@@ -38,45 +38,59 @@
 
 // 5) Effet “magnet” — inertie + rotation
 const isTouch = "ontouchstart" in window;
-const magnets = document.querySelectorAll("[data-magnet]");
-magnets.forEach(el => {
-  if (isTouch) return; // évite les saccades sur mobile
 
-  const strength = parseFloat(el.dataset.magnet) || 30; // translation max (px)
-  const maxRot   = parseFloat(el.dataset.rotate) || 6;  // rotation max (deg)
-  const damp     = 0.14; // 0.10–0.20 = plus ou moins “ressort”
+function initMagnets(root = document) {
+  if (isTouch) return; // on évite sur mobile
 
-  let tx = 0, ty = 0, rx = 0;            // valeurs actuelles
-  let txT = 0, tyT = 0, rxT = 0;         // cibles
-  let raf = 0;
+  const magnets = root.querySelectorAll("[data-magnet]");
+  magnets.forEach(el => {
+    // empêchez une double initialisation
+    if (el.__magnetInit) return;
+    el.__magnetInit = true;
 
-  const animate = () => {
-    tx += (txT - tx) * damp;
-    ty += (tyT - ty) * damp;
-    rx += (rxT - rx) * damp;
-    el.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rx}deg)`;
-    if (Math.abs(txT - tx) > 0.1 || Math.abs(tyT - ty) > 0.1 || Math.abs(rxT - rx) > 0.1) {
-      raf = requestAnimationFrame(animate);
-    } else {
-      raf = 0;
-    }
-  };
+    const strength = parseFloat(el.dataset.magnet) || 30; // translation max (px)
+    const maxRot   = parseFloat(el.dataset.rotate) || 6;  // rotation max (deg)
+    const damp     = 0.14; // 0.10–0.20 = plus ou moins “ressort”
 
-  el.addEventListener("mousemove", e => {
-    const r = el.getBoundingClientRect();
-    const nx = ((e.clientX - r.left) / r.width  - 0.5) * 2; // -1..1
-    const ny = ((e.clientY - r.top)  / r.height - 0.5) * 2;
-    txT = nx * strength;
-    tyT = ny * strength;
-    rxT = -nx * maxRot; // tourne légèrement selon l’axe X
-    if (!raf) raf = requestAnimationFrame(animate);
+    let tx = 0, ty = 0, rx = 0;
+    let txT = 0, tyT = 0, rxT = 0;
+    let raf = 0;
+
+    const animate = () => {
+      tx += (txT - tx) * damp;
+      ty += (tyT - ty) * damp;
+      rx += (rxT - rx) * damp;
+      el.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${rx}deg)`;
+      if (
+        Math.abs(txT - tx) > 0.1 ||
+        Math.abs(tyT - ty) > 0.1 ||
+        Math.abs(rxT - rx) > 0.1
+      ) {
+        raf = requestAnimationFrame(animate);
+      } else {
+        raf = 0;
+      }
+    };
+
+    el.addEventListener("mousemove", e => {
+      const r = el.getBoundingClientRect();
+      const nx = ((e.clientX - r.left) / r.width  - 0.5) * 2; // -1..1
+      const ny = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+      txT = nx * strength;
+      tyT = ny * strength;
+      rxT = -nx * maxRot;
+      if (!raf) raf = requestAnimationFrame(animate);
+    });
+
+    el.addEventListener("mouseleave", () => {
+      txT = 0; tyT = 0; rxT = 0;
+      if (!raf) raf = requestAnimationFrame(animate);
+    });
   });
+}
 
-  el.addEventListener("mouseleave", () => {
-    txT = 0; tyT = 0; rxT = 0;
-    if (!raf) raf = requestAnimationFrame(animate);
-  });
-});
+// appel initial pour tout ce qui est déjà en DOM
+initMagnets();
 
 // Soleil : dérive lente indépendante du scroll (aller-retour)
 (() => {
@@ -230,19 +244,24 @@ gsap.to("#carHero", {
     return article;
   }
 
-  function renderPage() {
-    reviewsContainer.innerHTML = "";
+function renderPage() {
+  reviewsContainer.innerHTML = "";
 
-    const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
-    const start = currentPage * REVIEWS_PER_PAGE;
-    const end = start + REVIEWS_PER_PAGE;
-    const slice = reviews.slice(start, end);
+  const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
+  const start = currentPage * REVIEWS_PER_PAGE;
+  const end = start + REVIEWS_PER_PAGE;
+  const slice = reviews.slice(start, end);
 
-    slice.forEach((review) => {
-      const el = createReviewElement(review);
-      reviewsContainer.appendChild(el);
-    });
+  slice.forEach((review) => {
+    const el = createReviewElement(review);
+    reviewsContainer.appendChild(el);
+  });
+
+  // ➜ applique les effets "magnet" aux nouveaux blocs
+  if (typeof initMagnets === "function") {
+    initMagnets(reviewsContainer);
   }
+}
 
   function nextPage() {
     const totalPages = Math.ceil(reviews.length / REVIEWS_PER_PAGE) || 1;
