@@ -338,18 +338,18 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   );
 }
 
-/* Lien vers les avis Google : style plus premium */
-.avis .lead a {
+/* Liens premium (ex: "Voir tous les avis sur Google") */
+a.premium {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
   text-decoration: none;
   position: relative;
-  color: var(--pink);
+  color: var(--pink); /* ou var(--yellow) selon le contexte */
 }
 
-.avis .lead a::after {
+a.premium::after {
   content: "";
   position: absolute;
   left: 0;
@@ -363,7 +363,8 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   transition: transform 0.25s ease-out;
 }
 
-.avis .lead a:hover::after {
+a.premium:hover::after,
+a.premium:focus-visible::after {
   transform: scaleX(1);
 }
 
