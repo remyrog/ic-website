@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mentions légales, CGV & Données personnelles – Informatique Cerdagne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --bg: #020617;             /* bleu nuit très sombre */
+      --card: #050816;
+      --card-soft: #050818;
+      --border-soft: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --yellow: #f7c600;         /* jaune doré charte */
+      --pink: #ec4899;           /* rose voiture */
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: var(--bg);   /* fond uni */
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========= TOP BAR ========= */
+
+    .top-bar {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.45);
+      background: #020617;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .top-bar-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .brand span {
+      color: var(--yellow);
+    }
+
+    a.premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      color: var(--pink);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    a.premium::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pink), var(--yellow));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.25s ease-out;
+    }
+
+    a.premium:hover::after,
+    a.premium:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 3.75rem;
+    }
+
+    /* ========= HERO ========= */
+
+    header.hero {
+      margin-bottom: 2.5rem;
+      padding: 2.1rem 2.1rem 2.2rem;
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(135deg, var(--pink), var(--yellow)) border-box;
+      -webkit-mask:
+        linear-gradient(#000 0 0) padding-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      opacity: 0.35;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.75rem 0.3rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: #020617;
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0%, var(--yellow), var(--pink));
+      box-shadow: 0 0 10px rgba(248, 250, 252, 0.6);
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 2.9vw, 2.4rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0.8rem 0 0.6rem;
+    }
+
+    h1 span.accent {
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-subtitle strong {
+      color: #fefce8;
+      font-weight: 600;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.4rem;
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ========= CONTENU ========= */
+
+    .legal-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .legal-block {
+      border-radius: var(--radius-lg);
+      background: var(--card-soft);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8);
+      padding: 1.6rem 1.75rem 1.7rem;
+    }
+
+    .legal-block h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .legal-block h2 span {
+      color: var(--yellow);
+    }
+
+    .legal-block h3 {
+      font-size: 1.02rem;
+      margin-top: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .legal-block p {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .legal-block p + p {
+      margin-top: 0.4rem;
+    }
+
+    .legal-block ul {
+      margin: 0.3rem 0 0.5rem 0;
+      padding-left: 1.15rem;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .legal-block li + li {
+      margin-top: 0.15rem;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .legal-inline-title {
+      font-weight: 600;
+    }
+
+    .code-like {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9rem;
+      background: #020617;
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.5rem;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      padding: 0.14rem 0.6rem;
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: #fefce8;
+    }
+
+    .quote {
+      margin-top: 0.6rem;
+      padding-left: 0.9rem;
+      border-left: 2px solid rgba(248, 250, 252, 0.2);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* ========= PRINT ========= */
+
+    @media print {
+      body { background: #000; }
+      .top-bar { display: none; }
+      header.hero,
+      .legal-block {
+        box-shadow: none;
+      }
+      .hero::before { opacity: 0.6; }
+    }
+
+    /* ========= RESPONSIVE ========= */
+
+    @media (max-width: 720px) {
+      .top-bar-inner {
+        padding: 0.6rem 1.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      main {
+        padding: 2.1rem 1.1rem 2.8rem;
+      }
+      header.hero {
+        padding: 1.8rem 1.4rem 1.7rem;
+      }
+      .legal-block {
+        padding: 1.4rem 1.3rem 1.45rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        INFORMATIQUE <span>CERDAGNE</span>
+      </div>
+      <a href="index.html" class="premium">
+        ← Retour au site principal
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Mentions légales – CGV – Données personnelles
+          </div>
+          <h1>
+            Mentions légales,<br>
+            <span class="accent">Conditions Générales de Vente</span><br>
+            & Données personnelles
+          </h1>
+          <p class="hero-subtitle">
+            Ce document unique regroupe les mentions légales, les Conditions Générales de Vente (CGV),
+            ainsi que les informations relatives à la protection de vos données personnelles et aux cookies.
+            <strong>Dernière mise à jour : 27/10/2025.</strong>
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div><strong>Éditeur</strong> : EI – Rémy ROGER (Informatique Cerdagne)</div>
+          <div><strong>SIRET</strong> : 895&nbsp;060&nbsp;382&nbsp;00036</div>
+          <div><strong>Statut</strong> : profession libérale (BNC)</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="legal-grid" aria-label="Mentions légales, CGV et politique de confidentialité">
+
+      <!-- Mentions légales -->
+      <article class="legal-block" id="mentions">
+        <h2>1. <span>Mentions légales</span></h2>
+
+        <h3>Éditeur du site</h3>
+        <p>
+          EI – Rémy ROGER (Informatique Cerdagne)<br>
+          5 rue de la Sardane – 66760 Ur – France<br>
+          Tél. : 06.98.99.80.01 – Email : contact@informatique-cerdagne.fr<br>
+          Site : www.informatique-cerdagne.fr<br>
+          SIRET : 895 060 382 00036 – Profession libérale (BNC).<br>
+          Directeur de la publication : Rémy ROGER.
+        </p>
+
+        <h3>Hébergement</h3>
+        <p>
+          Hostinger International Ltd.<br>
+          61 Lordou Vironos str., 6023 Larnaca, Chypre.<br>
+          Site : https://www.hostinger.fr – Tél. : +370 645 03378
+        </p>
+      </article>
+
+      <!-- CGV / champ & prestations -->
+      <article class="legal-block" id="cgv">
+        <h2>2. <span>Conditions Générales de Vente (CGV)</span></h2>
+
+        <h3>Champ d’application & zone d’intervention</h3>
+        <p>
+          Prestations d’assistance et de services informatiques pour particuliers et professionnels.
+          Les interventions sur site sont privilégiées (pas de prise en main à distance).
+          La zone habituelle d’intervention couvre la Cerdagne / Capcir (environ 25 km autour d’Ur – 66760).
+        </p>
+
+        <h3>Prestations proposées</h3>
+        <ul>
+          <li>Audit / conseil / consulting</li>
+          <li>Cours informatiques</li>
+          <li>Installation et configuration d’imprimantes / branchements</li>
+          <li>Diagnostic complet + recommandations</li>
+          <li>Transfert de données</li>
+          <li>Clonage de disque (opérations purement logicielles, pas de tâches matérielles)</li>
+          <li>Configuration tablette/smartphone + personnalisation</li>
+          <li>Nettoyage / sécurisation / personnalisation</li>
+          <li>Sauvegardes / tri / organisation</li>
+          <li>Mise en service, sécurisation, personnalisation et prise en main</li>
+          <li>Sécurisation après arnaque/piratage</li>
+          <li>Tentatives de récupération de données (ordinateur en panne, disque illisible, mauvaise manipulation)</li>
+          <li>Réinstallation ou mise à niveau Windows 10/11</li>
+          <li>Pack « mise en service complète » (matériel + logiciels + sécurité + connexion imprimante/scanner + compte-rendu)</li>
+          <li>Création applicative / site web</li>
+          <li>Création graphique (flyers/logo)</li>
+          <li>Communication / marketing / réseaux sociaux</li>
+          <li>…</li>
+        </ul>
+
+        <p class="muted">
+          Fourchette indicative : la plupart des interventions unitaires se situent entre 60&nbsp;€ et 450&nbsp;€ TTC,
+          selon la durée et la complexité. Le prix ferme est toujours communiqué et accepté avant intervention.
+        </p>
+
+        <h3>Statut fiscal – absence de TVA</h3>
+        <p>
+          Facturation hors TVA (franchise en base). La mention
+          <span class="highlight">« TVA non applicable – art. 293 B du CGI »</span>
+          est portée sur les devis et factures.
+        </p>
+
+        <h3>Délais & moyens de paiement</h3>
+        <p>
+          Paiement sous 15 jours par virement bancaire ou chèque.
+        </p>
+        <p>
+          Conformément à l’article L441-10 du Code de commerce, tout retard de paiement entraîne
+          l’application de pénalités calculées sur la base d’un taux annuel de 15&nbsp;%, appliqué prorata temporis
+          au nombre de jours de retard. Ces pénalités sont exigibles sans mise en demeure préalable.
+        </p>
+        <p>
+          Une indemnité forfaitaire de 40&nbsp;€ pour frais de recouvrement sera réclamée en supplément
+          de ces pénalités pour les clients professionnels uniquement.
+        </p>
+      </article>
+
+      <!-- Récupération de données, obligation de moyens, suivi -->
+      <article class="legal-block" id="donnees">
+        <h2>3. <span>Récupération de données & obligation de moyens</span></h2>
+
+        <h3>Récupération de données – Obligation de moyens, aléas et facturation</h3>
+        <p>
+          La récupération de données est par nature aléatoire et dépend de nombreux facteurs
+          (état du support, corruptions logicielles, historique des manipulations, etc.).
+        </p>
+        <p>
+          Le Prestataire intervient au titre d’une <span class="highlight">obligation de moyens</span> :
+          il met en œuvre les outils et méthodes adaptés (diagnostic, clonage logique, accès en lecture
+          sécurisée, tests non destructifs) mais ne garantit pas le résultat.
+        </p>
+        <p>
+          <span class="legal-inline-title">Autorisation :</span> le Client autorise expressément le Prestataire
+          à réaliser les opérations nécessaires pour la tentative de récupération de données et comprend
+          les risques s’y rapportant.
+        </p>
+        <p>
+          <span class="legal-inline-title">Facturation :</span> les temps passés, ressources mobilisées et outils
+          utilisés sont facturés même en l’absence de données récupérables, conformément au devis accepté.
+          Le cas échéant, un forfait diagnostic et/ou une plage horaire maximale peuvent être prévus
+          pour borner le coût.
+        </p>
+        <p>
+          <span class="legal-inline-title">Risques résiduels :</span> malgré les précautions prises, certaines
+          opérations peuvent aggraver un défaut pré-existant ou révéler une panne latente. Le Client
+          reconnaît avoir été informé de ces risques inhérents à la tentative de récupération. La
+          responsabilité du Prestataire ne saurait être engagée qu’en cas de faute prouvée.
+        </p>
+        <p>
+          <span class="legal-inline-title">Restitution & confidentialité :</span> les données éventuellement
+          récupérées sont remises sur un support sain fourni ou acheté par le Client. Les données
+          et supports confiés sont traités de manière confidentielle puis purgés/supprimés à l’issue
+          de la prestation.
+        </p>
+
+        <h3>Obligation de moyens – Périmètre et limites de l’assistance</h3>
+        <p>
+          Pour l’ensemble de ses prestations informatiques, le Prestataire intervient au titre d’une
+          obligation de moyens : il met en œuvre ses compétences, outils et méthodes adaptés et agit
+          avec diligence, sans garantie de résultat, notamment lorsque l’environnement du Client
+          présente des contraintes (matériels anciens, logiciels tiers, connexions ou comptes externes,
+          historique de manipulations).
+        </p>
+        <p>
+          Cette règle complète, sans s’y limiter, la clause propre aux tentatives de récupération de données.
+        </p>
+
+        <h3>Support hors intervention / e-mail</h3>
+        <p>
+          Sauf stipulation contraire au devis, l’assistance en dehors d’un rendez-vous planifié
+          (téléphone, e-mail, messagerie) n’est pas incluse.
+        </p>
+        <p>
+          Le Prestataire peut, à sa seule discrétion, répondre ponctuellement à titre de courtoisie
+          à une question d’orientation par e-mail (sans prise en main) ; ce geste n’est ni contractuel
+          ni reconductible et ne crée aucun droit acquis.
+        </p>
+
+        <h3>Suivi post-intervention</h3>
+        <p>
+          Sauf mention expresse au devis ou contrat, le suivi post-intervention se limite à un
+          échange bref d’orientation consécutif à la prestation ; tout nouveau besoin, réglage
+          ou incident constitue une nouvelle intervention.
+        </p>
+
+        <h3>Pré-requis & sauvegardes</h3>
+        <p>
+          Le Client s’engage à assurer ses sauvegardes préalables. À défaut, délais et coûts
+          peuvent évoluer ; la responsabilité du Prestataire ne saurait être engagée pour les
+          conséquences d’une absence de sauvegarde.
+        </p>
+      </article>
+
+      <!-- Rétractation -->
+      <article class="legal-block" id="retractation">
+        <h2>4. <span>Droit de rétractation</span></h2>
+
+        <h3>Renonciation au droit de rétractation</h3>
+        <p>
+          Si vous demandez l’exécution immédiate de la prestation avant l’expiration du délai
+          de rétractation :
+        </p>
+        <ul>
+          <li>
+            en cas d’exercice du droit après le début d’exécution, vous versez au Prestataire
+            un montant proportionnel aux services déjà fournis jusqu’à la notification de
+            votre décision ;
+          </li>
+          <li>
+            si la prestation est pleinement exécutée avant la fin du délai, vous ne disposez
+            plus du droit de rétractation (sous réserve de votre consentement exprès et de la
+            reconnaissance de la perte de ce droit exprimés lors de la signature du devis).
+          </li>
+        </ul>
+
+        <p class="badge-pill">Modèle de formulaire de rétractation (R221-1 – contrats à distance / hors établissement, B2C)</p>
+        <div class="code-like">
+À l’attention de EI – Rémy ROGER (Informatique Cerdagne),
+5 rue de la Sardane, 66760 Ur – France, contact@informatique-cerdagne.fr
+
+Je vous notifie par la présente ma rétractation du contrat portant sur la prestation suivante : …
+
+Commandée le … / reçue le …
+
+Nom du consommateur : …
+
+Adresse du consommateur : …
+
+Signature : …
+
+Date : …
+        </div>
+      </article>
+
+      <!-- Données personnelles & cookies -->
+      <article class="legal-block" id="donnees-personnelles">
+        <h2>5. <span>Données personnelles & cookies</span></h2>
+
+        <h3>Responsable de traitement</h3>
+        <p>
+          Responsable de traitement : EI – Rémy ROGER – Informatique Cerdagne.
+        </p>
+
+        <h3>Finalités</h3>
+        <p>
+          Les données collectées sont utilisées pour :
+        </p>
+        <ul>
+          <li>la gestion des demandes (devis, rendez-vous),</li>
+          <li>l’exécution des prestations,</li>
+          <li>la facturation (outil Tiime) et la tenue comptable,</li>
+          <li>la communication post-intervention (compte-rendu).</li>
+        </ul>
+
+        <h3>Base légale</h3>
+        <p>
+          Les traitements reposent sur :
+        </p>
+        <ul>
+          <li>l’exécution contractuelle,</li>
+          <li>les obligations légales (comptabilité, fiscalité),</li>
+          <li>l’intérêt légitime (suivi client, amélioration du service).</li>
+        </ul>
+
+        <h3>Destinataires</h3>
+        <p>
+          Les données peuvent être transmises aux prestataires techniques impliqués dans la
+          prestation :
+        </p>
+        <ul>
+          <li>hébergeur (Hostinger),</li>
+          <li>outil de facturation (Tiime).</li>
+        </ul>
+
+        <h3>Durées de conservation</h3>
+        <ul>
+          <li>Dossiers et pièces comptables : 10 ans (obligation comptable).</li>
+          <li>Données fiscales : 6 ans (obligation fiscale).</li>
+          <li>Courriels opérationnels : durée nécessaire au suivi.</li>
+        </ul>
+
+        <h3>Droits RGPD</h3>
+        <p>
+          Conformément à la réglementation applicable, vous disposez des droits suivants
+          sur vos données :
+        </p>
+        <ul>
+          <li>droit d’accès, de rectification et d’effacement,</li>
+          <li>droit à la limitation et à l’opposition,</li>
+          <li>droit à la portabilité,</li>
+          <li>droit d’introduire une réclamation auprès de la CNIL.</li>
+        </ul>
+
+        <h3>Cookies & mesure d’audience</h3>
+        <p>
+          Si une mesure d’audience strictement nécessaire est mise en œuvre (sans reciblage,
+          sans partage à des tiers, durée limitée), elle peut être exempte de consentement
+          si elle respecte intégralement les critères de la CNIL (information + possibilité
+          d’opposition).
+        </p>
+        <p>
+          Dans les autres cas, un bandeau de consentement s’affiche lors de votre visite.
+        </p>
+        <p>
+          Pour toute opposition ou question concernant les cookies et la mesure d’audience :
+          contact@informatique-cerdagne.fr.
+        </p>
+      </article>
+
+      <!-- Propriété intellectuelle & livrables -->
+      <article class="legal-block" id="propriete">
+        <h2>6. <span>Propriété intellectuelle & livrables</span></h2>
+
+        <h3>Propriété intellectuelle – Site et contenus</h3>
+        <p>
+          L’ensemble des éléments publiés sur le site www.informatique-cerdagne.fr
+          (textes, visuels, logos, charte graphique, icônes, code, architecture)
+          est protégé par le droit de la propriété intellectuelle.
+        </p>
+        <p>
+          Sauf mention contraire, ces éléments sont la propriété exclusive de
+          EI – Rémy ROGER. Toute reproduction, représentation, modification,
+          adaptation, diffusion ou exploitation, totale ou partielle, du site
+          ou de l’un de ses éléments, sur quelque support que ce soit, est
+          interdite sans autorisation écrite préalable.
+        </p>
+        <p>
+          Les marques et contenus de tiers demeurent la propriété de leurs
+          titulaires.
+        </p>
+
+        <h3>Propriété des livrables et licence d’utilisation</h3>
+        <p>
+          Sauf stipulation différente au devis, les développements, scripts,
+          paramétrages, documentations et, plus généralement, les livrables
+          réalisés par le Prestataire demeurent sa propriété jusqu’au paiement
+          intégral des sommes dues.
+        </p>
+        <p>
+          Après complet paiement, le Client bénéficie d’une licence non exclusive,
+          personnelle et non transférable, limitée à ses besoins internes et au
+          périmètre défini au devis ou contrat.
+        </p>
+        <p>
+          Ne sont pas cédés :
+        </p>
+        <ul>
+          <li>les éléments open source ou logiciels de tiers intégrés, soumis à leurs licences propres ;</li>
+          <li>le savoir-faire, les méthodes, outils et bibliothèques réutilisables du Prestataire.</li>
+        </ul>
+        <p>
+          Sauf opposition écrite du Client, le Prestataire peut citer la dénomination
+          et le logo du Client comme référence (sans divulgation d’informations
+          confidentielles).
+        </p>
+      </article>
+
+      <!-- Loi applicable, juridiction, médiation -->
+      <article class="legal-block" id="loi-mediaton">
+        <h2>7. <span>Loi applicable, juridiction & médiation</span></h2>
+
+        <h3>Loi applicable</h3>
+        <p>
+          Les présentes mentions, CGV et les prestations qui en découlent sont
+          soumises au <span class="highlight">droit français</span>.
+        </p>
+
+        <h3>Compétence juridictionnelle</h3>
+        <p>
+          <span class="legal-inline-title">Clients consommateurs (B2C)</span> :
+          les litiges seront portés devant les juridictions légalement compétentes.
+          Le consommateur peut notamment saisir la juridiction de son domicile ou
+          celle du lieu d’exécution du service ; toute clause imposant un tribunal
+          unique au consommateur est inopposable.
+        </p>
+        <p>
+          <span class="legal-inline-title">Clients professionnels (B2B)</span> :
+          à défaut d’accord amiable, compétence exclusive des tribunaux de Perpignan
+          (France). Cette clause n’est applicable qu’entre commerçants et doit figurer
+          de manière très apparente dans le contrat signé.
+        </p>
+
+        <h3>Contact, réclamations & médiation</h3>
+        <p>
+          Conformément aux articles L.612-1 et suivants du Code de la consommation,
+          le client consommateur peut recourir gratuitement à un médiateur de la
+          consommation en vue de la résolution amiable d’un litige.
+        </p>
+
+        <h3>Réclamation préalable (obligatoire)</h3>
+        <p>
+          Avant toute médiation, le Client adresse une réclamation écrite au
+          Prestataire (contact@informatique-cerdagne.fr ou voie postale), en
+          précisant l’objet du litige et en joignant les justificatifs utiles.
+        </p>
+        <p>
+          Le Prestataire accuse réception sous 10 jours ouvrés et répond sous
+          30 jours ouvrés.
+        </p>
+
+        <h3>Saisine du médiateur (recevabilité)</h3>
+        <p>
+          À défaut de solution amiable dans les délais ci-dessus, le Client
+          consommateur peut saisir gratuitement le médiateur de la consommation
+          dont relève le Prestataire :
+        </p>
+        <p>
+          <span class="highlight">Société de la Médiation Professionnelle (SMP) – Médiateur de la consommation</span><br>
+          Adresse : Alteritae – 5, rue Salvaing, 12000 Rodez<br>
+          Site : https://www.mediateur-consommation-smp.fr<br>
+          E-mail : saisine@mediateur-consommation-smp.fr
+        </p>
+        <p>
+          La saisine n’est recevable que si elle est accompagnée :
+        </p>
+        <ul>
+          <li>de la réclamation préalable adressée au Prestataire et des réponses reçues ;</li>
+          <li>d’un litige B2C portant sur une prestation déjà fournie ou commandée ;</li>
+          <li>d’une demande introduite dans l’année suivant la réclamation ;</li>
+          <li>d’un dossier non manifestement infondé, non abusif et non examiné par un autre médiateur,
+              un arbitre ou une juridiction.</li>
+        </ul>
+        <p>
+          Toute saisine sans réclamation préalable ou ne satisfaisant pas ces critères
+          est classée sans suite par le médiateur.
+        </p>
+
+        <h3>Portée et coûts</h3>
+        <p>
+          La médiation est gratuite pour le consommateur (hors éventuels frais d’assistance).
+          Elle est facultative et non contraignante : chaque partie demeure libre d’accepter
+          ou non la proposition du médiateur.
+        </p>
+        <p>
+          La médiation suspend la prescription pendant son déroulement (C. civ. art. 2238).
+          Les litiges entre professionnels (B2B) ne relèvent pas de la médiation de la consommation.
+        </p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
