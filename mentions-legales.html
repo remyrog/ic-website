@@ -200,6 +200,47 @@
       font-weight: 600;
     }
 
+    /* Bouton de téléchargement PDF (support durable) */
+.hero-actions {
+  margin-top: 1.1rem;
+}
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--pink), var(--yellow));
+  color: #020617;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.7),
+    0 0 18px rgba(236, 72, 153, 0.55),
+    0 0 16px rgba(247, 198, 0, 0.55);
+  border: 1px solid rgba(15, 23, 42, 0.9);
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
+}
+
+.btn-download__note {
+  font-weight: 500;
+  font-size: 0.82rem;
+  opacity: 0.9;
+}
+
+.btn-download:hover,
+.btn-download:focus-visible {
+  transform: translateY(-1px);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.85),
+    0 0 22px rgba(236, 72, 153, 0.7),
+    0 0 18px rgba(247, 198, 0, 0.7);
+  filter: brightness(1.03);
+}
+
+
     /* ========= CONTENU ========= */
 
     .legal-grid {
@@ -363,6 +404,17 @@
             ainsi que les informations relatives à la protection de vos données personnelles et aux cookies.
             <strong>Dernière mise à jour : 27/10/2025.</strong>
           </p>
+                <div class="hero-actions">
+        <a
+          href="https://www.informatique-cerdagne.fr/mentions-legales.pdf"
+          class="btn-download"
+          download
+        >
+          ⬇︎ Télécharger ces mentions au format PDF
+          <span class="btn-download__note">(support durable)</span>
+        </a>
+      </div>
+
         </div>
         <div class="hero-meta">
           <div><strong>Éditeur</strong> : EI – Rémy ROGER (Informatique Cerdagne)</div>
