@@ -201,45 +201,98 @@
     }
 
     /* Bouton de téléchargement PDF (support durable) */
-.hero-actions {
-  margin-top: 1.1rem;
-}
+    .hero-actions {
+      margin-top: 1.1rem;
+    }
 
-.btn-download {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 0.95rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  background: linear-gradient(90deg, var(--pink), var(--yellow));
-  color: #020617;
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.7),
-    0 0 18px rgba(236, 72, 153, 0.55),
-    0 0 16px rgba(247, 198, 0, 0.55);
-  border: 1px solid rgba(15, 23, 42, 0.9);
-  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
-}
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: linear-gradient(90deg, var(--pink), var(--yellow));
+      color: #020617;
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.7),
+        0 0 18px rgba(236, 72, 153, 0.55),
+        0 0 16px rgba(247, 198, 0, 0.55);
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out;
+    }
 
-.btn-download__note {
-  font-weight: 500;
-  font-size: 0.82rem;
-  opacity: 0.9;
-}
+    .btn-download__note {
+      font-weight: 500;
+      font-size: 0.82rem;
+      opacity: 0.9;
+    }
 
-.btn-download:hover,
-.btn-download:focus-visible {
-  transform: translateY(-1px);
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.85),
-    0 0 22px rgba(236, 72, 153, 0.7),
-    0 0 18px rgba(247, 198, 0, 0.7);
-  filter: brightness(1.03);
-}
+    .btn-download:hover,
+    .btn-download:focus-visible {
+      transform: translateY(-1px);
+      box-shadow:
+        0 16px 40px rgba(0, 0, 0, 0.85),
+        0 0 22px rgba(236, 72, 153, 0.7),
+        0 0 18px rgba(247, 198, 0, 0.7);
+      filter: brightness(1.03);
+    }
 
+    /* ========= SOMMAIRE ========= */
+
+    .legal-toc {
+      margin-bottom: 2rem;
+      padding: 1.2rem 1.5rem 1.4rem;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(236, 72, 153, 0.22), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(247, 198, 0, 0.18), transparent 60%),
+        #020617;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+    }
+
+    .legal-toc-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .legal-toc-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 1.6rem;
+      font-size: 0.9rem;
+    }
+
+    .legal-toc-list a {
+      color: var(--text);
+      text-decoration: none;
+      position: relative;
+      padding-left: 0.9rem;
+    }
+
+    .legal-toc-list a::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      box-shadow: 0 0 6px rgba(248, 250, 252, 0.7);
+    }
+
+    .legal-toc-list a:hover,
+    .legal-toc-list a:focus-visible {
+      color: var(--yellow);
+    }
 
     /* ========= CONTENU ========= */
 
@@ -264,7 +317,9 @@
     }
 
     .legal-block h2 span {
-      color: var(--yellow);
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     .legal-block h3 {
@@ -348,7 +403,8 @@
       body { background: #000; }
       .top-bar { display: none; }
       header.hero,
-      .legal-block {
+      .legal-block,
+      .legal-toc {
         box-shadow: none;
       }
       .hero::before { opacity: 0.6; }
@@ -370,6 +426,10 @@
       }
       .legal-block {
         padding: 1.4rem 1.3rem 1.45rem;
+      }
+      .legal-toc-list {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
@@ -404,16 +464,16 @@
             ainsi que les informations relatives à la protection de vos données personnelles et aux cookies.<br>
             <strong>Dernière mise à jour : 27/10/2025.</strong>
           </p>
-                <div class="hero-actions">
-        <a
-          href="https://www.informatique-cerdagne.fr/mentions-legales.pdf"
-          class="btn-download"
-          download
-        >Télécharger ces mentions au format PDF
-          <span class="btn-download__note">(support durable)</span>
-        </a>
-      </div>
-
+          <div class="hero-actions">
+            <a
+              href="https://www.informatique-cerdagne.fr/mentions-legales.pdf"
+              class="btn-download"
+              download
+            >
+              Télécharger ces mentions au format PDF
+              <span class="btn-download__note">(support durable)</span>
+            </a>
+          </div>
         </div>
         <div class="hero-meta">
           <div><strong>Éditeur</strong> : EI – Rémy ROGER (Informatique Cerdagne)</div>
@@ -422,6 +482,20 @@
         </div>
       </div>
     </header>
+
+    <!-- SOMMAIRE -->
+    <nav class="legal-toc" aria-label="Sommaire des mentions légales">
+      <div class="legal-toc-title">Sommaire</div>
+      <ol class="legal-toc-list">
+        <li><a href="#mentions">1. Mentions légales</a></li>
+        <li><a href="#cgv">2. Conditions Générales de Vente (CGV)</a></li>
+        <li><a href="#donnees">3. Récupération de données & obligation de moyens</a></li>
+        <li><a href="#retractation">4. Droit de rétractation</a></li>
+        <li><a href="#donnees-personnelles">5. Données personnelles & cookies</a></li>
+        <li><a href="#propriete">6. Propriété intellectuelle & livrables</a></li>
+        <li><a href="#loi-mediaton">7. Loi applicable, juridiction & médiation</a></li>
+      </ol>
+    </nav>
 
     <section class="legal-grid" aria-label="Mentions légales, CGV et politique de confidentialité">
 
@@ -529,8 +603,6 @@
         <p>
           <span class="legal-inline-title">Facturation :</span> les temps passés, ressources mobilisées et outils
           utilisés sont facturés même en l’absence de données récupérables, conformément au devis accepté.
-          Le cas échéant, un forfait diagnostic et/ou une plage horaire maximale peuvent être prévus
-          pour borner le coût.
         </p>
         <p>
           <span class="legal-inline-title">Risques résiduels :</span> malgré les précautions prises, certaines
