@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Comprendre mes tarifs – Informatique Cerdagne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-alt: #050816;
+      --card: rgba(15, 23, 42, 0.96);
+      --card-soft: rgba(15, 23, 42, 0.88);
+      --border-soft: rgba(148, 163, 184, 0.35);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --yellow: #f7c600;
+      --pink: #ec4899;
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(236, 72, 153, 0.08), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(247, 198, 0, 0.12), transparent 55%),
+        radial-gradient(circle at 50% 120%, #020617 0, #020617 45%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 3.75rem;
+    }
+
+    header.hero {
+      margin-bottom: 2.5rem;
+      padding: 2.25rem 2rem 2.4rem;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(236, 72, 153, 0.28), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(247, 198, 0, 0.25), transparent 55%),
+        linear-gradient(135deg, #020617, #020617 40%, #050816 100%);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(248, 250, 252, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 110% 120%, rgba(15, 23, 42, 0.7), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.7rem 0.3rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0%, var(--yellow), var(--pink));
+      box-shadow: 0 0 10px rgba(248, 250, 252, 0.5);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 span.accent {
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.75rem;
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Layout blocks */
+
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .block {
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(236, 72, 153, 0.14), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(248, 250, 252, 0.04), transparent 60%),
+        var(--card-soft);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8);
+      padding: 1.6rem 1.75rem 1.7rem;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 1rem;
+      row-gap: 0.5rem;
+    }
+
+    .block-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .block-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, var(--yellow), var(--pink));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #020617;
+      box-shadow: 0 0 0 1px rgba(248, 250, 252, 0.16),
+                  0 10px 20px rgba(0, 0, 0, 0.75);
+      margin-bottom: 0.25rem;
+    }
+
+    .block-title {
+      font-weight: 650;
+      font-size: 1.05rem;
+    }
+
+    .block-body {
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+
+    .block-body p + p {
+      margin-top: 0.65rem;
+    }
+
+    .block-body ul {
+      list-style: none;
+      margin-top: 0.4rem;
+      padding-left: 0;
+    }
+
+    .block-body li {
+      position: relative;
+      padding-left: 1.15rem;
+      margin-top: 0.25rem;
+      color: var(--muted);
+    }
+
+    .block-body li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.68em;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      box-shadow: 0 0 6px rgba(248, 250, 252, 0.6);
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: #fefce8;
+    }
+
+    .quote {
+      margin-top: 0.7rem;
+      padding-left: 0.9rem;
+      border-left: 2px solid rgba(248, 250, 252, 0.18);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      padding: 0.16rem 0.6rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Summary block */
+
+    .summary {
+      margin-top: 2rem;
+      padding: 1.8rem 1.8rem 1.9rem;
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(circle at 0% 0%, rgba(236, 72, 153, 0.25), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(247, 198, 0, 0.22), transparent 60%),
+        linear-gradient(135deg, #020617, #050816);
+      border: 1px solid rgba(248, 250, 252, 0.16);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 1.3rem;
+    }
+
+    .summary h2 {
+      font-size: 1.45rem;
+      letter-spacing: -0.02em;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.9rem;
+      font-size: 0.93rem;
+    }
+
+    .summary-item {
+      padding: 0.7rem 0.8rem;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.84);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+    }
+
+    .summary-item span {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .summary-item strong {
+      font-weight: 600;
+    }
+
+    .summary-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Small “print friendly” tweak */
+    @media print {
+      body {
+        background: #020617;
+      }
+      header.hero,
+      .block,
+      .summary {
+        box-shadow: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header.hero {
+        padding: 1.8rem 1.4rem 1.7rem;
+      }
+      .block {
+        padding: 1.4rem 1.3rem 1.5rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .block-number {
+        margin-bottom: 0.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Informatique Cerdagne – Tarifs
+          </div>
+          <h1>
+            Comprendre mes tarifs<br>
+            <span class="accent">en toute transparence</span>
+          </h1>
+          <p class="hero-subtitle">
+            Ce document vous explique précisément ce que vous payez, ce que vous ne payez pas,
+            et tout le travail (visible et invisible) qui se cache derrière une intervention.
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div><strong>Format</strong> : service 100&nbsp;% indépendant, sans vente de matériel</div>
+          <div><strong>Zone</strong> : Plateau Cerdagne / Capcir et environs</div>
+          <div><strong>Statut</strong> : micro-entreprise – profession libérale</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid" aria-label="Détail des tarifs">
+
+      <!-- 1 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">1</div>
+          <div class="block-title">Ce que vous payez… et ce que vous ne payez pas</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Mon modèle est simple : <span class="highlight">100&nbsp;% service, 0&nbsp;% vente de matériel.</span>
+            Je ne prends aucune marge sur l’ordinateur, la tablette ou l’imprimante que je vous recommande.
+          </p>
+          <ul>
+            <li>Je vous recommande le meilleur produit au meilleur prix, selon votre usage réel.</li>
+            <li>Vous payez le matériel au prix public, directement chez le commerçant ou sur le site choisi.</li>
+            <li>Je n’ai aucun intérêt à vous faire acheter plus cher : ma boussole, c’est votre besoin.</li>
+          </ul>
+          <p>
+            Ailleurs, il arrive que la main-d’œuvre soit affichée plus bas, mais compensée
+            par une marge importante sur le matériel (par exemple 200&nbsp;€ sur un ordinateur
+            vendu 800&nbsp;€ au lieu de 600&nbsp;€), ou du reconditionné vendu au prix du neuf.
+          </p>
+          <p>
+            <span class="highlight">Je ne fonctionne pas comme ça :</span> ma main-d’œuvre peut paraître plus élevée,
+            mais elle est transparente et indépendante. Vous payez du temps, de l’expertise et du service,
+            pas de marge cachée.
+          </p>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">2</div>
+          <div class="block-title">Un vrai travail de recherche… souvent offert</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Avant même de venir chez vous, je passe souvent beaucoup de temps à chercher pour vous :
+          </p>
+          <ul>
+            <li>Comparer les modèles, les marques, les garanties.</li>
+            <li>Vérifier les performances réelles, au-delà du marketing.</li>
+            <li>Dégoter les meilleures promotions du moment.</li>
+            <li>Vous orienter vers un matériel durable, avec un bon rapport qualité / prix.</li>
+          </ul>
+          <p>
+            Ce travail de «&nbsp;détective informatique&nbsp;» est rarement facturé, alors qu’il me prend parfois
+            autant de temps qu’une intervention. Vous le «&nbsp;remerciez&nbsp;» en me confiant la mise en service,
+            qui peut vous sembler chère… mais reste plus honnête qu’une marge cachée sur un produit revendu.
+          </p>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">3</div>
+          <div class="block-title">Que devient un euro facturé&nbsp;?</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Je travaille en micro-entreprise (profession libérale). Sur 100&nbsp;€ facturés, une partie part
+            directement en charges obligatoires (cotisations, impôts…).
+          </p>
+          <p>
+            L’administration fiscale estime les charges d’un micro-entrepreneur BNC à environ
+            <span class="highlight">34&nbsp;%</span>. Autrement dit, je ne perçois pas la totalité de ce que vous voyez
+            sur la facture : il me reste environ les deux tiers… avant même de payer mes autres frais.
+          </p>
+          <ul>
+            <li>Temps de déplacements et organisation.</li>
+            <li>Usure et entretien du véhicule.</li>
+            <li>Matériel professionnel, logiciels et outils.</li>
+            <li>Et bien sûr… mon revenu.</li>
+          </ul>
+          <p class="quote">
+            Les kilomètres, l’essence, l’entretien, le temps passé sur la route ne sont pas déductibles :
+            je les prends entièrement à ma charge. Une heure chez vous, c’est aussi beaucoup de temps
+            invisible en amont et en aval.
+          </p>
+        </div>
+      </article>
+
+      <!-- 4 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">4</div>
+          <div class="block-title">Le temps de déplacement : un service à part entière</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Pour venir jusqu’à vous, je consacre du temps, de la concentration, et j’assume la fatigue
+            liée à la route, surtout l’hiver en montagne.
+          </p>
+          <p>
+            Je fonctionne avec un <span class="highlight">tarif unique sur tout le plateau Cerdagne / Capcir</span>,
+            afin de ne pénaliser personne en fonction de son village. Les frais de déplacement sont
+            mutualisés dans le tarif des prestations.
+          </p>
+          <p>
+            En choisissant mes services, vous participez à faire vivre un professionnel itinérant
+            qui se déplace partout, pour tout le monde.
+          </p>
+        </div>
+      </article>
+
+      <!-- 5 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">5</div>
+          <div class="block-title">Un service à domicile rare en zone rurale</div>
+        </div>
+        <div class="block-body">
+          <p>
+            En zone rurale, obtenir un service à domicile, qualifié, patient, avec une vraie écoute humaine,
+            est loin d’être évident.
+          </p>
+          <p>
+            En Cerdagne, il est difficile de trouver quelqu’un qui se déplace chez vous, prend le temps
+            d’expliquer, s’adapte à votre niveau et vous accompagne autant sur le plan technique
+            qu’humain.
+          </p>
+          <p>
+            En faisant appel à moi, vous contribuez à maintenir ce service de proximité,
+            utile pour certains, indispensable pour d’autres (personnes âgées, sans véhicule, en difficulté
+            avec le numérique), et à éviter que tout ne se déplace vers de grandes enseignes impersonnelles.
+          </p>
+        </div>
+      </article>
+
+      <!-- 6 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">6</div>
+          <div class="block-title">Grandes enseignes vs service sur-mesure</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Les grandes enseignes peuvent être utiles, mais leur service est souvent standardisé,
+            l’interlocuteur change régulièrement et la pression commerciale peut prendre le dessus.
+          </p>
+          <ul>
+            <li>Service calibré pour la moyenne, pas pour votre cas particulier.</li>
+            <li>Interlocuteurs différents à chaque passage.</li>
+            <li>Compétences pas toujours adaptées à votre situation concrète.</li>
+            <li>Objectifs de vente et marges sur le matériel en arrière-plan.</li>
+          </ul>
+          <p>
+            De mon côté, je propose :
+          </p>
+          <ul>
+            <li>Un accompagnement sur-mesure, basé sur vos usages réels.</li>
+            <li>Un suivi personnalisé dans la durée.</li>
+            <li>Un interlocuteur unique qui connaît votre matériel et votre histoire.</li>
+            <li>Une expertise technique qui ne dépend pas d’un script de SAV.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 7 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">7</div>
+          <div class="block-title">Mon expertise… que je ne facture pas au prix fort</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Derrière chaque prestation, il y a :
+          </p>
+          <ul>
+            <li>Des années d’études et de pratique en informatique.</li>
+            <li>Une formation spécifique en accompagnement et relation d’aide.</li>
+            <li>Une veille régulière sur les menaces, logiciels et usages.</li>
+          </ul>
+          <p>
+            Je pourrais théoriquement valoriser cette expertise plus cher. Mais je choisis de rester
+            <span class="highlight">accessible</span>, avec des tarifs compatibles avec le marché local,
+            tout en essayant d’en vivre.
+          </p>
+          <p class="quote">
+            Mon quotidien : trouver l’équilibre entre rester abordable pour vous… et pouvoir continuer
+            à exercer ce métier dans la durée.
+          </p>
+        </div>
+      </article>
+
+      <!-- 8 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">8</div>
+          <div class="block-title">Ce que mes tarifs incluent (et que vous ne voyez pas toujours)</div>
+        </div>
+        <div class="block-body">
+          <p class="pill">Avant l’intervention</p>
+          <ul>
+            <li>Lecture de votre demande et échanges pour bien comprendre le besoin.</li>
+            <li>Éventuelles recherches de matériel adapté.</li>
+            <li>Préparation des outils nécessaires à l’intervention.</li>
+            <li>Veille hebdomadaire sur les arnaques, virus, phishing et évolutions logicielles.</li>
+            <li>Organisation du planning et réservation d’un créneau dédié (ce temps ne peut pas être vendu deux fois).</li>
+          </ul>
+
+          <p class="pill" style="margin-top:0.8rem;">Pendant l’intervention</p>
+          <ul>
+            <li>Diagnostic précis et explications claires.</li>
+            <li>Travail méthodique, sécurisé, sans précipitation.</li>
+            <li>Pédagogie : ce que je fais, pourquoi je le fais, comment être plus autonome.</li>
+            <li>Ajustements, personnalisations, réponses à vos questions.</li>
+          </ul>
+
+          <p class="pill" style="margin-top:0.8rem;">Après l’intervention</p>
+          <ul>
+            <li>Rédaction éventuelle de compte-rendus ou de petites fiches explicatives.</li>
+            <li>Suivi de votre situation si vous me rappelez pour un point.</li>
+            <li>Temps non facturé : mails de conseils, petits dépannages express, rédaction de documents comme celui-ci.</li>
+          </ul>
+
+          <p class="quote">
+            Je ne compte pas toujours mon temps : je préfère que vous soyez serein·e et satisfait·e,
+            plutôt que strictement minuté·e.
+          </p>
+        </div>
+      </article>
+
+      <!-- 9 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">9</div>
+          <div class="block-title">Quelques repères de prix</div>
+        </div>
+        <div class="block-body">
+          <p>
+            La plupart de mes interventions unitaires se situent
+            <span class="highlight">entre 60&nbsp;€ et 650&nbsp;€ TTC</span>,
+            selon la durée et la complexité.
+          </p>
+          <p>
+            Les prix sont toujours communiqués et acceptés avant intervention. Ils tiennent compte :
+          </p>
+          <ul>
+            <li>De la complexité technique.</li>
+            <li>Du temps nécessaire.</li>
+            <li>Des risques pris (données, matériel, environnement).</li>
+            <li>De tout ce qui est décrit dans ce document.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 10 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">10</div>
+          <div class="block-title">Une approche humaine, pas industrielle</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Mon métier n’est pas seulement de «&nbsp;réparer des ordinateurs&nbsp;».
+            Je m’efforce d’être :
+          </p>
+          <ul>
+            <li>ponctuel,</li>
+            <li>prévenant,</li>
+            <li>transparent,</li>
+            <li>bienveillant,</li>
+            <li>à l’écoute de vos difficultés et de vos peurs face au numérique.</li>
+          </ul>
+          <p>
+            Comme beaucoup de petits entrepreneurs, je fais face à :
+          </p>
+          <ul>
+            <li>des revenus variables,</li>
+            <li>certains mois en dessous d’un SMIC,</li>
+            <li>aucune sécurité de l’emploi.</li>
+          </ul>
+          <p>
+            Pour continuer à vous accompagner dans la durée, je dois donc tarifer de manière juste :
+            ni au rabais (au risque de disparaître), ni abusivement (au détriment de votre budget).
+          </p>
+        </div>
+      </article>
+
+      <!-- 11 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">11</div>
+          <div class="block-title">Et si malgré tout le tarif vous semble trop élevé&nbsp;?</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Je reste humain, donc ouvert à la discussion.
+          </p>
+          <ul>
+            <li>Une erreur est possible : si quelque chose vous semble inadapté, parlons-en.</li>
+            <li>Il m’arrive d’ajuster un tarif en fonction du budget, notamment pour les petits revenus.</li>
+            <li>On peut parfois découper une prestation en étapes : commencer par l’essentiel, planifier le reste.</li>
+            <li>Mon intention n’est ni de braquer, ni de culpabiliser, mais de trouver un terrain d’entente.</li>
+          </ul>
+          <p class="quote">
+            Si un devis vous questionne, le plus simple est de m’en parler franchement :
+            on trouve presque toujours une solution raisonnable ensemble.
+          </p>
+        </div>
+      </article>
+
+      <!-- 12 -->
+      <article class="block">
+        <div class="block-header">
+          <div class="block-number">12</div>
+          <div class="block-title">En résumé : ce que vous payez vraiment</div>
+        </div>
+        <div class="block-body">
+          <p>
+            Quand vous payez une prestation Informatique Cerdagne, vous payez :
+          </p>
+          <ul>
+            <li><span class="highlight">Du temps visible</span> : l’intervention chez vous.</li>
+            <li><span class="highlight">Du temps invisible</span> : recherche, préparation, route, suivi.</li>
+            <li><span class="highlight">De l’expertise</span> : technique et humaine, accumulée sur des années.</li>
+            <li><span class="highlight">De la sécurité</span> : travail propre, précautionneux.</li>
+            <li><span class="highlight">Un service de proximité</span> : à domicile, en Cerdagne / Capcir.</li>
+          </ul>
+          <p>
+            Et surtout, vous payez quelqu’un qui se soucie vraiment que tout fonctionne chez vous,
+            que vous soyez à l’aise et rassuré.
+          </p>
+          <p class="quote">
+            Il n’est pas si facile de trouver en Cerdagne un professionnel qui se déplace, prend le temps
+            d’expliquer et livre ce niveau de service. En faisant appel à mes services, vous contribuez
+            à l’existence d’un service à domicile très utile pour certains, indispensable pour d’autres.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <section class="summary" aria-label="Synthèse">
+      <h2>Pourquoi ce document&nbsp;?</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span>Vision</span>
+          <strong>Mettre cartes sur table entre vous et moi.</strong>
+        </div>
+        <div class="summary-item">
+          <span>Transparence</span>
+          <strong>Vous savez précisément ce que vous payez… et pourquoi.</strong>
+        </div>
+        <div class="summary-item">
+          <span>Confiance</span>
+          <strong>Construire une relation durable, pas un simple dépannage ponctuel.</strong>
+        </div>
+        <div class="summary-item">
+          <span>Proximité</span>
+          <strong>Permettre à un service local de continuer à exister en Cerdagne / Capcir.</strong>
+        </div>
+      </div>
+      <p class="summary-note">
+        Si vous avez la moindre question sur un devis ou une prestation, vous pouvez
+        bien sûr m’en parler directement : ce document est là pour ouvrir la discussion,
+        pas la fermer.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
