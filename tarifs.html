@@ -1,90 +1,155 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Les 12 « commandements » de mes tarifs – Informatique Cerdagne</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     :root {
-      /* Palette alignée sur ton site */
-      --pink: #FF5E8E;
-      --yellow: #F7C600;
-
-      --bg: #0c0d12;
-      --text: #f7f7f7;
-      --muted: #b9bfd6;
-      --card: #141723;
-      --card-soft: #181b28;
-      --border-soft: rgba(148, 163, 184, 0.35);
-
+      --bg: #020617;             /* bleu nuit très sombre */
+      --card: #050816;
+      --card-soft: #050818;
+      --border-soft: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --yellow: #f7c600;         /* jaune doré charte */
+      --pink: #ec4899;           /* rose voiture */
       --radius-xl: 26px;
-      --radius-lg: 20px;
+      --radius-lg: 18px;
       --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      height: 100%;
-    }
-
-    html {
-      background: var(--bg);
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
 
     body {
-      margin: 0;
-      font-family: system-ui, -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: var(--bg);   /* fond uni */
       color: var(--text);
-      background: var(--bg); /* fond uni bleu nuit sombre */
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+    }
+
+    /* ========= TOP BAR ========= */
+
+    .top-bar {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.45);
+      background: #020617;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .top-bar-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    .brand span {
+      color: var(--yellow);
+    }
+
+    a.premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      color: var(--pink);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    a.premium::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pink), var(--yellow));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.25s ease-out;
+    }
+
+    a.premium:hover::after,
+    a.premium:focus-visible::after {
+      transform: scaleX(1);
     }
 
     main {
       max-width: 1040px;
       margin: 0 auto;
-      padding: 3.5rem 1.5rem 3.75rem;
+      padding: 2.4rem 1.5rem 3.75rem;
     }
 
     /* ========= HERO ========= */
 
     header.hero {
-      margin-bottom: 2.5rem;
-      padding: 2.25rem 2rem 2.4rem;
+      margin-bottom: 2.75rem;
+      padding: 2.4rem 2.1rem 2.3rem;
       border-radius: var(--radius-xl);
-      background: var(--card); /* même famille que le reste */
+      background: var(--card);
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(248, 250, 252, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.35);
       position: relative;
       overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(135deg, var(--pink), var(--yellow)) border-box;
+      -webkit-mask:
+        linear-gradient(#000 0 0) padding-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      opacity: 0.35;
     }
 
     .hero-inner {
       position: relative;
       z-index: 1;
       display: grid;
-      gap: 1.5rem;
+      gap: 1.65rem;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.25rem 0.7rem 0.3rem;
+      padding: 0.25rem 0.75rem 0.3rem;
       border-radius: 999px;
       font-size: 0.8rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      background: rgba(15, 23, 42, 0.9);
+      background: #020617;
       color: var(--muted);
-      border: 1px solid rgba(148, 163, 184, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.7);
     }
 
     .badge-dot {
@@ -96,31 +161,36 @@
     }
 
     h1 {
-      font-size: clamp(2.2rem, 3.4vw, 3rem);
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
       line-height: 1.1;
-      font-weight: 900;
+      font-weight: 800;
       letter-spacing: -0.03em;
-      margin: 0.85rem 0 0.8rem;
+      margin: 1rem 0 0.85rem;
     }
 
-    h1 .accent {
+    h1 span.accent {
       background: linear-gradient(90deg, var(--yellow), var(--pink));
       -webkit-background-clip: text;
-      background-clip: text;
       color: transparent;
     }
 
     .hero-subtitle {
-      max-width: 720px;
+      max-width: 700px;
       color: var(--muted);
       font-size: 0.98rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-subtitle strong {
+      color: #fefce8;
+      font-weight: 600;
     }
 
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem 1.75rem;
-      margin-top: 1.2rem;
+      margin-top: 1.1rem;
       font-size: 0.85rem;
       color: var(--muted);
     }
@@ -130,7 +200,7 @@
       font-weight: 600;
     }
 
-    /* ========= BLOCKS ========= */
+    /* ========= BLOC PRINCIPAL ========= */
 
     .grid {
       display: flex;
@@ -142,8 +212,8 @@
       border-radius: var(--radius-lg);
       background: var(--card-soft);
       border: 1px solid var(--border-soft);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.8);
-      padding: 1.6rem 1.75rem 1.7rem;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+      padding: 1.6rem 1.75rem 1.75rem;
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       column-gap: 1rem;
@@ -153,29 +223,41 @@
     .block-header {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.45rem;
+      margin-right: 0.5rem;
     }
 
     .block-number {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, var(--yellow), var(--pink));
+      background: #020617;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
       font-size: 0.95rem;
-      color: #020617;
+      color: #fefce8;
+      border: 1px solid rgba(148, 163, 184, 0.8);
       box-shadow:
-        0 0 0 1px rgba(248, 250, 252, 0.18),
-        0 10px 20px rgba(0, 0, 0, 0.75);
-      margin-bottom: 0.25rem;
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 0 24px rgba(236, 72, 153, 0.4),
+        0 0 18px rgba(247, 198, 0, 0.4);
+    }
+
+    .block-number span {
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     .block-title {
       font-weight: 650;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
+    }
+
+    .block-title span {
+      color: var(--yellow);
     }
 
     .block-body {
@@ -195,7 +277,7 @@
 
     .block-body li {
       position: relative;
-      padding-left: 1.15rem;
+      padding-left: 1.2rem;
       margin-top: 0.25rem;
       color: var(--muted);
     }
@@ -204,12 +286,12 @@
       content: "";
       position: absolute;
       left: 0;
-      top: 0.68em;
-      width: 6px;
-      height: 6px;
+      top: 0.7em;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--yellow), var(--pink));
-      box-shadow: 0 0 6px rgba(248, 250, 252, 0.6);
+      box-shadow: 0 0 7px rgba(248, 250, 252, 0.6);
     }
 
     .highlight {
@@ -220,7 +302,7 @@
     .quote {
       margin-top: 0.7rem;
       padding-left: 0.9rem;
-      border-left: 2px solid rgba(248, 250, 252, 0.18);
+      border-left: 2px solid rgba(248, 250, 252, 0.2);
       color: var(--muted);
       font-size: 0.9rem;
       font-style: italic;
@@ -232,7 +314,7 @@
       gap: 0.35rem;
       border-radius: 999px;
       padding: 0.16rem 0.6rem;
-      background: rgba(15, 23, 42, 0.85);
+      background: #020617;
       border: 1px solid rgba(148, 163, 184, 0.55);
       font-size: 0.78rem;
       letter-spacing: 0.06em;
@@ -240,17 +322,17 @@
       color: var(--muted);
     }
 
-    /* ========= SUMMARY ========= */
+    /* ========= SYNTHÈSE ========= */
 
     .summary {
-      margin-top: 2rem;
-      padding: 1.8rem 1.8rem 1.9rem;
+      margin-top: 2.2rem;
+      padding: 1.9rem 1.9rem 2rem;
       border-radius: var(--radius-xl);
-      background: var(--card);
-      border: 1px solid rgba(248, 250, 252, 0.16);
+      background: #050816;
+      border: 1px solid rgba(148, 163, 184, 0.6);
       box-shadow: var(--shadow-soft);
       display: grid;
-      gap: 1.3rem;
+      gap: 1.35rem;
     }
 
     .summary h2 {
@@ -258,10 +340,9 @@
       letter-spacing: -0.02em;
     }
 
-    .summary h2 .accent {
+    .summary h2 span {
       background: linear-gradient(90deg, var(--yellow), var(--pink));
       -webkit-background-clip: text;
-      background-clip: text;
       color: transparent;
     }
 
@@ -275,7 +356,7 @@
     .summary-item {
       padding: 0.7rem 0.8rem;
       border-radius: 18px;
-      background: rgba(15, 23, 42, 0.9);
+      background: #020617;
       border: 1px solid rgba(148, 163, 184, 0.55);
     }
 
@@ -297,36 +378,57 @@
       color: var(--muted);
     }
 
-    /* ========= RESPONSIVE / PRINT ========= */
-
-    @media (max-width: 720px) {
-      header.hero {
-        padding: 1.8rem 1.4rem 1.7rem;
-      }
-
-      .block {
-        padding: 1.4rem 1.3rem 1.5rem;
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .block-number {
-        margin-bottom: 0.35rem;
-      }
-    }
+    /* ========= PRINT ========= */
 
     @media print {
-      body {
-        background: #000;
-      }
+      body { background: #000; }
+      .top-bar { display: none; }
       header.hero,
       .block,
       .summary {
         box-shadow: none;
       }
+      .hero::before { opacity: 0.6; }
+    }
+
+    /* ========= RESPONSIVE ========= */
+
+    @media (max-width: 720px) {
+      .top-bar-inner {
+        padding: 0.6rem 1.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      main {
+        padding: 2.1rem 1.1rem 2.8rem;
+      }
+      header.hero {
+        padding: 1.9rem 1.4rem 1.8rem;
+      }
+      .block {
+        padding: 1.35rem 1.25rem 1.45rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .block-header {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 0.4rem;
+      }
     }
   </style>
 </head>
 <body>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        INFORMATIQUE <span>CERDAGNE</span>
+      </div>
+      <a href="index.html" class="premium">
+        ← Retour au site principal
+      </a>
+    </div>
+  </header>
+
   <main>
     <header class="hero">
       <div class="hero-inner">
@@ -336,30 +438,30 @@
             Informatique Cerdagne – Tarifs
           </div>
           <h1>
-            Les 12 « commandements »<br />
-            <span class="accent">de mes tarifs</span>
+            Les 12 <span class="accent">« commandements »</span><br>
+            de mes tarifs
           </h1>
           <p class="hero-subtitle">
-            Vous êtes pleinement légitime à vous interroger sur mes tarifs&nbsp;:
-            ce document est là pour y répondre clairement, avec la transparence
-            que vous êtes en droit d’attendre.
+            Pour moi, c’est normal – et sain – que vous vous interrogiez sur le prix d’une prestation.
+            <strong>Vous êtes pleinement dans votre droit de demander «&nbsp;pourquoi&nbsp;? »</strong>,
+            et ce document a été pensé pour vous répondre en toute transparence.
           </p>
         </div>
         <div class="hero-meta">
-          <div><strong>Format</strong> : prestation de service à domicile, sans vente de matériel</div>
-          <div><strong>Zone</strong> : Plateau Cerdagne / Capcir</div>
-          <div><strong>Statut</strong> : micro-entreprise – profession libérale</div>
+          <div><strong>Modèle</strong> : 100&nbsp;% service, 0&nbsp;% marge sur le matériel</div>
+          <div><strong>Zone</strong> : Plateau Cerdagne / Capcir et environs</div>
+          <div><strong>Posture</strong> : transparence, pédagogie et accompagnement</div>
         </div>
       </div>
     </header>
 
-    <section class="grid" aria-label="Détail des 12 commandements">
+    <section class="grid" aria-label="Les 12 engagements tarifaires">
 
-      <!-- 1 -->
+      <!-- 01 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">1</div>
-          <div class="block-title">Ce que vous payez… et ce que vous ne payez pas</div>
+          <div class="block-number"><span>01</span></div>
+          <div class="block-title">Ce que vous payez… <span>et ce que vous ne payez pas</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -384,11 +486,11 @@
         </div>
       </article>
 
-      <!-- 2 -->
+      <!-- 02 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">2</div>
-          <div class="block-title">Un vrai travail de recherche… souvent offert</div>
+          <div class="block-number"><span>02</span></div>
+          <div class="block-title">Le travail de recherche… souvent <span>invisible</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -408,11 +510,11 @@
         </div>
       </article>
 
-      <!-- 3 -->
+      <!-- 03 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">3</div>
-          <div class="block-title">Que devient un euro facturé&nbsp;?</div>
+          <div class="block-number"><span>03</span></div>
+          <div class="block-title">Ce que devient un euro <span>facturé</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -438,11 +540,11 @@
         </div>
       </article>
 
-      <!-- 4 -->
+      <!-- 04 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">4</div>
-          <div class="block-title">Le temps de déplacement : un service à part entière</div>
+          <div class="block-number"><span>04</span></div>
+          <div class="block-title">Le déplacement : un vrai <span>service</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -461,11 +563,11 @@
         </div>
       </article>
 
-      <!-- 5 -->
+      <!-- 05 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">5</div>
-          <div class="block-title">Un service à domicile rare en zone rurale</div>
+          <div class="block-number"><span>05</span></div>
+          <div class="block-title">Un service à domicile <span>rare</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -485,11 +587,11 @@
         </div>
       </article>
 
-      <!-- 6 -->
+      <!-- 06 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">6</div>
-          <div class="block-title">Grandes enseignes vs service sur-mesure</div>
+          <div class="block-number"><span>06</span></div>
+          <div class="block-title">Grandes enseignes vs <span>sur-mesure</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -514,11 +616,11 @@
         </div>
       </article>
 
-      <!-- 7 -->
+      <!-- 07 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">7</div>
-          <div class="block-title">Mon expertise… que je ne facture pas au prix fort</div>
+          <div class="block-number"><span>07</span></div>
+          <div class="block-title">Une expertise que je garde <span>accessible</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -541,11 +643,11 @@
         </div>
       </article>
 
-      <!-- 8 -->
+      <!-- 08 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">8</div>
-          <div class="block-title">Ce que mes tarifs incluent (et que vous ne voyez pas toujours)</div>
+          <div class="block-number"><span>08</span></div>
+          <div class="block-title">Tout ce que vos factures <span>incluent</span></div>
         </div>
         <div class="block-body">
           <p class="pill">Avant l’intervention</p>
@@ -554,7 +656,7 @@
             <li>Éventuelles recherches de matériel adapté.</li>
             <li>Préparation des outils nécessaires à l’intervention.</li>
             <li>Veille hebdomadaire sur les arnaques, virus, phishing et évolutions logicielles.</li>
-            <li>Organisation du planning et réservation d’un créneau dédié (ce temps ne peut pas être vendu deux fois).</li>
+            <li>Organisation du planning et réservation d’un créneau dédié.</li>
           </ul>
 
           <p class="pill" style="margin-top:0.8rem;">Pendant l’intervention</p>
@@ -567,9 +669,9 @@
 
           <p class="pill" style="margin-top:0.8rem;">Après l’intervention</p>
           <ul>
-            <li>Rédaction éventuelle de compte-rendus ou de petites fiches explicatives.</li>
+            <li>Rédaction éventuelle de petits comptes-rendus ou fiches mémo.</li>
             <li>Suivi de votre situation si vous me rappelez pour un point.</li>
-            <li>Temps non facturé : mails de conseils, petits dépannages express, rédaction de documents comme celui-ci.</li>
+            <li>Temps non facturé : mails de conseils, mini-dépannages express, rédaction de ce document.</li>
           </ul>
 
           <p class="quote">
@@ -579,11 +681,11 @@
         </div>
       </article>
 
-      <!-- 9 -->
+      <!-- 09 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">9</div>
-          <div class="block-title">Quelques repères de prix</div>
+          <div class="block-number"><span>09</span></div>
+          <div class="block-title">Des prix <span>annoncés et assumés</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -606,8 +708,8 @@
       <!-- 10 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">10</div>
-          <div class="block-title">Une approche humaine, pas industrielle</div>
+          <div class="block-number"><span>10</span></div>
+          <div class="block-title">Une approche humaine, <span>pas industrielle</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -639,8 +741,8 @@
       <!-- 11 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">11</div>
-          <div class="block-title">Et si malgré tout le tarif vous semble trop élevé&nbsp;?</div>
+          <div class="block-number"><span>11</span></div>
+          <div class="block-title">Si le tarif vous semble <span>trop élevé</span>…</div>
         </div>
         <div class="block-body">
           <p>
@@ -662,8 +764,8 @@
       <!-- 12 -->
       <article class="block">
         <div class="block-header">
-          <div class="block-number">12</div>
-          <div class="block-title">En résumé : ce que vous payez vraiment</div>
+          <div class="block-number"><span>12</span></div>
+          <div class="block-title">En résumé : ce que vous <span>achetez vraiment</span></div>
         </div>
         <div class="block-body">
           <p>
@@ -690,31 +792,29 @@
     </section>
 
     <section class="summary" aria-label="Synthèse">
-      <h2>
-        En deux mots&nbsp;: <span class="accent">confiance & transparence</span>
-      </h2>
+      <h2>En résumé, <span>mes 12 « commandements »</span></h2>
       <div class="summary-grid">
         <div class="summary-item">
-          <span>Vision</span>
-          <strong>Mettre cartes sur table entre vous et moi.</strong>
+          <span>Votre droit</span>
+          <strong>Vous avez le droit de poser des questions sur mes tarifs. Je vous dois des réponses claires.</strong>
         </div>
         <div class="summary-item">
-          <span>Transparence</span>
-          <strong>Vous savez précisément ce que vous payez… et pourquoi.</strong>
+          <span>Ma promesse</span>
+          <strong>Vous expliquer comment je facture, ce que ça finance, et ce que vous gagnez réellement.</strong>
         </div>
         <div class="summary-item">
-          <span>Confiance</span>
-          <strong>Construire une relation durable, pas un simple dépannage.</strong>
+          <span>Notre relation</span>
+          <strong>Construire une relation de confiance, pas un simple dépannage ponctuel.</strong>
         </div>
         <div class="summary-item">
-          <span>Proximité</span>
-          <strong>Permettre à un service local de continuer à exister en Cerdagne / Capcir.</strong>
+          <span>Le territoire</span>
+          <strong>Permettre à un service local, humain et itinérant de continuer à exister en Cerdagne / Capcir.</strong>
         </div>
       </div>
       <p class="summary-note">
-        Si vous avez la moindre question sur un devis ou une prestation, vous pouvez
-        bien sûr m’en parler directement : ce document est là pour ouvrir la discussion,
-        pas la fermer.
+        Si, après ce document, quelque chose vous questionne encore sur un devis ou une prestation,
+        le plus simple reste de m’en parler directement. La transparence, ce n’est pas un document figé :
+        c’est une discussion ouverte entre vous et moi.
       </p>
     </section>
   </main>
