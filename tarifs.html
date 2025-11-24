@@ -29,7 +29,6 @@
       background: var(--bg);   /* fond uni */
       color: var(--text);
       line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
     }
 
     /* ========= TOP BAR ========= */
@@ -123,10 +122,10 @@
       border: 1px solid transparent;
       background:
         linear-gradient(135deg, var(--pink), var(--yellow)) border-box;
-      -webkit-mask:
+      mask:
         linear-gradient(#000 0 0) padding-box,
         linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
+      mask-composite: xor;
               mask-composite: exclude;
       opacity: 0.35;
     }
@@ -170,7 +169,7 @@
 
     h1 span.accent {
       background: linear-gradient(90deg, var(--yellow), var(--pink));
-      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
@@ -247,7 +246,7 @@
 
     .block-number span {
       background: linear-gradient(135deg, var(--yellow), var(--pink));
-      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
@@ -342,7 +341,7 @@
 
     .summary h2 span {
       background: linear-gradient(90deg, var(--yellow), var(--pink));
-      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
@@ -424,7 +423,7 @@
         INFORMATIQUE <span>CERDAGNE</span>
       </div>
       <a href="index.html" class="premium">
-        ← Retour au site principal
+        Retour au site principal
       </a>
     </div>
   </header>
@@ -444,13 +443,15 @@
           <p class="hero-subtitle">
             Pour moi, c’est normal – et sain – que vous vous interrogiez sur le prix d’une prestation.
             <strong>Vous êtes pleinement dans votre droit de demander «&nbsp;pourquoi&nbsp;? »</strong>,
-            et ce document a été pensé pour vous répondre en toute transparence.
+            et ce document a été pensé pour vous répondre en toute transparence.<br>
+            Il est aussi là pour vous montrer à quoi vous contribuez, vous et les autres clients :
+            <strong>un service à domicile humain, local et presque mutualiste, qui existe grâce à vous.</strong>
           </p>
         </div>
         <div class="hero-meta">
           <div><strong>Modèle</strong> : 100&nbsp;% service, 0&nbsp;% marge sur le matériel</div>
           <div><strong>Zone</strong> : Plateau Cerdagne / Capcir et environs</div>
-          <div><strong>Posture</strong> : transparence, pédagogie et accompagnement</div>
+          <div><strong>Posture</strong> : transparence, pédagogie, accompagnement humain</div>
         </div>
       </div>
     </header>
@@ -483,6 +484,10 @@
             mais elle est transparente et indépendante. Vous payez du temps, de l’expertise et du service,
             pas de marge cachée.
           </p>
+          <p class="quote">
+            En choisissant ce modèle sans marge cachée, vous financez du temps de cerveau disponible
+            pour vous accompagner au mieux, plutôt qu’un stock d’ordinateurs à revendre.
+          </p>
         </div>
       </article>
 
@@ -503,9 +508,17 @@
             <li>Vous orienter vers un matériel durable, avec un bon rapport qualité / prix.</li>
           </ul>
           <p>
-            Ce travail de «&nbsp;détective informatique&nbsp;» est rarement facturé, alors qu’il me prend parfois
-            autant de temps qu’une intervention. Vous le «&nbsp;remerciez&nbsp;» en me confiant la mise en service,
-            qui peut vous sembler chère… mais reste plus honnête qu’une marge cachée sur un produit revendu.
+            Ce travail de «&nbsp;détective informatique&nbsp;» est rarement facturé à sa juste valeur,
+            alors qu’il me prend parfois autant de temps qu’une intervention.
+          </p>
+          <p>
+            Vous le «&nbsp;remerciez&nbsp;» en me confiant la mise en service,
+            qui peut vous sembler chère… mais reste plus honnête qu’une marge cachée
+            sur un produit revendu.
+          </p>
+          <p class="quote">
+            En acceptant que ce temps ait un prix, vous permettez que ce travail de recherche reste possible
+            pour tous les clients… y compris ceux qui n’auraient jamais pensé à le payer.
           </p>
         </div>
       </article>
@@ -533,9 +546,9 @@
             <li>Et bien sûr… mon revenu.</li>
           </ul>
           <p class="quote">
-            Les kilomètres, l’essence, l’entretien, le temps passé sur la route ne sont pas déductibles :
-            je les prends entièrement à ma charge. Une heure chez vous, c’est aussi beaucoup de temps
-            invisible en amont et en aval.
+            Chaque facture participe à un « pot commun » : les périodes où l’activité est confortable
+            permettent d’assurer des dépannages plus longs, des accompagnements plus patients,
+            pour d’autres personnes que vous ne verrez jamais.
           </p>
         </div>
       </article>
@@ -560,6 +573,10 @@
             En choisissant mes services, vous participez à faire vivre un professionnel itinérant
             qui se déplace partout, pour tout le monde.
           </p>
+          <p class="quote">
+            Quand vous faites appel à moi, vous rendez possible le fait que je puisse aussi me déplacer
+            chez votre voisine qui ne conduit plus, ou chez ce couple perdu avec leur box internet.
+          </p>
         </div>
       </article>
 
@@ -583,6 +600,10 @@
             En faisant appel à moi, vous contribuez à maintenir ce service de proximité,
             utile pour certains, indispensable pour d’autres (personnes âgées, sans véhicule, en difficulté
             avec le numérique), et à éviter que tout ne se déplace vers de grandes enseignes impersonnelles.
+          </p>
+          <p class="quote">
+            Vous n’êtes pas « juste un client » : vous êtes l’une des personnes qui permettent
+            à ce service d’exister encore ici, plutôt que seulement dans les grandes villes.
           </p>
         </div>
       </article>
@@ -613,6 +634,11 @@
             <li>Un interlocuteur unique qui connaît votre matériel et votre histoire.</li>
             <li>Une expertise technique qui ne dépend pas d’un script de SAV.</li>
           </ul>
+          <p class="quote">
+            En choisissant un indépendant plutôt qu’une enseigne généraliste, vous gardez vos euros
+            sur le territoire et vous consolidez une petite communauté locale, plutôt qu’un chiffre
+            d’affaires anonyme.
+          </p>
         </div>
       </article>
 
@@ -637,8 +663,8 @@
             tout en essayant d’en vivre.
           </p>
           <p class="quote">
-            Mon quotidien : trouver l’équilibre entre rester abordable pour vous… et pouvoir continuer
-            à exercer ce métier dans la durée.
+            Votre choix de payer un tarif juste, même quand ce n’est pas « le moins cher du marché »,
+            est un vrai soutien : il permet à cette expertise de rester disponible pour tout le monde ici.
           </p>
         </div>
       </article>
@@ -675,8 +701,8 @@
           </ul>
 
           <p class="quote">
-            Je ne compte pas toujours mon temps : je préfère que vous soyez serein·e et satisfait·e,
-            plutôt que strictement minuté·e.
+            Je ne compte pas toujours mon temps : c’est ma façon de vous remercier pour votre confiance…
+            et de « mutualiser » un peu, en offrant parfois davantage que ce qui est strictement facturé.
           </p>
         </div>
       </article>
@@ -702,6 +728,11 @@
             <li>Des risques pris (données, matériel, environnement).</li>
             <li>De tout ce qui est décrit dans ce document.</li>
           </ul>
+          <p class="quote">
+            Quand vous acceptez un devis, vous ne financez pas qu’une intervention ponctuelle :
+            vous contribuez à un modèle de tarification presque mutualiste, où chacun profite,
+            à son tour, du fait que d’autres ont joué le jeu avant lui.
+          </p>
         </div>
       </article>
 
@@ -735,6 +766,11 @@
             Pour continuer à vous accompagner dans la durée, je dois donc tarifer de manière juste :
             ni au rabais (au risque de disparaître), ni abusivement (au détriment de votre budget).
           </p>
+          <p class="quote">
+            Chaque fois que vous faites appel à moi, vous nourrissez une relation suivie :
+            au fil du temps, on finit par former une petite « famille numérique » locale,
+            dans laquelle chacun compte.
+          </p>
         </div>
       </article>
 
@@ -755,8 +791,8 @@
             <li>Mon intention n’est ni de braquer, ni de culpabiliser, mais de trouver un terrain d’entente.</li>
           </ul>
           <p class="quote">
-            Si un devis vous questionne, le plus simple est de m’en parler franchement :
-            on trouve presque toujours une solution raisonnable ensemble.
+            Pouvoir parfois adapter les tarifs, c’est possible justement parce que d’autres clients
+            paient le prix juste sans négocier systématiquement : vous faites tous partie du même équilibre.
           </p>
         </div>
       </article>
@@ -779,41 +815,44 @@
             <li><span class="highlight">Un service de proximité</span> : à domicile, en Cerdagne / Capcir.</li>
           </ul>
           <p>
-            Et surtout, vous payez quelqu’un qui se soucie vraiment que tout fonctionne chez vous,
-            que vous soyez à l’aise et rassuré.
+            Et surtout, vous soutenez une manière de travailler qui met l’humain avant la vente :
+            une relation dans la durée, avec quelqu’un qui suit votre histoire numérique et celle
+            de vos proches.
           </p>
           <p class="quote">
             Il n’est pas si facile de trouver en Cerdagne un professionnel qui se déplace, prend le temps
             d’expliquer et livre ce niveau de service. En faisant appel à mes services, vous contribuez
-            à l’existence d’un service à domicile très utile pour certains, indispensable pour d’autres.
+            à l’existence d’un service à domicile très utile pour certains, indispensable pour d’autres…
+            et vous pouvez en être fier ou fière.
           </p>
         </div>
       </article>
     </section>
 
     <section class="summary" aria-label="Synthèse">
-      <h2>En résumé, <span>mes 12 « commandements »</span></h2>
+      <h2>En résumé, <span>vos 12 « super-pouvoirs » de client</span></h2>
       <div class="summary-grid">
         <div class="summary-item">
-          <span>Votre droit</span>
-          <strong>Vous avez le droit de poser des questions sur mes tarifs. Je vous dois des réponses claires.</strong>
+          <span>Votre rôle</span>
+          <strong>Vous n’êtes pas seulement un client : vous êtes l’une des personnes qui rendent ce service possible pour tout le monde.</strong>
         </div>
         <div class="summary-item">
-          <span>Ma promesse</span>
-          <strong>Vous expliquer comment je facture, ce que ça finance, et ce que vous gagnez réellement.</strong>
+          <span>Ce que vous rendez possible</span>
+          <strong>Un service à domicile humain, indépendant, qui se déplace en Cerdagne / Capcir plutôt que de disparaître au profit de grandes enseignes.</strong>
         </div>
         <div class="summary-item">
-          <span>Notre relation</span>
-          <strong>Construire une relation de confiance, pas un simple dépannage ponctuel.</strong>
+          <span>La communauté</span>
+          <strong>En acceptant un tarif juste, vous participez à un fonctionnement presque mutualiste : chacun bénéficie du fait que d’autres avant lui ont joué le jeu.</strong>
         </div>
         <div class="summary-item">
           <span>Le territoire</span>
-          <strong>Permettre à un service local, humain et itinérant de continuer à exister en Cerdagne / Capcir.</strong>
+          <strong>Vous faites vivre un professionnel local, un réseau de proximité et, à votre façon, vous soutenez la vie de la montagne.</strong>
         </div>
       </div>
       <p class="summary-note">
-        Si, après ce document, quelque chose vous questionne encore sur un devis ou une prestation,
-        le plus simple reste de m’en parler directement. La transparence, ce n’est pas un document figé :
+        Merci, vraiment, de prendre le temps de lire ce document.
+        Si, après tout cela, quelque chose vous questionne encore sur un devis ou une prestation,
+        le plus simple reste de m’en parler directement : la transparence, ce n’est pas un document figé,
         c’est une discussion ouverte entre vous et moi.
       </p>
     </section>

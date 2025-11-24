@@ -123,10 +123,10 @@
       border: 1px solid transparent;
       background:
         linear-gradient(135deg, var(--pink), var(--yellow)) border-box;
-      -webkit-mask:
+      mask:
         linear-gradient(#000 0 0) padding-box,
         linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
+      mask-composite: xor;
               mask-composite: exclude;
       opacity: 0.35;
     }
@@ -170,7 +170,7 @@
 
     h1 span.accent {
       background: linear-gradient(90deg, var(--yellow), var(--pink));
-      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
@@ -318,7 +318,7 @@
 
     .legal-block h2 span {
       background: linear-gradient(90deg, var(--yellow), var(--pink));
-      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
