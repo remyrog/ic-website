@@ -677,6 +677,182 @@ a.premium:focus-visible::after {
 }
 
 
+/* =========================
+   Icônes SVG – style & animations
+   ========================= */
+
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 999px;
+  margin-right: 0.6rem;
+  flex-shrink: 0;
+  background:
+    radial-gradient(circle at 20% 0, rgba(247,198,0,0.45), transparent 60%),
+    radial-gradient(circle at 80% 120%, rgba(236,72,153,0.35), transparent 55%);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(15,23,42,0.8);
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+}
+
+/* Couleur "courante" des icônes : on garde la charte jaune/rose */
+
+.icon--smile  { color: #facc15; }
+.icon--clock  { color: #ec4899; }
+.icon--puzzle { color: #facc15; }
+.icon--shield { color: #ec4899; }
+.icon--phone  { color: #ec4899; }
+.icon--mail   { color: #facc15; }
+.icon--pin    { color: #ec4899; }
+
+/* ========== ANIMATIONS ========== */
+
+@keyframes bob {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-2px); }
+}
+
+@keyframes waveArm {
+  0%,100% { transform: rotate(0deg); }
+  30%     { transform: rotate(-18deg); }
+  60%     { transform: rotate(10deg); }
+}
+
+@keyframes sparkle {
+  0%,100% { transform: scale(0.9); opacity: 0.6; }
+  50%     { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes spinHand {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatPiece {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-4px); }
+}
+
+@keyframes shieldGlow {
+  0%,100% { opacity: 0; transform: translateX(-8px); }
+  50%     { opacity: 1; transform: translateX(10px); }
+}
+
+@keyframes ringPhone {
+  0%,100% { transform: rotate(0deg); }
+  15%     { transform: rotate(-12deg); }
+  30%     { transform: rotate(9deg); }
+  45%     { transform: rotate(-6deg); }
+  60%     { transform: rotate(4deg); }
+}
+
+@keyframes pulseWave {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes flapMail {
+  0%, 70%, 100% { transform: rotateX(0deg); }
+  40%          { transform: rotateX(-35deg); }
+}
+
+@keyframes pinBob {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
+}
+
+@keyframes pinRing {
+  0% {
+    opacity: 0.6;
+    transform: scaleX(1) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1.3) scaleY(1.5);
+  }
+}
+
+/* Application des animations sur les parties internes des SVG */
+
+.icon--smile .smile-face,
+.icon--smile .smile-body {
+  animation: bob 3s ease-in-out infinite;
+}
+
+.icon--smile .smile-arm {
+  transform-origin: 40px 18px;
+  animation: waveArm 2.5s ease-in-out infinite;
+}
+
+.icon--smile .smile-sparkle {
+  animation: sparkle 1.8s ease-in-out infinite;
+  transform-origin: 44px 12px;
+}
+
+/* Horloge : aiguille qui tourne */
+.icon--clock .clock-hand {
+  transform-origin: 32px 32px;
+  animation: spinHand 6s linear infinite;
+}
+
+/* Puzzle : pièce qui flotte */
+.icon--puzzle .puzzle-piece {
+  animation: floatPiece 2.6s ease-in-out infinite;
+}
+
+/* Bouclier : reflet qui traverse */
+.icon--shield .shield-glow {
+  animation: shieldGlow 3s ease-in-out infinite;
+}
+
+/* Téléphone : corps qui sonne + ondes */
+.icon--phone .phone-body {
+  transform-origin: 32px 40px;
+  animation: ringPhone 1.6s ease-in-out infinite;
+}
+.icon--phone .phone-wave {
+  animation: pulseWave 2.4s ease-out infinite;
+}
+
+/* Mail : rabat qui s’ouvre très légèrement */
+.icon--mail .mail-flap {
+  transform-origin: 32px 24px;
+  transform-box: fill-box;
+  animation: flapMail 3.2s ease-in-out infinite;
+}
+
+/* Pin : bob + halo */
+.icon--pin g {
+  animation: pinBob 2.1s ease-in-out infinite;
+  transform-origin: 32px 22px;
+}
+.icon--pin .pin-ring {
+  animation: pinRing 1.8s ease-out infinite;
+  transform-origin: 32px 50px;
+}
+
+/* Respecte les personnes qui ont réduit les animations */
+@media (prefers-reduced-motion: reduce) {
+  .icon, .icon * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
 
 
 

@@ -19,6 +19,169 @@
   <script defer src="js/main.js"></script>
 </head>
 <body>
+
+  <!-- Sprite d'icônes SVG réutilisables -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     style="position:absolute;width:0;height:0;overflow:hidden"
+     aria-hidden="true" focusable="false">
+  <defs>
+    <!-- 😄 Personnage qui fait coucou -->
+    <symbol id="ic-smile" viewBox="0 0 64 64">
+      <!-- Halo -->
+      <circle cx="32" cy="32" r="30" fill="url(#grad-smile-bg)" opacity="0.9" />
+      <!-- Corps -->
+      <circle class="smile-body" cx="32" cy="40" r="12" fill="#111827" />
+      <!-- Tête -->
+      <circle class="smile-face" cx="28" cy="24" r="9" fill="#fde68a" />
+      <!-- Yeux -->
+      <circle cx="25" cy="23" r="1.2" fill="#111827" />
+      <circle cx="31" cy="23" r="1.2" fill="#111827" />
+      <!-- Sourire -->
+      <path d="M24 26 Q28 29 32 26" stroke="#111827" stroke-width="1.6"
+            stroke-linecap="round" fill="none" />
+      <!-- Bras fixe -->
+      <path d="M21 33 Q18 34 18 37"
+            stroke="#fde68a" stroke-width="3" stroke-linecap="round" />
+      <!-- Bras qui fait coucou -->
+      <g class="smile-arm">
+        <path d="M30 28 Q36 24 40 18"
+              stroke="#fde68a" stroke-width="3.2" stroke-linecap="round" />
+        <circle cx="40.5" cy="17" r="2.3" fill="#fde68a" />
+      </g>
+      <!-- Petite étincelle -->
+      <circle class="smile-sparkle" cx="44" cy="12" r="2"
+              fill="#fbbf24" />
+    </symbol>
+
+    <!-- ⏰ Horloge avec aiguille qui tourne -->
+    <symbol id="ic-clock" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="26" fill="#020617" stroke="#e5e7eb" stroke-width="2.2" />
+      <circle cx="32" cy="32" r="21" fill="#020617" stroke="#4b5563" stroke-width="1.6" />
+      <!-- Ticks -->
+      <g stroke="#4b5563" stroke-linecap="round" stroke-width="1.5">
+        <line x1="32" y1="11" x2="32" y2="14" />
+        <line x1="32" y1="50" x2="32" y2="53" />
+        <line x1="11" y1="32" x2="14" y2="32" />
+        <line x1="50" y1="32" x2="53" y2="32" />
+      </g>
+      <!-- Aiguille heure -->
+      <line x1="32" y1="32" x2="32" y2="20" stroke="#e5e7eb" stroke-width="2" stroke-linecap="round" />
+      <!-- Aiguille minute (tourne) -->
+      <line class="clock-hand" x1="32" y1="32" x2="43" y2="32"
+            stroke="#f97316" stroke-width="2" stroke-linecap="round" />
+      <circle cx="32" cy="32" r="2.4" fill="#fbbf24" />
+    </symbol>
+
+    <!-- 🧩 Pièce de puzzle qui flotte -->
+    <symbol id="ic-puzzle" viewBox="0 0 64 64">
+      <rect x="10" y="18" width="30" height="30" rx="6" fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <!-- Encoche interne -->
+      <circle cx="25" cy="25" r="4" fill="#111827" />
+      <!-- Pièce qui flotte -->
+      <g class="puzzle-piece">
+        <path
+          d="M36 10 h10 a4 4 0 0 1 4 4 v10
+             a4 4 0 0 1 -4 4 h-6
+             a3 3 0 1 0 0 4 h-4
+             a4 4 0 0 1 -4 -4 v-10
+             a4 4 0 0 1 4 -4 z"
+          fill="#ec4899" />
+      </g>
+    </symbol>
+
+    <!-- 🛡 Bouclier avec liseré lumineux -->
+    <symbol id="ic-shield" viewBox="0 0 64 64">
+      <path
+        d="M32 6 L16 12 V28
+           C16 38 22 47 32 52
+           C42 47 48 38 48 28
+           V12 Z"
+        fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <path d="M24 30 L30 36 L40 24"
+            stroke="#22c55e" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Reflet animé -->
+      <path class="shield-glow"
+            d="M20 14 Q32 10 44 14"
+            stroke="#facc15" stroke-width="1.6"
+            stroke-linecap="round" />
+    </symbol>
+
+    <!-- 📞 Téléphone qui sonne -->
+    <symbol id="ic-phone" viewBox="0 0 64 64">
+      <g class="phone-body">
+        <path
+          d="M18 9 L30 13
+             C32 13.7 33.2 15.8 32.6 17.8
+             L30.8 23.4
+             C32.6 26.4 35 29 38 31
+             L44.2 29.3
+             C46.2 28.7 48.3 29.9 49 31.9
+             L53 44
+             C53.6 45.8 52.8 47.8 51 48.5
+             C47 50 41.2 49.7 35 47.2
+             C28.8 44.7 23.3 40.3 19.4 35.5
+             C15.5 30.7 13.3 25.5 12.6 21.5
+             C12.2 19.1 12.3 16.9 13 15
+             C13.7 13.2 15.5 12.3 17.3 12.9Z"
+          fill="#ec4899" />
+      </g>
+      <!-- Ondes -->
+      <g class="phone-wave" stroke="#facc15" stroke-width="2" stroke-linecap="round" fill="none">
+        <path d="M41 13 Q47 18 49 25" />
+        <path d="M44 9 Q52 16 54 27" opacity="0.6" />
+      </g>
+    </symbol>
+
+    <!-- ✉️ Enveloppe qui respire -->
+    <symbol id="ic-mail" viewBox="0 0 64 64">
+      <rect x="10" y="16" width="44" height="30" rx="6"
+            fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <path d="M12 18 L32 32 L52 18"
+            stroke="#e5e7eb" stroke-width="2" fill="none" />
+      <!-- Rabat -->
+      <path class="mail-flap"
+            d="M12 18 L32 32 L52 18"
+            fill="url(#grad-mail)" opacity="0.9" />
+    </symbol>
+
+    <!-- 📍 Pin de carte + halo -->
+    <symbol id="ic-pin" viewBox="0 0 64 64">
+      <g>
+        <path
+          d="M32 8
+             C24 8 18 14.1 18 22
+             C18 26.7 20.3 31 22.8 34.6
+             C25 37.8 27.4 40.7 29.9 43.6
+             C31.1 45 32 46 32 46
+             C32 46 32.9 45 34.1 43.6
+             C36.6 40.7 39 37.8 41.2 34.6
+             C43.7 31 46 26.7 46 22
+             C46 14.1 40 8 32 8Z"
+          fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+        <circle cx="32" cy="22" r="5" fill="#ec4899" />
+      </g>
+      <!-- Halo au sol -->
+      <ellipse class="pin-ring" cx="32" cy="50" rx="10" ry="3.6"
+               fill="rgba(0,0,0,0.6)" />
+    </symbol>
+
+    <!-- Dégradés -->
+    <linearGradient id="grad-smile-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#facc15" />
+      <stop offset="50%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+
+    <linearGradient id="grad-mail" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#facc15" />
+    </linearGradient>
+
+  </defs>
+</svg>
+
+
   <!-- PRELOADER -->
   <div id="preloader" aria-hidden="true">
     <div class="spinner" aria-label="Chargement">
@@ -128,11 +291,43 @@
           <p class="lead">Suite à mon intervention, assistance, réparation ou dépannage, je souhaite que vous ayez le sentiment que l’informatique vous facilite la vie et vous aide au quotidien.</p>
           <p class="lead">Je prends le temps de vous expliquer et de vous former afin que vous puissiez vous sentir à l'aise avec l'informatique.</p>
           <ul class="values">
-            <li data-magnet><span>😊</span> Sourire & pédagogie</li>
-            <li data-magnet><span>🕐</span> Ponctualité & fiabilité</li>
-            <li data-magnet><span>🧩</span> Adaptabilité & clarté</li>
-            <li data-magnet><span>🛡️</span> Transparence & sécurité</li>
-          </ul>
+  <li data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--smile" aria-hidden="true" focusable="false">
+        <use href="#ic-smile"></use>
+      </svg>
+    </span>
+    Sourire & pédagogie
+  </li>
+
+  <li data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--clock" aria-hidden="true" focusable="false">
+        <use href="#ic-clock"></use>
+      </svg>
+    </span>
+    Ponctualité & fiabilité
+  </li>
+
+  <li data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--puzzle" aria-hidden="true" focusable="false">
+        <use href="#ic-puzzle"></use>
+      </svg>
+    </span>
+    Adaptabilité & clarté
+  </li>
+
+  <li data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--shield" aria-hidden="true" focusable="false">
+        <use href="#ic-shield"></use>
+      </svg>
+    </span>
+    Transparence & sécurité
+  </li>
+</ul>
+
         </div>
 
         <div class="card profile" data-magnet>
@@ -407,10 +602,39 @@
       <h2 id="h-contact">On démarre ? <span class="accent">J'ai hâte.</span></h2>
       <p class="lead">Intervention à domicile sur rendez-vous exclusivement. Conseils & Accompagnement sur-mesure.</p>
       <div class="contact__grid">
-        <a class="cta-tile btn-magnet" href="tel:+33698998001" data-magnet><span>📞</span><strong>06&nbsp;98&nbsp;99&nbsp;80&nbsp;01</strong><small>Appel direct</small></a>
-        <a class="cta-tile btn-magnet" href="mailto:contact@informatique-cerdagne.fr" data-magnet><span>✉️</span><strong>contact@informatique-cerdagne.fr</strong><small>Réponse rapide</small></a>
-        <a class="cta-tile btn-magnet" href="https://www.google.com/maps/search/?api=1&query=Cerdagne" target="_blank" rel="noopener" data-magnet><span>📍</span><strong>Cerdagne / Capcir</strong><small>Zone d’intervention</small></a>
-      </div>
+  <a class="cta-tile btn-magnet" href="tel:+33698998001" data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--phone" aria-hidden="true" focusable="false">
+        <use href="#ic-phone"></use>
+      </svg>
+    </span>
+    <strong>06&nbsp;98&nbsp;99&nbsp;80&nbsp;01</strong>
+    <small>Appel direct</small>
+  </a>
+
+  <a class="cta-tile btn-magnet" href="mailto:contact@informatique-cerdagne.fr" data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--mail" aria-hidden="true" focusable="false">
+        <use href="#ic-mail"></use>
+      </svg>
+    </span>
+    <strong>contact@informatique-cerdagne.fr</strong>
+    <small>Réponse rapide</small>
+  </a>
+
+  <a class="cta-tile btn-magnet"
+     href="https://www.google.com/maps/search/?api=1&query=Cerdagne"
+     target="_blank" rel="noopener" data-magnet>
+    <span class="icon-wrapper">
+      <svg class="icon icon--pin" aria-hidden="true" focusable="false">
+        <use href="#ic-pin"></use>
+      </svg>
+    </span>
+    <strong>Cerdagne / Capcir</strong>
+    <small>Zone d’intervention</small>
+  </a>
+</div>
+
     </div>
   </section>
 
