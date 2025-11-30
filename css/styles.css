@@ -610,13 +610,6 @@ a.premium:focus-visible::after {
   margin: 0;
 }
 
-/* Layout des cartes Prestations */
-.prestations .grid-cards {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: 1fr; /* par défaut : 1 carte par ligne (mobile) */
-}
-
 .prestations .service {
   display: flex;
   flex-direction: column;
@@ -845,11 +838,20 @@ a.premium:focus-visible::after {
   transform: translateY(-4px) scale(1.03);
 }
 
-/* Force 2 cartes par ligne pour Prestations dès que l’écran est un peu large */
-@media (min-width: 600px) {
-  .prestations .grid-cards {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 24px !important;
+/* =========================
+   Grille spécifique Prestations
+   ========================= */
+
+/* Par défaut : 1 carte par ligne (mobile) */
+.grid-cards--prestations {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+}
+
+/* Dès que l'écran commence à être un peu large : 2 cartes par ligne */
+@media (min-width: 640px) {
+  .grid-cards--prestations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
