@@ -851,3 +851,12 @@ a.premium:focus-visible::after {
 .cta-tile:hover .contact__icon svg {
   transform: translateY(-4px) scale(1.03);
 }
+
+/* Force 2 cartes par ligne pour Prestations dès que l’écran est un peu large */
+@media (min-width: 600px) {
+  .prestations .grid-cards {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+  }
+}
