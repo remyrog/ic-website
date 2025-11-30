@@ -617,13 +617,6 @@ a.premium:focus-visible::after {
   grid-template-columns: 1fr; /* par défaut : 1 carte par ligne (mobile) */
 }
 
-/* À partir de la tablette / desktop : 2 cartes par ligne */
-@media (min-width: 768px) {
-  .prestations .grid-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 .prestations .service {
   display: flex;
   flex-direction: column;
