@@ -597,8 +597,25 @@ a.premium:focus-visible::after {
   text-align: left;
 }
 
+/* Titre prestations : aligner icône + texte */
 .prestations .service h3 {
-  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Icône un poil plus compacte dans les titres */
+.prestations .service h3 .ic-badge {
+  width: 2.2rem;
+  height: 2.2rem;
+  flex-shrink: 0;
+}
+
+/* Sur grands écrans, passer à 2 colonnes pour éviter les retours à la ligne */
+@media (min-width: 1200px) {
+  .prestations .grid-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .prestations .service p {
@@ -718,21 +735,22 @@ a.premium:focus-visible::after {
    Icônes inline (SVG)
    ========================= */
 
-/* Pour les petites pastilles (ma démarche, listes…) */
 .ic-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 999px;
-  margin-right: 0.7rem;
-  flex-shrink: 0;
-  background: #050816;
-  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: radial-gradient(circle at 30% 20%, #111827, #020617);
   box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(15, 23, 42, 0.9);
+    0 0 0 1px rgba(148, 163, 184, 0.35),
+    0 10px 25px rgba(0, 0, 0, 0.8);
+}
+
+.ic-badge .ic-svg {
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
 .ic-svg {
