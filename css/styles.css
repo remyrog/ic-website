@@ -703,6 +703,48 @@ a.premium:focus-visible::after {
   display: block;
 }
 
+/* =========================
+   Icônes inline (SVG)
+   ========================= */
 
+/* Pour les petites pastilles (ma démarche, listes…) */
+.ic-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  margin-right: 0.7rem;
+  flex-shrink: 0;
+  background: #050816;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(15, 23, 42, 0.9);
+}
 
+.ic-svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  display: block;
+}
+
+/* Icônes gros format des tuiles contact */
+.contact__icon {
+  width: 4.2rem;
+  height: 4.2rem;
+  margin: 0 auto 1.3rem;
+}
+
+.contact__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Optionnel : léger zoom au survol des tuiles contact */
+.cta-tile:hover .contact__icon svg {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease-out;
+}
 
