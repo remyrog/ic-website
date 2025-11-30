@@ -188,6 +188,17 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 
 .expertise .tick { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px }
 .expertise .tick li { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); padding: 10px 12px; border-radius: 10px }
+.expertise .tick li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.expertise .tick .ic-badge {
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-right: 0;
+}
 .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px }
 .chips span { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); padding: 8px 10px; border-radius: 999px }
 

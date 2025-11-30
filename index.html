@@ -178,6 +178,98 @@
       <stop offset="100%" stop-color="#facc15" />
     </linearGradient>
 
+        <!-- 🔧 Réparation / optimisation -->
+    <symbol id="ic-service-repair" viewBox="0 0 64 64">
+      <g>
+        <rect x="10" y="18" width="30" height="20" rx="4"
+              fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+        <rect x="14" y="22" width="22" height="12" rx="2"
+              fill="#0f172a" />
+        <!-- clé plate -->
+        <g fill="none" stroke="#facc15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 28 L26 20" />
+          <circle cx="18" cy="28" r="2.4" />
+          <path d="M26 20 L30 24" />
+        </g>
+      </g>
+    </symbol>
+
+    <!-- 🛡 Sécurité / sauvegardes (réutilise le bouclier) -->
+    <symbol id="ic-service-security" viewBox="0 0 64 64">
+      <use href="#ic-shield" />
+    </symbol>
+
+    <!-- 📦 Installation / personnalisation -->
+    <symbol id="ic-service-setup" viewBox="0 0 64 64">
+      <rect x="10" y="16" width="34" height="22" rx="4"
+            fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <rect x="14" y="20" width="26" height="10" rx="2"
+            fill="#0f172a" />
+      <!-- curseur / slider -->
+      <line x1="16" y1="24" x2="32" y2="24"
+            stroke="#facc15" stroke-width="2" stroke-linecap="round" />
+      <circle cx="26" cy="24" r="2.2" fill="#ec4899" />
+    </symbol>
+
+    <!-- 💡 Conseil & achat -->
+    <symbol id="ic-service-advice" viewBox="0 0 64 64">
+      <!-- bulle -->
+      <path
+        d="M14 20
+           Q14 14 21 14
+           H38
+           Q45 14 45 20
+           V28
+           Q45 34 38 34
+           H26
+           L21 38
+           V34
+           Q14 34 14 28 Z"
+        fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <!-- coche -->
+      <path d="M23 24 L28 29 L36 20"
+            stroke="#22c55e" stroke-width="2.3"
+            stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+
+    <!-- 🖥 Programmation & visibilité -->
+    <symbol id="ic-service-dev" viewBox="0 0 64 64">
+      <rect x="10" y="16" width="38" height="24" rx="4"
+            fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <circle cx="14" cy="20" r="1.4" fill="#ef4444" />
+      <circle cx="18" cy="20" r="1.4" fill="#facc15" />
+      <circle cx="22" cy="20" r="1.4" fill="#22c55e" />
+      <!-- chevrons -->
+      <path d="M20 27 L16 30 L20 33"
+            stroke="#ec4899" stroke-width="1.7"
+            stroke-linecap="round" fill="none" />
+      <path d="M30 27 L34 30 L30 33"
+            stroke="#ec4899" stroke-width="1.7"
+            stroke-linecap="round" fill="none" />
+      <rect x="25" y="27" width="3" height="6" rx="1"
+            fill="#facc15" />
+    </symbol>
+
+    <!-- 📚 Formation & accompagnement -->
+    <symbol id="ic-service-coach" viewBox="0 0 64 64">
+      <!-- livre -->
+      <path
+        d="M18 18 H40
+           Q46 18 46 24
+           V40
+           Q46 46 40 46
+           H18 Z"
+        fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <line x1="22" y1="22" x2="36" y2="22"
+            stroke="#facc15" stroke-width="2" stroke-linecap="round" />
+      <line x1="22" y1="26" x2="34" y2="26"
+            stroke="#e5e7eb" stroke-width="1.6" stroke-linecap="round" />
+      <!-- personnage stylisé -->
+      <circle cx="26" cy="33" r="2.2" fill="#ec4899" />
+      <path d="M24.5 36.5 Q26 38 27.5 36.5"
+            stroke="#ec4899" stroke-width="1.7" stroke-linecap="round" />
+    </symbol>
+
   </defs>
 </svg>
 
@@ -491,7 +583,14 @@
 
       <div class="grid-cards">
         <article class="service" data-magnet>
-          <h3>🔧 Dépannage & optimisation</h3>
+<h3>
+  <span class="ic-badge">
+    <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--wiggle">
+      <use href="#ic-service-repair" />
+    </svg>
+  </span>
+  Dépannage & optimisation
+</h3>
           <p class="service-tagline">Quand ça rame, plante ou ne s’allume plus.</p>
           <ul class="service-list">
             <li>Nettoyage et diagnostic complet</li>
@@ -501,7 +600,14 @@
         </article>
 
         <article class="service" data-magnet>
-          <h3>🛡️ Sécurité & sauvegardes</h3>
+<h3>
+  <span class="ic-badge">
+    <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--pulse">
+      <use href="#ic-service-security" />
+    </svg>
+  </span>
+  Sécurité & sauvegardes
+</h3>
           <p class="service-tagline">Protéger vos données et vos souvenirs.</p>
           <ul class="service-list">
             <li>Sécurisation après arnaque ou tentative de piratage</li>
@@ -512,7 +618,14 @@
         </article>
 
         <article class="service" data-magnet>
-          <h3>📦 Installations & personnalisation</h3>
+<h3>
+  <span class="ic-badge">
+    <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--bounce">
+      <use href="#ic-service-setup" />
+    </svg>
+  </span>
+  Installations & personnalisation
+</h3>
           <p class="service-tagline">Être opérationnel, sans prise de tête.</p>
           <ul class="service-list">
             <li>Mise en fonction Windows, macOS & Linux</li>
@@ -522,7 +635,14 @@
         </article>
 
         <article class="service" data-magnet>
-          <h3>💡 Conseils & achat</h3>
+<h3>
+  <span class="ic-badge">
+    <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--wiggle">
+      <use href="#ic-service-advice" />
+    </svg>
+  </span>
+  Conseils & achat
+</h3>
           <p class="service-tagline">Acheter juste, pas plus.</p>
           <ul class="service-list">
             <li>Recommandations d’achat 100&nbsp;% désintéressées</li>
@@ -533,7 +653,14 @@
         </article>
 
         <article class="service" data-magnet>
-          <h3>🖥️ Programmation & visibilité</h3>
+<h3>
+  <span class="ic-badge">
+    <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--pulse">
+      <use href="#ic-service-dev" />
+    </svg>
+  </span>
+  Programmation & visibilité
+</h3>
           <p class="service-tagline">Gagner du temps et être visible.</p>
           <ul class="service-list">
             <li>Sites web</li>
@@ -544,7 +671,14 @@
         </article>
 
         <article class="service" data-magnet>
-          <h3>📚 Formation & accompagnement</h3>
+<h3>
+  <span class="ic-badge">
+    <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--bounce">
+      <use href="#ic-service-coach" />
+    </svg>
+  </span>
+  Formation & accompagnement
+</h3>
           <p class="service-tagline">Apprendre à votre rythme, sans jargon.</p>
           <ul class="service-list">
             <li>Audit & conseils personnalisés</li>
@@ -563,23 +697,52 @@
     <div class="split reverse">
       <div class="card glow">
         <h3>Expertise</h3>
-        <ul class="tick">
-          <li data-magnet>
-            Programmation web & applicative sur-mesure
-          </li>
-          <li data-magnet>
-            Automatisation des tâches & processus
-          </li>
-          <li data-magnet>
-            Optimisation des performances & Sauvegardes
-          </li>
-          <li data-magnet>
-            Cybersécurité & Récupération de données
-          </li>
-          <li data-magnet>
-            Recommandations d’achat 100&nbsp;% désintéressées
-          </li>
-        </ul>
+<ul class="tick">
+  <li data-magnet>
+    <span class="ic-badge">
+      <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--pulse">
+        <use href="#ic-service-dev" />
+      </svg>
+    </span>
+    Programmation web & applicative sur-mesure
+  </li>
+
+  <li data-magnet>
+    <span class="ic-badge">
+      <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--wiggle">
+        <use href="#ic-service-setup" />
+      </svg>
+    </span>
+    Automatisation des tâches & processus
+  </li>
+
+  <li data-magnet>
+    <span class="ic-badge">
+      <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--bounce">
+        <use href="#ic-service-repair" />
+      </svg>
+    </span>
+    Optimisation des performances & Sauvegardes
+  </li>
+
+  <li data-magnet>
+    <span class="ic-badge">
+      <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--pulse">
+        <use href="#ic-service-security" />
+      </svg>
+    </span>
+    Cybersécurité & Récupération de données
+  </li>
+
+  <li data-magnet>
+    <span class="ic-badge">
+      <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--bounce">
+        <use href="#ic-service-advice" />
+      </svg>
+    </span>
+    Recommandations d’achat 100&nbsp;% désintéressées
+  </li>
+</ul>
       </div>
 
       <div>
