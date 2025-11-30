@@ -584,11 +584,6 @@ a.premium:focus-visible::after {
   }
 }
 
-/* PRESTATIONS – cartes harmonisées */
-.prestations .grid-cards {
-  align-items: stretch;
-}
-
 .prestations .service {
   display: flex;
   flex-direction: column;
@@ -611,20 +606,22 @@ a.premium:focus-visible::after {
   flex-shrink: 0;
 }
 
-/* Sur grands écrans, passer à 2 colonnes pour éviter les retours à la ligne */
-@media (min-width: 1200px) {
-  .prestations .grid-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 .prestations .service p {
   margin: 0;
 }
 
-/* PRESTATIONS – mise en forme du contenu */
+/* Layout des cartes Prestations */
 .prestations .grid-cards {
-  align-items: stretch;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr; /* par défaut : 1 carte par ligne (mobile) */
+}
+
+/* À partir de la tablette / desktop : 2 cartes par ligne */
+@media (min-width: 768px) {
+  .prestations .grid-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .prestations .service {
