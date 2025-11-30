@@ -290,46 +290,42 @@
           <p class="lead">Je conçois le service comme une relation humaine : empathie, écoute, patience, persévérance, respect, générosité, soin.</p>
           <p class="lead">Suite à mon intervention, assistance, réparation ou dépannage, je souhaite que vous ayez le sentiment que l’informatique vous facilite la vie et vous aide au quotidien.</p>
           <p class="lead">Je prends le temps de vous expliquer et de vous former afin que vous puissiez vous sentir à l'aise avec l'informatique.</p>
+          
           <ul class="values">
-  <!-- Sourire & pédagogie -->
+  <!-- Sourire & pédagogie : gros smiley qui rebondit légèrement -->
   <li data-magnet>
     <span class="ic-badge">
       <svg viewBox="0 0 32 32" aria-hidden="true" class="ic-svg">
-        <!-- petit tableau -->
-        <rect x="16" y="7" width="10" height="7" rx="1.5"
-              fill="#020617" stroke="#e5e7eb" stroke-width="1" />
-        <line x1="17" y1="10" x2="25" y2="10"
-              stroke="#facc15" stroke-width="1" stroke-linecap="round" />
-        <line x1="18" y1="12" x2="23" y2="12"
-              stroke="#ec4899" stroke-width="0.9" stroke-linecap="round" />
-
-        <!-- personnage -->
-        <circle cx="10.5" cy="11" r="4.1" fill="#fde68a" />
-        <circle cx="9.3" cy="10.3" r="0.7" fill="#111827" />
-        <circle cx="11.7" cy="10.3" r="0.7" fill="#111827" />
-        <path d="M9 12 Q10.5 13.3 12 12"
-              stroke="#111827" stroke-width="0.7"
+        <!-- visage -->
+        <circle id="face" cx="16" cy="16" r="9" fill="#facc15" />
+        <!-- yeux -->
+        <circle cx="13" cy="14" r="1.2" fill="#111827" />
+        <circle cx="19" cy="14" r="1.2" fill="#111827" />
+        <!-- sourire -->
+        <path d="M12.5 18 Q16 20 19.5 18"
+              stroke="#111827" stroke-width="1.3"
               stroke-linecap="round" fill="none" />
-        <path d="M6.5 18 Q10.5 16 14.5 18 L14.5 22 L6.5 22 Z"
-              fill="#111827" />
-
-        <!-- bras qui explique le tableau -->
-        <g>
-          <path d="M12 13.5 Q15 13 16.2 13"
-                stroke="#fde68a" stroke-width="1.2" stroke-linecap="round" />
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            values="0 11.5 13.5; -10 11.5 13.5; 0 11.5 13.5"
-            dur="2.4s"
-            repeatCount="indefinite" />
-        </g>
+        <!-- petit tableau pour la pédagogie -->
+        <rect x="5" y="7" width="8" height="5" rx="1.2"
+              fill="#020617" stroke="#e5e7eb" stroke-width="0.7" />
+        <line x1="6" y1="9.5" x2="11.5" y2="9.5"
+              stroke="#ec4899" stroke-width="0.8" stroke-linecap="round" />
+        <line x1="6" y1="11" x2="9.5" y2="11"
+              stroke="#facc15" stroke-width="0.8" stroke-linecap="round" />
+        <!-- animation rebond du visage -->
+        <animateTransform
+          xlink:href="#face"
+          attributeName="transform"
+          type="translate"
+          values="0 0; 0 -0.8; 0 0"
+          dur="1.8s"
+          repeatCount="indefinite" />
       </svg>
     </span>
     Sourire & pédagogie
   </li>
 
-  <!-- Ponctualité & fiabilité -->
+  <!-- Ponctualité & fiabilité : horloge avec minute qui tourne -->
   <li data-magnet>
     <span class="ic-badge">
       <svg viewBox="0 0 32 32" aria-hidden="true" class="ic-svg">
@@ -337,62 +333,56 @@
                 fill="#020617" stroke="#e5e7eb" stroke-width="1.1" />
         <circle cx="16" cy="16" r="6"
                 fill="#020617" stroke="#4b5563" stroke-width="0.9" />
-        <!-- quarts -->
         <g stroke="#4b5563" stroke-linecap="round" stroke-width="0.8">
           <line x1="16" y1="9.5" x2="16" y2="10.7" />
           <line x1="16" y1="21.3" x2="16" y2="22.5" />
           <line x1="9.5" y1="16" x2="10.7" y2="16" />
           <line x1="21.3" y1="16" x2="22.5" y2="16" />
         </g>
-        <!-- aiguille heure -->
         <line x1="16" y1="16" x2="16" y2="11.5"
               stroke="#e5e7eb" stroke-width="0.9" stroke-linecap="round" />
-        <!-- aiguille minute animée -->
-        <line x1="16" y1="16" x2="20.5" y2="16"
-              stroke="#f97316" stroke-width="0.9" stroke-linecap="round">
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0 16 16"
-            to="360 16 16"
-            dur="6s"
-            repeatCount="indefinite" />
-        </line>
+        <line id="minute-hand" x1="16" y1="16" x2="20.5" y2="16"
+              stroke="#f97316" stroke-width="0.9" stroke-linecap="round" />
         <circle cx="16" cy="16" r="0.9" fill="#facc15" />
-        <!-- coche fiabilité -->
-        <path d="M19.5 19.5 L21 21 L23.5 18"
-              stroke="#22c55e" stroke-width="1.2"
-              stroke-linecap="round" stroke-linejoin="round" />
+        <animateTransform
+          xlink:href="#minute-hand"
+          attributeName="transform"
+          type="rotate"
+          from="0 16 16"
+          to="360 16 16"
+          dur="5s"
+          repeatCount="indefinite" />
       </svg>
     </span>
     Ponctualité & fiabilité
   </li>
 
-  <!-- Adaptabilité & clarté -->
+  <!-- Adaptabilité & clarté : ampoule qui pulse + flèches d’échange -->
   <li data-magnet>
     <span class="ic-badge">
       <svg viewBox="0 0 32 32" aria-hidden="true" class="ic-svg">
         <!-- ampoule -->
-        <g>
-          <circle cx="12" cy="12" r="3.8" fill="#facc15" />
-          <rect x="11" y="15" width="2" height="3.4" rx="0.8" fill="#111827" />
-          <rect x="10.4" y="18.4" width="3.2" height="1.4" rx="0.7" fill="#111827" />
-          <!-- petites rayons -->
+        <g id="bulb">
+          <circle cx="12" cy="12" r="4.2" fill="#facc15" />
+          <rect x="11" y="15.2" width="2" height="3.2" rx="0.8" fill="#111827" />
+          <rect x="10.4" y="18.2" width="3.2" height="1.4" rx="0.7" fill="#111827" />
           <g stroke="#facc15" stroke-width="0.9" stroke-linecap="round">
             <line x1="12" y1="7.2" x2="12" y2="6" />
-            <line x1="8.8" y1="8.2" x2="8" y2="7.2" />
-            <line x1="15.2" y1="8.2" x2="16" y2="7.2" />
+            <line x1="9" y1="8.4" x2="8.2" y2="7.4" />
+            <line x1="15" y1="8.4" x2="15.8" y2="7.4" />
           </g>
-          <animate
-            attributeName="opacity"
-            values="0.7;1;0.7"
-            dur="2s"
-            repeatCount="indefinite" />
         </g>
-        <!-- flèches d’adaptation -->
+        <animate
+          xlink:href="#bulb"
+          attributeName="opacity"
+          values="0.7;1;0.7"
+          dur="2s"
+          repeatCount="indefinite" />
+
+        <!-- flèches adaptabilité -->
         <g stroke="#ec4899" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 10 H23 Q25 10 25 12 V13.5" fill="none" />
-          <path d="M23 13.5 L25 15.5 L27 13.5" fill="none" />
+          <path d="M18 11 H23 Q25 11 25 13 V14.5" fill="none" />
+          <path d="M23 14.5 L25 16.5 L27 14.5" fill="none" />
           <path d="M24 19 H19 Q17 19 17 17.2 V16" fill="none" />
           <path d="M19 16 L17 14 L15 16" fill="none" />
         </g>
@@ -401,7 +391,7 @@
     Adaptabilité & clarté
   </li>
 
-  <!-- Transparence & sécurité -->
+  <!-- Transparence & sécurité : cadenas qui s’ouvre / se ferme -->
   <li data-magnet>
     <span class="ic-badge">
       <svg viewBox="0 0 32 32" aria-hidden="true" class="ic-svg">
@@ -413,14 +403,27 @@
              V8.3 Z"
           fill="#020617" stroke="#e5e7eb" stroke-width="1.1" />
         <!-- cadenas -->
-        <rect x="13" y="14.5" width="6" height="4.5" rx="1"
+        <g id="lock-shackle">
+          <path d="M14.2 14.7 V13.3
+                   Q14.2 11.3 16 11.3
+                   Q17.8 11.3 17.8 13.3 V14.7"
+                fill="none" stroke="#e5e7eb" stroke-width="0.8"
+                stroke-linecap="round" />
+        </g>
+        <rect x="13" y="14.7" width="6" height="4.5" rx="1"
               fill="#0f172a" stroke="#e5e7eb" stroke-width="0.8" />
-        <path d="M14.8 14.5 V13.2
-                 Q14.8 11 16 11
-                 Q17.2 11 17.2 13.2 V14.5"
-              fill="none" stroke="#e5e7eb" stroke-width="0.8" />
-        <circle cx="16" cy="16.3" r="0.7" fill="#facc15" />
-        <!-- reflet animé pour la "transparence" -->
+        <circle cx="16" cy="16.9" r="0.8" fill="#facc15" />
+
+        <!-- animation ouverture / fermeture du cadenas -->
+        <animateTransform
+          xlink:href="#lock-shackle"
+          attributeName="transform"
+          type="rotate"
+          values="0 16 13.5; -18 16 13.5; 0 16 13.5"
+          dur="2.6s"
+          repeatCount="indefinite" />
+
+        <!-- petit reflet qui balaye -->
         <path
           d="M11 9.2 Q16 7.8 21 9.2"
           stroke="#facc15" stroke-width="0.9" stroke-linecap="round">
@@ -429,19 +432,12 @@
             values="0;1;0"
             dur="2.4s"
             repeatCount="indefinite" />
-          <animateTransform
-            attributeName="transform"
-            type="translate"
-            values="-1 0; 1 0; -1 0"
-            dur="2.4s"
-            repeatCount="indefinite" />
         </path>
       </svg>
     </span>
     Transparence & sécurité
   </li>
 </ul>
-
         </div>
 
         <div class="card profile" data-magnet>
@@ -717,164 +713,180 @@
     <p class="lead">Intervention à domicile & sur rendez-vous exclusivement, conseils & accompagnement sur-mesure.</p>
 
     <div class="contact__grid">
-      <!-- Tél -->
-      <a class="cta-tile btn-magnet" href="tel:+33698998001" data-magnet>
-        <div class="contact__icon">
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <!-- combiné -->
-            <g>
-              <path
-                d="M18 16
-                   Q18 11 22 11
-                   L26 11
-                   Q30 11 30 16
-                   L30 22
-                   Q30 27 26 27
-                   L22 27
-                   Q18 27 18 22 Z"
-                fill="#ec4899" />
-              <path
-                d="M34 37
-                   Q34 32 38 32
-                   L42 32
-                   Q46 32 46 37
-                   L46 43
-                   Q46 48 42 48
-                   L38 48
-                   Q34 48 34 43 Z"
-                fill="#ec4899" />
-              <path
-                d="M26 24 L34 32"
-                stroke="#ec4899" stroke-width="6" stroke-linecap="round" />
-            </g>
+      <!-- TUILE TÉLÉPHONE -->
+<a class="cta-tile btn-magnet" href="tel:+33698998001" data-magnet>
+  <div class="contact__icon">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <g id="phone" transform="translate(0,0)">
+        <!-- combiné classique -->
+        <path
+          d="M20 16
+             Q18 20 21 25
+             Q25 31 30 35
+             Q35 39 41 43
+             Q46 46 48 42
+             L51 36
+             Q53 32 49 29
+             L45 27
+             Q42 25 40 28
+             L38 31
+             Q34 29 30.5 26
+             Q27 23 25 20
+             L28 18
+             Q31 16 30 13
+             L28 9
+             Q26 5 22 7
+             Z"
+          fill="#ec4899" />
+        <!-- centre assombri -->
+        <path
+          d="M24 15
+             Q23 17 25 21
+             Q28 26 32 29
+             Q36 32 40 35
+             Q44 37 45.5 35"
+          fill="none" stroke="#be185d" stroke-width="2" stroke-linecap="round" />
+      </g>
 
-            <!-- secousse du téléphone -->
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              values="0 32 32; -7 32 32; 5 32 32; -4 32 32; 0 32 32"
-              dur="1.2s"
-              repeatCount="indefinite" />
+      <!-- légère secousse de l’ensemble du téléphone -->
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="0 32 32; -8 32 32; 7 32 32; -4 32 32; 0 32 32"
+        dur="0.9s"
+        repeatCount="indefinite" />
 
-            <!-- ondes -->
-            <g stroke="#facc15" stroke-width="2.4" stroke-linecap="round" fill="none">
-              <path d="M46 17 Q52 23 54 30">
-                <animate
-                  attributeName="opacity"
-                  values="0;1;0"
-                  dur="1.2s"
-                  repeatCount="indefinite" />
-              </path>
-              <path d="M49 13 Q57 21 59 31" opacity="0.6">
-                <animate
-                  attributeName="opacity"
-                  values="0;0.8;0"
-                  dur="1.4s"
-                  repeatCount="indefinite" />
-              </path>
-            </g>
-          </svg>
-        </div>
-        <strong>06&nbsp;98&nbsp;99&nbsp;80&nbsp;01</strong>
-        <small>Appel direct</small>
-      </a>
+      <!-- ondes de sonnerie -->
+      <g stroke="#facc15" stroke-width="2.4" stroke-linecap="round" fill="none">
+        <path d="M46 18 Q52 23 54 30">
+          <animate
+            attributeName="opacity"
+            values="0;1;0"
+            dur="0.9s"
+            repeatCount="indefinite" />
+        </path>
+        <path d="M49 14 Q57 21 59 31" opacity="0.5">
+          <animate
+            attributeName="opacity"
+            values="0;0.8;0"
+            dur="1.1s"
+            repeatCount="indefinite" />
+        </path>
+      </g>
+    </svg>
+  </div>
+  <strong>06&nbsp;98&nbsp;99&nbsp;80&nbsp;01</strong>
+  <small>Appel direct</small>
+</a>
 
-      <!-- Mail -->
-      <a class="cta-tile btn-magnet" href="mailto:contact@informatique-cerdagne.fr" data-magnet>
-        <div class="contact__icon">
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <!-- enveloppe -->
-            <rect x="10" y="18" width="44" height="28" rx="6"
-                  fill="#020617" stroke="#e5e7eb" stroke-width="2" />
-            <!-- contenu en dégradé -->
-            <defs>
-              <linearGradient id="mail-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#ec4899" />
-                <stop offset="50%" stop-color="#f97316" />
-                <stop offset="100%" stop-color="#facc15" />
-              </linearGradient>
-            </defs>
-            <path d="M12 20 L32 34 L52 20" fill="url(#mail-grad)" />
-            <!-- rabat -->
-            <path id="mail-flap"
-                  d="M12 20 L32 34 L52 20 L52 18 L12 18 Z"
-                  fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+<!-- TUILE MAIL -->
+<a class="cta-tile btn-magnet" href="mailto:contact@informatique-cerdagne.fr" data-magnet>
+  <div class="contact__icon">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="mail-grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ec4899" />
+          <stop offset="50%" stop-color="#f97316" />
+          <stop offset="100%" stop-color="#facc15" />
+        </linearGradient>
+      </defs>
 
-            <!-- anim rabat qui s'ouvre/ferme -->
-            <animateTransform
-              xlink:href="#mail-flap"
-              attributeName="transform"
-              type="rotate"
-              values="0 32 20; -18 32 20; 0 32 20"
-              dur="2.8s"
-              repeatCount="indefinite" />
+      <!-- corps de l’enveloppe -->
+      <rect x="10" y="20" width="44" height="26" rx="6"
+            fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+      <!-- intérieur en dégradé -->
+      <path d="M12 22 L32 36 L52 22" fill="url(#mail-grad2)" />
 
-            <!-- petit badge "notification" -->
-            <circle cx="48" cy="20" r="3.5" fill="#ef4444">
-              <animate
-                attributeName="r"
-                values="3.5;4;3.5"
-                dur="1.8s"
-                repeatCount="indefinite" />
-            </circle>
-          </svg>
-        </div>
-        <strong>contact@informatique-cerdagne.fr</strong>
-        <small>Réponse rapide</small>
-      </a>
+      <!-- lettre qui glisse -->
+      <rect id="mail-letter"
+            x="14" y="18" width="36" height="18" rx="2.5"
+            fill="#f9fafb" />
+      <animateTransform
+        xlink:href="#mail-letter"
+        attributeName="transform"
+        type="translate"
+        values="0 0; 0 -6; 0 0"
+        dur="2.6s"
+        repeatCount="indefinite" />
 
-      <!-- Zone d'intervention -->
-      <a class="cta-tile btn-magnet"
-         href="https://www.google.com/maps/search/?api=1&query=Cerdagne"
-         target="_blank" rel="noopener" data-magnet>
-        <div class="contact__icon">
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <!-- trajet -->
-            <path id="route-path"
-                  d="M8 46 C18 38 28 40 36 34 C44 28 52 26 56 20"
-                  fill="none" stroke="#64748b" stroke-width="2"
-                  stroke-linecap="round" stroke-dasharray="4 5" />
+      <!-- rabat blanc -->
+      <path
+        d="M12 22 L32 36 L52 22 L52 20 L12 20 Z"
+        fill="rgba(15,23,42,0.95)" stroke="#e5e7eb" stroke-width="2" />
 
-            <!-- point qui avance sur le trajet -->
-            <circle r="2.6" fill="#facc15">
-              <animateMotion
-                dur="3.2s"
-                repeatCount="indefinite"
-                rotate="auto">
-                <mpath xlink:href="#route-path" />
-              </animateMotion>
-            </circle>
+      <!-- petite notif -->
+      <circle cx="50" cy="22" r="3.5" fill="#ef4444">
+        <animate
+          attributeName="r"
+          values="3.5;4.4;3.5"
+          dur="2s"
+          repeatCount="indefinite" />
+      </circle>
+    </svg>
+  </div>
+  <strong>contact@informatique-cerdagne.fr</strong>
+  <small>Réponse rapide</small>
+</a>
 
-            <!-- pin -->
-            <g>
-              <path
-                d="M32 10
-                   C24 10 18 16.3 18 24
-                   C18 28.4 20.1 32.3 22.4 35.6
-                   C24.5 38.7 27 41.5 29.2 44.2
-                   C30.4 45.8 31.2 46.8 32 47.8
-                   C32.8 46.8 33.6 45.8 34.8 44.2
-                   C37 41.5 39.5 38.7 41.6 35.6
-                   C43.9 32.3 46 28.4 46 24
-                   C46 16.3 40 10 32 10 Z"
-                fill="#020617" stroke="#e5e7eb" stroke-width="2" />
-              <circle cx="32" cy="24" r="5" fill="#ec4899" />
-            </g>
+<!-- TUILE ZONE D’INTERVENTION -->
+<a class="cta-tile btn-magnet"
+   href="https://www.google.com/maps/search/?api=1&query=Cerdagne"
+   target="_blank" rel="noopener" data-magnet>
+  <div class="contact__icon">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <!-- carte -->
+      <rect x="10" y="16" width="44" height="30" rx="6"
+            fill="#020617" stroke="#e5e7eb" stroke-width="2" />
 
-            <!-- halo au sol -->
-            <ellipse cx="32" cy="51" rx="9" ry="3"
-                     fill="rgba(0,0,0,0.6)">
-              <animate
-                attributeName="opacity"
-                values="0.6;0.2;0.6"
-                dur="2.1s"
-                repeatCount="indefinite" />
-            </ellipse>
-          </svg>
-        </div>
-        <strong>Cerdagne / Capcir</strong>
-        <small>Zone d’intervention</small>
-      </a>
+      <!-- trajet -->
+      <path id="route2"
+            d="M16 40 C24 32 32 36 40 30 C46 25 50 24 54 22"
+            fill="none"
+            stroke="#64748b"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-dasharray="4 6"
+            stroke-dashoffset="0">
+        <animate
+          attributeName="stroke-dashoffset"
+          values="0;10;0"
+          dur="2.4s"
+          repeatCount="indefinite" />
+      </path>
+
+      <!-- point de départ -->
+      <circle cx="16" cy="40" r="3" fill="#facc15" />
+
+      <!-- pin de destination -->
+      <g>
+        <path
+          d="M40 20
+             C35 20 31 23.8 31 28
+             C31 30.9 32.3 33.4 33.8 35.6
+             C35 37.3 36.2 38.8 37.3 40.2
+             C37.7 40.8 38.1 41.3 38.5 41.8
+             C38.9 41.3 39.3 40.8 39.7 40.2
+             C40.8 38.8 42 37.3 43.2 35.6
+             C44.7 33.4 46 30.9 46 28
+             C46 23.8 43 20 40 20Z"
+          fill="#020617" stroke="#e5e7eb" stroke-width="2" />
+        <circle cx="40" cy="28" r="4.3" fill="#ec4899" />
+      </g>
+
+      <!-- halo -->
+      <ellipse cx="40" cy="44" rx="7.5" ry="2.7"
+               fill="rgba(0,0,0,0.7)">
+        <animate
+          attributeName="opacity"
+          values="0.7;0.3;0.7"
+          dur="2.2s"
+          repeatCount="indefinite" />
+      </ellipse>
+    </svg>
+  </div>
+  <strong>Cerdagne / Capcir</strong>
+  <small>Zone d’intervention</small>
+</a>
     </div>
   </div>
 </section>
