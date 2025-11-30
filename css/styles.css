@@ -748,3 +748,80 @@ a.premium:focus-visible::after {
   transition: transform 0.2s ease-out;
 }
 
+/* =========================
+   Animations globales SVG
+   ========================= */
+
+.ic-svg {
+  transform-origin: center;
+}
+
+/* Petit rebond vertical (smiley) */
+.ic-svg--bounce {
+  animation: ic-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes ic-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(2px);
+  }
+}
+
+/* Grosse pulsation (horloge, cadenas) */
+.ic-svg--pulse {
+  animation: ic-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes ic-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.12);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+}
+
+/* Balancement gauche / droite (adaptabilité) */
+.ic-svg--wiggle {
+  animation: ic-wiggle 1.8s ease-in-out infinite;
+}
+
+@keyframes ic-wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-7deg);
+  }
+  60% {
+    transform: rotate(6deg);
+  }
+}
+
+/* Flottement plus marqué pour les tuiles contact */
+.contact__icon--float svg {
+  animation: ic-float 2.1s ease-in-out infinite;
+}
+
+@keyframes ic-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Optionnel : quand on survole la tuile, on booste un peu */
+.cta-tile:hover .contact__icon svg {
+  transform: translateY(-4px) scale(1.03);
+}
