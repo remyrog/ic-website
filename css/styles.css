@@ -119,7 +119,7 @@ body {
 .progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--pink), var(--yellow)) }
 
 /* =========================
-   Hero - Z-INDEX FIXE DEFINITIF
+   Hero - SOLEIL FIXE EN HAUT
    ========================= */
 .hero { 
   padding: 0; 
@@ -141,6 +141,27 @@ body {
   overflow: visible;
   pointer-events: none;
 }
+
+/* SOLEIL : position fixe en haut Ã  droite du titre */
+#sun {
+  transform-origin: center;
+  /* Position initiale du soleil - au-dessus du titre */
+  transform: translate(600px, 120px);
+}
+
+/* Sur petit Ã©cran, on le garde visible mais plus haut */
+@media (max-width: 920px) {
+  #sun {
+    transform: translate(300px, 100px) scale(0.8);
+  }
+}
+
+@media (max-width: 560px) {
+  #sun {
+    transform: translate(150px, 80px) scale(0.6);
+  }
+}
+
 .hero__content { 
   position: relative; 
   z-index: 10;
@@ -218,6 +239,17 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    Content blocks
    ========================= */
 .lead { color: var(--muted); max-width: 980px }
+
+/* SECTION DEMARCHE - Fond distinct */
+.demarche {
+  background: radial-gradient(
+    1200px 600px at 50% -10%,
+    #1a1c2e 0%,
+    #0d0e16 50%,
+    #0c0d12 100%
+  );
+  padding-top: clamp(40px, 6vw, 60px) !important;
+}
 
 .split {
   display: grid;
