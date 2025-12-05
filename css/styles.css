@@ -30,18 +30,18 @@ body {
   --card: #141723;
   --glass: rgba(255,255,255,0.06);
 
-  /* Accent utilitaire (peut etre basculée) */
+  /* Accent utilitaire (peut etre bascule) */
   --accent-color: var(--yellow);
-
-  /* Layout */
-  --roadGap: clamp(16px, 3vw, 42px);
-  --roadH: clamp(200px, 18.75vw, 420px);
 
   /* Border radius */
   --radius-full: 999px;
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
+
+  /* Layout */
+  --roadGap: clamp(16px, 3vw, 42px);
+  --roadH: clamp(200px, 18.75vw, 420px);
 }
 
 /* =========================
@@ -114,24 +114,60 @@ body {
 .btn-ghost { background: rgba(255,255,255,.08); color: inherit; border: 1px solid rgba(255,255,255,.15) }
 .btn.small { padding: .55rem .8rem; font-size: .9rem }
 .btn-magnet { will-change: transform; transition: transform .2s ease }
-/* micro-optim pour tous les aimantés */
+/* micro-optim pour tous les aimantes */
 [data-magnet] { will-change: transform; transition: transform .12s ease-out; }
 .progress { position: absolute; left: 14px; right: 14px; bottom: -8px; height: 4px; background: rgba(255,255,255,.06); border-radius: var(--radius-full); overflow: hidden }
 .progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--pink), var(--yellow)) }
 
 /* =========================
-   Hero
+   Hero - RESPONSIVE FIXE
    ========================= */
-.hero { padding: 0; min-height: 100svh }
-.hero__pin { position: relative; min-height: 100svh; contain: paint }
-.scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1 }
-.hero__content { position: relative; z-index: 5; text-align: center; margin-top: min(26vh, 240px); padding-bottom: calc(var(--roadH) + var(--roadGap)) }
-.hero__badge {
-  display: inline-block; padding: 8px 12px; border-radius: var(--radius-full);
-  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
-  font-weight: 700; letter-spacing: .3px;
+.hero { 
+  padding: 0; 
+  min-height: 100svh;
+  /* FOND UNIFIE avec le reste de la page */
+  background: #0c0d12;
 }
-h1 { font-weight: 900; font-size: clamp(32px, 5.6vw, 72px); margin: 16px 0 6px; line-height: 1.04 }
+.hero__pin { position: relative; min-height: 100svh; contain: paint }
+.scene { 
+  position: absolute; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+  display: block; 
+  z-index: 1;
+  /* Le soleil peut deborder sans casser le layout */
+  overflow: hidden;
+}
+.hero__content { 
+  position: relative; 
+  z-index: 5; 
+  text-align: center; 
+  margin-top: min(26vh, 240px); 
+  padding-bottom: calc(var(--roadH) + var(--roadGap));
+  /* Ajout de padding lateral pour mobile */
+  padding-inline: clamp(16px, 5vw, 0px);
+}
+.hero__badge {
+  display: inline-block; 
+  padding: 8px 12px; 
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,.08); 
+  border: 1px solid rgba(255,255,255,.12);
+  font-weight: 700; 
+  letter-spacing: .3px;
+  /* Responsive : taille plus petite sur mobile */
+  font-size: clamp(0.8rem, 2vw, 1rem);
+}
+h1 { 
+  font-weight: 900; 
+  font-size: clamp(32px, 5.6vw, 72px); 
+  margin: 16px 0 6px; 
+  line-height: 1.04;
+  /* Eviter le debordement */
+  word-wrap: break-word;
+  hyphens: auto;
+}
 h2 {
   font-weight: 900;
   font-size: clamp(28px, 3.8vw, 44px);
@@ -139,9 +175,40 @@ h2 {
 }
 h3 { margin: 0 0 10px; font-size: 1.2rem }
 .hero__content .accent { color: var(--yellow); text-shadow: 0 0 12px rgba(247,198,0,.25) }
-.hero__sub { color: var(--muted); max-width: 980px; margin-inline: auto }
-.cta { display: flex; gap: 14px; justify-content: center; margin-top: 18px }
-.hero__credits { color: var(--muted); font-size: .9rem; opacity: .9; margin-top: 14px }
+.hero__sub { 
+  color: var(--muted); 
+  max-width: 980px; 
+  margin-inline: auto;
+  /* Meilleure lisibilite sur mobile */
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;
+}
+.cta { 
+  display: flex; 
+  gap: 14px; 
+  justify-content: center; 
+  margin-top: 18px;
+  /* Passage en colonne sur tres petit ecran */
+  flex-wrap: wrap;
+}
+.hero__credits { 
+  color: var(--muted); 
+  font-size: clamp(0.8rem, 1.8vw, 0.9rem); 
+  opacity: .9; 
+  margin-top: 14px;
+}
+
+/* Ajustements mobile pour les boutons CTA */
+@media (max-width: 560px) {
+  .cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .cta .btn {
+    width: 100%;
+  }
+}
 
 /* Accent utilitaire */
 .accent { color: var(--accent-color) !important; opacity: 1 !important }
@@ -155,7 +222,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    ========================= */
 .lead { color: var(--muted); max-width: 980px }
 
-/* Layout 2 colonnes réutilisable (démarche / expertise) */
+/* Layout 2 colonnes reutilisable (demarche / expertise) */
 .split {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
@@ -200,7 +267,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   gap: 0.6rem;
 }
 
-.expertise .tick 
+.expertise .tick .ic-badge { width: 2.2rem; height: 2.2rem; margin-right: 0 }
 .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px }
 .chips span { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); padding: 8px 10px; border-radius: var(--radius-full) }
 
@@ -260,6 +327,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   color: transparent !important;
 }
 .small { font-size: .9rem }
+
 /* =========================
    Responsive
    ========================= */
@@ -286,20 +354,20 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    [data-magnet]
    ========================= */
 :root {
-  /* Tokens d'ombre pour garder la même intensité partout */
+  /* Tokens d'ombre pour garder la meme intensite partout */
   --neon-outer: 0 10px 30px rgba(255,94,142,.12);
   --neon-inset: inset 0 0 0 1px rgba(255,94,142,.12);
   --neon-inset-quiet: inset 0 0 0 1px rgba(255,94,142,.08);
 }
 
-/* Base : lÃ©ger "sertissage" rose */
+/* Base : leger "sertissage" rose */
 [data-magnet] {
   box-shadow: var(--neon-inset-quiet);
   transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
   will-change: transform; transform: translateZ(0);
 }
 
-/* Hover / Focus : glow néon rose (même rendu que les tuiles Contact) */
+/* Hover / Focus : glow neon rose (meme rendu que les tuiles Contact) */
 [data-magnet]:hover,
 [data-magnet]:focus-visible {
   box-shadow: var(--neon-outer), var(--neon-inset);
@@ -339,7 +407,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 }
 
 /* =========================
-   Section Avis – layout & style
+   Section Avis - layout & style
    ========================= */
 
 .avis {
@@ -359,7 +427,7 @@ a.premium {
   font-weight: 600;
   text-decoration: none;
   position: relative;
-  color: var(--pink); /* ou var(--yellow) selon le contexte */
+  color: var(--pink);
 }
 
 a.premium::after {
@@ -381,7 +449,7 @@ a.premium:focus-visible::after {
   transform: scaleX(1);
 }
 
-/* Conteneur texte + résumé, en ligne */
+/* Conteneur texte + resume, en ligne */
 .reviews__top {
   display: flex;
   align-items: center;
@@ -417,7 +485,7 @@ a.premium:focus-visible::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Avatar : personnage SVG qui fait coucou, centré verticalement */
+/* Avatar : personnage SVG qui fait coucou, centre verticalement */
 .review__avatar {
   width: 72px;
   height: 72px;
@@ -454,15 +522,13 @@ a.premium:focus-visible::after {
   }
 }
 
-/* Texte des avis : lisible même long */
+/* Texte des avis : lisible meme long */
 .review__text {
   max-width: 980px;
   line-height: 1.6;
 }
 
-/* Au cas où tu utilises encore .review__stars quelque part */
-
-/* Contrôles précédent / suivant */
+/* Controles precedent / suivant */
 .reviews__controls {
   display: flex;
   gap: 12px;
@@ -485,7 +551,7 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Section Avis – Résumé 52 avis / 5
+   Section Avis - Resume 52 avis / 5
    ========================= */
 
 .reviews__summary {
@@ -553,7 +619,7 @@ a.premium:focus-visible::after {
   color: rgba(248, 250, 252, 0.88);
 }
 
-/* Étoiles qui apparaissent une par une */
+/* Etoiles qui apparaissent une par une */
 .reviews__summary-stars {
   display: flex;
   gap: 4px;
@@ -576,22 +642,22 @@ a.premium:focus-visible::after {
   color: #f7c600;
 }
 
-/* Optionnel : sur mobile, le résumé passe gentiment sous le texte */
+/* Optionnel : sur mobile, le resume passe gentiment sous le texte */
 @media (max-width: 700px) {
   .reviews__top {
     align-items: flex-start;
   }
 }
 
-/* Titre prestations : aligner icône + texte */
+/* Titre prestations : aligner icone + texte */
 .prestations .service h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Icône un poil plus compacte dans les titres */
-.prestations .service h3 
+/* Icone un poil plus compacte dans les titres */
+.prestations .service h3 .ic-badge { width: 2.2rem; height: 2.2rem; flex-shrink: 0 }
 
 .prestations .service p {
   margin: 0;
@@ -630,7 +696,7 @@ a.premium:focus-visible::after {
   font-size: 0.95rem;
 }
 
-/* petit point lumineux au lieu des virgules/points médians */
+/* petit point lumineux au lieu des virgules/points medians */
 .prestations .service-list li::before {
   content: "";
   position: absolute;
@@ -644,21 +710,21 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Section Expertise – centre sombre, bords dorés
+   Section Expertise - centre sombre, bords dores
    ========================= */
 
 .expertise {
   position: relative;
   overflow: hidden;
   background:
-    /* halo jaune à gauche */
+    /* halo jaune a gauche */
     radial-gradient(
       circle at 0% 50%,
       rgba(247, 198, 0, 0.22) 0,
       rgba(247, 198, 0, 0.12) 14%,
       transparent 40%
     ),
-    /* halo jaune à droite */
+    /* halo jaune a droite */
     radial-gradient(
       circle at 100% 50%,
       rgba(253, 186, 44, 0.22) 0,
@@ -675,11 +741,33 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Icônes de la section "Ma démarche"
+   Icones de la section "Ma demarche"
    ========================= */
 
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: var(--radius-full);
+  margin-right: 0.6rem;
+  flex-shrink: 0;
+  background: #050816;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(15, 23, 42, 0.9);
+}
+
+.icon-svg {
+  width: 1.7rem;
+  height: 1.7rem;
+  display: block;
+}
+
 /* =========================
-   Icônes inline (SVG)
+   Icones inline (SVG)
    ========================= */
 
 .ic-badge {
@@ -706,7 +794,7 @@ a.premium:focus-visible::after {
   display: block;
 }
 
-/* Icônes gros format des tuiles contact */
+/* Icones gros format des tuiles contact */
 .contact__icon {
   width: 4.2rem;
   height: 4.2rem;
@@ -718,7 +806,7 @@ a.premium:focus-visible::after {
   height: 100%;
 }
 
-/* Optionnel : léger zoom au survol des tuiles contact */
+/* Optionnel : leger zoom au survol des tuiles contact */
 .cta-tile:hover .contact__icon svg {
   transform: translateY(-2px);
   transition: transform 0.2s ease-out;
@@ -766,7 +854,7 @@ a.premium:focus-visible::after {
   }
 }
 
-/* Balancement gauche / droite (adaptabilité) */
+/* Balancement gauche / droite (adaptabilite) */
 .ic-svg--wiggle {
   animation: ic-wiggle 1.8s ease-in-out infinite;
 }
@@ -783,7 +871,7 @@ a.premium:focus-visible::after {
   }
 }
 
-/* Flottement plus marqué pour les tuiles contact */
+/* Flottement plus marque pour les tuiles contact */
 .contact__icon--float svg {
   animation: ic-float 2.1s ease-in-out infinite;
 }
@@ -803,17 +891,17 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Grille spécifique Prestations
+   Grille specifique Prestations
    ========================= */
 
-/* Par défaut : 1 carte par ligne (mobile) */
+/* Par defaut : 1 carte par ligne (mobile) */
 .grid-cards--prestations {
   display: grid;
   gap: 24px;
   grid-template-columns: 1fr;
 }
 
-/* Dès que l'écran commence à être un peu large : 2 cartes par ligne */
+/* Des que l'ecran commence a etre un peu large : 2 cartes par ligne */
 @media (min-width: 640px) {
   .grid-cards--prestations {
     grid-template-columns: repeat(2, minmax(0, 1fr));
