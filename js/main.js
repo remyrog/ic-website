@@ -232,9 +232,9 @@ gsap.to("#carHero", {
     if (review.date) {
       const d = new Date(review.date);
       const formatted = d.toLocaleDateString("fr-FR");
-      metaEl.textContent = `${name} â€¢ ${formatted} â€¢ ${stars}`;
+      metaEl.textContent = `${name} \u2022 ${formatted} \u2022 ${stars}`;
     } else {
-      metaEl.textContent = `${name} â€¢ ${stars}`;
+      metaEl.textContent = `${name} \u2022 ${stars}`;
     }
 
     const textEl = document.createElement("p");
