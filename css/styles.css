@@ -119,7 +119,7 @@ body {
 .progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--pink), var(--yellow)) }
 
 /* =========================
-   Hero - FIXE ROUTE + RESPONSIVE
+   Hero - Z-INDEX FIXE DEFINITIF
    ========================= */
 .hero { 
   padding: 0; 
@@ -129,8 +129,7 @@ body {
 }
 .hero__pin { 
   position: relative; 
-  min-height: 100svh; 
-  contain: paint;
+  min-height: 100svh;
 }
 .scene { 
   position: absolute; 
@@ -139,15 +138,15 @@ body {
   height: 100%; 
   display: block; 
   z-index: 1;
-  overflow: hidden;
+  overflow: visible;
+  pointer-events: none;
 }
 .hero__content { 
   position: relative; 
-  z-index: 5;
+  z-index: 10;
   text-align: center; 
   margin-top: min(26vh, 240px); 
-  /* CORRECTION : Plus d'espace pour la route sur mobile */
-  padding-bottom: calc(var(--roadH) + var(--roadGap) + 80px);
+  padding-bottom: calc(var(--roadH) + 60px);
   padding-inline: clamp(16px, 5vw, 0px);
 }
 .hero__badge {
@@ -373,7 +372,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 }
 
 /* =========================
-   Road + Car - CORRECTION Z-INDEX
+   Road + Car - Sections
    ========================= */
 :root {
   --roadGap: clamp(16px, 3vw, 42px);
@@ -389,7 +388,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   right: 0;
   bottom: 0;
   height: var(--roadH);
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
   isolation: isolate;
 }
