@@ -36,7 +36,7 @@
   window.addEventListener("scroll", updateProgress, { passive: true });
   updateProgress();
 
-// 5) Effet â€œmagnetâ€ \u2014 inertie + rotation
+// 5) Effet â€œmagnetâ€ â€” inertie + rotation
 const isTouch = "ontouchstart" in window;
 
 function initMagnets(root = document) {
@@ -227,14 +227,14 @@ gsap.to("#carHero", {
     metaEl.className = "review__meta";
 
     const rating = parseInt(review.rating, 10) || 0;
-    const stars = "â˜…â˜…â˜…â˜…â˜…".slice(0, rating);
+    const stars = "\u2605\u2605\u2605\u2605\u2605".slice(0, rating);
 
     if (review.date) {
       const d = new Date(review.date);
       const formatted = d.toLocaleDateString("fr-FR");
-      metaEl.textContent = `${name} \u2022 ${formatted} \u2022 ${stars}`;
+      metaEl.textContent = `${name} â€¢ ${formatted} â€¢ ${stars}`;
     } else {
-      metaEl.textContent = `${name} \u2022 ${stars}`;
+      metaEl.textContent = `${name} â€¢ ${stars}`;
     }
 
     const textEl = document.createElement("p");
