@@ -30,7 +30,7 @@ body {
   --card: #141723;
   --glass: rgba(255,255,255,0.06);
 
-  /* Accent utilitaire (peut etre bascule) */
+  /* Accent utilitaire */
   --accent-color: var(--yellow);
 
   /* Border radius */
@@ -114,21 +114,24 @@ body {
 .btn-ghost { background: rgba(255,255,255,.08); color: inherit; border: 1px solid rgba(255,255,255,.15) }
 .btn.small { padding: .55rem .8rem; font-size: .9rem }
 .btn-magnet { will-change: transform; transition: transform .2s ease }
-/* micro-optim pour tous les aimantes */
 [data-magnet] { will-change: transform; transition: transform .12s ease-out; }
 .progress { position: absolute; left: 14px; right: 14px; bottom: -8px; height: 4px; background: rgba(255,255,255,.06); border-radius: var(--radius-full); overflow: hidden }
 .progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--pink), var(--yellow)) }
 
 /* =========================
-   Hero - RESPONSIVE FIXE
+   Hero - FIXE ROUTE + RESPONSIVE
    ========================= */
 .hero { 
   padding: 0; 
   min-height: 100svh;
-  /* FOND UNIFIE avec le reste de la page */
   background: #0c0d12;
+  position: relative;
 }
-.hero__pin { position: relative; min-height: 100svh; contain: paint }
+.hero__pin { 
+  position: relative; 
+  min-height: 100svh; 
+  contain: paint;
+}
 .scene { 
   position: absolute; 
   inset: 0; 
@@ -136,16 +139,15 @@ body {
   height: 100%; 
   display: block; 
   z-index: 1;
-  /* Le soleil peut deborder sans casser le layout */
   overflow: hidden;
 }
 .hero__content { 
   position: relative; 
-  z-index: 5; 
+  z-index: 5;
   text-align: center; 
   margin-top: min(26vh, 240px); 
-  padding-bottom: calc(var(--roadH) + var(--roadGap));
-  /* Ajout de padding lateral pour mobile */
+  /* CORRECTION : Plus d'espace pour la route sur mobile */
+  padding-bottom: calc(var(--roadH) + var(--roadGap) + 80px);
   padding-inline: clamp(16px, 5vw, 0px);
 }
 .hero__badge {
@@ -156,7 +158,6 @@ body {
   border: 1px solid rgba(255,255,255,.12);
   font-weight: 700; 
   letter-spacing: .3px;
-  /* Responsive : taille plus petite sur mobile */
   font-size: clamp(0.8rem, 2vw, 1rem);
 }
 h1 { 
@@ -164,7 +165,6 @@ h1 {
   font-size: clamp(32px, 5.6vw, 72px); 
   margin: 16px 0 6px; 
   line-height: 1.04;
-  /* Eviter le debordement */
   word-wrap: break-word;
   hyphens: auto;
 }
@@ -179,7 +179,6 @@ h3 { margin: 0 0 10px; font-size: 1.2rem }
   color: var(--muted); 
   max-width: 980px; 
   margin-inline: auto;
-  /* Meilleure lisibilite sur mobile */
   font-size: clamp(0.95rem, 2vw, 1.1rem);
   line-height: 1.6;
 }
@@ -188,7 +187,6 @@ h3 { margin: 0 0 10px; font-size: 1.2rem }
   gap: 14px; 
   justify-content: center; 
   margin-top: 18px;
-  /* Passage en colonne sur tres petit ecran */
   flex-wrap: wrap;
 }
 .hero__credits { 
@@ -222,7 +220,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    ========================= */
 .lead { color: var(--muted); max-width: 980px }
 
-/* Layout 2 colonnes reutilisable (demarche / expertise) */
 .split {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
@@ -354,32 +351,30 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
    [data-magnet]
    ========================= */
 :root {
-  /* Tokens d'ombre pour garder la meme intensite partout */
   --neon-outer: 0 10px 30px rgba(255,94,142,.12);
   --neon-inset: inset 0 0 0 1px rgba(255,94,142,.12);
   --neon-inset-quiet: inset 0 0 0 1px rgba(255,94,142,.08);
 }
 
-/* Base : leger "sertissage" rose */
 [data-magnet] {
   box-shadow: var(--neon-inset-quiet);
   transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
   will-change: transform; transform: translateZ(0);
 }
 
-/* Hover / Focus : glow neon rose (meme rendu que les tuiles Contact) */
 [data-magnet]:hover,
 [data-magnet]:focus-visible {
   box-shadow: var(--neon-outer), var(--neon-inset);
   outline: none;
 }
 
-/* Active : mini "tap" (mobile + clavier) */
 [data-magnet]:active {
   transform: translateY(1px) scale(.98);
 }
 
-/* === Road + Car (restored minimal) === */
+/* =========================
+   Road + Car - CORRECTION Z-INDEX
+   ========================= */
 :root {
   --roadGap: clamp(16px, 3vw, 42px);
   --roadH: clamp(200px, 18.75vw, 420px);
@@ -388,28 +383,65 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   --carYOffset: 0px;
 }
 
-.section-road{position:absolute;left:0;right:0;bottom:0;height:var(--roadH);z-index:3;pointer-events:none;isolation:isolate}
-.section-road svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden;background:transparent}
-.section-road svg path{fill:none!important}
-.section-road .bg{stroke:#2b2d3a;stroke-linecap:round;stroke-width:120;opacity:.93}
-.section-road .dash{stroke:#F7F7F7;stroke-linecap:round;stroke-width:8;stroke-dasharray:36 28;opacity:.85}
-.section-road.fullwidth{width:100vw;left:50%;right:auto;transform:translateX(-50%)}
-
-/* Car sprites */
-.section-road .car{transform-box:fill-box;transform-origin:center}
-.section-road .carSprite{
-  transform-box:fill-box;transform-origin:center;
-  transform:translateY(var(--carYOffset)) scale(var(--carScaleSections));
-  will-change:transform;
+.section-road {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--roadH);
+  z-index: 2;
+  pointer-events: none;
+  isolation: isolate;
 }
-@media (max-width:560px){
-  .section-road .carSprite{transform:translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm))}
+.section-road svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  background: transparent;
+}
+.section-road svg path { fill: none !important }
+.section-road .bg {
+  stroke: #2b2d3a;
+  stroke-linecap: round;
+  stroke-width: 120;
+  opacity: .93;
+}
+.section-road .dash {
+  stroke: #F7F7F7;
+  stroke-linecap: round;
+  stroke-width: 8;
+  stroke-dasharray: 36 28;
+  opacity: .85;
+}
+.section-road.fullwidth {
+  width: 100vw;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.section-road .car {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.section-road .carSprite {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateY(var(--carYOffset)) scale(var(--carScaleSections));
+  will-change: transform;
+}
+@media (max-width:560px) {
+  .section-road .carSprite {
+    transform: translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm));
+  }
 }
 
 /* =========================
-   Section Avis - layout & style
+   Section Avis
    ========================= */
-
 .avis {
   background: conic-gradient(
     from 180deg at 50% 120%,
@@ -419,7 +451,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   );
 }
 
-/* Liens premium (ex: "Voir tous les avis sur Google") */
 a.premium {
   display: inline-flex;
   align-items: center;
@@ -449,7 +480,6 @@ a.premium:focus-visible::after {
   transform: scaleX(1);
 }
 
-/* Conteneur texte + resume, en ligne */
 .reviews__top {
   display: flex;
   align-items: center;
@@ -458,7 +488,6 @@ a.premium:focus-visible::after {
   flex-wrap: wrap;
 }
 
-/* Multi-avis : 5 cartes par page */
 .avis .reviews {
   position: relative;
   overflow: visible;
@@ -472,7 +501,6 @@ a.premium:focus-visible::after {
   gap: 16px;
 }
 
-/* Chaque avis = une carte */
 .avis .review {
   position: relative;
   padding: 18px 20px;
@@ -485,7 +513,6 @@ a.premium:focus-visible::after {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Avatar : personnage SVG qui fait coucou, centre verticalement */
 .review__avatar {
   width: 72px;
   height: 72px;
@@ -503,32 +530,22 @@ a.premium:focus-visible::after {
   height: 100%;
 }
 
-/* Bras qui s'agite */
 .review__avatar-svg .avatar-arm {
   transform-origin: 52px 34px;
   animation: avatarWave 2.2s ease-in-out infinite;
 }
 
 @keyframes avatarWave {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  30% {
-    transform: rotate(-16deg);
-  }
-  60% {
-    transform: rotate(10deg);
-  }
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(-16deg); }
+  60% { transform: rotate(10deg); }
 }
 
-/* Texte des avis : lisible meme long */
 .review__text {
   max-width: 980px;
   line-height: 1.6;
 }
 
-/* Controles precedent / suivant */
 .reviews__controls {
   display: flex;
   gap: 12px;
@@ -550,10 +567,6 @@ a.premium:focus-visible::after {
   background: rgba(255, 255, 255, 0.14);
 }
 
-/* =========================
-   Section Avis - Resume 52 avis / 5
-   ========================= */
-
 .reviews__summary {
   margin: 8px 0 20px;
   padding: 14px 18px;
@@ -568,22 +581,14 @@ a.premium:focus-visible::after {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
 }
 
-/* Animation "rebond" cyclique sur tout le bloc */
 .reviews__summary--bounce {
   animation: summaryBounce 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 @keyframes summaryBounce {
-  0%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-  30% {
-    transform: translateY(-3px) scale(1.04);
-  }
-  60% {
-    transform: translateY(1px) scale(0.99);
-  }
+  0%, 100% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-3px) scale(1.04); }
+  60% { transform: translateY(1px) scale(0.99); }
 }
 
 .reviews__summary-left,
@@ -619,7 +624,6 @@ a.premium:focus-visible::after {
   color: rgba(248, 250, 252, 0.88);
 }
 
-/* Etoiles qui apparaissent une par une */
 .reviews__summary-stars {
   display: flex;
   gap: 4px;
@@ -642,21 +646,18 @@ a.premium:focus-visible::after {
   color: #f7c600;
 }
 
-/* Optionnel : sur mobile, le resume passe gentiment sous le texte */
 @media (max-width: 700px) {
   .reviews__top {
     align-items: flex-start;
   }
 }
 
-/* Titre prestations : aligner icone + texte */
 .prestations .service h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Icone un poil plus compacte dans les titres */
 .prestations .service h3 .ic-badge { width: 2.2rem; height: 2.2rem; flex-shrink: 0 }
 
 .prestations .service p {
@@ -696,7 +697,6 @@ a.premium:focus-visible::after {
   font-size: 0.95rem;
 }
 
-/* petit point lumineux au lieu des virgules/points medians */
 .prestations .service-list li::before {
   content: "";
   position: absolute;
@@ -710,28 +710,24 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Section Expertise - centre sombre, bords dores
+   Section Expertise
    ========================= */
-
 .expertise {
   position: relative;
   overflow: hidden;
   background:
-    /* halo jaune a gauche */
     radial-gradient(
       circle at 0% 50%,
       rgba(247, 198, 0, 0.22) 0,
       rgba(247, 198, 0, 0.12) 14%,
       transparent 40%
     ),
-    /* halo jaune a droite */
     radial-gradient(
       circle at 100% 50%,
       rgba(253, 186, 44, 0.22) 0,
       rgba(253, 186, 44, 0.12) 14%,
       transparent 40%
     ),
-    /* fond quasi noir pour tout le reste */
     #020617;
 }
 
@@ -739,10 +735,6 @@ a.premium:focus-visible::after {
   position: relative;
   z-index: 1;
 }
-
-/* =========================
-   Icones de la section "Ma demarche"
-   ========================= */
 
 .icon-badge {
   display: inline-flex;
@@ -765,10 +757,6 @@ a.premium:focus-visible::after {
   height: 1.7rem;
   display: block;
 }
-
-/* =========================
-   Icones inline (SVG)
-   ========================= */
 
 .ic-badge {
   display: inline-flex;
@@ -794,7 +782,6 @@ a.premium:focus-visible::after {
   display: block;
 }
 
-/* Icones gros format des tuiles contact */
 .contact__icon {
   width: 4.2rem;
   height: 4.2rem;
@@ -806,102 +793,64 @@ a.premium:focus-visible::after {
   height: 100%;
 }
 
-/* Optionnel : leger zoom au survol des tuiles contact */
 .cta-tile:hover .contact__icon svg {
   transform: translateY(-2px);
   transition: transform 0.2s ease-out;
 }
 
-/* =========================
-   Animations globales SVG
-   ========================= */
-
 .ic-svg {
   transform-origin: center;
 }
 
-/* Petit rebond vertical (smiley) */
 .ic-svg--bounce {
   animation: ic-bounce 1.5s ease-in-out infinite;
 }
 
 @keyframes ic-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-3px);
-  }
-  60% {
-    transform: translateY(2px);
-  }
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-3px); }
+  60% { transform: translateY(2px); }
 }
 
-/* Grosse pulsation (horloge, cadenas) */
 .ic-svg--pulse {
   animation: ic-pulse 1.6s ease-in-out infinite;
 }
 
 @keyframes ic-pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1.12);
-  }
-  70% {
-    transform: scale(0.95);
-  }
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.12); }
+  70% { transform: scale(0.95); }
 }
 
-/* Balancement gauche / droite (adaptabilite) */
 .ic-svg--wiggle {
   animation: ic-wiggle 1.8s ease-in-out infinite;
 }
 
 @keyframes ic-wiggle {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  30% {
-    transform: rotate(-7deg);
-  }
-  60% {
-    transform: rotate(6deg);
-  }
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(-7deg); }
+  60% { transform: rotate(6deg); }
 }
 
-/* Flottement plus marque pour les tuiles contact */
 .contact__icon--float svg {
   animation: ic-float 2.1s ease-in-out infinite;
 }
 
 @keyframes ic-float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
-/* Optionnel : quand on survole la tuile, on booste un peu */
 .cta-tile:hover .contact__icon svg {
   transform: translateY(-4px) scale(1.03);
 }
 
-/* =========================
-   Grille specifique Prestations
-   ========================= */
-
-/* Par defaut : 1 carte par ligne (mobile) */
 .grid-cards--prestations {
   display: grid;
   gap: 24px;
   grid-template-columns: 1fr;
 }
 
-/* Des que l'ecran commence a etre un peu large : 2 cartes par ligne */
 @media (min-width: 640px) {
   .grid-cards--prestations {
     grid-template-columns: repeat(2, minmax(0, 1fr));
