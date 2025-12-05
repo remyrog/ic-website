@@ -2,17 +2,17 @@
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
-  // 1) Année footer
+  // 1) AnnÃ©e footer
   const y = $("#year");
   if (y) y.textContent = new Date().getFullYear();
 
-  // 2) Preloader : disparaît dès que tout est prêt
+  // 2) Preloader : disparaÃ®t dÃ¨s que tout est prÃªt
   setTimeout(() => {
     const pre = document.getElementById("preloader");
     if (pre) pre.classList.add("is-done");
   }, 3000);
 
-  // 3) Scroll doux sur les liens internes (offset géré par scroll-padding-top en CSS)
+  // 3) Scroll doux sur les liens internes (offset gÃ©rÃ© par scroll-padding-top en CSS)
   $$(".nav [data-scrolllink], [data-scrolllink]").forEach(a => {
     a.addEventListener("click", e => {
       const href = a.getAttribute("href");
@@ -36,21 +36,21 @@
   window.addEventListener("scroll", updateProgress, { passive: true });
   updateProgress();
 
-// 5) Effet “magnet” — inertie + rotation
+// 5) Effet â€œmagnetâ€ â€” inertie + rotation
 const isTouch = "ontouchstart" in window;
 
 function initMagnets(root = document) {
-  if (isTouch) return; // on évite sur mobile
+  if (isTouch) return; // on Ã©vite sur mobile
 
   const magnets = root.querySelectorAll("[data-magnet]");
   magnets.forEach(el => {
-    // empêchez une double initialisation
+    // empÃªchez une double initialisation
     if (el.__magnetInit) return;
     el.__magnetInit = true;
 
     const strength = parseFloat(el.dataset.magnet) || 30; // translation max (px)
     const maxRot   = parseFloat(el.dataset.rotate) || 6;  // rotation max (deg)
-    const damp     = 0.14; // 0.10–0.20 = plus ou moins “ressort”
+    const damp     = 0.14; // 0.10â€“0.20 = plus ou moins â€œressortâ€
 
     let tx = 0, ty = 0, rx = 0;
     let txT = 0, tyT = 0, rxT = 0;
@@ -89,10 +89,10 @@ function initMagnets(root = document) {
   });
 }
 
-// appel initial pour tout ce qui est déjà en DOM
+// appel initial pour tout ce qui est dÃ©jÃ  en DOM
 initMagnets();
 
-// Soleil : dérive lente indépendante du scroll (aller-retour)
+// Soleil : dÃ©rive lente indÃ©pendante du scroll (aller-retour)
 (() => {
   const sun = document.getElementById('sun');
   if (!sun) return;
@@ -100,11 +100,11 @@ initMagnets();
   const svg = sun.ownerSVGElement;
   const base = sun.getAttribute('transform') || '';
 
-  // Réglages (modifiable aussi via data-attrs)
-  const duration = parseFloat(sun.dataset.sunDuration || '30'); // secondes pour l’aller (gauche -> droite)
-  const arc      = parseFloat(sun.dataset.sunArc || '22');      // amplitude de l’arc vertical
-  const marginR  = parseFloat(sun.dataset.sunMargin || '12');   // marge à droite
-  const offsetY  = parseFloat(sun.dataset.offsetY || '108');     // “marge haute” (pousse vers le bas)
+  // RÃ©glages (modifiable aussi via data-attrs)
+  const duration = parseFloat(sun.dataset.sunDuration || '30'); // secondes pour lâ€™aller (gauche -> droite)
+  const arc      = parseFloat(sun.dataset.sunArc || '22');      // amplitude de lâ€™arc vertical
+  const marginR  = parseFloat(sun.dataset.sunMargin || '12');   // marge Ã  droite
+  const offsetY  = parseFloat(sun.dataset.offsetY || '108');     // â€œmarge hauteâ€ (pousse vers le bas)
 
   let maxX = 0;
 
@@ -118,7 +118,7 @@ initMagnets();
     maxX = Math.max(0, (width - marginR) - (bb.x + bb.width));
   }
 
-  // anim: on part de x=0 (position actuelle), on va jusqu’à maxX, puis on revient (ping-pong)
+  // anim: on part de x=0 (position actuelle), on va jusquâ€™Ã  maxX, puis on revient (ping-pong)
   let x = 0;
   let dir = 1;
   let last = 0;
@@ -134,11 +134,11 @@ initMagnets();
     if (x >= maxX) { x = maxX; dir = -1; }
     if (x <= 0)    { x = 0;    dir =  1; }
 
-    const p = maxX > 0 ? (x / maxX) : 0;                  // 0..1 sur l’aller
+    const p = maxX > 0 ? (x / maxX) : 0;                  // 0..1 sur lâ€™aller
     const y = offsetY + Math.sin(p * Math.PI) * -arc;     // petit arc solaire
-    const r = p * 180;                                    // rotation légère
+    const r = p * 180;                                    // rotation lÃ©gÃ¨re
 
-    // Concatène à la transform d’origine (ne casse pas la position de base)
+    // ConcatÃ¨ne Ã  la transform dâ€™origine (ne casse pas la position de base)
     sun.setAttribute('transform', `${base} translate(${x},${y}) rotate(${r})`);
 
     requestAnimationFrame(step);
@@ -187,7 +187,7 @@ gsap.to("#carHero", {
 
   if (!reviewsContainer || !prevBtn || !nextBtn || !avatarTemplate) return;
 
-  // Élément du résumé (compteurs + étoiles)
+  // Ã‰lÃ©ment du rÃ©sumÃ© (compteurs + Ã©toiles)
   const countEl = section.querySelector('[data-counter="count"]');
   const ratingEl = section.querySelector('[data-counter="rating"]');
   const summaryStars = section.querySelectorAll(".reviews__summary-star");
@@ -227,14 +227,14 @@ gsap.to("#carHero", {
     metaEl.className = "review__meta";
 
     const rating = parseInt(review.rating, 10) || 0;
-    const stars = "★★★★★".slice(0, rating);
+    const stars = "â˜…â˜…â˜…â˜…â˜…".slice(0, rating);
 
     if (review.date) {
       const d = new Date(review.date);
       const formatted = d.toLocaleDateString("fr-FR");
-      metaEl.textContent = `${name} • ${formatted} • ${stars}`;
+      metaEl.textContent = `${name} â€¢ ${formatted} â€¢ ${stars}`;
     } else {
-      metaEl.textContent = `${name} • ${stars}`;
+      metaEl.textContent = `${name} â€¢ ${stars}`;
     }
 
     const textEl = document.createElement("p");
@@ -328,7 +328,7 @@ gsap.to("#carHero", {
   section.addEventListener("focusin", stopAutoplay);
   section.addEventListener("focusout", startAutoplay);
 
-  // ---- Compteurs + étoiles ----
+  // ---- Compteurs + Ã©toiles ----
 
   function animateCounter(el, target, duration) {
     if (!el) return;
@@ -376,7 +376,7 @@ gsap.to("#carHero", {
   function startCountersLoop() {
     if (countersLoopId) return;
 
-    // premier run immédiat
+    // premier run immÃ©diat
     runCountersOnce();
 
     // puis relance toutes les 9 secondes
@@ -400,7 +400,7 @@ gsap.to("#carHero", {
   if (countersStarted) return;
   countersStarted = true;
 
-  startCountersLoop(); // compteurs + étoiles en boucle
+  startCountersLoop(); // compteurs + Ã©toiles en boucle
   startSummaryLoop();  // rebond en boucle du badge
   }
 
@@ -436,7 +436,7 @@ gsap.to("#carHero", {
       reviews = Array.isArray(data.reviews) ? data.reviews : [];
 
       if (!reviews.length) {
-        reviewsContainer.textContent = "Pas encore d'avis à afficher.";
+        reviewsContainer.textContent = "Pas encore d'avis Ã  afficher.";
         prevBtn.disabled = true;
         nextBtn.disabled = true;
         return;

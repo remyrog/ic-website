@@ -143,24 +143,14 @@ body {
 }
 
 /* SOLEIL : position responsive bien visible */
-#sun {
-  transform-origin: center;
-  /* Desktop : Ã  droite du badge */
-  transform: translate(420px, 80px) scale(1);
-}
+/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
 
 @media (max-width: 920px) {
-  #sun {
-    /* Tablet : plus petit, centrÃ© au-dessus */
-    transform: translate(200px, 60px) scale(0.7);
-  }
+/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
 }
 
 @media (max-width: 560px) {
-  #sun {
-    /* Mobile : trÃ¨s petit, au-dessus du titre */
-    transform: translate(100px, 50px) scale(0.5);
-  }
+/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
 }
 
 .hero__content { 
@@ -168,15 +158,15 @@ body {
   z-index: 10;
   text-align: center; 
   margin-top: min(26vh, 240px); 
-  /* Espace rÃ©duit aprÃ¨s les boutons */
-  padding-bottom: clamp(140px, 20vw, 200px);
+  /* Espace rÃƒÂ©duit aprÃƒÂ¨s les boutons */
+  padding-bottom: clamp(180px, 24vw, 240px);
   padding-inline: clamp(16px, 5vw, 0px);
 }
 
 /* Sur mobile, plus d'espace pour la route */
 @media (max-width: 560px) {
   .hero__content {
-    padding-bottom: clamp(180px, 25vw, 240px);
+    padding-bottom: clamp(220px, 30vw, 280px);
   }
 }
 
