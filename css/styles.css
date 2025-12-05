@@ -36,6 +36,12 @@ body {
   /* Layout */
   --roadGap: clamp(16px, 3vw, 42px);
   --roadH: clamp(200px, 18.75vw, 420px);
+
+  /* Border radius */
+  --radius-full: 999px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
 }
 
 /* =========================
