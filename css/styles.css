@@ -137,20 +137,20 @@ body {
   width: 100%; 
   height: 100%; 
   display: block; 
-  z-index: 1;
+  z-index: 0;
   overflow: visible;
   pointer-events: none;
 }
 
 /* SOLEIL : position responsive bien visible */
-/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
+/* #sun : position gÃƒÂ©rÃƒÂ©e par JS uniquement - pas de transform CSS */
 
 @media (max-width: 920px) {
-/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
+/* #sun : position gÃƒÂ©rÃƒÂ©e par JS uniquement - pas de transform CSS */
 }
 
 @media (max-width: 560px) {
-/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
+/* #sun : position gÃƒÂ©rÃƒÂ©e par JS uniquement - pas de transform CSS */
 }
 
 .hero__content { 
@@ -158,15 +158,15 @@ body {
   z-index: 10;
   text-align: center; 
   margin-top: min(26vh, 240px); 
-  /* Espace rÃƒÂ©duit aprÃƒÂ¨s les boutons */
-  padding-bottom: clamp(180px, 24vw, 240px);
+  /* Espace rÃƒÆ’Ã‚Â©duit aprÃƒÆ’Ã‚Â¨s les boutons */
+  padding-bottom: clamp(240px, 28vw, 300px);
   padding-inline: clamp(16px, 5vw, 0px);
 }
 
 /* Sur mobile, plus d'espace pour la route */
 @media (max-width: 560px) {
   .hero__content {
-    padding-bottom: clamp(220px, 30vw, 280px);
+    padding-bottom: clamp(280px, 35vw, 340px);
   }
 }
 
@@ -420,7 +420,7 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   right: 0;
   bottom: 0;
   height: var(--roadH);
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
   isolation: isolate;
 }
