@@ -905,17 +905,30 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Mobile : réduire l'espace entre hero et Ma démarche
+   Mobile : pas de soleil, pas de route, pas de vide
 ========================= */
 @media (max-width: 560px) {
-  /* Réduire l'espace en bas du hero */
-  .hero__content {
-    padding-bottom: 40px !important;
+  /* Masquer soleil et route */
+  .scene,
+  #sun,
+  .section-road {
+    display: none !important;
   }
 
-  /* Laisser Ma démarche commencer normalement */
+  /* Réduire drastiquement l'espace en bas du hero */
+  .hero__content {
+    padding-bottom: 20px !important;
+  }
+  
+  /* Texte "Interventions" : réduire la marge du haut */
+  .hero__credits {
+    margin-top: 10px !important;
+  }
+
+  /* Ma démarche : commencer immédiatement après */
   .demarche {
     padding-top: 40px !important;
     margin-top: 0 !important;
   }
 }
+
