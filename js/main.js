@@ -455,43 +455,4 @@ gsap.to("#carHero", {
       nextBtn.disabled = true;
     });
 })();
-
-// Menu burger mobile
-const burger = document.querySelector('.burger');
-const navlinks = document.querySelector('.navlinks');
-const body = document.body;
-
-if (burger && navlinks) {
-  burger.addEventListener('click', () => {
-    const isOpen = burger.classList.toggle('is-open');
-    navlinks.classList.toggle('is-open');
-    body.classList.toggle('menu-open');
-    
-    burger.setAttribute('aria-expanded', isOpen);
-  });
-  
-  // Fermer au clic sur un lien
-  navlinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      burger.classList.remove('is-open');
-      navlinks.classList.remove('is-open');
-      body.classList.remove('menu-open');
-      burger.setAttribute('aria-expanded', 'false');
-    });
-  });
-  
-  // Fermer au clic sur l'overlay
-  body.addEventListener('click', (e) => {
-    if (body.classList.contains('menu-open') && 
-        !navlinks.contains(e.target) && 
-        !burger.contains(e.target)) {
-      burger.classList.remove('is-open');
-      navlinks.classList.remove('is-open');
-      body.classList.remove('menu-open');
-      burger.setAttribute('aria-expanded', 'false');
-    }
-  });
-}
-
-
 })();
