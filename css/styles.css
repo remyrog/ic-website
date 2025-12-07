@@ -887,3 +887,35 @@ a.premium:focus-visible::after {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* =========================
+   Mobile : pas de soleil, pas de route
+========================= */
+@media (max-width: 560px) {
+  /* Soleil + décor SVG hero */
+  .scene,
+  #sun {
+    display: none !important;
+  }
+
+  /* Route du hero */
+  .section-road {
+    display: none !important;
+  }
+}
+
+/* =========================
+   Mobile : réduire l'espace entre hero et Ma démarche
+========================= */
+@media (max-width: 560px) {
+  /* Réduire l'espace en bas du hero */
+  .hero__content {
+    padding-bottom: 40px !important;
+  }
+
+  /* Laisser Ma démarche commencer normalement */
+  .demarche {
+    padding-top: 40px !important;
+    margin-top: 0 !important;
+  }
+}
