@@ -456,4 +456,28 @@ gsap.to("#carHero", {
     });
 })();
 
+// Menu burger mobile
+const burger = document.querySelector('.burger');
+const navlinks = document.querySelector('.navlinks');
+
+if (burger && navlinks) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('is-open');
+    navlinks.classList.toggle('is-open');
+    
+    // Accessibilité
+    const isOpen = burger.classList.contains('is-open');
+    burger.setAttribute('aria-expanded', isOpen);
+  });
+  
+  // Fermer au clic sur un lien
+  navlinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('is-open');
+      navlinks.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
 })();
