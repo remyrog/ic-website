@@ -157,7 +157,7 @@ body {
   position: relative; 
   z-index: 10;
   text-align: center; 
-  margin-top: min(26vh, 240px); 
+  margin-top: min(20vh, 200px); 
   /* Espace rÃƒÂ©duit aprÃƒÂ¨s les boutons */
   padding-bottom: clamp(180px, 24vw, 240px);
   padding-inline: clamp(16px, 5vw, 0px);
@@ -939,53 +939,86 @@ h1 {
   background: #0c0d12 !important;
 }
 
+/* =========================
+   MENU BURGER MOBILE - VERSION PROPRE
+========================= */
+
+/* Desktop : burger caché */
+@media (min-width: 561px) {
+  .burger {
+    display: none !important;
+  }
+}
+
+/* Mobile uniquement */
 @media (max-width: 560px) {
+  
+  /* Nav barre */
+  .nav {
+    width: calc(100% - 24px);
+    padding: 10px 14px;
+    top: 12px;
+  }
+  
+  /* Logo normal */
+  .logo img {
+    height: 26px;
+  }
+  
+  /* Bouton burger */
   .burger {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
     background: none;
     border: none;
-    padding: 8px;
+    padding: 0;
     cursor: pointer;
     z-index: 1300;
+    position: relative;
   }
   
   .burger span {
+    display: block;
     width: 24px;
     height: 2px;
     background: #f7f7f7;
     border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: all 0.3s ease;
   }
   
   /* Animation burger → X */
   .burger.is-open span:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
+    transform: translateY(7px) rotate(45deg);
   }
   .burger.is-open span:nth-child(2) {
     opacity: 0;
   }
   .burger.is-open span:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg);
+    transform: translateY(-7px) rotate(-45deg);
   }
   
-  /* Menu caché par défaut sur mobile */
+  /* MASQUER les liens desktop sur mobile */
   .navlinks {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 70vw;
-    max-width: 300px;
+    width: 75vw;
+    max-width: 320px;
     height: 100vh;
-    background: rgba(10, 11, 18, 0.98);
-    backdrop-filter: blur(12px);
+    background: rgba(12, 13, 18, 0.98);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
     flex-direction: column;
     align-items: flex-start;
-    padding: 80px 24px 24px;
-    gap: 24px;
-    transition: right 0.3s ease;
+    padding: 100px 32px 40px;
+    gap: 0;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1250;
+    overflow-y: auto;
   }
   
   /* Menu ouvert */
@@ -993,16 +1026,42 @@ h1 {
     right: 0;
   }
   
+  /* Liens dans le menu mobile */
   .navlinks a {
-    font-size: 1.1rem;
     width: 100%;
-    padding: 12px 16px;
+    padding: 16px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 1;
   }
-}
-
-/* Desktop : burger caché */
-@media (min-width: 561px) {
-  .burger {
-    display: none;
+  
+  .navlinks a:last-child {
+    border-bottom: none;
+  }
+  
+  /* Overlay sombre quand menu ouvert */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1200;
+  }
+  
+  body.menu-open::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  /* Empêcher le scroll quand menu ouvert */
+  body.menu-open {
+    overflow: hidden;
   }
 }
