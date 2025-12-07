@@ -889,23 +889,7 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Mobile : pas de soleil, pas de route
-========================= */
-@media (max-width: 560px) {
-  /* Soleil + décor SVG hero */
-  .scene,
-  #sun {
-    display: none !important;
-  }
-
-  /* Route du hero */
-  .section-road {
-    display: none !important;
-  }
-}
-
-/* =========================
-   Mobile : pas de soleil, pas de route, pas de vide
+   Mobile : ÉLIMINER TOUT L'ESPACE VIDE
 ========================= */
 @media (max-width: 560px) {
   /* Masquer soleil et route */
@@ -915,20 +899,31 @@ a.premium:focus-visible::after {
     display: none !important;
   }
 
-  /* Réduire drastiquement l'espace en bas du hero */
-  .hero__content {
-    padding-bottom: 20px !important;
+  /* Hero : enlever la hauteur minimale forcée */
+  .hero {
+    min-height: auto !important;
   }
   
-  /* Texte "Interventions" : réduire la marge du haut */
-  .hero__credits {
-    margin-top: 10px !important;
+  .hero__pin {
+    min-height: auto !important;
   }
 
-  /* Ma démarche : commencer immédiatement après */
+  /* Contenu Hero : ZÉRO espace en bas */
+  .hero__content {
+    padding-bottom: 0px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Texte "Interventions" : juste 20px d'espace */
+  .hero__credits {
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 20px !important;
+  }
+
+  /* Ma démarche : coller directement après */
   .demarche {
     padding-top: 40px !important;
     margin-top: 0 !important;
   }
 }
-
