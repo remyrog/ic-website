@@ -885,3 +885,75 @@ a.premium:focus-visible::after {
 @media (min-width: 700px){
   .hero__content{ margin-top: clamp(78px, 11vh, 150px); }
 }
+
+/* =========================
+   MOBILE / SMALL TABLET FIXES
+   (force le mode 1 colonne plus tôt)
+   ========================= */
+
+/* Breakpoint “safe” : si un mobile affiche ~980px de largeur CSS, ça prendra quand même ce layout */
+@media (max-width: 1100px) {
+
+  /* Toutes les sections en split : on empile */
+  .split,
+  .split.reverse {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  /* Les cartes dans les split : éviter l’effet “bloc trop large + overlay” */
+  .split .card {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  /* Expertise : éviter que la carte “liste” mange le texte */
+  #expertise .card,
+  .expertise .card {
+    max-width: 720px;
+  }
+
+  /* Chips : ça doit wrap proprement */
+  .chips {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  /* Contact : une seule colonne sur mobile/small */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Footer boutons : éviter d’être écrasés */
+  .footer-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+}
+
+/* Petit mobile : densifier + éviter les gros paddings qui “vident” l’écran */
+@media (max-width: 560px) {
+
+  .section {
+    padding-block: 56px;
+  }
+
+  /* Titres : éviter que ça prenne 12 lignes */
+  h2 {
+    line-height: 1.05;
+  }
+
+  /* Résumé avis : qu’il respire et reste lisible */
+  .reviews__summary {
+    width: 100%;
+    border-radius: 22px;
+    padding: 14px 14px;
+  }
+
+  /* Cartes avis : réduire un poil les paddings */
+  .review {
+    padding: 16px;
+  }
+}
