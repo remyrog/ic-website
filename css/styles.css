@@ -1013,3 +1013,248 @@ a.premium:focus-visible::after {
     padding-top: 72px;
   }
 }
+
+/* =========================
+   Mobile Apple-vibe Menu
+   ========================= */
+
+.nav__burger{
+  display:none;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 10px 12px;
+  cursor:pointer;
+  backdrop-filter: blur(12px);
+}
+.nav__burger:active{ transform: translateY(1px) scale(.98); }
+
+.burger-ico{ width:22px; height:22px; display:block; }
+.burger-ico path{
+  stroke: #f7f7f7;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+  transform-origin: 12px 12px;
+}
+
+.mnav{
+  position: fixed; inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+}
+.mnav__backdrop{
+  position:absolute; inset:0;
+  background: rgba(0,0,0,.45);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.mnav__sheet{
+  position:absolute;
+  left: 10px; right: 10px;
+  top: 60px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(1200px 700px at 20% 0%, rgba(247,198,0,.18), transparent 60%),
+    radial-gradient(900px 550px at 90% 110%, rgba(255,94,142,.18), transparent 55%),
+    rgba(10,11,18,.65);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 90px rgba(0,0,0,.65);
+  transform: translateY(-14px) scale(.985);
+  opacity: 0;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.mnav__handle{
+  display:grid; place-items:center;
+  padding: 12px 0 6px;
+  cursor: pointer;
+}
+.mnav__handle span{
+  width: 44px; height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.22);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
+}
+
+.mnav__peek{
+  padding: 0 14px 12px;
+}
+.mnav__peek-pill{
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+}
+.mnav__dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink), var(--yellow));
+  box-shadow: 0 0 14px rgba(255,94,142,.35);
+}
+.mnav__hint{ opacity:.7; font-size:.85rem; color: var(--muted); }
+
+.mnav__items{
+  display:grid;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+
+.mnav__item{
+  display:flex; align-items:center; gap: 12px;
+  padding: 14px 14px;
+  border-radius: 18px;
+  text-decoration:none;
+  color: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.10);
+  transform: translateZ(0);
+  position: relative;
+  overflow: hidden;
+}
+
+.mnav__item::before{
+  content:"";
+  position:absolute; inset:-40%;
+  background: radial-gradient(circle at 30% 20%, rgba(247,198,0,.22), transparent 40%),
+              radial-gradient(circle at 70% 80%, rgba(255,94,142,.18), transparent 45%);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.mnav__item:hover::before{ opacity: 1; }
+
+.mnav__icon{
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  display:grid; place-items:center;
+  background: rgba(2,6,23,.75);
+  border: 1px solid rgba(148,163,184,.35);
+  box-shadow: 0 10px 22px rgba(0,0,0,.55);
+  flex-shrink: 0;
+}
+.mnav__icon svg{
+  width: 26px; height: 26px;
+  transform-origin: center;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .25s ease;
+}
+
+.mnav__label{
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+.mnav__chev{
+  margin-left:auto;
+  opacity:.75;
+  font-size: 22px;
+  transform: translateX(0);
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.mnav__item:hover .mnav__icon svg{
+  transform: translateY(-2px) rotate(-6deg) scale(1.06);
+  filter: drop-shadow(0 0 10px rgba(247,198,0,.18));
+}
+.mnav__item:hover .mnav__chev{ transform: translateX(4px); opacity: 1; }
+
+.mnav__item--cta{
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(135deg, rgba(255,94,142,.22), rgba(247,198,0,.16));
+}
+
+.mnav__footer{
+  position: relative;
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  color: rgba(248,250,252,.82);
+}
+.mnav__shine{
+  position:absolute; inset:-60% -30%;
+  background: conic-gradient(from 180deg, rgba(255,94,142,.0), rgba(255,94,142,.18), rgba(247,198,0,.12), rgba(255,94,142,.0));
+  filter: blur(22px);
+  opacity: .55;
+  animation: mnavShine 4.8s linear infinite;
+  pointer-events:none;
+}
+@keyframes mnavShine { to { transform: rotate(360deg); } }
+
+/* état ouvert */
+.mnav.is-open{ pointer-events: auto; }
+.mnav.is-open .mnav__backdrop{ opacity: 1; }
+.mnav.is-open .mnav__sheet{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* burger -> X */
+.nav.is-menu-open .burger-top{ transform: translateY(5px) rotate(45deg); }
+.nav.is-menu-open .burger-mid{ opacity: 0; transform: scaleX(.7); }
+.nav.is-menu-open .burger-bot{ transform: translateY(-5px) rotate(-45deg); }
+
+/* Mobile only */
+@media (max-width: 760px){
+  .nav__links{ display:none; }
+  .nav__burger{ display:inline-grid; place-items:center; }
+}
+
+/* === Insolent FX === */
+
+/* Sheen qui traverse chaque item à l'ouverture / hover */
+.mnav__item::after{
+  content:"";
+  position:absolute;
+  inset:-40% -60%;
+  background: linear-gradient(110deg,
+    transparent 35%,
+    rgba(255,255,255,.10) 45%,
+    rgba(255,255,255,.22) 50%,
+    rgba(255,255,255,.10) 55%,
+    transparent 65%);
+  transform: translateX(-30%) rotate(12deg);
+  opacity: 0;
+  pointer-events:none;
+}
+
+.mnav.is-open .mnav__item::after{
+  animation: mnavSheen 900ms cubic-bezier(.2,.9,.2,1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+@keyframes mnavSheen{
+  0%   { opacity: 0; transform: translateX(-55%) rotate(12deg); }
+  15%  { opacity: .55; }
+  100% { opacity: 0; transform: translateX(55%) rotate(12deg); }
+}
+
+/* Hover: petit "insolent wiggle" */
+.mnav__item:hover{
+  transform: translateY(-1px) scale(1.01);
+}
+
+/* Icônes: un poil plus "pop" */
+.mnav__icon{
+  position:relative;
+  overflow:hidden;
+}
+.mnav__icon::after{
+  content:"";
+  position:absolute; inset:-60%;
+  background: radial-gradient(circle at 30% 25%, rgba(247,198,0,.24), transparent 45%),
+              radial-gradient(circle at 70% 80%, rgba(255,94,142,.20), transparent 50%);
+  opacity:.0;
+  transition: opacity .25s ease;
+}
+.mnav__item:hover .mnav__icon::after{ opacity: .9; }
+
+/* Une légère “respiration” sur le handle */
+.mnav.is-open .mnav__handle span{
+  animation: mnavBreath 1.8s ease-in-out infinite;
+}
+@keyframes mnavBreath{
+  0%,100%{ transform: scaleX(1); opacity:.85; }
+  50%    { transform: scaleX(1.12); opacity:1; }
+}

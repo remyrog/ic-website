@@ -455,4 +455,188 @@ gsap.to("#carHero", {
       nextBtn.disabled = true;
     });
 })();
+
+// =========================
+// Mobile Menu (Apple vibe)
+// =========================
+(function initMobileMenu(){
+  const nav = document.querySelector(".nav");
+  const btn = document.querySelector(".nav__burger");
+  const mnav = document.getElementById("mnav");
+  if (!nav || !btn || !mnav) return;
+
+  const sheet = mnav.querySelector(".mnav__sheet");
+  const backdrop = mnav.querySelector(".mnav__backdrop");
+  const closeEls = mnav.querySelectorAll("[data-close]");
+  const links = mnav.querySelectorAll("a[data-scrolllink]");
+
+  // Magnet / tilt (insolent mais propre)
+const magnets = mnav.querySelectorAll("[data-magnet]");
+
+magnets.forEach((el) => {
+  const icon = el.querySelector(".mnav__icon svg");
+  let raf = null;
+
+  const move = (ev) => {
+    const r = el.getBoundingClientRect();
+    const x = (ev.touches ? ev.touches[0].clientX : ev.clientX) - (r.left + r.width/2);
+    const y = (ev.touches ? ev.touches[0].clientY : ev.clientY) - (r.top + r.height/2);
+
+    const dx = Math.max(-18, Math.min(18, x / (r.width/2) * 18));
+    const dy = Math.max(-10, Math.min(10, y / (r.height/2) * 10));
+
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      gsap.to(el, { x: dx * 0.35, y: dy * 0.25, duration: 0.25, ease: "power2.out" });
+      if (icon) gsap.to(icon, { rotate: dx * 0.35, y: -Math.abs(dy) * 0.12, duration: 0.25, ease: "power2.out" });
+    });
+  };
+
+  const leave = () => {
+    gsap.to(el, { x: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.7)" });
+    if (icon) gsap.to(icon, { rotate: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.7)" });
+  };
+
+  el.addEventListener("mousemove", move);
+  el.addEventListener("mouseleave", leave);
+
+  // petit "wiggle" insolent au hover
+  el.addEventListener("mouseenter", () => {
+    if (!icon) return;
+    gsap.fromTo(icon,
+      { rotate: -6 },
+      { rotate: 6, duration: 0.18, yoyo: true, repeat: 3, ease: "power1.inOut" }
+    );
+  });
+});
+
+  let isOpen = false;
+  let startY = 0;
+  let curY = 0;
+  let dragging = false;
+
+  const lockScroll = (lock) => {
+    document.documentElement.style.overflow = lock ? "hidden" : "";
+    document.body.style.overflow = lock ? "hidden" : "";
+  };
+
+  const openMenu = () => {
+    if (isOpen) return;
+    isOpen = true;
+    mnav.classList.add("is-open");
+    nav.classList.add("is-menu-open");
+    btn.setAttribute("aria-expanded", "true");
+    mnav.setAttribute("aria-hidden", "false");
+    lockScroll(true);
+
+    // petite “haptique” si dispo (optionnel)
+    if (navigator.vibrate) navigator.vibrate(12);
+
+    gsap.killTweensOf(sheet);
+    gsap.fromTo(sheet,
+      { y: -14, scale: 0.985, opacity: 0 },
+      { y: 0, scale: 1, opacity: 1, duration: 0.55, ease: "elastic.out(1, 0.85)" }
+    );
+
+    // index pour animer le sheen avec --i
+    mnav.querySelectorAll(".mnav__item").forEach((el, idx) => el.style.setProperty("--i", idx));
+
+    // cascade insolente : les items claquent + les icônes font un "pop"
+    const items = mnav.querySelectorAll(".mnav__item");
+    gsap.fromTo(items,
+      { y: 18, opacity: 0, scale: 0.985, rotateX: -8, transformOrigin: "50% 0%" },
+      { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.38, ease: "power3.out", stagger: 0.06, delay: 0.05 }
+    );
+
+    const icons = mnav.querySelectorAll(".mnav__icon svg");
+    gsap.fromTo(icons,
+      { scale: 0.6, rotate: -18, y: 6, opacity: 0 },
+      { scale: 1, rotate: 0, y: 0, opacity: 1, duration: 0.55, ease: "elastic.out(1, 0.55)", stagger: 0.05, delay: 0.12 }
+    );
+  };
+
+  const closeMenu = () => {
+    if (!isOpen) return;
+    isOpen = false;
+    btn.setAttribute("aria-expanded", "false");
+
+    gsap.killTweensOf(sheet);
+    gsap.to(sheet, {
+      y: -16, scale: 0.985, opacity: 0, duration: 0.25, ease: "power2.in",
+      onComplete: () => {
+        mnav.classList.remove("is-open");
+        nav.classList.remove("is-menu-open");
+        mnav.setAttribute("aria-hidden", "true");
+        lockScroll(false);
+      }
+    });
+
+    if (navigator.vibrate) navigator.vibrate(8);
+  };
+
+  btn.addEventListener("click", () => (isOpen ? closeMenu() : openMenu()));
+  backdrop.addEventListener("click", closeMenu);
+  closeEls.forEach(el => el.addEventListener("click", closeMenu));
+
+  // fermer quand on clique un lien (scrolllink déjà géré chez toi)
+  links.forEach(a => a.addEventListener("click", () => setTimeout(closeMenu, 120)));
+
+  // ESC pour fermer
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+
+  // Swipe down pour fermer (iOS sheet vibes)
+  const onDown = (e) => {
+    if (!isOpen) return;
+    dragging = true;
+    startY = (e.touches ? e.touches[0].clientY : e.clientY);
+    curY = 0;
+    sheet.style.transition = "none";
+  };
+
+  const onMove = (e) => {
+    if (!dragging) return;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY);
+    curY = Math.max(0, y - startY);
+    sheet.style.transform = `translateY(${curY}px) scale(${1 - Math.min(curY, 180) / 1800})`;
+    sheet.style.opacity = String(1 - Math.min(curY, 220) / 420);
+  };
+
+  const onUp = () => {
+    if (!dragging) return;
+    dragging = false;
+    sheet.style.transition = "";
+    if (curY > 120) {
+      closeMenu();
+    } else {
+      gsap.to(sheet, { y: 0, duration: 0.35, ease: "elastic.out(1, 0.8)" });
+      sheet.style.opacity = "";
+      sheet.style.transform = "";
+    }
+  };
+
+  sheet.addEventListener("touchstart", onDown, { passive: true });
+  sheet.addEventListener("touchmove", onMove, { passive: true });
+  sheet.addEventListener("touchend", onUp, { passive: true });
+
+  // “Peek” automatique: si l’utilisateur scrolle vers le haut en mobile, on tease le menu (sans l’ouvrir)
+  let lastScroll = window.scrollY;
+  let peeked = false;
+  window.addEventListener("scroll", () => {
+    if (isOpen) return;
+    const now = window.scrollY;
+    const up = now < lastScroll;
+    lastScroll = now;
+
+    if (window.matchMedia("(max-width: 760px)").matches && up && now > 120 && !peeked) {
+      peeked = true;
+      gsap.fromTo(btn, { y: 0 }, { y: -6, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" });
+      setTimeout(() => (peeked = false), 1600);
+    }
+  }, { passive: true });
+
 })();
+
+})();
+
