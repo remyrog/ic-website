@@ -893,13 +893,7 @@ a.premium:focus-visible::after {
     padding-bottom: 40px !important;
   }
 
-  /* Ma démarche : coller directement après */
-  .demarche {
-    padding-top: 20px !important;
-    margin-top: 0 !important;
-  }
-
-    .cta {
+  .cta {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
