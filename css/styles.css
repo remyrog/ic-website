@@ -50,7 +50,7 @@ body {
 #preloader {
   transition: opacity .4s ease;
   position: fixed; inset: 0; z-index: 1999;
-  background: radial-gradient(1200px 600px at 50% 20%, #1e2030 0%, #0c0d12 60%);
+  background: radial-gradient(1200px 600px at 50% 20%, #0c0d12 0%, #0c0d12 60%);
   display: grid; place-items: center; gap: 18px;
 }
 #preloader .spinner { display: flex; gap: 10px }
@@ -142,32 +142,13 @@ body {
   pointer-events: none;
 }
 
-/* SOLEIL : position responsive bien visible */
-/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
-
-@media (max-width: 920px) {
-/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
-}
-
-@media (max-width: 560px) {
-/* #sun : position gÃ©rÃ©e par JS uniquement - pas de transform CSS */
-}
-
 .hero__content { 
   position: relative; 
   z-index: 10;
   text-align: center; 
-  margin-top: min(20vh, 200px); 
-  /* Espace rÃƒÂ©duit aprÃƒÂ¨s les boutons */
-  padding-bottom: clamp(180px, 24vw, 240px);
+  margin-top: clamp(48px, 10vh, 120px);
+  padding-bottom: clamp(120px, 14vw, 170px);
   padding-inline: clamp(16px, 5vw, 0px);
-}
-
-/* Sur mobile, plus d'espace pour la route */
-@media (max-width: 560px) {
-  .hero__content {
-    padding-bottom: clamp(220px, 30vw, 280px);
-  }
 }
 
 .hero__badge {
@@ -214,18 +195,6 @@ h3 { margin: 0 0 10px; font-size: 1.2rem }
   font-size: clamp(0.8rem, 1.8vw, 0.9rem); 
   opacity: .9; 
   margin-top: 14px;
-}
-
-/* Ajustements mobile pour les boutons CTA */
-@media (max-width: 560px) {
-  .cta {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .cta .btn {
-    width: 100%;
-  }
 }
 
 /* Accent utilitaire */
@@ -357,28 +326,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
 .small { font-size: .9rem }
 
 /* =========================
-   Responsive
-   ========================= */
-@media (max-width: 920px) {
-  .grid-cards { grid-template-columns: 1fr 1fr }
-  .service { grid-column: auto }
-  .contact__grid { grid-template-columns: 1fr }
-
-  .split,
-  .split.reverse {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-}
-
-/* =========================
-   Motion preferences
-   ========================= */
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important }
-}
-
-/* =========================
    [data-magnet]
    ========================= */
 :root {
@@ -463,11 +410,6 @@ a.accent, .accent a { color: var(--accent-color) !important; opacity: 1 !importa
   transform-origin: center;
   transform: translateY(var(--carYOffset)) scale(var(--carScaleSections));
   will-change: transform;
-}
-@media (max-width:560px) {
-  .section-road .carSprite {
-    transform: translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm));
-  }
 }
 
 /* =========================
@@ -677,12 +619,6 @@ a.premium:focus-visible::after {
   color: #f7c600;
 }
 
-@media (max-width: 700px) {
-  .reviews__top {
-    align-items: flex-start;
-  }
-}
-
 .prestations .service h3 {
   display: flex;
   align-items: center;
@@ -882,16 +818,10 @@ a.premium:focus-visible::after {
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 640px) {
-  .grid-cards--prestations {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 /* =========================
-   Mobile : ÉLIMINER TOUT L'ESPACE VIDE
+   Mobile
 ========================= */
-@media (max-width: 560px) {
+@media (max-width: 760px) {
   /* Masquer soleil et route */
   .scene,
   #sun,
@@ -926,16 +856,26 @@ a.premium:focus-visible::after {
     padding-top: 20px !important;
     margin-top: 0 !important;
   }
-}
 
-h1 {
-  word-break: keep-all !important;
-  overflow-wrap: normal !important;
-  hyphens: none !important;
-  font-size: clamp(28px, 7vw, 38px) !important;
-}
+    .cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .cta .btn {
+    width: 100%;
+  }
+  .hero__content {
+    padding-bottom: clamp(220px, 30vw, 280px);
+  }
+  .section-road .carSprite {
+    transform: translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm));
+  }
 
-#preloader {
-  background: #0c0d12 !important;
+  h1 {
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    hyphens: none !important;
+    font-size: clamp(28px, 7vw, 38px) !important;
+  }
 }
-
