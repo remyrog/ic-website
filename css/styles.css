@@ -854,11 +854,16 @@ a.premium:focus-visible::after {
   transform: translateY(-4px) scale(1.03);
 }
 
-/* Prestations : 2 colonnes (desktop), 1 colonne (mobile) */
+/* Prestations : 2 colonnes desktop */
 .grid-cards--prestations{
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* IMPORTANT : neutralise le span 2 global des .service */
+.grid-cards--prestations > .service{
+  grid-column: auto;
 }
 
 /* Mobile : 1 colonne */
@@ -867,7 +872,6 @@ a.premium:focus-visible::after {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* =========================
    Mobile
