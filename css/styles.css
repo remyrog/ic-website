@@ -1046,12 +1046,6 @@ a.premium:focus-visible::after {
 /* Backdrop : plus dark + léger flou (effet "focus sur le menu") */
 
 .mnav__backdrop{
-  background: rgba(0,0,0,.86);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.mnav__backdrop{
   position:absolute; inset:0;
   background: rgba(0,0,0,.86);
   backdrop-filter: blur(10px);
