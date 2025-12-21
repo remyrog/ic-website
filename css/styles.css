@@ -1044,13 +1044,20 @@ a.premium:focus-visible::after {
   pointer-events: none;
 }
 /* Backdrop : plus dark + léger flou (effet "focus sur le menu") */
+
+.mnav__backdrop{
+  background: rgba(0,0,0,.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 .mnav__backdrop{
   position:absolute; inset:0;
-  background: rgba(0,0,0,.72);
+  background: rgba(0,0,0,.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   opacity: 0;
   transition: opacity .25s ease;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 /* Sheet : beaucoup plus opaque, moins “aquarium” */
