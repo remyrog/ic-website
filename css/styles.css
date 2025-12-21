@@ -1043,34 +1043,33 @@ a.premium:focus-visible::after {
   z-index: 2000;
   pointer-events: none;
 }
-/* Backdrop : plus dark + léger flou (effet "focus sur le menu") */
 
 .mnav__backdrop{
-  position:absolute; inset:0;
-  background: rgba(0,0,0,.86);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.72);
   opacity: 0;
   transition: opacity .25s ease;
 }
 
-/* Sheet : beaucoup plus opaque, moins “aquarium” */
 .mnav__sheet{
   position:absolute;
   left: 10px; right: 10px;
-  top: calc(14px + env(safe-area-inset-top));
+  top: 60px;
   border-radius: 22px;
   border: 1px solid rgba(255,255,255,.10);
 
-  /* 👇 Le vrai fix : on arrête le semi-transparent trop léger */
+  /* OPTION 3 : opaque + texture lumineuse */
   background:
-    radial-gradient(900px 520px at 20% 0%, rgba(247,198,0,.10), transparent 55%),
-    radial-gradient(780px 520px at 90% 110%, rgba(255,94,142,.10), transparent 55%),
-    rgba(10,11,18,.92);
+    radial-gradient(800px 500px at 15% 0%, rgba(247,198,0,.12), transparent 55%),
+    radial-gradient(700px 500px at 90% 100%, rgba(255,94,142,.12), transparent 55%),
+    #0d0f18;
 
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  /* Pas de blur, puisque c’est opaque */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 
+  /* On garde la profondeur + le “lift” */
   box-shadow:
     0 30px 90px rgba(0,0,0,.75),
     inset 0 1px 0 rgba(255,255,255,.06);
@@ -1083,16 +1082,27 @@ a.premium:focus-visible::after {
 
 .mnav__sheet::after{
   content:"";
-  position:absolute; inset:0;
+  position:absolute;
+  inset:-30%;
   pointer-events:none;
+  opacity:.065;
+  mix-blend-mode: overlay;
+
+  /* Faux grain CSS : 2 couches + répétition */
   background:
     repeating-linear-gradient(
-      115deg,
-      rgba(255,255,255,.020) 0 2px,
-      rgba(255,255,255,0) 2px 6px
+      0deg,
+      rgba(255,255,255,.018) 0 1px,
+      rgba(255,255,255,0) 1px 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,.016) 0 1px,
+      rgba(0,0,0,0) 1px 4px
     );
-  opacity:.35;
-  mix-blend-mode: overlay;
+
+  transform: rotate(12deg);
+  border-radius: inherit;
 }
 
 .mnav__handle{
