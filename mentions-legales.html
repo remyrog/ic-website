@@ -432,6 +432,89 @@
         align-items: flex-start;
       }
     }
+    
+    .legal-versions {
+      margin-bottom: 2rem;
+      padding: 1.2rem 1.5rem 1.35rem;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 0% 100%, rgba(247,198,0,0.15), transparent 60%),
+        radial-gradient(circle at 100% 0%, rgba(236,72,153,0.18), transparent 60%),
+        #020617;
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.85);
+    }
+
+    .legal-versions-title {
+      font-size: 1.15rem;
+      margin: 0.35rem 0 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .legal-versions-title span {
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      background-clip: text;
+      color: transparent;
+    }
+
+    .legal-versions-intro {
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 0.9rem;
+    }
+
+    .legal-versions-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.92rem;
+    }
+
+    .legal-versions-list li {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      align-items: center;
+      padding: 0.55rem 0.8rem;
+      border-radius: 14px;
+      background: #050816;
+      border: 1px solid rgba(148,163,184,0.35);
+    }
+
+    .legal-versions-list li.current {
+      border-color: rgba(247,198,0,0.8);
+      box-shadow: 0 0 0 1px rgba(247,198,0,0.35);
+    }
+
+    .version-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      color: #020617;
+      font-weight: 800;
+    }
+
+    .legal-versions-list a {
+      color: var(--yellow);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    .legal-versions-list a:hover,
+    .legal-versions-list a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .legal-versions-footnote {
+      margin-top: 0.8rem;
+      font-size: 0.88rem;
+    }
+
   </style>
 </head>
 <body>
@@ -482,6 +565,42 @@
         </div>
       </div>
     </header>
+
+    <section class="legal-versions" aria-label="Archives des versions des mentions légales (PDF)">
+      <div class="legal-versions-inner">
+        <div class="badge-pill">Archives</div>
+
+        <h2 class="legal-versions-title">
+          Versions antérieures <span>(PDF)</span>
+        </h2>
+
+        <p class="legal-versions-intro">
+          Cette page <strong>mentions-legales.html</strong> affiche en permanence la version la plus récente.
+          Les versions précédentes sont conservées au format <strong>PDF</strong> à des fins d’archivage et de preuve.
+        </p>
+
+        <ul class="legal-versions-list">
+          <li class="current">
+            <span class="version-tag">Version en vigueur</span>
+            <strong>Dernière mise à jour : 21/12/2025</strong>
+            <a href="https://www.informatique-cerdagne.fr/mentions-legales.pdf" download>
+              Télécharger le PDF en vigueur
+            </a>
+          </li>
+
+          <li>
+            <strong>Version du 27/10/2025</strong>
+            <a href="/archives/mentions-legales-2025-10-27.pdf" download>
+              Télécharger le PDF
+            </a>
+          </li>
+        </ul>
+
+        <p class="legal-versions-footnote muted">
+          En cas de divergence, la version applicable est celle en vigueur à la date des faits.
+        </p>
+      </div>
+    </section>
 
     <!-- SOMMAIRE -->
     <nav class="legal-toc" aria-label="Sommaire des mentions légales">
