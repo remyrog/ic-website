@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Offre de développement – Informatique Cerdagne</title>
+  <meta name="description" content="Présentation complète de l’offre de développement et d’accompagnement numérique proposée par Informatique Cerdagne. Découvrez la méthode, l’audit à 150 €, les services, la transparence des budgets et l’expertise derrière chaque projet." />
+
+  <!-- Feuilles de style existantes -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- JavaScript existant (animations, magnets, progress bar…) -->
+  <script defer src="main.js"></script>
+
+  <!-- Styles spécifiques à cette page -->
+  <style>
+    :root {
+      /* Réutilisation des couleurs de la charte pour assurer la cohérence */
+      --bg: #020617;
+      --card: #050816;
+      --card-soft: #050818;
+      --border-soft: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --yellow: #f7c600;
+      --pink: #ec4899;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Top bar */
+    .top-bar {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.45);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .top-bar-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+    .brand span { color: var(--yellow); }
+    a.premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      color: var(--pink);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    a.premium::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pink), var(--yellow));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.25s ease-out;
+    }
+    a.premium:hover::after,
+    a.premium:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 3.75rem;
+    }
+
+    /* Hero section */
+    header.hero {
+      margin-bottom: 2.75rem;
+      padding: 2.4rem 2.1rem 2.3rem;
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 1.65rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.75rem 0.3rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0%, var(--yellow), var(--pink));
+      box-shadow: 0 0 10px rgba(248, 250, 252, 0.6);
+    }
+    h1 {
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 1rem 0 0.85rem;
+    }
+    h1 span.accent {
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-subtitle {
+      max-width: 700px;
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-bottom: 0.35rem;
+    }
+    .hero-subtitle strong {
+      color: #fefce8;
+      font-weight: 600;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.75rem;
+      margin-top: 1.1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .hero-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Grille de sommaire */
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+    .toc-card {
+      position: relative;
+      padding: 1.2rem 1.4rem;
+      border-radius: var(--radius-lg);
+      background: var(--card-soft);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
+      color: var(--text);
+      text-decoration: none;
+      overflow: hidden;
+      will-change: transform;
+    }
+    .toc-card h3 {
+      margin-bottom: 0.35rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fefce8;
+    }
+    .toc-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .toc-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+    }
+    .toc-card:hover::after,
+    .toc-card:focus-visible::after {
+      opacity: 0.15;
+    }
+
+    /* Accentuation visuelle pour les cartes prioritaires */
+    .toc-card.highlight {
+      border-color: var(--pink);
+      box-shadow:
+        0 0 0 1px var(--pink),
+        0 0 12px rgba(236, 72, 153, 0.5),
+        0 0 8px rgba(247, 198, 0, 0.4);
+    }
+
+
+    /* Sections */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+    .block {
+      border-radius: var(--radius-lg);
+      background: var(--card-soft);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+      padding: 1.6rem 1.75rem 1.75rem;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 1rem;
+      row-gap: 0.5rem;
+      scroll-margin-top: 80px;
+    }
+    .block-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-right: 0.5rem;
+    }
+
+    /* Icônes pour chaque bloc */
+    .block-icon {
+      width: 40px;
+      height: 40px;
+      color: var(--pink);
+      flex-shrink: 0;
+    }
+    .block-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    /* When icons draw themselves, initialise dash array/offset so lines are hidden */
+    .block-icon path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+    }
+    .block-title {
+      font-weight: 650;
+      font-size: 1.02rem;
+    }
+    .block-title span {
+      color: var(--yellow);
+    }
+    .block-body {
+      font-size: 0.96rem;
+      color: var(--text);
+    }
+    .block-body p + p {
+      margin-top: 0.65rem;
+    }
+    .block-body ul {
+      list-style: none;
+      margin-top: 0.4rem;
+      padding-left: 0;
+    }
+    .block-body li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-top: 0.25rem;
+      color: var(--muted);
+    }
+    .block-body li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.7em;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      box-shadow: 0 0 7px rgba(248, 250, 252, 0.6);
+    }
+    .highlight {
+      font-weight: 600;
+      color: #fefce8;
+    }
+    .quote {
+      margin-top: 0.7rem;
+      padding-left: 0.9rem;
+      border-left: 2px solid rgba(248, 250, 252, 0.2);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      padding: 0.16rem 0.6rem;
+      background: var(--bg);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Diagramme simple */
+    .process {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 0.6rem;
+    }
+    .process-step {
+      padding: 0.4rem 0.8rem;
+      background: var(--bg);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      border-radius: var(--radius-lg);
+      font-size: 0.85rem;
+      color: var(--muted);
+      position: relative;
+    }
+    .process-step::after {
+      content: "→";
+      margin-left: 0.6rem;
+      color: var(--pink);
+    }
+    .process-step:last-child::after { content: ""; }
+
+    /* Micro-copy pour micro-accroches dans les sections prioritaires */
+    .micro-copy {
+      color: var(--pink);
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* CTA final */
+    .cta-final {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cta-final a {
+      align-self: flex-start;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+      .top-bar-inner {
+        padding: 0.6rem 1.1rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      main {
+        padding: 2.1rem 1.1rem 2.8rem;
+      }
+      header.hero {
+        padding: 1.9rem 1.4rem 1.8rem;
+      }
+      .block {
+        padding: 1.35rem 1.25rem 1.45rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .block-header {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 0.4rem;
+      }
+      nav.toc ul {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+    }
+
+    /* Mettez en avant les blocs prioritaires par un contour dégradé */
+    .feature-block {
+      position: relative;
+      border: 1px solid transparent;
+      /* même fond que .block */
+      background: var(--card-soft);
+    }
+    .feature-block::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: var(--radius-lg);
+      padding: 0;
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Réorganisation visuelle des blocs via l'ordre Flexbox */
+    /* La situation vient en introduction (ordre 0) puis mon rôle & engagements, l'audit, la méthode,
+       les budgets, l'offre, le SEO, l'autonomie, les risques, etc. */
+    #situation { order: 0; }
+    #role { order: 1; }
+    #audit { order: 2; }
+    #agile { order: 3; }
+    #budgets { order: 4; }
+    #solutions { order: 5; }
+    #seo { order: 6; }
+    #autonomie { order: 7; }
+    #risques { order: 8; }
+    /* L'article engagements est fusionné dans Mon rôle, pas d'ordre dédié */
+    #mvp { order: 9; }
+    #parcours { order: 10; }
+    #experiences { order: 11; }
+
+    /* Amélioration de la lisibilité : les listes utilisent la couleur principale */
+    .block-body li { color: var(--text); }
+
+    /*
+      ======== Sommaire amélioré ========
+      Le sommaire doit se comporter comme un composant premium :
+      - Chaque carte peut se surélever légèrement au survol (tilt/parallax)
+      - L’état actif est mis en avant par un halo et un contour
+      - Un retour vers le sommaire est accessible depuis chaque section via un lien
+      - Une mini barre de navigation sticky apparaît après le sommaire pour un accès rapide aux sections
+    */
+    .toc-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .toc-card:hover,
+    .toc-card:focus-visible {
+      transform: translateY(-4px) rotateX(1deg) rotateY(-1deg);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.8), 0 0 14px rgba(236, 72, 153, 0.4), 0 0 10px rgba(247, 198, 0, 0.3);
+    }
+    .toc-card.active {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 1px var(--pink), 0 0 14px rgba(236, 72, 153, 0.6), 0 0 10px rgba(247, 198, 0, 0.45);
+    }
+    /* Les liens "Retour au sommaire" ont été retirés pour alléger la lecture */
+    /* Barre sticky après le sommaire */
+    .sticky-nav {
+      position: sticky;
+      top: 58px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-lg);
+      z-index: 20;
+    }
+    .sticky-nav.show { display: flex; }
+    .sticky-nav a {
+      color: var(--pink);
+      font-size: 0.85rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .sticky-nav a:hover { text-decoration: underline; }
+    .sticky-nav .current-section {
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+      color: #fefce8;
+    }
+    /* Cache la sticky nav sur mobile */
+    @media (max-width: 720px) {
+      .sticky-nav { display: none !important; }
+    }
+
+    /* Visuel de poignée de main dans le hero */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    .hero-visual svg {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      opacity: 0;
+    }
+    .handshake-labels {
+      position: absolute;
+      bottom: -1.6rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      opacity: 0;
+    }
+    .handshake-label {
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(248, 250, 252, 0.25);
+      color: var(--muted);
+      backdrop-filter: blur(6px);
+    }
+
+    /* L'illustration d'audit a été retirée : aucun style spécifique nécessaire */
+
+    /* CTA mis en avant dans le hero et l'audit */
+    .cta-primary {
+      margin-top: 1.5rem;
+    }
+    .cta-primary a {
+      display: inline-block;
+      padding: 0.8rem 1.4rem;
+      /* Bouton entièrement arrondi pour évoquer la convivialité */
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      color: #111;
+      font-weight: 700;
+      text-decoration: none;
+      will-change: transform;
+      transition: transform 0.2s ease;
+      /* Animation douce qui incite à cliquer */
+      animation: cta-pulse 4s ease-in-out infinite;
+    }
+    .cta-primary a:hover {
+      transform: translateY(-2px);
+    }
+    .cta-primary a:focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 2px;
+    }
+
+    @keyframes cta-pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 6px rgba(236, 72, 153, 0.35);
+      }
+    }
+
+    /* Style appliqué directement sur un lien portant la classe cta-primary
+       afin qu’il puisse être utilisé sans wrapper. Cela reprend le design du
+       bouton d’origine (dégradé, arrondi, animation pulsée, hover). */
+    a.cta-primary {
+      display: inline-block;
+      padding: 0.8rem 1.4rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      color: #111;
+      font-weight: 700;
+      text-decoration: none;
+      will-change: transform;
+      transition: transform 0.2s ease;
+      animation: cta-pulse 4s ease-in-out infinite;
+      /* Un peu d’espace au-dessus et en dessous des CTA placés directement dans le flux du texte */
+      margin-top: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    a.cta-primary:hover {
+      transform: translateY(-2px);
+    }
+    a.cta-primary:focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 2px;
+    }
+
+
+    /* Titres et notes du sommaire restructuré */
+    .toc-heading-essential,
+    .toc-heading-full {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #fefce8;
+    }
+    .toc-note {
+      margin-top: 0.4rem;
+      /* augmenter l’espacement après la note pour mieux séparer les cartes */
+      margin-bottom: 1.4rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Disposition en quinconce pour la section essentielle (5 cartes comme les points d’un dé) */
+    .essential-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      /* on laisse la hauteur des rangées s’ajuster au contenu, les cartes ayant une hauteur minimale identique */
+      gap: 1.2rem;
+      /* augmenter encore l'espace sous les cartes essentielles pour mieux séparer du sommaire complet */
+      margin-bottom: 6rem;
+      /* un peu de padding interne pour éviter la fusion des marges verticales */
+      padding-bottom: 1rem;
+    }
+    /* Positionnement spécifique des 5 cartes :
+       1 – coin haut gauche; 2 – coin haut droit; 3 – centre; 4 – coin bas gauche; 5 – coin bas droit */
+    .essential-grid > a:nth-child(1) { grid-row: 1; grid-column: 1; }
+    .essential-grid > a:nth-child(2) { grid-row: 1; grid-column: 3; }
+    .essential-grid > a:nth-child(3) { grid-row: 2; grid-column: 2; }
+    .essential-grid > a:nth-child(4) { grid-row: 3; grid-column: 1; }
+    .essential-grid > a:nth-child(5) { grid-row: 3; grid-column: 3; }
+
+    /* Les cartes essentielles : mêmes dimensions pour toutes et texte centré */
+    .essential-grid > a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      /* hauteur minimale identique sur toutes les cartes pour uniformiser le rendu */
+      min-height: 180px;
+    }
+
+    /* Les cartes du sommaire complet sont organisées en deux lignes de trois, occupant toute la largeur */
+    .full-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: auto;
+      gap: 1.2rem;
+      width: 100%;
+    }
+
+    /* Uniformiser l’apparence des cartes du sommaire complet */
+    .full-grid > a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      /* hauteur minimale pour harmoniser avec le design général */
+      min-height: 160px;
+    }
+
+    .toc-heading-full {
+      /* plus d’espace avant le titre du sommaire complet */
+      margin-top: 3rem;
+    }
+
+    /* Alignement du CTA dans l’audit : on utilise désormais un bouton sous le titre sans mise en page en colonnes */
+
+    /* Décoration sous les titres des blocs */
+    .block-underline {
+      width: 80px;
+      height: 2px;
+      margin-top: 4px;
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      border-radius: 2px;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    /* Marges entre les sections pour éviter le chevauchement */
+    #situation {
+      margin-bottom: 2.5rem;
+    }
+    .toc-heading-essential {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .toc-heading-full {
+      /* laisser un espace encore plus généreux avant le titre du sommaire complet */
+      margin-top: 5rem;
+      margin-bottom: 0.8rem;
+    }
+    /* Ajout d’espace entre les blocs et le sommaire complet */
+    #role {
+      margin-top: 3rem;
+    }
+
+    /* Espacement des paragraphes : éloigner les paragraphes entre eux et après listes ou CTA */
+    .block-body p {
+      margin-bottom: 1.1rem;
+    }
+    .block-body ul + p {
+      margin-top: 1.2rem;
+    }
+    .cta-primary + p {
+      margin-top: 1.5rem;
+    }
+
+    /* Paragraphe qui enveloppe les boutons dans les blocs : marges pour séparer du contenu */
+    .cta-call {
+      margin-top: 1.2rem;
+      margin-bottom: 1.2rem;
+      /* aligner le texte à gauche pour éviter que le CTA ne soit centré */
+      text-align: left;
+    }
+
+    /* Alignement spécifique pour le bloc Audit : on s'assure que le contenu n'est pas centré */
+    #audit .block-body {
+      text-align: left;
+    }
+
+    /* Mise en valeur des noms de projets dans la section Parcours */
+    #parcours li strong {
+      color: var(--yellow);
+    }
+
+    /* Mise en valeur des intitulés de solutions dans la section Mon offre */
+
+    /* Mise en valeur des intitulés de solutions dans la section Mon offre */
+    #solutions li strong {
+      color: var(--yellow);
+    }
+
+
+    /* Mise en valeur des projets de la section Budgets */
+    #budgets li strong {
+      color: var(--yellow);
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Barre de navigation simple -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        INFORMATIQUE <span>CERDAGNE</span>
+      </div>
+      <a href="/" class="premium">Retour au site principal</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Section Hero -->
+    <header class="hero" id="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            Offre de développement
+          </div>
+          <h1>
+            Du flou à la <span class="accent">clarté</span><br>
+            construisons votre projet numérique
+          </h1>
+          <p class="hero-subtitle">
+            Vous avez des idées et des envies, mais vous ne savez pas par où commencer ni comment éviter les pièges ? Ici, vous trouverez une méthode structurée et humaine pour passer de l’intention à la réalisation avec sérénité.
+          </p>
+        </div>
+        <div class="hero-meta">
+          <div><strong>Expérience</strong> : 15&nbsp;ans en développement et gestion de projet</div>
+          <div><strong>Approche</strong> : agile, transparente, orientée valeur</div>
+          <div><strong>Zone</strong> : Cerdagne, Capcir & au-delà</div>
+        </div>
+
+        <!-- Visuel premium animé de poignée de main -->
+        <div class="hero-visual">
+          <!-- Visuel de poignée de main et personnages : deux personnages se rapprochent et se serrent la main au défilement -->
+          <svg id="handshake-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="var(--pink)" />
+                <stop offset="1" stop-color="var(--yellow)" />
+              </linearGradient>
+            </defs>
+            <!-- Personnage client à gauche -->
+            <g id="client-person">
+              <circle cx="100" cy="60" r="20" fill="url(#grad)" />
+              <rect x="80" y="80" width="40" height="60" rx="8" fill="url(#grad)" />
+            </g>
+            <!-- Personnage prestataire à droite -->
+            <g id="provider-person">
+              <circle cx="500" cy="60" r="20" fill="url(#grad)" />
+              <rect x="480" y="80" width="40" height="60" rx="8" fill="url(#grad)" />
+            </g>
+            <!-- Bras se rejoignant pour la poignée de main -->
+            <g id="left-arm">
+              <rect x="180" y="120" width="120" height="20" rx="10" fill="url(#grad)" />
+              <circle cx="300" cy="130" r="22" fill="url(#grad)" />
+            </g>
+            <g id="right-arm">
+              <rect x="300" y="120" width="120" height="20" rx="10" fill="url(#grad)" />
+              <circle cx="300" cy="130" r="22" fill="url(#grad)" />
+            </g>
+          </svg>
+          <div class="handshake-labels">
+            <span class="handshake-label">Cadrage</span>
+            <span class="handshake-label">Budget</span>
+            <span class="handshake-label">Autonomie</span>
+          </div>
+        </div>
+
+        <!-- CTA principal retiré du hero pour alléger l’en-tête -->
+      </div>
+    </header>
+
+    <!-- Introduction : Situation du client, placée avant le sommaire pour contextualiser la lecture -->
+    <section id="situation" class="block">
+      <div class="block-header">
+        <div class="block-title">Votre <span>situation</span></div>
+      </div>
+      <div class="block-body">
+        <p>Vous avez un projet numérique… mais trop de doutes pour avancer sereinement ?</p>
+        <p>Vous savez que vous devez faire quelque chose : un site, une refonte, une boutique en ligne, un outil interne, une automatisation.</p>
+        <p>Mais concrètement :</p>
+        <ul>
+          <li>Vous ne savez pas exactement par où commencer.</li>
+          <li>Vous avez peur de payer pour quelque chose que vous ne comprendrez pas.</li>
+          <li>Vous manquez de temps pour comparer, trier, vérifier.</li>
+        </ul>
+        <p>Et surtout, vous ne voulez pas vous tromper. Si vous vous reconnaissez, vous êtes au bon endroit.</p>
+      </div>
+    </section>
+
+    <!-- Sommaire restructuré : section "essentiel" et section détaillée -->
+    <section id="sommaire" aria-label="Sommaire">
+      <!-- Section essentielle -->
+      <h2 class="toc-heading-essential">Pas le temps de lire&nbsp? Voici l’essentiel</h2>
+      <!-- Note d’utilisation placée sous le titre essentiel -->
+      <p class="toc-note">Cliquez sur une carte pour accéder directement à la section</p>
+      <div class="toc-grid essential-grid">
+        <a href="#audit" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Audit&nbsp;&amp;&nbsp;Cadrage</h3>
+          <p>Clarifier votre besoin avant d’investir</p>
+        </a>
+        <a href="#agile" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Méthode&nbsp;Agile&nbsp;&amp;&nbsp;Scrum</h3>
+          <p>Découper et valider chaque étape</p>
+        </a>
+        <a href="#budgets" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Budgets&nbsp;&amp;&nbsp;TJM</h3>
+          <p>Des repères clairs et transparents</p>
+        </a>
+        <a href="#solutions" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Mon offre</h3>
+          <p>Des services adaptés à votre réalité</p>
+        </a>
+        <!-- Ajout de la carte "Mon rôle" dans la section essentielle -->
+        <a href="#role" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Mon rôle</h3>
+          <p>Traduire, sécuriser et construire durablement</p>
+        </a>
+      </div>
+      <!-- Section complète -->
+      <!-- Titre de la partie détaillée du sommaire -->
+      <h2 class="toc-heading-full">Le reste mérite d'être lu également&nbsp; (temps de lecture estimé à moins de&nbsp;3&nbsp;minutes)</h2>
+      <div class="toc-grid full-grid">
+        <a href="#seo" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>SEO&nbsp;intégré</h3>
+          <p>Visibilité naturelle dès la conception</p>
+        </a>
+        <a href="#autonomie" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Votre autonomie</h3>
+          <p>Gardez le contrôle de votre outil</p>
+        </a>
+        <a href="#risques" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Risques</h3>
+          <p>Ce qui arrive sans cadrage</p>
+        </a>
+        <a href="#mvp" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>MVP</h3>
+          <p>Tester l’essentiel avant d’aller plus loin</p>
+        </a>
+        <a href="#parcours" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Parcours&nbsp;&amp;&nbsp;Références</h3>
+          <p>15 ans de projets variés</p>
+        </a>
+        <a href="#experiences" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Expertise&nbsp;&amp;&nbsp;Approche</h3>
+          <p>Une écoute active au service du numérique</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Barre de navigation sticky qui apparaît après le sommaire -->
+    <div class="sticky-nav" id="stickyNav">
+      <a href="#sommaire">Sommaire</a>
+      <span class="current-section">&nbsp;</span>
+      <a href="#" class="prev-section" aria-label="Section précédente">Précédent</a>
+      <a href="#" class="next-section" aria-label="Section suivante">Suivant</a>
+    </div>
+
+    <!-- Bloc principal -->
+    <section class="grid" aria-label="Contenu de l’offre">
+      <!-- 01 : Votre situation déplacée en introduction -->
+
+      <!-- 02 : Mon rôle & engagements -->
+      <article class="block" id="role">
+        <div class="block-header">
+          <!-- Icône animée pour Mon rôle (icône Personne) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+            </svg>
+          </div>
+          <div class="block-title">Mon <span>rôle</span></div>
+          <div class="block-underline"></div>
+        </div>
+
+        <div class="block-body">
+          <p>Mon rôle : traduire, structurer, sécuriser. Je suis développeur web, chef de projet digital et consultant. Mais surtout, je me place du côté du client, pas de la technologie.</p>
+          <p>Concrètement :</p>
+          <ul>
+            <li>Je traduis le technique en langage clair.</li>
+            <li>Je cherche ce qui est le plus adapté à votre situation, pas ce que je préfère vendre.</li>
+            <li>Je structure le projet étape par étape.</li>
+            <li>Je sécurise votre budget, votre temps et votre autonomie.</li>
+          </ul>
+          <p>Je refuse le vite fait, les paillettes et la dépendance. Je construis des projets utiles, compréhensibles et durables.</p>
+          <p>Pourquoi je fais ces choix (et pourquoi ils comptent) :</p>
+          <ul>
+            <li>Construire des projets utiles, pas juste « livrés ».</li>
+            <li>Penser le long terme plutôt que la prestation ponctuelle.</li>
+            <li>Créer une relation saine et équilibrée avec mes clients.</li>
+          </ul>
+          <p>Un projet numérique réussi n’est pas celui qui impressionne, c’est celui qui sert réellement votre activité, aujourd’hui et demain.</p>
+        </div>
+      </article>
+
+      <!-- 03 : Risques d’un projet mal cadré -->
+      <article class="block" id="risques">
+        <div class="block-header">
+          <div class="block-title">Risques d’un <span>projet mal cadré</span></div>
+          <div class="block-underline"></div>
+        </div>
+
+        <div class="block-body">
+          <p>Vous n’avez pas besoin d’être expert pour prendre une bonne décision. La majorité des entreprises, artisans, TPE, associations ou hébergeurs touristiques que j’accompagne arrivent avec du flou. C’est normal : le numérique est devenu complexe, rempli de jargon et de promesses marketing.</p>
+          <p>Le problème n’est pas votre niveau technique. Le problème, c’est d’avancer sans cadre clair.</p>
+          <p>Le vrai risque est de décider sans visibilité. Un projet lancé trop vite peut devenir :</p>
+          <ul>
+            <li>Une usine à gaz.</li>
+            <li>Une source de dépendance.</li>
+            <li>Ou une déception coûteuse.</li>
+          </ul>
+          <p>Avant de produire quoi que ce soit, il faut comprendre, prioriser, structurer. C’est exactement le rôle du cadrage.</p>
+        </div>
+      </article>
+
+      <!-- 04 : Audit &amp; Cadrage -->
+      <article class="block feature-block" id="audit">
+        <div class="block-header">
+          <!-- Icône animée pour Audit & Cadrage (document) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+            </svg>
+          </div>
+          <div class="block-title">Audit&nbsp;&amp;&nbsp;Cadrage <span>150 €</span></div>
+          <div class="block-underline"></div>
+        </div>
+        <div class="block-body">
+          <p class="micro-copy">Ce que ça change concrètement pour vous</p>
+          <p>Audit &amp; cadrage de projet – 150 € pour décider avant d’investir.</p>
+
+          <p>Ce n’est pas un devis déguisé. Ce n’est pas un engagement. C’est un vrai travail de fond, dont vous repartez avec de la valeur, même si nous ne travaillons pas ensemble ensuite.</p>
+          <p>Cet audit vous permet :</p>
+          <ul>
+            <li>De clarifier votre besoin réel.</li>
+            <li>D’identifier les solutions pertinentes (et celles à éviter).</li>
+            <li>De prioriser ce qui est utile maintenant.</li>
+            <li>D’avoir une vision réaliste des budgets et des délais.</li>
+            <li>De savoir précisément par où commencer… ou s’il vaut mieux attendre.</li>
+          </ul>
+          <p>Vous repartez avec une vision claire et exploitable.</p>
+          <!-- Contenu de contact fusionné depuis l’ancienne section Contact -->
+          <p>Parlons-en simplement. Expliquez-moi votre situation par mail, même si ce n’est pas clair ou fixons un rendez-vous pour un audit. Je vous répondrai de manière personnalisée, sans pression ni engagement.</p>
+          <p>Si cela vous aide, vous pouvez préciser :</p>
+          <ul>
+            <li>Votre activité.</li>
+            <li>Ce qui vous bloque aujourd’hui.</li>
+            <li>Ce que vous aimeriez améliorer.</li>
+            <li>Vos contraintes éventuelles.</li>
+          </ul>
+
+          <!-- Appel à l'action pour réserver l'audit : placé en bas de la section pour conclure la lecture -->
+          <p class="cta-call">
+            <a href="mailto:informatiquecerdagne@gmail.com?subject=Réservation%20audit%20150%20€%20–%20[Nom/Entreprise]&body=Bonjour%20Rémy,%0A%0AMon%20activité :%20%0AMes%20blocages :%20%0AMes%20objectifs :%20%0AVos%20contraintes :%20%0A%0AMerci." class="cta-primary" data-magnet="20" data-rotate="4">RESERVER</a>
+          </p>
+        </div>
+      </article>
+
+      <!-- 05 : Méthode Agile & Scrum -->
+      <article class="block feature-block" id="agile">
+        <div class="block-header">
+          <!-- Icône animée pour Méthode Agile & Scrum (cycle/refresh arrows) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+            </svg>
+          </div>
+          <div class="block-title">Méthode <span>Agile &amp; Scrum</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p class="micro-copy">Découper et valider chaque étape pour avancer en confiance</p>
+          <p>Une méthode progressive, claire et rassurante. Je travaille avec des principes issus de la gestion de projet en méthodologie agile (dont Scrum).</p>
+          <p>Concrètement :</p>
+          <ul>
+            <li>Le projet est découpé en étapes compréhensibles.</li>
+            <li>Chaque phase est validée avant de continuer.</li>
+            <li>On avance de semaine en semaine.</li>
+            <li>Vous avez une vision réelle de l’avancement.</li>
+          </ul>
+          <p>Un projet numérique n’est pas un développement à l’aveugle où l’on voit le résultat qu’à la fin, mais une construction progressive.</p>
+          <p>Un schéma simple peut illustrer mon fonctionnement avec vous :</p>
+          <div class="process">
+            <span class="process-step">Cadrage</span>
+            <span class="process-step">Découpage</span>
+            <span class="process-step">Développement</span>
+            <span class="process-step">Validation</span>
+            <span class="process-step">Autonomie</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 : MVP -->
+      <article class="block" id="mvp">
+        <div class="block-header">
+          <!-- Icône animée pour MVP (fusée) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 8c.828 0 1.5-.895 1.5-2S8.828 4 8 4s-1.5.895-1.5 2S7.172 8 8 8"/>
+              <path d="M11.953 8.81c-.195-3.388-.968-5.507-1.777-6.819C9.707 1.233 9.23.751 8.857.454a3.5 3.5 0 0 0-.463-.315A2 2 0 0 0 8.25.064.55.55 0 0 0 8 0a.55.55 0 0 0-.266.073 2 2 0 0 0-.142.08 4 4 0 0 0-.459.33c-.37.308-.844.803-1.31 1.57-.805 1.322-1.577 3.433-1.774 6.756l-1.497 1.826-.004.005A2.5 2.5 0 0 0 2 12.202V15.5a.5.5 0 0 0 .9.3l1.125-1.5c.166-.222.42-.4.752-.57.214-.108.414-.192.625-.281l.198-.084c.7.428 1.55.635 2.4.635s1.7-.207 2.4-.635q.1.044.196.083c.213.09.413.174.627.282.332.17.586.348.752.57l1.125 1.5a.5.5 0 0 0 .9-.3v-3.298a2.5 2.5 0 0 0-.548-1.562zM12 10.445v.055c0 .866-.284 1.585-.75 2.14.146.064.292.13.425.199.39.197.8.46 1.1.86L13 14v-1.798a1.5 1.5 0 0 0-.327-.935zM4.75 12.64C4.284 12.085 4 11.366 4 10.5v-.054l-.673.82a1.5 1.5 0 0 0-.327.936V14l.225-.3c.3-.4.71-.664 1.1-.861.133-.068.279-.135.425-.199M8.009 1.073q.096.06.226.163c.284.226.683.621 1.09 1.28C10.137 3.836 11 6.237 11 10.5c0 .858-.374 1.48-.943 1.893C9.517 12.786 8.781 13 8 13s-1.517-.214-2.057-.607C5.373 11.979 5 11.358 5 10.5c0-4.182.86-6.586 1.677-7.928.409-.67.81-1.082 1.096-1.32q.136-.113.236-.18Z"/>
+              <path d="M9.479 14.361c-.48.093-.98.139-1.479.139s-.999-.046-1.479-.139L7.6 15.8a.5.5 0 0 0 .8 0z"/>
+            </svg>
+          </div>
+          <div class="block-title">Tester avant de construire : <span>MVP</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p>Tester avant de construire : le MVP. Avant de créer une application complète ou un outil complexe, je propose souvent de passer par un MVP (Produit Minimum Viable).</p>
+          <p>Dit simplement : on construit d’abord la version utile, pas la version parfaite.</p>
+          <p>Comme une maquette fonctionnelle :</p>
+          <ul>
+            <li>Pour tester un concept.</li>
+            <li>Valider un usage réel.</li>
+            <li>Vérifier que ça apporte vraiment de la valeur.</li>
+          </ul>
+          <p>Une fois que ça fonctionne, alors seulement :</p>
+          <ul>
+            <li>On améliore.</li>
+            <li>On affine.</li>
+            <li>On rend plus « joli ».</li>
+          </ul>
+          <p>Résultat : moins de risques, moins de dépenses inutiles, plus d’efficacité.</p>
+        </div>
+      </article>
+
+      <!-- 07 : Solutions proposées -->
+      <article class="block" id="solutions">
+        <div class="block-header">
+          <!-- Icône animée pour Des solutions adaptées (gear) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+            </svg>
+          </div>
+          <div class="block-title">Des <span>solutions adaptées</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p>Des solutions adaptées à votre réalité. Selon votre besoin, je peux vous accompagner sur :</p>
+          <ul>
+            <li><strong>Site vitrine sur-mesure (from scratch)</strong> : quand un thème générique ne suffit pas. Un site clair, rapide, aligné avec votre identité, sans surcharge inutile.</li>
+            <li><strong>Site avec interface d’administration (CMS – souvent WordPress)</strong> : pour être autonome sur vos contenus, sans dépendre d’un prestataire à chaque modification. WordPress, quand il est bien configuré, est un excellent outil. On peut également choisir parmi des milliers de designs existants et personnaliser l’apparence de votre site.</li>
+            <li><strong>Accompagnement hébergement &amp; nom de domaine</strong> : choisir un hébergeur, configurer un nom de domaine, ce n’est pas le plus compliqué. Le plus important, c’est qui garde les clés. Je vois régulièrement des clients arriver sans accès à leur site, otages involontaires d’un prestataire qui ne les a jamais rendus autonomes. Ce n’est pas ma vision du métier. Vos accès vous appartiennent. Vos données aussi. Point.</li>
+            <li><strong>Boutique e‑commerce</strong> : souvent en continuité avec WordPress. Des boutiques simples à gérer, adaptées à votre réalité terrain.</li>
+            <li><strong>Automatisation &amp; numérisation des tâches</strong> : tableaux Excel sur-mesure, petites applications, outils web. Objectif : moins de tâches répétitives, plus de temps pour votre métier.</li>
+            <li><strong>Applications web sur-mesure</strong> : quand un concept ne rentre dans aucun outil existant. Traduire une idée métier en produit numérique utile.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 08 : SEO intégré -->
+      <article class="block" id="seo">
+        <div class="block-header">
+          <!-- Icône animée pour SEO intégré (loupe) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+          </div>
+          <div class="block-title">SEO <span>intégré</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p>Deux engagements forts de ma méthode (rarement proposés sur le marché).</p>
+          <p><strong>1.&nbsp;Être visible sur les moteurs de recherche (SEO)</strong></p>
+          <p>Un site ou une application qui n’est pas visible est un outil inutile. Le référencement naturel (SEO) consiste à faire en sorte que votre projet soit compréhensible et exploitable par les moteurs de recherche, comme Google. Concrètement, cela signifie :</p>
+          <ul>
+            <li>Une structure de site claire et logique.</li>
+            <li>Des bases techniques propres (performance, lisibilité, balisage).</li>
+            <li>Un contenu organisé autour de votre activité réelle, pas de mots‑clés artificiels.</li>
+          </ul>
+          <p>Je n’annonce jamais de promesses irréalistes du type « première position sur Google en X semaines ». Ce serait malhonnête. En revanche, je m’engage à ce que votre projet parte sur des fondations saines, visibles et durables, pour que le référencement puisse réellement travailler dans le temps.</p>
+          <p>Le SEO n’est pas une option ajoutée après coup. Il fait partie intégrante de la conception.</p>
+        </div>
+      </article>
+
+      <!-- 09 : Autonomie & transparence -->
+      <article class="block" id="autonomie">
+        <div class="block-header">
+          <!-- Icône animée pour Votre autonomie (cadenas) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+            </svg>
+          </div>
+          <div class="block-title">Votre <span>autonomie</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p><strong>2.&nbsp;Vous rendre autonome, pas dépendant</strong></p>
+          <p>Beaucoup de projets numériques créent une dépendance implicite : au moindre changement, il faut repasser par le prestataire. Ce n’est pas ma vision.</p>
+          <p>À l’issue d’un projet, je vous accompagne pour :</p>
+          <ul>
+            <li>Comprendre le fonctionnement de votre site ou de votre outil.</li>
+            <li>Savoir modifier vos contenus sans stress.</li>
+            <li>Gérer les actions courantes en toute autonomie.</li>
+            <li>Savoir quand une intervention extérieure est réellement nécessaire.</li>
+          </ul>
+          <p>Je refuse volontairement : le vite fait pas cher, les abonnements imposés, la dépendance, les solutions surdimensionnées.</p>
+          <p>Cet accompagnement à la prise en main est intégré à ma démarche, alors qu’il est encore trop souvent absent du marché, ou facturé à part. Mon objectif n’est pas de vous garder captif, mais de vous permettre d’utiliser votre outil en toute confiance.</p>
+        </div>
+      </article>
+
+      <!-- 10 : Budgets & TJM -->
+      <article class="block feature-block" id="budgets">
+        <div class="block-header">
+          <!-- Icône animée pour Budgets & TJM (monnaie) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+            </svg>
+          </div>
+          <div class="block-title">Budgets &amp; <span>TJM</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p class="micro-copy">Des repères clairs pour savoir où vous allez</p>
+          <p>Budgets &amp; transparence. Chaque projet est unique, mais pour vous donner des repères :</p>
+          <ul>
+            <li><strong>Site vitrine</strong> : à partir de 2 000 €.</li>
+            <li><strong>Refonte de site</strong> : à partir de 2 500 €.</li>
+            <li><strong>E‑commerce</strong> : à partir de 4 000 €.</li>
+            <li><strong>Applications / automatisation</strong> : sur cadrage.</li>
+          </ul>
+          <p>Dans le développement de projets digitaux, on parle souvent de TJM (Taux Journalier Moyen). C’est un standard du marché. Mon TJM est de 770 €, et il inclut :</p>
+          <ul>
+            <li><strong>Le cadrage</strong>.</li>
+            <li><strong>La gestion de projet</strong>.</li>
+            <li><strong>Le développement</strong>.</li>
+          </ul>
+          <p>Vous ne payez pas « du code », vous payez une prise de responsabilité globale sur votre projet. Aucune étape n’est engagée sans votre libre décision.</p>
+        </div>
+      </article>
+
+      <!-- 11 : Engagements forts -->
+      <!-- Section Engagements fusionnée dans Mon rôle -->
+
+      <!-- 12 : Parcours & références -->
+      <article class="block" id="parcours">
+        <div class="block-header">
+          <!-- Icône animée pour Parcours & références (chemin) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2 14 Q4 10 8 12 Q12 14 14 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="2" cy="14" r="1.4" fill="currentColor" />
+              <circle cx="14" cy="8" r="1.4" fill="currentColor" />
+            </svg>
+          </div>
+          <div class="block-title">Parcours &amp; <span>références</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p>Et parce que je ne me suis pas encore présenté… Je m’appelle Rémy Roger. Je travaille dans le domaine de l’informatique et du numérique depuis une quinzaine d’années.</p>
+          <p>Mon parcours m’a amené à exercer professionnellement les activités de développeur web, chef de projet digital et coach consultant. Ces expériences ont profondément façonné ma manière de travailler : je ne conçois pas la technique sans une compréhension attentive du besoin, et je ne pilote pas un projet sans en maîtriser les implications techniques réelles. J’ai exercé plusieurs années comme développeur et en gestion de projet web, au sein d’environnements exigeants, sur des projets à forte visibilité, à forts enjeux métiers et à contraintes multiples.</p>
+          <p>Projets et environnements réalisés :</p>
+          <ul>
+            <li><strong>Électricité de Strasbourg</strong> : portails clients et sites institutionnels : particuliers.es.fr, strasbourg-electricite-reseaux.fr, ejp.es.fr, groupe.es.fr.</li>
+            <li><strong>Cromology – Zolpan – Robbialac – Tollens</strong> : réseaux de sites et plateformes pour des marques de peinture grand public et professionnelles : zolpan.fr, tintasrobbialac.pt, tollens.com.</li>
+            <li><strong>Aéroport Nice Côte d’Azur</strong>.</li>
+            <li><strong>Essilor</strong> : sites institutionnels internationaux : essilor.fr, essilor.co.uk, essilor.nl.</li>
+            <li><strong>REFRAM</strong> : Réseau francophone des régulateurs des médias : refram.org.</li>
+            <li><strong>CLAAS</strong> : application web interne dédiée à la gestion du parc machines agricoles : maintenance, logistique, transport, vente.</li>
+            <li><strong>Psychologies – Mon Psy</strong> : annuaire de psychothérapeutes : monpsy.psychologies.com.</li>
+            <li><strong>Thermor</strong> : espace client : moncompte.thermor.fr.</li>
+            <li><strong>Mois sans Tabac</strong> : campagne nationale de santé publique : mois-sans-tabac.tabac-info-service.fr.</li>
+          </ul>
+          <p>Ces projets m’ont confronté à des réalités très variées : grand public, B2B, institutions, santé, industrie, logistique, internationalisation, performance, sécurité, expérience utilisateur, contraintes réglementaires.</p>
+          <p>Environnements techniques maîtrisés : Linux, Docker, Varnish, Git, Solr, Symfony, Doctrine, SQL, eZ Publish / eZ Platform, PHP, JavaScript, jQuery, ainsi que les méthodologies Agile / Scrum, avec des outils de pilotage comme JIRA.</p>
+        </div>
+      </article>
+
+      <!-- 13 : Expertise & approche -->
+      <article class="block" id="experiences">
+        <div class="block-header">
+          <!-- Icône animée pour Expertise & approche (ampoule) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
+            </svg>
+          </div>
+          <div class="block-title">Expertise &amp; <span>approche</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p>Une expertise complémentaire : l’écoute et le questionnement. En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach consultant, notamment à travers le site coachingparecrit.fr, conçu et développé également par mes soins.</p>
+          <p>Cette activité a renforcé une compétence clé, souvent sous-estimée dans les projets numériques : l’écoute active et le questionnement structurant. Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil numérique pertinent. C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite mon approche actuelle.</p>
+          <p>Ce que ce parcours change pour vos projets : ce parcours me permet aujourd’hui de :</p>
+          <ul>
+            <li>Comprendre rapidement des contextes complexes.</li>
+            <li>Dialoguer aussi bien avec des profils métiers que techniques.</li>
+            <li>Anticiper les dérives classiques des projets numériques.</li>
+            <li>Sécuriser les décisions avant qu’elles ne deviennent coûteuses.</li>
+            <li>Et accompagner des projets avec exigence, mais sans rigidité.</li>
+            <li>ment en un outil numérique cohérent, utile et maîtrisé.</li>
+          </ul>
+          <p>Cette approche s’adresse aux porteurs de projets, indépendants, associations, TPE ou PME qui ne cherchent pas « un site de plus », mais un outil juste, adapté à leur réalité, à leurs contraintes et à leur rythme.</p>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- Chargement de GSAP pour des animations premium -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    // Animations d’entrée et de scroll haut de gamme via GSAP
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof gsap === 'undefined') return;
+      gsap.registerPlugin(ScrollTrigger);
+      // Animation d’arrivée pour le hero
+      gsap.from('.hero-inner', {
+        opacity: 0,
+        y: 60,
+        duration: 1.3,
+        ease: 'power3.out'
+      });
+      // Apparition en cascade des cartes de sommaire
+      gsap.from('.toc-card', {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: 'power3.out',
+        stagger: 0.15,
+        delay: 0.3
+      });
+      // Révélations au scroll des blocs principaux
+      document.querySelectorAll('.block').forEach((el) => {
+        gsap.from(el, {
+          opacity: 0,
+          y: 80,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 80%',
+            end: 'bottom 60%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+
+      // Animation des soulignages décoratifs sous les titres
+      document.querySelectorAll('.block-underline').forEach((underline) => {
+        gsap.fromTo(underline, { scaleX: 0 }, {
+          scaleX: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: underline.parentElement.parentElement,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+
+      // Animation d'apparition des icônes de section
+      document.querySelectorAll('.block-icon').forEach((icon) => {
+        gsap.from(icon, {
+          opacity: 0,
+          y: 20,
+          rotation: -15,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: icon.parentElement.parentElement,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+
+      // Animation de tracé des icônes (dessin au trait)
+      document.querySelectorAll('.block-icon path').forEach((path) => {
+        const length = path.getTotalLength ? path.getTotalLength() : 300;
+        // Réinitialiser dasharray et dashoffset à la longueur
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+        gsap.to(path, {
+          strokeDashoffset: 0,
+          duration: 1.2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: path.closest('.block'),
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+
+      // ====== Animation premium : poignée de main et personnages ======
+      // Mise en scène au scroll : les deux personnages glissent vers le centre et se serrent la main.
+      const clientPerson = document.getElementById('client-person');
+      const providerPerson = document.getElementById('provider-person');
+      const leftArm = document.getElementById('left-arm');
+      const rightArm = document.getElementById('right-arm');
+      const labelContainer = document.querySelector('.handshake-labels');
+      if (clientPerson && providerPerson && leftArm && rightArm && labelContainer) {
+        // Définir les positions initiales hors du cadre
+        gsap.set([clientPerson, leftArm], { x: -200, opacity: 0 });
+        gsap.set([providerPerson, rightArm], { x: 200, opacity: 0 });
+        gsap.set(labelContainer, { opacity: 0, y: 20 });
+        gsap.set('#handshake-svg', { opacity: 1 });
+        // Animation synchronisée avec le défilement
+        const tlHandshake = gsap.timeline({
+          scrollTrigger: {
+            trigger: document.getElementById('hero'),
+            start: 'top top',
+            end: '+=400',
+            scrub: true
+          }
+        });
+        tlHandshake.to(clientPerson, { x: 0, opacity: 1, ease: 'power2.out' }, 0);
+        tlHandshake.to(providerPerson, { x: 0, opacity: 1, ease: 'power2.out' }, 0);
+        tlHandshake.to(leftArm, { x: 0, opacity: 1, ease: 'power2.out' }, 0.15);
+        tlHandshake.to(rightArm, { x: 0, opacity: 1, ease: 'power2.out' }, 0.15);
+        tlHandshake.to(labelContainer, { opacity: 1, y: -10, ease: 'power2.out' }, 0.3);
+      }
+
+      // ====== Sticky navigation et scrollspy ======
+      const tocSection = document.getElementById('sommaire');
+      const stickyNav = document.getElementById('stickyNav');
+      const currentSpan = stickyNav ? stickyNav.querySelector('.current-section') : null;
+      const prevLink = stickyNav ? stickyNav.querySelector('.prev-section') : null;
+      const nextLink = stickyNav ? stickyNav.querySelector('.next-section') : null;
+      const cards = Array.from(document.querySelectorAll('.toc-card'));
+      const sections = Array.from(document.querySelectorAll('.grid .block'));
+      const sectionIds = sections.map(s => s.id);
+
+      // Affichage de la sticky nav quand le sommaire est scrolled hors de la vue
+      if (tocSection && stickyNav) {
+        ScrollTrigger.create({
+          trigger: tocSection,
+          start: 'bottom top-=80',
+          end: 'bottom top',
+          onEnter: () => stickyNav.classList.add('show'),
+          onLeaveBack: () => stickyNav.classList.remove('show')
+        });
+      }
+
+      /*
+       * Mise à jour de la navigation et des cartes actives au scroll
+       * On utilise ScrollTrigger plutôt qu'IntersectionObserver pour plus de fiabilité.
+       */
+      function updateNav(section) {
+        const id = section.id;
+        // activer la carte correspondante
+        cards.forEach(card => {
+          card.classList.toggle('active', card.getAttribute('href') === `#${id}`);
+        });
+        // mettre à jour le texte courant et les liens prev/next
+        if (stickyNav && currentSpan) {
+          const titleEl = section.querySelector('.block-title');
+          currentSpan.textContent = titleEl ? titleEl.textContent.trim() : '';
+          const index = sectionIds.indexOf(id);
+          const prevId = sectionIds[index - 1];
+          const nextId = sectionIds[index + 1];
+          if (prevLink) {
+            if (prevId) {
+              prevLink.href = `#${prevId}`;
+              prevLink.style.visibility = 'visible';
+            } else {
+              prevLink.href = '#';
+              prevLink.style.visibility = 'hidden';
+            }
+          }
+          if (nextLink) {
+            if (nextId) {
+              nextLink.href = `#${nextId}`;
+              nextLink.style.visibility = 'visible';
+            } else {
+              nextLink.href = '#';
+              nextLink.style.visibility = 'hidden';
+            }
+          }
+        }
+      }
+      // ScrollTrigger pour chaque section
+      sections.forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onEnter: () => updateNav(section),
+          onEnterBack: () => updateNav(section)
+        });
+      });
+    });
+  </script>
+</body>
+</html>
