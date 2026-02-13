@@ -431,8 +431,8 @@
     #situation { order: 0; }
     #role { order: 1; }
     #expertise { order: 2; }
-    #audit { order: 3; }
-    #offre { order: 4; }
+    #solutions { order: 3; }
+    #audit { order: 4; }
     #budgets { order: 5; }
     #autonomie { order: 6; }
     #mvp { order: 7; }
@@ -725,13 +725,9 @@
       color: var(--yellow);
     }
 
-    /* Mise en valeur des intitulés de solutions dans la section Mon offre */
-
-    /* Mise en valeur des intitulés de solutions dans la section Mon offre */
-    #offre li strong {
+    #solutions li strong {
       color: var(--yellow);
     }
-
 
     /* Mise en valeur des projets de la section Budgets */
     #budgets li strong {
@@ -853,8 +849,8 @@
           <p>Clarifier votre besoin avant d’investir</p>
         </a>
 
-        <a href="#offre" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Mon offre</h3>
+        <a href="#solutions" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+          <h3>Solutions proposées</h3>
           <p>Des services adaptés à votre réalité</p>
         </a>
 
@@ -885,7 +881,7 @@
 
         <a href="#seo" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
           <h3>Référencement&nbsp;naturel&nbsp;(SEO)</h3>
-          <p>Visibilité dans les moteurs de recherches</p>
+          <p>Visibilité dans les moteurs de recherche</p>
         </a>
 
         <a href="#risques" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
@@ -923,7 +919,8 @@
         </div>
 
         <div class="block-body">
-          <p>Mon rôle : traduire, structurer, sécuriser. Je suis développeur web, chef de projet digital et consultant. Mais surtout, je me place du côté du client, pas de la technologie.</p>
+          <p class="micro-copy">Mon rôle : traduire, structurer, sécuriser.</p> 
+          <p>Je suis développeur web, chef de projet digital et consultant. Mais surtout, je me place du côté du client, pas de la technologie.</p>
           <p>Concrètement :</p>
           <ul>
             <li>Je traduis le technique en langage clair.</li>
@@ -956,8 +953,11 @@
         </div>
     
         <div class="block-body">
-          <p>Une expertise complémentaire : l’écoute et le questionnement. En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach consultant, notamment à travers le site coachingparecrit.fr, conçu et développé également par mes soins.</p>
-          <p>Cette activité a renforcé une compétence clé, souvent sous-estimée dans les projets numériques : l’écoute active et le questionnement structurant. Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil numérique pertinent. C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite mon approche actuelle.</p>
+          <p class="micro-copy">Une expertise complémentaire : l’écoute et le questionnement.</p>
+          <p>En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach consultant, notamment à travers le site <a href="https://www.coachingparecrit.fr" target="_blank" class="premium">www.coachingparecrit.fr</a>, conçu et développé également par mes soins.</p>
+          <p>Cette activité a renforcé une compétence clé, souvent sous-estimée dans les projets numériques : l’écoute active et le questionnement structurant.</p> 
+          <p>Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil numérique pertinent.</p> 
+          <p>C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite mon approche actuelle.</p>
           <p>Ce que ce parcours change pour vos projets : ce parcours me permet aujourd’hui de :</p>
           <ul>
             <li>Comprendre rapidement des contextes complexes.</li>
@@ -968,6 +968,34 @@
             <li>ment en un outil numérique cohérent, utile et maîtrisé.</li>
           </ul>
           <p>Cette approche s’adresse aux porteurs de projets, indépendants, associations, TPE ou PME qui ne cherchent pas « un site de plus », mais un outil juste, adapté à leur réalité, à leurs contraintes et à leur rythme.</p>
+        </div>
+      </article>
+
+      <!-- Solutons adaptées -->
+      <article class="block feature-block" id="solutions">
+        <div class="block-header">
+          <!-- Icône animée pour Des solutions adaptées (gear) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+            </svg>
+          </div>
+          <div class="block-title">Des <span>solutions adaptées</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p class="micro-copy">Des solutions adaptées à votre réalité.</p> 
+          <p>Selon votre besoin, je peux vous accompagner sur :</p>
+          <ul>
+            <li><strong>Site vitrine sur-mesure</strong> : quand un thème générique ne suffit pas. Un site clair, rapide, aligné avec votre identité, sans surcharge inutile.</li>
+            <li><strong>Site avec interface d’administration (CMS – souvent WordPress)</strong> : pour être autonome sur vos contenus, sans dépendre d’un prestataire à chaque modification. WordPress, quand il est bien configuré, est un excellent outil. On peut également choisir parmi des milliers de designs existants et personnaliser l’apparence de votre site.</li>
+            <li><strong>Hébergement &amp; nom de domaine</strong> : choisir un hébergeur, configurer un nom de domaine, ce n’est pas le plus compliqué. Le plus important, c’est qui garde les clés. Je vois régulièrement des clients arriver sans accès à leur site, otages involontaires d’un prestataire qui ne les a jamais rendus autonomes. Ce n’est pas ma vision du métier. Vos accès vous appartiennent. Vos données aussi. Point.</li>
+            <li><strong>Boutique e‑commerce</strong> : souvent en continuité avec WordPress. Des boutiques simples à gérer, adaptées à votre réalité terrain.</li>
+            <li><strong>Automatisation &amp; numérisation des tâches</strong> : tableaux Excel sur-mesure, petites applications, outils web. Objectif : moins de tâches répétitives, plus de temps pour votre métier.</li>
+            <li><strong>Applications web sur-mesure</strong> : quand un concept ne rentre dans aucun outil existant. Traduire une idée métier en produit numérique utile.</li>
+          </ul>
         </div>
       </article>
 
@@ -1030,47 +1058,20 @@
     
         <div class="block-body">
           <p class="micro-copy">Des repères clairs pour savoir où vous allez</p>
-          <p>Budgets &amp; transparence. Chaque projet est unique, mais pour vous donner des repères :</p>
+          <p>Chaque projet est unique, mais pour vous donner des repères :</p>
           <ul>
             <li><strong>Site vitrine</strong> : à partir de 2 000 €.</li>
             <li><strong>Refonte de site</strong> : à partir de 2 500 €.</li>
             <li><strong>E‑commerce</strong> : à partir de 4 000 €.</li>
             <li><strong>Applications / automatisation</strong> : sur cadrage.</li>
           </ul>
-          <p>Dans le développement de projets digitaux, on parle souvent de TJM (Taux Journalier Moyen). C’est un standard du marché. Mon TJM est de 770 €, et il inclut :</p>
+          <p>Dans le développement de projets digitaux, on parle souvent de TJM (Taux Journalier Moyen). C’est un standard du marché. <strong>Mon TJM est de 770 €</strong>, et il inclut :</p>
           <ul>
             <li><strong>Le cadrage</strong>.</li>
             <li><strong>La gestion de projet</strong>.</li>
             <li><strong>Le développement</strong>.</li>
           </ul>
           <p>Vous ne payez pas « du code », vous payez une prise de responsabilité globale sur votre projet. Aucune étape n’est engagée sans votre libre décision.</p>
-        </div>
-      </article>
-
-      <!-- Mon offre -->
-      <article class="block feature-block" id="offre">
-        <div class="block-header">
-          <!-- Icône animée pour Des solutions adaptées (gear) -->
-          <div class="block-icon">
-            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
-            </svg>
-          </div>
-          <div class="block-title">Des <span>solutions adaptées</span></div>
-          <div class="block-underline"></div>
-        </div>
-    
-        <div class="block-body">
-          <p>Des solutions adaptées à votre réalité. Selon votre besoin, je peux vous accompagner sur :</p>
-          <ul>
-            <li><strong>Site vitrine sur-mesure (from scratch)</strong> : quand un thème générique ne suffit pas. Un site clair, rapide, aligné avec votre identité, sans surcharge inutile.</li>
-            <li><strong>Site avec interface d’administration (CMS – souvent WordPress)</strong> : pour être autonome sur vos contenus, sans dépendre d’un prestataire à chaque modification. WordPress, quand il est bien configuré, est un excellent outil. On peut également choisir parmi des milliers de designs existants et personnaliser l’apparence de votre site.</li>
-            <li><strong>Accompagnement hébergement &amp; nom de domaine</strong> : choisir un hébergeur, configurer un nom de domaine, ce n’est pas le plus compliqué. Le plus important, c’est qui garde les clés. Je vois régulièrement des clients arriver sans accès à leur site, otages involontaires d’un prestataire qui ne les a jamais rendus autonomes. Ce n’est pas ma vision du métier. Vos accès vous appartiennent. Vos données aussi. Point.</li>
-            <li><strong>Boutique e‑commerce</strong> : souvent en continuité avec WordPress. Des boutiques simples à gérer, adaptées à votre réalité terrain.</li>
-            <li><strong>Automatisation &amp; numérisation des tâches</strong> : tableaux Excel sur-mesure, petites applications, outils web. Objectif : moins de tâches répétitives, plus de temps pour votre métier.</li>
-            <li><strong>Applications web sur-mesure</strong> : quand un concept ne rentre dans aucun outil existant. Traduire une idée métier en produit numérique utile.</li>
-          </ul>
         </div>
       </article>
 
@@ -1088,7 +1089,7 @@
         </div>
     
         <div class="block-body">
-          <p><strong>Vous rendre autonome, pas dépendant</strong></p>
+          <p class="micro-copy">Vous rendre autonome, pas dépendant</p>
           <p>Beaucoup de projets numériques créent une dépendance implicite : au moindre changement, il faut repasser par le prestataire. Ce n’est pas ma vision.</p>
           <p>À l’issue d’un projet, je vous accompagne pour :</p>
           <ul>
@@ -1113,12 +1114,13 @@
               <path d="M9.479 14.361c-.48.093-.98.139-1.479.139s-.999-.046-1.479-.139L7.6 15.8a.5.5 0 0 0 .8 0z"/>
             </svg>
           </div>
-          <div class="block-title">Tester avant de construire : <span>MVP</span></div>
+          <div class="block-title">Le <span>MVP</span></div>
           <div class="block-underline"></div>
         </div>
     
         <div class="block-body">
-          <p>Tester avant de construire : le MVP. Avant de créer une application complète ou un outil complexe, je propose souvent de passer par un MVP (Produit Minimum Viable).</p>
+          <p class="micro-copy">Tester avant de construire : le MVP.</p> 
+          <p>Avant de créer une application complète ou un outil complexe, je propose souvent de passer par un <strong>MVP (Produit Minimum Viable)</strong>.</p>
           <p>Dit simplement : on construit d’abord la version utile, pas la version parfaite.</p>
           <p>Comme une maquette fonctionnelle :</p>
           <ul>
@@ -1186,8 +1188,7 @@
         </div>
     
         <div class="block-body">
-          <p>Deux engagements forts de ma méthode (rarement proposés sur le marché).</p>
-          <p><strong>1.&nbsp;Être visible sur les moteurs de recherche (SEO)</strong></p>
+          <p class="micro-copy">Être visible naturellement sur les moteurs de recherche</p>
           <p>Un site ou une application qui n’est pas visible est un outil inutile. Le référencement naturel (SEO) consiste à faire en sorte que votre projet soit compréhensible et exploitable par les moteurs de recherche, comme Google. Concrètement, cela signifie :</p>
           <ul>
             <li>Une structure de site claire et logique.</li>
@@ -1207,7 +1208,9 @@
         </div>
 
         <div class="block-body">
-          <p>Vous n’avez pas besoin d’être expert pour prendre une bonne décision. La majorité des entreprises, artisans, TPE, associations ou hébergeurs touristiques que j’accompagne arrivent avec du flou. C’est normal : le numérique est devenu complexe, rempli de jargon et de promesses marketing.</p>
+          <p class="micro-copy">Vous n’avez pas besoin d’être expert pour prendre une bonne décision.</p> 
+          <p>La majorité des entreprises, artisans, TPE, associations ou hébergeurs touristiques que j’accompagne arrivent avec du flou.</p> 
+          <p>C’est normal : le numérique est devenu complexe, rempli de jargon et de promesses marketing.</p>
           <p>Le problème n’est pas votre niveau technique. Le problème, c’est d’avancer sans cadre clair.</p>
           <p>Le vrai risque est de décider sans visibilité. Un projet lancé trop vite peut devenir :</p>
           <ul>
@@ -1215,7 +1218,8 @@
             <li>Une source de dépendance.</li>
             <li>Ou une déception coûteuse.</li>
           </ul>
-          <p>Avant de produire quoi que ce soit, il faut comprendre, prioriser, structurer. C’est exactement le rôle du cadrage.</p>
+          <p>Avant de produire quoi que ce soit, il faut comprendre, prioriser, structurer.</p>
+          <p>C’est exactement le rôle du cadrage.</p>
         </div>
       </article>
 
@@ -1235,8 +1239,12 @@
         </div>
     
         <div class="block-body">
-          <p>Et parce que je ne me suis pas encore présenté… Je m’appelle Rémy Roger. Je travaille dans le domaine de l’informatique et du numérique depuis une quinzaine d’années.</p>
-          <p>Mon parcours m’a amené à exercer professionnellement les activités de développeur web, chef de projet digital et coach consultant. Ces expériences ont profondément façonné ma manière de travailler : je ne conçois pas la technique sans une compréhension attentive du besoin, et je ne pilote pas un projet sans en maîtriser les implications techniques réelles. J’ai exercé plusieurs années comme développeur et en gestion de projet web, au sein d’environnements exigeants, sur des projets à forte visibilité, à forts enjeux métiers et à contraintes multiples.</p>
+          <p class="micro-copy">Et parce que je ne me suis pas encore présenté…</p> 
+          <p>Je m’appelle Rémy Roger.</p>
+          <p>Je travaille dans le domaine de l’informatique et du numérique depuis une quinzaine d’années.</p>
+          <p>Mon parcours m’a amené à exercer professionnellement les activités de développeur web, chef de projet digital et coach consultant.</p>
+          <p>Ces expériences ont profondément façonné ma manière de travailler : je ne conçois pas la technique sans une compréhension attentive du besoin, et je ne pilote pas un projet sans en maîtriser les implications techniques réelles.</p>
+          <p>J’ai exercé plusieurs années comme développeur et en gestion de projet web, au sein d’environnements exigeants, sur des projets à forte visibilité, à forts enjeux métiers et à contraintes multiples.</p>
           <p>Projets et environnements réalisés :</p>
           <ul>
             <li><strong>Électricité de Strasbourg</strong> : portails clients et sites institutionnels : particuliers.es.fr, strasbourg-electricite-reseaux.fr, ejp.es.fr, groupe.es.fr.</li>
