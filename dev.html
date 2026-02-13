@@ -228,7 +228,6 @@
         0 0 8px rgba(247, 198, 0, 0.4);
     }
 
-
     /* Sections */
     .grid {
       display: flex;
@@ -429,33 +428,23 @@
     }
 
     /* Réorganisation visuelle des blocs via l'ordre Flexbox */
-    /* La situation vient en introduction (ordre 0) puis mon rôle & engagements, l'audit, la méthode,
-       les budgets, l'offre, le SEO, l'autonomie, les risques, etc. */
     #situation { order: 0; }
     #role { order: 1; }
-    #audit { order: 2; }
-    #agile { order: 3; }
-    #budgets { order: 4; }
-    #solutions { order: 5; }
-    #seo { order: 6; }
-    #autonomie { order: 7; }
-    #risques { order: 8; }
-    /* L'article engagements est fusionné dans Mon rôle, pas d'ordre dédié */
-    #mvp { order: 9; }
-    #parcours { order: 10; }
-    #experiences { order: 11; }
+    #expertise { order: 2; }
+    #audit { order: 3; }
+    #offre { order: 4; }
+    #budgets { order: 5; }
+    #autonomie { order: 6; }
+    #mvp { order: 7; }
+    #agile { order: 8; }
+    #seo { order: 9; }
+    #risques { order: 10; }
+    #parcours { order: 11; }
+
 
     /* Amélioration de la lisibilité : les listes utilisent la couleur principale */
     .block-body li { color: var(--text); }
 
-    /*
-      ======== Sommaire amélioré ========
-      Le sommaire doit se comporter comme un composant premium :
-      - Chaque carte peut se surélever légèrement au survol (tilt/parallax)
-      - L’état actif est mis en avant par un halo et un contour
-      - Un retour vers le sommaire est accessible depuis chaque section via un lien
-      - Une mini barre de navigation sticky apparaît après le sommaire pour un accès rapide aux sections
-    */
     .toc-card {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
@@ -468,7 +457,6 @@
       border-color: var(--pink);
       box-shadow: 0 0 0 1px var(--pink), 0 0 14px rgba(236, 72, 153, 0.6), 0 0 10px rgba(247, 198, 0, 0.45);
     }
-    /* Les liens "Retour au sommaire" ont été retirés pour alléger la lecture */
     /* Barre sticky après le sommaire */
     .sticky-nav {
       position: sticky;
@@ -537,9 +525,6 @@
       color: var(--muted);
       backdrop-filter: blur(6px);
     }
-
-    /* L'illustration d'audit a été retirée : aucun style spécifique nécessaire */
-
     /* CTA mis en avant dans le hero et l'audit */
     .cta-primary {
       margin-top: 1.5rem;
@@ -547,7 +532,6 @@
     .cta-primary a {
       display: inline-block;
       padding: 0.8rem 1.4rem;
-      /* Bouton entièrement arrondi pour évoquer la convivialité */
       border-radius: 999px;
       background: linear-gradient(135deg, var(--pink), var(--yellow));
       color: #111;
@@ -744,7 +728,7 @@
     /* Mise en valeur des intitulés de solutions dans la section Mon offre */
 
     /* Mise en valeur des intitulés de solutions dans la section Mon offre */
-    #solutions li strong {
+    #offre li strong {
       color: var(--yellow);
     }
 
@@ -859,7 +843,7 @@
           <p>Traduire, sécuriser et construire durablement</p>
         </a>
 
-        <a href="#experiences" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+        <a href="#expertise" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
           <h3>Expertise&nbsp;&amp;&nbsp;Approche</h3>
           <p>Une écoute active au service du numérique</p>
         </a>
@@ -869,7 +853,7 @@
           <p>Clarifier votre besoin avant d’investir</p>
         </a>
 
-        <a href="#solutions" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
+        <a href="#offre" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
           <h3>Mon offre</h3>
           <p>Des services adaptés à votre réalité</p>
         </a>
@@ -911,7 +895,7 @@
 
         <a href="#parcours" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
           <h3>Parcours&nbsp;&amp;&nbsp;Références</h3>
-          <p>15 ans de projets variés</p>
+          <p>Des années de projets variés</p>
         </a>
     </section>
 
@@ -925,7 +909,7 @@
 
     <!-- Bloc principal -->
     <section class="grid" aria-label="Contenu de l’offre">
-      <!-- Mon rôle & engagements -->
+      <!-- Mon rôle -->
       <article class="block" id="role">
         <div class="block-header">
           <!-- Icône animée pour Mon rôle (icône Personne) -->
@@ -955,6 +939,35 @@
             <li>Créer une relation saine et équilibrée avec mes clients.</li>
           </ul>
           <p>Un projet numérique réussi n’est pas celui qui impressionne, c’est celui qui sert réellement votre activité, aujourd’hui et demain.</p>
+        </div>
+      </article>
+
+      <!-- Expertise & approche -->
+      <article class="block feature-block" id="expertise">
+        <div class="block-header">
+          <!-- Icône animée pour Expertise & approche (ampoule) -->
+          <div class="block-icon">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
+            </svg>
+          </div>
+          <div class="block-title">Expertise &amp; <span>approche</span></div>
+          <div class="block-underline"></div>
+        </div>
+    
+        <div class="block-body">
+          <p>Une expertise complémentaire : l’écoute et le questionnement. En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach consultant, notamment à travers le site coachingparecrit.fr, conçu et développé également par mes soins.</p>
+          <p>Cette activité a renforcé une compétence clé, souvent sous-estimée dans les projets numériques : l’écoute active et le questionnement structurant. Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil numérique pertinent. C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite mon approche actuelle.</p>
+          <p>Ce que ce parcours change pour vos projets : ce parcours me permet aujourd’hui de :</p>
+          <ul>
+            <li>Comprendre rapidement des contextes complexes.</li>
+            <li>Dialoguer aussi bien avec des profils métiers que techniques.</li>
+            <li>Anticiper les dérives classiques des projets numériques.</li>
+            <li>Sécuriser les décisions avant qu’elles ne deviennent coûteuses.</li>
+            <li>Et accompagner des projets avec exigence, mais sans rigidité.</li>
+            <li>ment en un outil numérique cohérent, utile et maîtrisé.</li>
+          </ul>
+          <p>Cette approche s’adresse aux porteurs de projets, indépendants, associations, TPE ou PME qui ne cherchent pas « un site de plus », mais un outil juste, adapté à leur réalité, à leurs contraintes et à leur rythme.</p>
         </div>
       </article>
 
@@ -1002,35 +1015,6 @@
         </div>
       </article>
 
-      <!-- Expertise & approche -->
-      <article class="block feature-block" id="experiences">
-        <div class="block-header">
-          <!-- Icône animée pour Expertise & approche (ampoule) -->
-          <div class="block-icon">
-            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
-            </svg>
-          </div>
-          <div class="block-title">Expertise &amp; <span>approche</span></div>
-          <div class="block-underline"></div>
-        </div>
-    
-        <div class="block-body">
-          <p>Une expertise complémentaire : l’écoute et le questionnement. En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach consultant, notamment à travers le site coachingparecrit.fr, conçu et développé également par mes soins.</p>
-          <p>Cette activité a renforcé une compétence clé, souvent sous-estimée dans les projets numériques : l’écoute active et le questionnement structurant. Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil numérique pertinent. C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite mon approche actuelle.</p>
-          <p>Ce que ce parcours change pour vos projets : ce parcours me permet aujourd’hui de :</p>
-          <ul>
-            <li>Comprendre rapidement des contextes complexes.</li>
-            <li>Dialoguer aussi bien avec des profils métiers que techniques.</li>
-            <li>Anticiper les dérives classiques des projets numériques.</li>
-            <li>Sécuriser les décisions avant qu’elles ne deviennent coûteuses.</li>
-            <li>Et accompagner des projets avec exigence, mais sans rigidité.</li>
-            <li>ment en un outil numérique cohérent, utile et maîtrisé.</li>
-          </ul>
-          <p>Cette approche s’adresse aux porteurs de projets, indépendants, associations, TPE ou PME qui ne cherchent pas « un site de plus », mais un outil juste, adapté à leur réalité, à leurs contraintes et à leur rythme.</p>
-        </div>
-      </article>
-
       <!-- Budgets & TJM -->
       <article class="block feature-block" id="budgets">
         <div class="block-header">
@@ -1064,7 +1048,7 @@
       </article>
 
       <!-- Mon offre -->
-      <article class="block feature-block" id="solutions">
+      <article class="block feature-block" id="offre">
         <div class="block-header">
           <!-- Icône animée pour Des solutions adaptées (gear) -->
           <div class="block-icon">
@@ -1152,7 +1136,7 @@
         </div>
       </article>
 
-      <!-- Méthode Agile & Scrum -->
+      <!-- Gestion de projet agile -->
       <article class="block" id="agile">
         <div class="block-header">
           <!-- Icône animée pour Méthode Agile & Scrum (cycle/refresh arrows) -->
@@ -1191,13 +1175,13 @@
       <!-- SEO -->
       <article class="block" id="seo">
         <div class="block-header">
-          <!-- Icône animée pour SEO intégré (loupe) -->
+          <!-- Icône animée pour SEO (loupe) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
           </div>
-          <div class="block-title">SEO <span>intégré</span></div>
+          <div class="block-title">Référencement naturel<span>(SEO)</span></div>
           <div class="block-underline"></div>
         </div>
     
@@ -1215,7 +1199,7 @@
         </div>
       </article>
 
-      <!-- Risques d’un projet mal cadré -->
+      <!-- Risques -->
       <article class="block" id="risques">
         <div class="block-header">
           <div class="block-title">Risques d’un <span>projet mal cadré</span></div>
