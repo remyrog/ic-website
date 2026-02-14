@@ -10,7 +10,7 @@ html {
 }
 
 /* fix scroll issue on tablet */
-@media (pointer: coarse) and (min-width: 1024px) {
+@media (pointer: coarse) and (min-width: 800px) {
   html {
     scroll-behavior: auto !important;
   }

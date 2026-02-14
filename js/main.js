@@ -1,6 +1,6 @@
 (() => {
   // fix scroll issue on tablet
-  if (window.matchMedia('(pointer: coarse) and (min-width: 1024px)').matches) {
+  if (window.matchMedia('(pointer: coarse) and (min-width: 800px)').matches) {
     document.documentElement.style.scrollBehavior = 'auto';
   }
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
