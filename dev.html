@@ -266,6 +266,9 @@
       stroke: currentColor;
       fill: none;
       stroke-width: 1.5;
+      /* ajoute du padding interne pour que le tracé ne touche pas les bords et paraisse moins serré */
+      padding: 4px;
+      box-sizing: border-box;
     }
 
     /* When icons draw themselves, initialise dash array/offset so lines are hidden */
@@ -1015,8 +1018,7 @@
           <div class="block-underline"></div>
         </div>
         <div class="block-body">
-          <p class="micro-copy">Ce que ça change concrètement pour vous</p>
-          <p>Audit &amp; cadrage de projet – 150 € pour décider avant d’investir.</p>
+          <p class="micro-copy">Pour décider avant d’investir.</p>
 
           <p>Ce n’est pas un devis déguisé. Ce n’est pas un engagement. C’est un vrai travail de fond, dont vous repartez avec de la valeur, même si nous ne travaillons pas ensemble ensuite.</p>
           <p>Cet audit vous permet :</p>
@@ -1028,7 +1030,6 @@
             <li>De savoir précisément par où commencer… ou s’il vaut mieux attendre.</li>
           </ul>
           <p>Vous repartez avec une vision claire et exploitable.</p>
-          <!-- Contenu de contact fusionné depuis l’ancienne section Contact -->
           <p>Parlons-en simplement. Expliquez-moi votre situation par mail, même si ce n’est pas clair ou fixons un rendez-vous pour un audit. Je vous répondrai de manière personnalisée, sans pression ni engagement.</p>
           <p>Si cela vous aide, vous pouvez préciser :</p>
           <ul>
