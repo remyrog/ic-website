@@ -11,809 +11,490 @@
 
   <!-- JavaScript existant -->
   <script defer src="main.js"></script>
-
-  <!-- Styles spécifiques à cette page -->
+  
   <style>
-    :root {
-      /* Réutilisation des couleurs de la charte pour assurer la cohérence */
-      --bg: #020617;
-      --card: #050816;
-      --card-soft: #050818;
-      --border-soft: #1f2937;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --yellow: #f7c600;
-      --pink: #ec4899;
-      --radius-xl: 26px;
-      --radius-lg: 18px;
-      --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.75);
+    :root{
+      --bg:#020617;
+      --card:#050816;
+      --card-soft:#050818;
+      --border-soft:#1f2937;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --yellow:#f7c600;
+      --pink:#ec4899;
+      --radius-xl:26px;
+      --radius-lg:18px;
+      --radius-full:999px;
+      --shadow-soft:0 24px 60px rgba(0,0,0,.75);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
     }
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    /* Top bar */
+    .top-bar{
+      border-bottom:1px solid rgba(148,163,184,.45);
+      background:var(--bg);
+      position:sticky;
+      top:0;
+      z-index:20;
     }
+    .top-bar-inner{
+      max-width:1040px;
+      margin:0 auto;
+      padding:.65rem 1.5rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+    .brand{
+      font-weight:700;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:.8rem;
+      color:var(--text);
+      white-space:nowrap;
+    }
+    .brand span{ color:var(--yellow); }
 
-    /* Top bar */
-    .top-bar {
-      border-bottom: 1px solid rgba(148, 163, 184, 0.45);
-      background: var(--bg);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    a.premium{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-weight:600;
+      text-decoration:none;
+      position:relative;
+      color:var(--pink);
+      font-size:.9rem;
+      white-space:nowrap;
     }
-    .top-bar-inner {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 0.65rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .brand {
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      color: var(--text);
-    }
-    .brand span { color: var(--yellow); }
-    a.premium {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      text-decoration: none;
-      position: relative;
-      color: var(--pink);
-      font-size: 0.9rem;
-      white-space: nowrap;
-    }
-    a.premium::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      width: 100%;
-      height: 2px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--pink), var(--yellow));
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform 0.25s ease-out;
+    a.premium::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-2px;
+      width:100%;
+      height:2px;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--pink),var(--yellow));
+      transform-origin:left;
+      transform:scaleX(0);
+      transition:transform .25s ease-out;
     }
     a.premium:hover::after,
-    a.premium:focus-visible::after {
-      transform: scaleX(1);
+    a.premium:focus-visible::after{ transform:scaleX(1); }
+
+    main{
+      max-width:1040px;
+      margin:0 auto;
+      padding:2.4rem 1.5rem 3.75rem;
     }
 
-    main {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 2.4rem 1.5rem 3.75rem;
+    /* Hero */
+    header.hero{
+      margin-bottom:2.75rem;
+      padding:2.4rem 2.1rem 2.3rem;
+      border-radius:var(--radius-xl);
+      background:var(--card);
+      box-shadow:var(--shadow-soft);
+      border:1px solid rgba(148,163,184,.45);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-inner{ position:relative; z-index:1; display:grid; gap:1.65rem; }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      padding:.25rem .75rem .3rem;
+      border-radius:999px;
+      font-size:.8rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      background:var(--bg);
+      color:var(--muted);
+      border:1px solid rgba(148,163,184,.7);
+    }
+    .badge-dot{
+      width:7px; height:7px; border-radius:999px;
+      background:radial-gradient(circle at 30% 0%,var(--yellow),var(--pink));
+      box-shadow:0 0 10px rgba(248,250,252,.6);
     }
 
-    /* Hero section */
-    header.hero {
-      margin-bottom: 2.75rem;
-      padding: 2.4rem 2.1rem 2.3rem;
-      border-radius: var(--radius-xl);
-      background: var(--card);
-      box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      position: relative;
-      overflow: hidden;
+    h1{
+      font-size:clamp(2.2rem,3.2vw,2.8rem);
+      line-height:1.1;
+      font-weight:800;
+      letter-spacing:-.03em;
+      margin:1rem 0 .85rem;
     }
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 1.65rem;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.25rem 0.75rem 0.3rem;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: var(--bg);
-      color: var(--muted);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-    }
-    .badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 0%, var(--yellow), var(--pink));
-      box-shadow: 0 0 10px rgba(248, 250, 252, 0.6);
-    }
-    h1 {
-      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
-      line-height: 1.1;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin: 1rem 0 0.85rem;
-    }
-    h1 span.accent {
-      background: linear-gradient(90deg, var(--yellow), var(--pink));
-      background-clip: text;
-      color: transparent;
-    }
-    .hero-subtitle {
-      max-width: 700px;
-      color: var(--muted);
-      font-size: 0.98rem;
-      margin-bottom: 0.35rem;
-    }
-    .hero-subtitle strong {
-      color: #fefce8;
-      font-weight: 600;
-    }
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 1.75rem;
-      margin-top: 1.1rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    .hero-meta strong {
-      color: var(--text);
-      font-weight: 600;
+    h1 span.accent{
+      background:linear-gradient(90deg,var(--yellow),var(--pink));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
 
-    /* Grille de sommaire */
-    .toc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 2.5rem;
+    .hero-subtitle{
+      max-width:700px;
+      color:var(--muted);
+      font-size:.98rem;
+      margin-bottom:.35rem;
     }
-    .toc-card {
-      position: relative;
-      padding: 1.2rem 1.4rem;
-      border-radius: var(--radius-lg);
-      background: var(--card-soft);
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
-      color: var(--text);
-      text-decoration: none;
-      overflow: hidden;
-      will-change: transform;
+    .hero-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1rem 1.75rem;
+      margin-top:1.1rem;
+      font-size:.85rem;
+      color:var(--muted);
     }
-    .toc-card h3 {
-      margin-bottom: 0.35rem;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fefce8;
+    .hero-meta strong{ color:var(--text); font-weight:600; }
+
+    /* Sommaire - grilles + cartes */
+    .toc-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:1.2rem;
+      margin-bottom:1.8rem;
     }
-    .toc-card p {
-      font-size: 0.85rem;
-      color: var(--muted);
+
+    .toc-card{
+      position:relative;
+      padding:1.2rem 1.4rem;
+      border-radius:var(--radius-lg);
+      background:var(--card-soft);
+      border:1px solid var(--border-soft);
+      box-shadow:0 12px 28px rgba(0,0,0,.65);
+      color:var(--text);
+      text-decoration:none;
+      overflow:hidden;
+      will-change:transform;
+      transition:transform .3s ease, box-shadow .3s ease;
     }
-    .toc-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(135deg, var(--pink), var(--yellow));
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: -1;
+    .toc-card h3{
+      margin-bottom:.35rem;
+      font-size:1.05rem;
+      font-weight:700;
+      color:#fefce8;
+    }
+    .toc-card p{
+      font-size:.85rem;
+      color:var(--muted);
+    }
+
+    .toc-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:var(--radius-lg);
+      background:linear-gradient(135deg,var(--pink),var(--yellow));
+      opacity:0;
+      transition:opacity .4s ease;
+      z-index:-1;
     }
     .toc-card:hover::after,
-    .toc-card:focus-visible::after {
-      opacity: 0.15;
-    }
+    .toc-card:focus-visible::after{ opacity:.15; }
 
-    /* Accentuation visuelle pour les cartes prioritaires */
-    .toc-card.highlight {
-      border-color: var(--pink);
-      box-shadow:
-        0 0 0 1px var(--pink),
-        0 0 12px rgba(236, 72, 153, 0.5),
-        0 0 8px rgba(247, 198, 0, 0.4);
-    }
-
-    /* Sections */
-    .grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.4rem;
-    }
-    .block {
-      border-radius: var(--radius-lg);
-      background: var(--card-soft);
-      border: 1px solid var(--border-soft);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
-      padding: 1.6rem 1.75rem 1.75rem;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: 1rem;
-      row-gap: 0.5rem;
-      scroll-margin-top: 80px;
-    }
-    .block-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      margin-right: 0.5rem;
-    }
-
-    /* Icônes pour chaque bloc */
-    .block-icon {
-      width: 40px;
-      height: 40px;
-      color: var(--pink);
-      flex-shrink: 0;
-    }
-    .block-icon svg {
-      width: 100%;
-      height: 100%;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.5;
-      /* ajoute du padding interne pour que le tracé ne touche pas les bords et paraisse moins serré */
-      padding: 4px;
-      box-sizing: border-box;
-    }
-
-    /* When icons draw themselves, initialise dash array/offset so lines are hidden */
-    .block-icon path {
-      stroke-dasharray: 300;
-      stroke-dashoffset: 300;
-    }
-    .block-title {
-      font-weight: 650;
-      font-size: 1.02rem;
-    }
-    .block-title span {
-      color: var(--yellow);
-    }
-    .block-body {
-      font-size: 0.96rem;
-      color: var(--text);
-    }
-    .block-body p + p {
-      margin-top: 0.65rem;
-    }
-    .block-body ul {
-      list-style: none;
-      margin-top: 0.4rem;
-      padding-left: 0;
-    }
-    .block-body li {
-      position: relative;
-      padding-left: 1.2rem;
-      margin-top: 0.25rem;
-      color: var(--muted);
-    }
-    .block-body li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.7em;
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--yellow), var(--pink));
-      box-shadow: 0 0 7px rgba(248, 250, 252, 0.6);
-    }
-    .highlight {
-      font-weight: 600;
-      color: #fefce8;
-    }
-    .quote {
-      margin-top: 0.7rem;
-      padding-left: 0.9rem;
-      border-left: 2px solid rgba(248, 250, 252, 0.2);
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-style: italic;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border-radius: 999px;
-      padding: 0.16rem 0.6rem;
-      background: var(--bg);
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* Diagramme simple */
-    .process {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      align-items: center;
-      margin-top: 0.6rem;
-    }
-    .process-step {
-      padding: 0.4rem 0.8rem;
-      background: var(--bg);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      border-radius: var(--radius-lg);
-      font-size: 0.85rem;
-      color: var(--muted);
-      position: relative;
-    }
-    .process-step::after {
-      content: "→";
-      margin-left: 0.6rem;
-      color: var(--pink);
-    }
-    .process-step:last-child::after { content: ""; }
-
-    /* Micro-copy pour micro-accroches dans les sections prioritaires */
-    .micro-copy {
-      color: var(--pink);
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 0.8rem;
-    }
-
-    /* CTA final */
-    .cta-final {
-      margin-top: 1.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .cta-final a {
-      align-self: flex-start;
-    }
-
-    /* Mettez en avant les blocs prioritaires par un contour dégradé */
-    .feature-block {
-      position: relative;
-      border: 1px solid transparent;
-      /* même fond que .block */
-      background: var(--card-soft);
-    }
-    .feature-block::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: var(--radius-lg);
-      padding: 0;
-      background: linear-gradient(135deg, var(--yellow), var(--pink));
-      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    /* Réorganisation visuelle des blocs via l'ordre Flexbox */
-    #situation { order: 0; }
-    #role { order: 1; }
-    #approche { order: 2; }
-    #solutions { order: 3; }
-    #audit { order: 4; }
-    #budgets { order: 5; }
-    #autonomie { order: 6; }
-    #mvp { order: 7; }
-    #agile { order: 8; }
-    #seo { order: 9; }
-    #risques { order: 10; }
-    #parcours { order: 11; }
-
-    /* Amélioration de la lisibilité : les listes utilisent la couleur principale */
-    .block-body li { color: var(--text); }
-
-    .toc-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
     .toc-card:hover,
-    .toc-card:focus-visible {
-      transform: translateY(-4px) rotateX(1deg) rotateY(-1deg);
-      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.8), 0 0 14px rgba(236, 72, 153, 0.4), 0 0 10px rgba(247, 198, 0, 0.3);
-    }
-    .toc-card.active {
-      border-color: var(--pink);
-      box-shadow: 0 0 0 1px var(--pink), 0 0 14px rgba(236, 72, 153, 0.6), 0 0 10px rgba(247, 198, 0, 0.45);
-    }
-    /* Barre sticky après le sommaire */
-    .sticky-nav {
-      position: sticky;
-      top: 58px;
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      background: var(--card);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-      padding: 0.6rem 1rem;
-      border-radius: var(--radius-lg);
-      z-index: 20;
-    }
-    .sticky-nav.show { display: flex; }
-    .sticky-nav a {
-      color: var(--pink);
-      font-size: 0.85rem;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .sticky-nav a:hover { text-decoration: underline; }
-    .sticky-nav .current-section {
-      flex: 1;
-      text-align: center;
-      font-weight: 600;
-      color: #fefce8;
+    .toc-card:focus-visible{
+      transform:translateY(-4px) rotateX(1deg) rotateY(-1deg);
+      box-shadow:0 18px 32px rgba(0,0,0,.8), 0 0 14px rgba(236,72,153,.4), 0 0 10px rgba(247,198,0,.3);
     }
 
-    /* Visuel de poignée de main dans le hero */
-    .hero-visual {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 2rem;
-    }
-    .hero-visual svg {
-      width: 100%;
-      max-width: 480px;
-      height: auto;
-      opacity: 0;
-    }
-    .handshake-labels {
-      position: absolute;
-      bottom: -1.6rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      opacity: 0;
-    }
-    .handshake-label {
-      padding: 0.3rem 0.6rem;
-      border-radius: var(--radius-full);
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(248, 250, 252, 0.25);
-      color: var(--muted);
-      backdrop-filter: blur(6px);
-    }
-    /* CTA mis en avant dans le hero et l'audit */
-    .cta-primary {
-      margin-top: 1.5rem;
-    }
-    .cta-primary a {
-      display: inline-block;
-      padding: 0.8rem 1.4rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--pink), var(--yellow));
-      color: #111;
-      font-weight: 700;
-      text-decoration: none;
-      will-change: transform;
-      transition: transform 0.2s ease;
-      /* Animation douce qui incite à cliquer */
-      animation: cta-pulse 4s ease-in-out infinite;
-    }
-    .cta-primary a:hover {
-      transform: translateY(-2px);
-    }
-    .cta-primary a:focus-visible {
-      outline: 2px solid var(--pink);
-      outline-offset: 2px;
+    .toc-card.active{
+      border-color:var(--pink);
+      box-shadow:0 0 0 1px var(--pink), 0 0 14px rgba(236,72,153,.6), 0 0 10px rgba(247,198,0,.45);
     }
 
-    @keyframes cta-pulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4);
-      }
-      50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px 6px rgba(236, 72, 153, 0.35);
-      }
+    .toc-card.highlight{
+      border-color:var(--pink);
+      box-shadow:0 0 0 1px var(--pink), 0 0 12px rgba(236,72,153,.5), 0 0 8px rgba(247,198,0,.4);
     }
 
-    /* Style appliqué directement sur un lien portant la classe cta-primary
-       afin qu’il puisse être utilisé sans wrapper. Cela reprend le design du
-       bouton d’origine (dégradé, arrondi, animation pulsée, hover). */
-    a.cta-primary {
-      display: inline-block;
-      padding: 0.8rem 1.4rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--pink), var(--yellow));
-      color: #111;
-      font-weight: 700;
-      text-decoration: none;
-      will-change: transform;
-      transition: transform 0.2s ease;
-      animation: cta-pulse 4s ease-in-out infinite;
-      /* Un peu d’espace au-dessus et en dessous des CTA placés directement dans le flux du texte */
-      margin-top: 1.2rem;
-      margin-bottom: 1.2rem;
-    }
-    a.cta-primary:hover {
-      transform: translateY(-2px);
-    }
-    a.cta-primary:focus-visible {
-      outline: 2px solid var(--pink);
-      outline-offset: 2px;
-    }
-
-
-    /* Titres et notes du sommaire restructuré */
+    /* Titres sommaire */
     .toc-heading-essential,
-    .toc-heading-full {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-      color: #fefce8;
+    .toc-heading-full{
+      font-size:1rem;
+      font-weight:700;
+      margin-bottom:.6rem;
+      color:#fefce8;
     }
-    .toc-note {
-      margin-top: 0.4rem;
-      /* augmenter l’espacement après la note pour mieux séparer les cartes */
-      margin-bottom: 1.4rem;
-      font-size: 0.85rem;
-      color: var(--muted);
+    .toc-note{
+      margin-top:.4rem;
+      margin-bottom:1.4rem;
+      font-size:.85rem;
+      color:var(--muted);
     }
-    .toc-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-      margin-bottom: 1.8rem;
+    .toc-heading-full{ margin-top:5rem; margin-bottom:.8rem; }
+
+    /* Cartes essentielles : effet dé sur desktop (3 colonnes) */
+    .essential-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:1.2rem;
+      margin-bottom:6rem;
+      padding-bottom:1rem;
+    }
+    .essential-grid > a:nth-child(1){ grid-row:1; grid-column:1; }
+    .essential-grid > a:nth-child(2){ grid-row:1; grid-column:3; }
+    .essential-grid > a:nth-child(3){ grid-row:2; grid-column:2; }
+    .essential-grid > a:nth-child(4){ grid-row:3; grid-column:1; }
+    .essential-grid > a:nth-child(5){ grid-row:3; grid-column:3; }
+
+    .essential-grid > a{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      min-height:180px;
     }
 
-    /* Disposition en quinconce pour la section essentielle (5 cartes comme les points d’un dé) */
-    .essential-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      /* on laisse la hauteur des rangées s’ajuster au contenu, les cartes ayant une hauteur minimale identique */
-      gap: 1.2rem;
-      /* augmenter encore l'espace sous les cartes essentielles pour mieux séparer du sommaire complet */
-      margin-bottom: 6rem;
-      /* un peu de padding interne pour éviter la fusion des marges verticales */
-      padding-bottom: 1rem;
+    /* Sommaire complet : 3 colonnes sur desktop */
+    .full-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      grid-auto-rows:auto;
+      gap:1.2rem;
+      width:100%;
     }
-    /* Positionnement spécifique des 5 cartes :
-       1 – coin haut gauche; 2 – coin haut droit; 3 – centre; 4 – coin bas gauche; 5 – coin bas droit */
-    .essential-grid > a:nth-child(1) { grid-row: 1; grid-column: 1; }
-    .essential-grid > a:nth-child(2) { grid-row: 1; grid-column: 3; }
-    .essential-grid > a:nth-child(3) { grid-row: 2; grid-column: 2; }
-    .essential-grid > a:nth-child(4) { grid-row: 3; grid-column: 1; }
-    .essential-grid > a:nth-child(5) { grid-row: 3; grid-column: 3; }
-
-    /* Les cartes essentielles : mêmes dimensions pour toutes et texte centré */
-    .essential-grid > a {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      /* hauteur minimale identique sur toutes les cartes pour uniformiser le rendu */
-      min-height: 180px;
+    .full-grid > a{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      min-height:160px;
     }
 
-    /* Les cartes du sommaire complet sont organisées en deux lignes de trois, occupant toute la largeur */
-    .full-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: auto;
-      gap: 1.2rem;
-      width: 100%;
+    /* Sections */
+    .grid{ display:flex; flex-direction:column; gap:1.4rem; }
+    .block{
+      border-radius:var(--radius-lg);
+      background:var(--card-soft);
+      border:1px solid var(--border-soft);
+      box-shadow:0 18px 45px rgba(0,0,0,.85);
+      padding:1.6rem 1.75rem 1.75rem;
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr);
+      column-gap:1rem;
+      row-gap:.5rem;
+      scroll-margin-top:80px;
+    }
+    .block-header{ display:flex; flex-direction:column; gap:.45rem; margin-right:.5rem; }
+
+    .block-icon{ width:40px; height:40px; color:var(--pink); flex-shrink:0; }
+    .block-icon svg{
+      width:100%; height:100%;
+      stroke:currentColor; fill:none; stroke-width:1.5;
+      padding:4px;
+      box-sizing:border-box;
+    }
+    .block-icon path{ stroke-dasharray:300; stroke-dashoffset:300; }
+
+    .block-title{ font-weight:650; font-size:1.02rem; }
+    .block-title span{ color:var(--yellow); }
+    .block-body{ font-size:.96rem; color:var(--text); }
+    .block-body p + p{ margin-top:.65rem; }
+    .block-body ul{ list-style:none; margin-top:.4rem; padding-left:0; }
+    .block-body li{
+      position:relative;
+      padding-left:1.2rem;
+      margin-top:.25rem;
+      color:var(--text);
+    }
+    .block-body li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:.7em;
+      width:7px; height:7px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--yellow),var(--pink));
+      box-shadow:0 0 7px rgba(248,250,252,.6);
     }
 
-    /* Uniformiser l’apparence des cartes du sommaire complet */
-    .full-grid > a {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      /* hauteur minimale pour harmoniser avec le design général */
-      min-height: 160px;
+    .block-underline{
+      width:80px;
+      height:2px;
+      margin-top:4px;
+      background:linear-gradient(90deg,var(--yellow),var(--pink));
+      border-radius:2px;
+      transform-origin:left;
+      transform:scaleX(0);
     }
 
-    .toc-heading-full {
-      /* plus d’espace avant le titre du sommaire complet */
-      margin-top: 3rem;
+    /* Sticky nav desktop */
+    .sticky-nav{
+      position:sticky;
+      top:58px;
+      display:none;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      background:var(--card);
+      border:1px solid rgba(148,163,184,.45);
+      box-shadow:0 8px 20px rgba(0,0,0,.6);
+      padding:.6rem 1rem;
+      border-radius:var(--radius-lg);
+      z-index:20;
+    }
+    .sticky-nav.show{ display:flex; }
+    .sticky-nav a{
+      color:var(--pink);
+      font-size:.85rem;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .sticky-nav a:hover{ text-decoration:underline; }
+    .sticky-nav .current-section{
+      flex:1;
+      text-align:center;
+      font-weight:600;
+      color:#fefce8;
     }
 
-    /* Alignement du CTA dans l’audit : on utilise désormais un bouton sous le titre sans mise en page en colonnes */
-
-    /* Décoration sous les titres des blocs */
-    .block-underline {
-      width: 80px;
-      height: 2px;
-      margin-top: 4px;
-      background: linear-gradient(90deg, var(--yellow), var(--pink));
-      border-radius: 2px;
-      transform-origin: left;
-      transform: scaleX(0);
+    /* Hero visual (poignée de main) */
+    .hero-visual{
+      position:relative;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-top:2rem;
+    }
+    .hero-visual svg{
+      width:100%;
+      max-width:480px;
+      height:auto;
+      opacity:0;
+    }
+    .handshake-labels{
+      position:absolute;
+      bottom:-1.6rem;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      gap:.75rem;
+      opacity:0;
+    }
+    .handshake-label{
+      padding:.3rem .6rem;
+      border-radius:var(--radius-full);
+      font-size:.75rem;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(248,250,252,.25);
+      color:var(--muted);
+      backdrop-filter:blur(6px);
     }
 
-    /* Marges entre les sections pour éviter le chevauchement */
-    #situation {
-      margin-bottom: 2.5rem;
+    /* CTA */
+    @keyframes cta-pulse{
+      0%,100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(236,72,153,.4); }
+      50%{ transform:scale(1.05); box-shadow:0 0 20px 6px rgba(236,72,153,.35); }
     }
-    .toc-heading-essential {
-      margin-top: 0;
-      margin-bottom: 1rem;
+    a.cta-primary{
+      display:inline-block;
+      padding:.8rem 1.4rem;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--pink),var(--yellow));
+      color:#111;
+      font-weight:700;
+      text-decoration:none;
+      will-change:transform;
+      transition:transform .2s ease;
+      animation:cta-pulse 4s ease-in-out infinite;
+      margin-top:1.2rem;
+      margin-bottom:1.2rem;
     }
-    .toc-heading-full {
-      /* laisser un espace encore plus généreux avant le titre du sommaire complet */
-      margin-top: 5rem;
-      margin-bottom: 0.8rem;
-    }
-    /* Ajout d’espace entre les blocs et le sommaire complet */
-    #role {
-      margin-top: 3rem;
-    }
+    a.cta-primary:hover{ transform:translateY(-2px); }
+    a.cta-primary:focus-visible{ outline:2px solid var(--pink); outline-offset:2px; }
 
-    /* Espacement des paragraphes : éloigner les paragraphes entre eux et après listes ou CTA */
-    .block-body p {
-      margin-bottom: 1.1rem;
-    }
-    .block-body ul + p {
-      margin-top: 1.2rem;
-    }
-    .cta-primary + p {
-      margin-top: 1.5rem;
-    }
+    /* Responsive */
+    @media (max-width: 720px){
 
-    /* Paragraphe qui enveloppe les boutons dans les blocs : marges pour séparer du contenu */
-    .cta-call {
-      margin-top: 1.2rem;
-      margin-bottom: 1.2rem;
-      /* aligner le texte à gauche pour éviter que le CTA ne soit centré */
-      text-align: left;
-    }
-
-    /* Alignement spécifique pour le bloc Audit : on s'assure que le contenu n'est pas centré */
-    #audit .block-body {
-      text-align: left;
-    }
-
-    /* Mise en valeur des noms de projets dans la section Parcours */
-    #parcours li strong {
-      color: var(--yellow);
-    }
-
-    #solutions li strong {
-      color: var(--yellow);
-    }
-
-    /* Mise en valeur des projets de la section Budgets */
-    #budgets li strong {
-      color: var(--yellow);
-    }
-
-        /* Responsive */
-    @media (max-width: 720px) {
-      .sticky-nav { display: none !important; }
-
+      /* Top bar sur une ligne */
       .top-bar-inner{
-        padding: 0.6rem 1.1rem;
-        flex-direction: row;          /* <-- sur une seule ligne */
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
+        padding:0.6rem 1.1rem;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+        gap:.75rem;
       }
+      .brand{ font-size:.76rem; }
+      a.premium{ font-size:.86rem; }
 
-      /* empêche les retours à la ligne */
-      .brand, a.premium { white-space: nowrap; }
-
-      /* si l’écran est très étroit, on évite le débordement */
-      .brand{
-        font-size: 0.76rem;
-        flex: 0 1 auto;
-      }
-      a.premium{
-        font-size: 0.86rem;
-        flex: 0 0 auto;
-      }
-      main {
-        padding: 2.1rem 1.1rem 2.8rem;
-      }
-      header.hero {
-        padding: 1.9rem 1.4rem 1.8rem;
-      }
-      .block {
-        padding: 1.35rem 1.25rem 1.45rem;
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .block-header {
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 0.4rem;
-      }
-      nav.toc ul {
-        flex-direction: column;
-        gap: 0.6rem;
-      }
-
-          /* 1) On récupère de la largeur utile sur mobile */
+      /* Layout */
       main{
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
+        padding:2.1rem .75rem 2.8rem;
+      }
+      header.hero{
+        padding:1.9rem 1.4rem 1.8rem;
+      }
+      .block{
+        padding:1.35rem 1.25rem 1.45rem;
+        grid-template-columns:minmax(0,1fr);
+      }
+      .block-header{
+        flex-direction:row;
+        align-items:center;
+        margin-bottom:.4rem;
       }
 
-      /* 2) Cartes essentielles : plus larges tout en gardant l'effet "5" */
+      /* Mobile : on masque la sticky-nav (si tu veux la garder, retire cette ligne) */
+      .sticky-nav{ display:none !important; }
+
+      /* Cartes essentielles : "dé élargi" => 4 colonnes + chaque carte span 2 colonnes */
       .essential-grid{
-        grid-template-columns: repeat(2, 1fr); /* <-- élargit vraiment les cartes */
-        gap: 0.85rem;
-
-        /* "Bleed" léger : la grille prend un peu plus de place que le conteneur */
-        margin-left: -0.35rem;
-        margin-right: -0.35rem;
+        grid-template-columns:repeat(4, minmax(0, 1fr));
+        gap:.9rem;
+        margin-left:-.25rem;
+        margin-right:-.25rem;
       }
+      .essential-grid > a:nth-child(1){ grid-row:1; grid-column:1 / span 2; }
+      .essential-grid > a:nth-child(2){ grid-row:1; grid-column:3 / span 2; }
+      .essential-grid > a:nth-child(3){ grid-row:2; grid-column:2 / span 2; }
+      .essential-grid > a:nth-child(4){ grid-row:3; grid-column:1 / span 2; }
+      .essential-grid > a:nth-child(5){ grid-row:3; grid-column:3 / span 2; }
 
-      /* Placement façon "5 sur un dé" (avec la carte centrale sur 2 colonnes) */
-      .essential-grid > a:nth-child(1){ grid-row: 1; grid-column: 1; }
-      .essential-grid > a:nth-child(2){ grid-row: 1; grid-column: 2; }
-      .essential-grid > a:nth-child(3){ grid-row: 2; grid-column: 1 / span 2; }
-      .essential-grid > a:nth-child(4){ grid-row: 3; grid-column: 1; }
-      .essential-grid > a:nth-child(5){ grid-row: 3; grid-column: 2; }
-
-      /* 3) Ajustements légers pour que tout le texte rentre (sans "tasser") */
       .essential-grid > a{
-        padding: 1.05rem 0.95rem;
-        min-height: 210px; /* augmente un peu seulement si nécessaire */
+        min-height:200px;
+        padding:1.05rem .95rem;
       }
 
-      .essential-grid > a h3{
-        font-size: 0.98rem;      /* un chouïa plus petit */
-        line-height: 1.15;
-        white-space: normal;
-        overflow-wrap: anywhere;
-        hyphens: auto;
-      }
-
-      .essential-grid > a p{
-        font-size: 0.84rem;      /* un chouïa plus petit */
-        line-height: 1.32;
-        white-space: normal;
-        hyphens: none;              /* <-- stop tirets */
-        -webkit-hyphens: none;      /* iOS Safari */
-        -ms-hyphens: none;
-        overflow-wrap: normal;      /* pas de coupure agressive */
-        word-break: normal;
-      }
-
-      .full-grid{
-        grid-template-columns: repeat(2, 1fr); /* 2 cartes par ligne */
-        gap: 0.85rem;                           /* optionnel : un peu plus serré */
-      }
-
-      /* optionnel : un peu plus de hauteur pour le texte */
-      .full-grid > a{
-        min-height: 190px;
-        padding: 1.05rem 0.95rem;
-      }
-
-      /* optionnel : éviter les coupures moches */
+      /* Pas de tirets / césures sur iOS */
+      .essential-grid > a h3,
+      .essential-grid > a p,
       .full-grid > a h3,
       .full-grid > a p{
-        hyphens: none;
-        -webkit-hyphens: none;
-        word-break: normal;
-        overflow-wrap: break-word;
+        hyphens:none;
+        -webkit-hyphens:none;
+        -ms-hyphens:none;
+        word-break:normal;
+        overflow-wrap:break-word;
+      }
+
+      .essential-grid > a h3{ font-size:.98rem; line-height:1.15; }
+      .essential-grid > a p{ font-size:.84rem; line-height:1.32; }
+
+      /* Sommaire complet : 2 colonnes sur mobile */
+      .full-grid{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+        gap:.85rem;
+      }
+      .full-grid > a{
+        min-height:190px;
+        padding:1.05rem .95rem;
       }
     }
   </style>
@@ -847,7 +528,7 @@
           </p>
         </div>
         <div class="hero-meta">
-          <div><strong>Expérience</strong> : +10&nbsp;ans en développement, gestion de projet & consulting</div>
+          <div><strong>Expérience</strong> : +10 ans en développement, gestion de projet & consulting</div>
           <div><strong>Approche</strong> : sécuritaire, agile, flexible & transparente</div>
           <div><strong>Zone</strong> : Cerdagne, Capcir & au-delà</div>
         </div>
@@ -911,13 +592,13 @@
     <!-- Sommaire -->
     <section id="sommaire" aria-label="Sommaire">
       <!-- Section essentielle -->
-      <h2 class="toc-heading-essential">Pas le temps de lire&nbsp? Voici l’essentiel</h2>
+      <h2 class="toc-heading-essential">Pas le temps de lire&nbsp;? Voici l’essentiel</h2>
       <!-- Note d’utilisation placée sous le titre essentiel -->
       <p class="toc-note">Cliquez sur une carte pour accéder directement à la section</p>
       <div class="toc-grid essential-grid">
 
         <a href="#role" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Mon&nbsp;rôle</h3>
+          <h3>Mon rôle</h3>
           <p>Traduire, sécuriser et construire durablement</p>
         </a>
 
@@ -943,7 +624,7 @@
       </div>
 
       <!-- Titre de la partie détaillée du sommaire -->
-      <h2 class="toc-heading-full">Le reste mérite d'être lu également&nbsp; (temps de lecture estimé à moins de&nbsp;3&nbsp;minutes)</h2>
+      <h2 class="toc-heading-full">Le reste mérite d'être lu également&nbsp;(temps de lecture estimé à moins de&nbsp;3&nbsp;minutes)</h2>
       <div class="toc-grid full-grid">
         
         <a href="#autonomie" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
@@ -957,12 +638,12 @@
         </a>
 
         <a href="#agile" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Gestion&nbsp;de&nbsp;projet&nbsp;agile</h3>
+          <h3>Gestion de projet agile</h3>
           <p>Découper et valider chaque étape</p>
         </a>
 
         <a href="#seo" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Référencement&nbsp;naturel&nbsp;(SEO)</h3>
+          <h3>Référencement SEO</h3>
           <p>Visibilité dans les moteurs de recherche</p>
         </a>
 
@@ -972,7 +653,7 @@
         </a>
 
         <a href="#parcours" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Parcours&nbsp;&amp;&nbsp;Références</h3>
+          <h3>Mon Parcours</h3>
           <p>Des années de projets variés</p>
         </a>
     </section>
@@ -1093,7 +774,7 @@
               <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
             </svg>
           </div>
-          <div class="block-title">Audit&nbsp;&amp;&nbsp;Cadrage <span>150 €</span></div>
+          <div class="block-title">Audit &amp; Cadrage <span>150 €</span></div>
           <div class="block-underline"></div>
         </div>
         <div class="block-body">
@@ -1269,7 +950,7 @@
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
           </div>
-          <div class="block-title">Référencement&nbsp;<span>SEO</span></div>
+          <div class="block-title">Référencement <span>SEO</span></div>
           <div class="block-underline"></div>
         </div>
     
@@ -1330,7 +1011,7 @@
         <div class="block-body">
           <p class="micro-copy">Et parce que je ne me suis pas encore présenté…</p> 
           <p>Je m’appelle Rémy Roger.</p>
-          <p>Je travaille dans le domaine de l’informatique et du numérique depuis une quinzaine d’années.</p>
+          <p>Je travaille dans le domaine de l’informatique et du numérique depuis + de 10 ans.</p>
           <p>Mon parcours m’a amené à exercer professionnellement les activités de développeur web, chef de projet digital et coach consultant.</p>
           <p>Ces expériences ont profondément façonné ma manière de travailler : je ne conçois pas la technique sans une compréhension attentive du besoin, et je ne pilote pas un projet sans en maîtriser les implications techniques réelles.</p>
           <p>J’ai exercé plusieurs années comme développeur et en gestion de projet web, au sein d’environnements exigeants, sur des projets à forte visibilité, à forts enjeux métiers et à contraintes multiples.</p>
