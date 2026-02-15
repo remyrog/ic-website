@@ -1,8 +1,13 @@
 (() => {
-  // fix scroll issue on tablet
-  if (window.matchMedia('(pointer: coarse) and (min-width: 800px)').matches) {
-    document.documentElement.style.scrollBehavior = 'auto';
+  const isTabletTouch = window.matchMedia('(pointer: coarse) and (min-width: 800px)').matches;
+
+  if (isTabletTouch && window.ScrollTrigger) {
+    ScrollTrigger.normalizeScroll(true);
+    ScrollTrigger.config({
+      ignoreMobileResize: true
+    });
   }
+
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
@@ -171,9 +176,11 @@ gsap.to("#carHero", {
   scrollTrigger: {
     trigger: "#hero",
     start: "top top",
-    endTrigger: endEl,           // la 2e section
-    end: "top top",              // fin quand son haut touche le haut du viewport
-    scrub: true
+    endTrigger: endEl,
+    end: "top top",
+    scrub: isTabletTouch ? 0.6 : true,   // <- change ici
+    invalidateOnRefresh: true,
+    fastScrollEnd: true
   }
 });
 
