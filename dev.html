@@ -645,9 +645,36 @@
         touch-action: manipulation;
       }
 
-      /* le titre au centre ne doit pas déborder */
+      /* Mobile: boutons en icônes */
+      .sticky-nav .nav-label {
+        display: none;
+      }
+
+      .sticky-nav .nav-ico {
+        display: inline-flex;
+        font-size: 1.7rem;
+        line-height: 1;
+        color: var(--pink);
+      }
+
+      /* Boutons latéraux plus compacts */
+      .sticky-nav .nav-btn {
+        width: 46px;
+        min-width: 46px;
+        height: 46px;
+        padding: 0;
+        /* important: gagne de la place */
+        justify-content: center;
+      }
+
+      /* Centre: on donne le max d’espace au titre */
       .sticky-nav .current-section {
-        padding: 0 0.5rem;
+        flex: 1;
+        min-width: 0;
+        /* permet l’ellipsis */
+        font-size: 0.82rem;
+        /* un poil plus petit */
+        padding: 0 0.45rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -898,10 +925,22 @@
 
     <!-- Barre de navigation sticky qui apparaît après le sommaire -->
     <div class="sticky-nav" id="stickyNav">
-      <a href="#sommaire">Sommaire</a>
-      <span class="current-section">&nbsp;</span>
-      <a href="#" class="prev-section" aria-label="Section précédente">Précédent</a>
-      <a href="#" class="next-section" aria-label="Section suivante">Suivant</a>
+      <a href="#sommaire" class="nav-btn nav-sommaire" aria-label="Sommaire">
+        <span class="nav-ico" aria-hidden="true">⌂</span>
+        <span class="nav-label">Sommaire</span>
+      </a>
+
+      <a href="#" class="nav-btn prev-section" aria-label="Section précédente">
+        <span class="nav-ico" aria-hidden="true">‹</span>
+        <span class="nav-label">Précédent</span>
+      </a>
+
+      <span class="current-section">Mon Approche</span>
+
+      <a href="#" class="nav-btn next-section" aria-label="Section suivante">
+        <span class="nav-label">Suivant</span>
+        <span class="nav-ico" aria-hidden="true">›</span>
+      </a>
     </div>
 
     <!-- Bloc principal -->
