@@ -383,6 +383,9 @@
 
     /* Responsive */
     @media (max-width: 720px) {
+
+      .sticky-nav { display: none !important; }
+
       .top-bar-inner{
         padding: 0.6rem 1.1rem;
         flex-direction: row;          /* <-- sur une seule ligne */
@@ -470,6 +473,26 @@
         overflow-wrap: normal;      /* pas de coupure agressive */
         word-break: normal;
       }
+
+        .full-grid{
+    grid-template-columns: repeat(2, 1fr); /* 2 cartes par ligne */
+    gap: 0.85rem;                           /* optionnel : un peu plus serré */
+  }
+
+  /* optionnel : un peu plus de hauteur pour le texte */
+  .full-grid > a{
+    min-height: 190px;
+    padding: 1.05rem 0.95rem;
+  }
+
+      /* optionnel : éviter les coupures moches */
+      .full-grid > a h3,
+      .full-grid > a p{
+        hyphens: none;
+        -webkit-hyphens: none;
+        word-break: normal;
+        overflow-wrap: break-word;
+      }
     }
 
     /* Mettez en avant les blocs prioritaires par un contour dégradé */
@@ -550,10 +573,6 @@
       text-align: center;
       font-weight: 600;
       color: #fefce8;
-    }
-    /* Cache la sticky nav sur mobile */
-    @media (max-width: 720px) {
-      .sticky-nav { display: none !important; }
     }
 
     /* Visuel de poignée de main dans le hero */
