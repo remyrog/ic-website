@@ -464,8 +464,11 @@
         font-size: 0.84rem;      /* un chouïa plus petit */
         line-height: 1.32;
         white-space: normal;
-        overflow-wrap: anywhere;
-        hyphens: auto;
+        hyphens: none;              /* <-- stop tirets */
+        -webkit-hyphens: none;      /* iOS Safari */
+        -ms-hyphens: none;
+        overflow-wrap: normal;      /* pas de coupure agressive */
+        word-break: normal;
       }
     }
 
