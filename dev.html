@@ -383,10 +383,25 @@
 
     /* Responsive */
     @media (max-width: 720px) {
-      .top-bar-inner {
+      .top-bar-inner{
         padding: 0.6rem 1.1rem;
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;          /* <-- sur une seule ligne */
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      /* empêche les retours à la ligne */
+      .brand, a.premium { white-space: nowrap; }
+
+      /* si l’écran est très étroit, on évite le débordement */
+      .brand{
+        font-size: 0.76rem;
+        flex: 0 1 auto;
+      }
+      a.premium{
+        font-size: 0.86rem;
+        flex: 0 0 auto;
       }
       main {
         padding: 2.1rem 1.1rem 2.8rem;
