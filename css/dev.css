@@ -788,12 +788,3 @@ section.grid {
     position: relative;
     z-index: 1;
 }
-
-@media (max-width: 720px) {
-    #sommaire {
-        padding-bottom: 2.6rem;
-    }
-    section.grid {
-        padding-top: 1.4rem;
-    }
-}
