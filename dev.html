@@ -422,6 +422,51 @@
         flex-direction: column;
         gap: 0.6rem;
       }
+
+          /* 1) On récupère de la largeur utile sur mobile */
+      main{
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+
+      /* 2) Cartes essentielles : plus larges tout en gardant l'effet "5" */
+      .essential-grid{
+        grid-template-columns: repeat(2, 1fr); /* <-- élargit vraiment les cartes */
+        gap: 0.85rem;
+
+        /* "Bleed" léger : la grille prend un peu plus de place que le conteneur */
+        margin-left: -0.35rem;
+        margin-right: -0.35rem;
+      }
+
+      /* Placement façon "5 sur un dé" (avec la carte centrale sur 2 colonnes) */
+      .essential-grid > a:nth-child(1){ grid-row: 1; grid-column: 1; }
+      .essential-grid > a:nth-child(2){ grid-row: 1; grid-column: 2; }
+      .essential-grid > a:nth-child(3){ grid-row: 2; grid-column: 1 / span 2; }
+      .essential-grid > a:nth-child(4){ grid-row: 3; grid-column: 1; }
+      .essential-grid > a:nth-child(5){ grid-row: 3; grid-column: 2; }
+
+      /* 3) Ajustements légers pour que tout le texte rentre (sans "tasser") */
+      .essential-grid > a{
+        padding: 1.05rem 0.95rem;
+        min-height: 210px; /* augmente un peu seulement si nécessaire */
+      }
+
+      .essential-grid > a h3{
+        font-size: 0.98rem;      /* un chouïa plus petit */
+        line-height: 1.15;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        hyphens: auto;
+      }
+
+      .essential-grid > a p{
+        font-size: 0.84rem;      /* un chouïa plus petit */
+        line-height: 1.32;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        hyphens: auto;
+      }
     }
 
     /* Mettez en avant les blocs prioritaires par un contour dégradé */
@@ -458,7 +503,6 @@
     #seo { order: 9; }
     #risques { order: 10; }
     #parcours { order: 11; }
-
 
     /* Amélioration de la lisibilité : les listes utilisent la couleur principale */
     .block-body li { color: var(--text); }
@@ -853,7 +897,7 @@
       <div class="toc-grid essential-grid">
 
         <a href="#role" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Mon rôle</h3>
+          <h3>Mon&nbsp;rôle</h3>
           <p>Traduire, sécuriser et construire durablement</p>
         </a>
 
@@ -868,7 +912,7 @@
         </a>
 
         <a href="#solutions" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
-          <h3>Solutions proposées</h3>
+          <h3>Solutions</h3>
           <p>Des services adaptés à votre réalité</p>
         </a>
 
