@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Offre de développement – Informatique Cerdagne</title>
-  <meta name="description" content="Présentation complète de l’offre de développement et d’accompagnement numérique proposée par Informatique Cerdagne. Découvrez la méthode, l’audit à 150 €, les services, la transparence des budgets et l’expertise derrière chaque projet." />
+  <meta name="description"
+    content="Présentation complète de l’offre de développement et d’accompagnement numérique proposée par Informatique Cerdagne. Découvrez la méthode, l’audit à 150 €, les services, la transparence des budgets et l’expertise derrière chaque projet." />
 
   <!-- Style existant -->
   <link rel="stylesheet" href="styles.css">
@@ -13,494 +15,724 @@
   <script defer src="main.js"></script>
 
   <style>
-    :root{
-      --bg:#020617;
-      --card:#050816;
-      --card-soft:#050818;
-      --border-soft:#1f2937;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --yellow:#f7c600;
-      --pink:#ec4899;
-      --radius-xl:26px;
-      --radius-lg:18px;
-      --radius-full:999px;
-      --shadow-soft:0 24px 60px rgba(0,0,0,.75);
+    :root {
+      --bg: #020617;
+      --card: #050816;
+      --card-soft: #050818;
+      --border-soft: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --yellow: #f7c600;
+      --pink: #ec4899;
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-full: 999px;
+      --shadow-soft: 0 24px 60px rgba(0, 0, 0, .75);
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    body{
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.6;
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
     /* Top bar */
-    .top-bar{
-      border-bottom:1px solid rgba(148,163,184,.45);
-      background:var(--bg);
-      position:sticky;
-      top:0;
-      z-index:20;
+    .top-bar {
+      border-bottom: 1px solid rgba(148, 163, 184, .45);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
-    .top-bar-inner{
-      max-width:1040px;
-      margin:0 auto;
-      padding:.65rem 1.5rem;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:1rem;
-    }
-    .brand{
-      font-weight:700;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      font-size:.8rem;
-      color:var(--text);
-      white-space:nowrap;
-    }
-    .brand span{ color:var(--yellow); }
 
-    a.premium{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      font-weight:600;
-      text-decoration:none;
-      position:relative;
-      color:var(--pink);
-      font-size:.9rem;
-      white-space:nowrap;
+    .top-bar-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: .65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
-    a.premium::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-2px;
-      width:100%;
-      height:2px;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--pink),var(--yellow));
-      transform-origin:left;
-      transform:scaleX(0);
-      transition:transform .25s ease-out;
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .8rem;
+      color: var(--text);
+      white-space: nowrap;
     }
+
+    .brand span {
+      color: var(--yellow);
+    }
+
+    a.premium {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      color: var(--pink);
+      font-size: .9rem;
+      white-space: nowrap;
+    }
+
+    a.premium::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pink), var(--yellow));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform .25s ease-out;
+    }
+
     a.premium:hover::after,
-    a.premium:focus-visible::after{ transform:scaleX(1); }
+    a.premium:focus-visible::after {
+      transform: scaleX(1);
+    }
 
-    main{
-      max-width:1040px;
-      margin:0 auto;
-      padding:2.4rem 1.5rem 3.75rem;
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 3.75rem;
+      padding-bottom: calc(3.75rem + 96px);
     }
 
     /* Hero */
-    header.hero{
-      margin-bottom:2.75rem;
-      padding:2.4rem 2.1rem 2.3rem;
-      border-radius:var(--radius-xl);
-      background:var(--card);
-      box-shadow:var(--shadow-soft);
-      border:1px solid rgba(148,163,184,.45);
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-inner{ position:relative; z-index:1; display:grid; gap:1.65rem; }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:.45rem;
-      padding:.25rem .75rem .3rem;
-      border-radius:999px;
-      font-size:.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      background:var(--bg);
-      color:var(--muted);
-      border:1px solid rgba(148,163,184,.7);
-    }
-    .badge-dot{
-      width:7px; height:7px; border-radius:999px;
-      background:radial-gradient(circle at 30% 0%,var(--yellow),var(--pink));
-      box-shadow:0 0 10px rgba(248,250,252,.6);
+    header.hero {
+      margin-bottom: 2.75rem;
+      padding: 2.4rem 2.1rem 2.3rem;
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, .45);
+      position: relative;
+      overflow: hidden;
     }
 
-    h1{
-      font-size:clamp(2.2rem,3.2vw,2.8rem);
-      line-height:1.1;
-      font-weight:800;
-      letter-spacing:-.03em;
-      margin:1rem 0 .85rem;
-    }
-    h1 span.accent{
-      background:linear-gradient(90deg,var(--yellow),var(--pink));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 1.65rem;
     }
 
-    .hero-subtitle{
-      max-width:700px;
-      color:var(--muted);
-      font-size:.98rem;
-      margin-bottom:.35rem;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .25rem .75rem .3rem;
+      border-radius: 999px;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, .7);
     }
-    .hero-meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:1rem 1.75rem;
-      margin-top:1.1rem;
-      font-size:.85rem;
-      color:var(--muted);
-    }
-    .hero-meta strong{ color:var(--text); font-weight:600; }
 
-    strong { color:var(--yellow); }
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0%, var(--yellow), var(--pink));
+      box-shadow: 0 0 10px rgba(248, 250, 252, .6);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 3.2vw, 2.8rem);
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin: 1rem 0 .85rem;
+    }
+
+    h1 span.accent {
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 700px;
+      color: var(--muted);
+      font-size: .98rem;
+      margin-bottom: .35rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem 1.75rem;
+      margin-top: 1.1rem;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    strong {
+      color: var(--yellow);
+    }
 
     /* Sommaire - grilles + cartes */
-    .toc-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-      gap:1.2rem;
-      margin-bottom:1.8rem;
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
     }
 
-    .toc-card{
-      position:relative;
-      padding:1.2rem 1.4rem;
-      border-radius:var(--radius-lg);
-      background:var(--card-soft);
-      border:1px solid var(--border-soft);
-      box-shadow:0 12px 28px rgba(0,0,0,.65);
-      color:var(--text);
-      text-decoration:none;
-      overflow:hidden;
-      will-change:transform;
-      transition:transform .3s ease, box-shadow .3s ease;
-    }
-    .toc-card h3{
-      margin-bottom:.35rem;
-      font-size:1.05rem;
-      font-weight:700;
-      color:#fefce8;
-    }
-    .toc-card p{
-      font-size:.85rem;
-      color:var(--muted);
+    .toc-card {
+      position: relative;
+      padding: 1.2rem 1.4rem;
+      border-radius: var(--radius-lg);
+      background: var(--card-soft);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .65);
+      color: var(--text);
+      text-decoration: none;
+      overflow: hidden;
+      will-change: transform;
+      transition: transform .3s ease, box-shadow .3s ease;
     }
 
-    .toc-card::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:var(--radius-lg);
-      background:linear-gradient(135deg,var(--pink),var(--yellow));
-      opacity:0;
-      transition:opacity .4s ease;
-      z-index:-1;
+    .toc-card h3 {
+      margin-bottom: .35rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fefce8;
     }
+
+    .toc-card p {
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .toc-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      opacity: 0;
+      transition: opacity .4s ease;
+      z-index: -1;
+    }
+
     .toc-card:hover::after,
-    .toc-card:focus-visible::after{ opacity:.15; }
+    .toc-card:focus-visible::after {
+      opacity: .15;
+    }
 
     .toc-card:hover,
-    .toc-card:focus-visible{
-      transform:translateY(-4px) rotateX(1deg) rotateY(-1deg);
-      box-shadow:0 18px 32px rgba(0,0,0,.8), 0 0 14px rgba(236,72,153,.4), 0 0 10px rgba(247,198,0,.3);
+    .toc-card:focus-visible {
+      transform: translateY(-4px) rotateX(1deg) rotateY(-1deg);
+      box-shadow: 0 18px 32px rgba(0, 0, 0, .8), 0 0 14px rgba(236, 72, 153, .4), 0 0 10px rgba(247, 198, 0, .3);
     }
 
-    .toc-card.active{
-      border-color:var(--pink);
-      box-shadow:0 0 0 1px var(--pink), 0 0 14px rgba(236,72,153,.6), 0 0 10px rgba(247,198,0,.45);
+    .toc-card.active {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 1px var(--pink), 0 0 14px rgba(236, 72, 153, .6), 0 0 10px rgba(247, 198, 0, .45);
     }
 
-    .toc-card.highlight{
-      border-color:var(--pink);
-      box-shadow:0 0 0 1px var(--pink), 0 0 12px rgba(236,72,153,.5), 0 0 8px rgba(247,198,0,.4);
+    .toc-card.highlight {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 1px var(--pink), 0 0 12px rgba(236, 72, 153, .5), 0 0 8px rgba(247, 198, 0, .4);
     }
 
     /* Titres sommaire */
     .toc-heading-essential,
-    .toc-heading-full{
-      font-size:1rem;
-      font-weight:700;
-      margin-bottom:.6rem;
-      color:#fefce8;
+    .toc-heading-full {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: .6rem;
+      color: #fefce8;
     }
-    .toc-note{
-      margin-top:.4rem;
-      margin-bottom:1.4rem;
-      font-size:.85rem;
-      color:var(--muted);
+
+    .toc-note {
+      margin-top: .4rem;
+      margin-bottom: 1.4rem;
+      font-size: .85rem;
+      color: var(--muted);
     }
-    .toc-heading-full{ margin-top:5rem; margin-bottom:.8rem; }
+
+    .toc-heading-full {
+      margin-top: 5rem;
+      margin-bottom: .8rem;
+    }
 
     /* Cartes essentielles : effet dé sur desktop (3 colonnes) */
-    .essential-grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:1.2rem;
-      margin-bottom:6rem;
-      padding-bottom:1rem;
+    .essential-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 6rem;
+      padding-bottom: 1rem;
     }
-    .essential-grid > a:nth-child(1){ grid-row:1; grid-column:1; }
-    .essential-grid > a:nth-child(2){ grid-row:1; grid-column:3; }
-    .essential-grid > a:nth-child(3){ grid-row:2; grid-column:2; }
-    .essential-grid > a:nth-child(4){ grid-row:3; grid-column:1; }
-    .essential-grid > a:nth-child(5){ grid-row:3; grid-column:3; }
 
-    .essential-grid > a{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      min-height:180px;
+    .essential-grid>a:nth-child(1) {
+      grid-row: 1;
+      grid-column: 1;
+    }
+
+    .essential-grid>a:nth-child(2) {
+      grid-row: 1;
+      grid-column: 3;
+    }
+
+    .essential-grid>a:nth-child(3) {
+      grid-row: 2;
+      grid-column: 2;
+    }
+
+    .essential-grid>a:nth-child(4) {
+      grid-row: 3;
+      grid-column: 1;
+    }
+
+    .essential-grid>a:nth-child(5) {
+      grid-row: 3;
+      grid-column: 3;
+    }
+
+    .essential-grid>a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 180px;
     }
 
     /* Sommaire complet : 3 colonnes sur desktop */
-    .full-grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      grid-auto-rows:auto;
-      gap:1.2rem;
-      width:100%;
+    .full-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: auto;
+      gap: 1.2rem;
+      width: 100%;
     }
-    .full-grid > a{
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      min-height:160px;
+
+    .full-grid>a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 160px;
     }
 
     /* Sections */
-    .grid{ display:flex; flex-direction:column; gap:1.4rem; }
-    .block{
-      border-radius:var(--radius-lg);
-      background:var(--card-soft);
-      border:1px solid var(--border-soft);
-      box-shadow:0 18px 45px rgba(0,0,0,.85);
-      padding:1.6rem 1.75rem 1.75rem;
-      display:grid;
-      grid-template-columns:auto minmax(0,1fr);
-      column-gap:1rem;
-      row-gap:.5rem;
-      scroll-margin-top:80px;
-    }
-    .block-header{ display:flex; flex-direction:column; gap:.45rem; margin-right:.5rem; }
-
-    .block-icon{ width:40px; height:40px; color:var(--pink); flex-shrink:0; }
-    .block-icon svg{
-      width:100%; height:100%;
-      stroke:currentColor; fill:none; stroke-width:1.5;
-      padding:4px;
-      box-sizing:border-box;
-    }
-    .block-icon path{ stroke-dasharray:300; stroke-dashoffset:300; }
-
-    .block-title{ font-weight:650; font-size:1.02rem; }
-    .block-title span{ color:var(--yellow); }
-    .block-body{ font-size:.96rem; color:var(--text); }
-    .block-body p + p{ margin-top:.65rem; }
-    .block-body ul{ list-style:none; margin-top:.4rem; padding-left:0; }
-    .block-body li{
-      position:relative;
-      padding-left:1.2rem;
-      margin-top:.25rem;
-      color:var(--text);
-    }
-    .block-body li::before{
-      content:"";
-      position:absolute;
-      left:0;
-      top:.7em;
-      width:7px; height:7px;
-      border-radius:999px;
-      background:linear-gradient(135deg,var(--yellow),var(--pink));
-      box-shadow:0 0 7px rgba(248,250,252,.6);
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
     }
 
-    .block-underline{
-      width:80px;
-      height:2px;
-      margin-top:4px;
-      background:linear-gradient(90deg,var(--yellow),var(--pink));
-      border-radius:2px;
-      transform-origin:left;
-      transform:scaleX(0);
+    .block {
+      border-radius: var(--radius-lg);
+      background: var(--card-soft);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, .85);
+      padding: 1.6rem 1.75rem 1.75rem;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 1rem;
+      row-gap: .5rem;
+      scroll-margin-top: 80px;
     }
 
-    /* Sticky nav desktop */
-    .sticky-nav{
-      position:sticky;
-      top:58px;
-      display:none;
-      align-items:center;
-      justify-content:space-between;
-      gap:1rem;
-      background:var(--card);
-      border:1px solid rgba(148,163,184,.45);
-      box-shadow:0 8px 20px rgba(0,0,0,.6);
-      padding:.6rem 1rem;
-      border-radius:var(--radius-lg);
-      z-index:20;
+    .block-header {
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+      margin-right: .5rem;
     }
-    .sticky-nav.show{ display:flex; }
-    .sticky-nav a{
-      color:var(--pink);
-      font-size:.85rem;
-      text-decoration:none;
-      white-space:nowrap;
+
+    .block-icon {
+      width: 40px;
+      height: 40px;
+      color: var(--pink);
+      flex-shrink: 0;
     }
-    .sticky-nav a:hover{ text-decoration:underline; }
-    .sticky-nav .current-section{
-      flex:1;
-      text-align:center;
-      font-weight:600;
-      color:#fefce8;
+
+    .block-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      padding: 4px;
+      box-sizing: border-box;
+    }
+
+    .block-icon path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+    }
+
+    .block-title {
+      font-weight: 650;
+      font-size: 1.02rem;
+    }
+
+    .block-title span {
+      color: var(--yellow);
+    }
+
+    .block-body {
+      font-size: .96rem;
+      color: var(--text);
+    }
+
+    .block-body p+p {
+      margin-top: .65rem;
+    }
+
+    .block-body ul {
+      list-style: none;
+      margin-top: .4rem;
+      padding-left: 0;
+    }
+
+    .block-body li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-top: .25rem;
+      color: var(--text);
+    }
+
+    .block-body li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      box-shadow: 0 0 7px rgba(248, 250, 252, .6);
+    }
+
+    .block-underline {
+      width: 80px;
+      height: 2px;
+      margin-top: 4px;
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      border-radius: 2px;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    /* Sticky nav (tous écrans) : barre en bas */
+    .sticky-nav {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      top: auto;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+
+      width: min(640px, calc(100% - 1.4rem));
+      display: none;
+      /* reste cachée tant qu'on n'a pas .show */
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      background: rgba(5, 8, 22, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      padding: 0.65rem 0.9rem;
+      border-radius: 999px;
+      z-index: 60;
+    }
+
+    .sticky-nav.show {
+      display: flex;
+    }
+
+    .sticky-nav a {
+      color: var(--pink);
+      font-size: 0.85rem;
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 0.55rem 0.65rem;
+      /* zone tap confortable */
+      border-radius: 999px;
+      touch-action: manipulation;
+    }
+
+    .sticky-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .sticky-nav .current-section {
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+      color: #fefce8;
+      padding: 0 0.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     /* Hero visual (poignée de main) */
-    .hero-visual{
-      position:relative;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      margin-top:2rem;
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
     }
-    .hero-visual svg{
-      width:100%;
-      max-width:480px;
-      height:auto;
-      opacity:0;
+
+    .hero-visual svg {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      opacity: 0;
     }
-    .handshake-labels{
-      position:absolute;
-      bottom:-1.6rem;
-      width:100%;
-      display:flex;
-      justify-content:center;
-      gap:.75rem;
-      opacity:0;
+
+    .handshake-labels {
+      position: absolute;
+      bottom: -1.6rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: .75rem;
+      opacity: 0;
     }
-    .handshake-label{
-      padding:.3rem .6rem;
-      border-radius:var(--radius-full);
-      font-size:.75rem;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(248,250,252,.25);
-      color:var(--muted);
-      backdrop-filter:blur(6px);
+
+    .handshake-label {
+      padding: .3rem .6rem;
+      border-radius: var(--radius-full);
+      font-size: .75rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(248, 250, 252, .25);
+      color: var(--muted);
+      backdrop-filter: blur(6px);
     }
 
     /* CTA */
-    @keyframes cta-pulse{
-      0%,100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(236,72,153,.4); }
-      50%{ transform:scale(1.05); box-shadow:0 0 20px 6px rgba(236,72,153,.35); }
+    @keyframes cta-pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, .4);
+      }
+
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 6px rgba(236, 72, 153, .35);
+      }
     }
-    a.cta-primary{
-      display:inline-block;
-      padding:.8rem 1.4rem;
-      border-radius:999px;
-      background:linear-gradient(135deg,var(--pink),var(--yellow));
-      color:#111;
-      font-weight:700;
-      text-decoration:none;
-      will-change:transform;
-      transition:transform .2s ease;
-      animation:cta-pulse 4s ease-in-out infinite;
-      margin-top:1.2rem;
-      margin-bottom:1.2rem;
+
+    a.cta-primary {
+      display: inline-block;
+      padding: .8rem 1.4rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      color: #111;
+      font-weight: 700;
+      text-decoration: none;
+      will-change: transform;
+      transition: transform .2s ease;
+      animation: cta-pulse 4s ease-in-out infinite;
+      margin-top: 1.2rem;
+      margin-bottom: 1.2rem;
     }
-    a.cta-primary:hover{ transform:translateY(-2px); }
-    a.cta-primary:focus-visible{ outline:2px solid var(--pink); outline-offset:2px; }
+
+    a.cta-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    a.cta-primary:focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 2px;
+    }
 
     /* Responsive */
-    @media (max-width: 720px){
+    @media (max-width: 720px) {
 
       /* Top bar sur une ligne */
-      .top-bar-inner{
-        padding:0.6rem 1.1rem;
-        flex-direction:row;
-        align-items:center;
-        justify-content:space-between;
-        gap:.75rem;
+      .top-bar-inner {
+        padding: 0.6rem 1.1rem;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
       }
-      .brand{ font-size:.76rem; }
-      a.premium{ font-size:.86rem; }
+
+      .brand {
+        font-size: .76rem;
+      }
+
+      a.premium {
+        font-size: .86rem;
+      }
 
       /* Layout */
-      main{
-        padding:2.1rem .75rem 2.8rem;
-      }
-      header.hero{
-        padding:1.9rem 1.4rem 1.8rem;
-      }
-      .block{
-        padding:1.35rem 1.25rem 1.45rem;
-        grid-template-columns:minmax(0,1fr);
-      }
-      .block-header{
-        flex-direction:row;
-        align-items:center;
-        margin-bottom:.4rem;
+      main {
+        padding: 2.1rem .75rem 2.8rem;
       }
 
-      /* Mobile : on masque la sticky-nav (si tu veux la garder, retire cette ligne) */
-      .sticky-nav{ display:none !important; }
+      header.hero {
+        padding: 1.9rem 1.4rem 1.8rem;
+      }
+
+      .block {
+        padding: 1.35rem 1.25rem 1.45rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .block-header {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: .4rem;
+      }
+
+      /* Mobile : sticky bar en bas (fixe) + visible quand .show est présent */
+      .sticky-nav {
+        position: fixed;
+        top: auto;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: calc(100% - 1.2rem);
+        max-width: 520px;
+        /* ajuste si tu veux plus large */
+        z-index: 60;
+
+        /* petit effet "barre" plus clean sur mobile */
+        border-radius: 999px;
+        padding: 0.65rem 0.85rem;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      /* confort tactile : zones cliquables plus grandes */
+      .sticky-nav a {
+        padding: 0.55rem 0.65rem;
+        border-radius: 999px;
+        text-decoration: none;
+        touch-action: manipulation;
+      }
+
+      /* le titre au centre ne doit pas déborder */
+      .sticky-nav .current-section {
+        padding: 0 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      /* Important : évite que le contenu passe sous la barre */
+      main {
+        padding-bottom: 7.2rem;
+        /* ajuste si besoin */
+      }
 
       /* Cartes essentielles : "dé élargi" => 4 colonnes + chaque carte span 2 colonnes */
-      .essential-grid{
-        grid-template-columns:repeat(4, minmax(0, 1fr));
-        gap:.9rem;
-        margin-left:-.25rem;
-        margin-right:-.25rem;
+      .essential-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: .9rem;
+        margin-left: -.25rem;
+        margin-right: -.25rem;
       }
-      .essential-grid > a:nth-child(1){ grid-row:1; grid-column:1 / span 2; }
-      .essential-grid > a:nth-child(2){ grid-row:1; grid-column:3 / span 2; }
-      .essential-grid > a:nth-child(3){ grid-row:2; grid-column:2 / span 2; }
-      .essential-grid > a:nth-child(4){ grid-row:3; grid-column:1 / span 2; }
-      .essential-grid > a:nth-child(5){ grid-row:3; grid-column:3 / span 2; }
 
-      .essential-grid > a{
-        min-height:200px;
-        padding:1.05rem .95rem;
+      .essential-grid>a:nth-child(1) {
+        grid-row: 1;
+        grid-column: 1 / span 2;
+      }
+
+      .essential-grid>a:nth-child(2) {
+        grid-row: 1;
+        grid-column: 3 / span 2;
+      }
+
+      .essential-grid>a:nth-child(3) {
+        grid-row: 2;
+        grid-column: 2 / span 2;
+      }
+
+      .essential-grid>a:nth-child(4) {
+        grid-row: 3;
+        grid-column: 1 / span 2;
+      }
+
+      .essential-grid>a:nth-child(5) {
+        grid-row: 3;
+        grid-column: 3 / span 2;
+      }
+
+      .essential-grid>a {
+        min-height: 200px;
+        padding: 1.05rem .95rem;
       }
 
       /* Pas de tirets / césures sur iOS */
-      .essential-grid > a h3,
-      .essential-grid > a p,
-      .full-grid > a h3,
-      .full-grid > a p{
-        hyphens:none;
-        -webkit-hyphens:none;
-        -ms-hyphens:none;
-        word-break:normal;
-        overflow-wrap:break-word;
+      .essential-grid>a h3,
+      .essential-grid>a p,
+      .full-grid>a h3,
+      .full-grid>a p {
+        hyphens: none;
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        word-break: normal;
+        overflow-wrap: break-word;
       }
 
-      .essential-grid > a h3{ font-size:.98rem; line-height:1.15; }
-      .essential-grid > a p{ font-size:.84rem; line-height:1.32; }
+      .essential-grid>a h3 {
+        font-size: .98rem;
+        line-height: 1.15;
+      }
+
+      .essential-grid>a p {
+        font-size: .84rem;
+        line-height: 1.32;
+      }
 
       /* Sommaire complet : 2 colonnes sur mobile */
-      .full-grid{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-        gap:.85rem;
+      .full-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .85rem;
       }
-      .full-grid > a{
-        min-height:190px;
-        padding:1.05rem .95rem;
+
+      .full-grid>a {
+        min-height: 190px;
+        padding: 1.05rem .95rem;
       }
     }
   </style>
 </head>
+
 <body>
   <!-- Barre de navigation simple -->
   <header class="top-bar">
@@ -526,7 +758,9 @@
             construisons votre projet numérique
           </h1>
           <p class="hero-subtitle">
-            Vous avez des idées et des envies, mais vous ne savez pas par où commencer ni comment éviter les pièges ? Ici, vous trouverez une méthode structurée et humaine pour passer de l’intention à la réalisation avec sérénité.
+            Vous avez des idées et des envies, mais vous ne savez pas par où commencer ni comment éviter les pièges ?
+            Ici, vous trouverez une méthode structurée et humaine pour passer de l’intention à la réalisation avec
+            sérénité.
           </p>
         </div>
         <div class="hero-meta">
@@ -580,7 +814,8 @@
       </div>
       <div class="block-body">
         <p>Vous avez un projet numérique… mais trop de doutes pour avancer sereinement ?</p>
-        <p>Vous savez que vous devez faire quelque chose : un site, une refonte, une boutique en ligne, un outil interne, une automatisation.</p>
+        <p>Vous savez que vous devez faire quelque chose : un site, une refonte, une boutique en ligne, un outil
+          interne, une automatisation.</p>
         <p>Mais concrètement :</p>
         <ul>
           <li>Vous ne savez pas exactement par où commencer.</li>
@@ -608,7 +843,7 @@
           <h3>Approche</h3>
           <p>Une écoute active au service du numérique</p>
         </a>
-        
+
         <a href="#audit" class="toc-card highlight" data-scrolllink data-magnet="20" data-rotate="4">
           <h3>Audit</h3>
           <p>Clarifier votre besoin avant d’investir</p>
@@ -626,9 +861,10 @@
       </div>
 
       <!-- Titre de la partie détaillée du sommaire -->
-      <h2 class="toc-heading-full">Le reste mérite d'être lu également&nbsp;(temps de lecture estimé à moins de&nbsp;3&nbsp;minutes)</h2>
+      <h2 class="toc-heading-full">Le reste mérite d'être lu également&nbsp;(temps de lecture estimé à moins
+        de&nbsp;3&nbsp;minutes)</h2>
       <div class="toc-grid full-grid">
-        
+
         <a href="#autonomie" class="toc-card" data-scrolllink data-magnet="20" data-rotate="4">
           <h3>Votre autonomie</h3>
           <p>Gardez le contrôle de votre outil</p>
@@ -676,7 +912,8 @@
           <!-- Icône animée pour Mon rôle (icône Personne) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
             </svg>
           </div>
           <div class="block-title">Mon <span>rôle</span></div>
@@ -684,7 +921,7 @@
         </div>
 
         <div class="block-body">
-          <p class="micro-copy">Mon rôle : traduire, structurer, sécuriser.</p> 
+          <p class="micro-copy">Mon rôle : traduire, structurer, sécuriser.</p>
           <p>Je suis développeur web, chef de projet digital et consultant.</p>
           <p>Mais surtout, je me place du côté du client, pas de la technologie.</p>
           <p>Concrètement :</p>
@@ -702,7 +939,8 @@
             <li>Penser le long terme plutôt que la prestation ponctuelle.</li>
             <li>Créer une relation saine et équilibrée avec mes clients.</li>
           </ul>
-          <p>Un projet numérique réussi n’est pas celui qui impressionne, c’est celui qui sert réellement votre activité, aujourd’hui et demain.</p>
+          <p>Un projet numérique réussi n’est pas celui qui impressionne, c’est celui qui sert réellement votre
+            activité, aujourd’hui et demain.</p>
         </div>
       </article>
 
@@ -712,20 +950,26 @@
           <!-- Icône animée pour Approche (ampoule) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1"/>
+              <path
+                d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a2 2 0 0 0-.453-.618A5.98 5.98 0 0 1 2 6m6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1" />
             </svg>
           </div>
           <div class="block-title">Mon <span>Approche</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
           <p class="micro-copy">Une expertise complémentaire : l’écoute et le questionnement.</p>
-          <p>En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach consultant, notamment à travers le site <a href="https://www.coachingparecrit.fr" target="_blank" class="premium">www.coachingparecrit.fr</a>, conçu et développé également par mes soins.</p>
+          <p>En parallèle de mon activité de développeur et de chef de projet, j’exerce également une activité de coach
+            consultant, notamment à travers le site <a href="https://www.coachingparecrit.fr" target="_blank"
+              class="premium">www.coachingparecrit.fr</a>, conçu et développé également par mes soins.</p>
           <p>Cette activité a renforcé une compétence clé, souvent sous-estimée dans les projets numériques :</p>
           <p><strong>L’écoute active et l'art du questionnement structurant.</strong></p>
-          <p>Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil numérique pertinent.</p> 
-          <p>C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite mon approche actuelle.</p>
+          <p>Savoir poser les bonnes questions, reformuler, faire émerger ce qui est implicite, identifier les non-dits
+            ou les fausses évidences… ce sont des qualités indispensables pour traduire un besoin humain en outil
+            numérique pertinent.</p>
+          <p>C’est précisément à la croisée de ces deux mondes, technique et accompagnement humain, que s’est construite
+            mon approche actuelle.</p>
           <p>Ce parcours me permet aujourd'hui de :</p>
           <ul>
             <li>Comprendre rapidement des contextes complexes.</li>
@@ -734,7 +978,8 @@
             <li>Sécuriser les décisions avant qu’elles ne deviennent coûteuses.</li>
             <li>Et accompagner des projets avec exigence, mais sans rigidité.</li>
           </ul>
-          <p>Cette approche s’adresse aux porteurs de projets, indépendants, associations, TPE ou PME qui cherchent un outil juste, adapté à leur réalité, à leurs contraintes et à leur rythme.</p>
+          <p>Cette approche s’adresse aux porteurs de projets, indépendants, associations, TPE ou PME qui cherchent un
+            outil juste, adapté à leur réalité, à leurs contraintes et à leur rythme.</p>
         </div>
       </article>
 
@@ -744,24 +989,37 @@
           <!-- Icône animée pour Des solutions adaptées (gear) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+              <path
+                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+              <path
+                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
             </svg>
           </div>
           <div class="block-title">Des <span>solutions adaptées</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
-          <p class="micro-copy">Des solutions adaptées à votre réalité.</p> 
+          <p class="micro-copy">Des solutions adaptées à votre réalité.</p>
           <p>Selon votre besoin, je peux vous accompagner sur :</p>
           <ul>
-            <li><strong>Site vitrine sur-mesure</strong> : quand un thème générique ne suffit pas. Un site clair, rapide, aligné avec votre identité, sans surcharge inutile.</li>
-            <li><strong>Site avec interface d’administration (CMS – souvent WordPress)</strong> : pour être autonome sur vos contenus, sans dépendre d’un prestataire à chaque modification. WordPress, quand il est bien configuré, est un excellent outil. On peut également choisir parmi des milliers de designs existants et personnaliser l’apparence de votre site.</li>
-            <li><strong>Hébergement &amp; nom de domaine</strong> : choisir un hébergeur, configurer un nom de domaine, ce n’est pas le plus compliqué. Le plus important, c’est qui garde les clés. Je vois régulièrement des clients arriver sans accès à leur site, otages involontaires d’un prestataire qui ne les a jamais rendus autonomes. Ce n’est pas ma vision du métier. Vos accès vous appartiennent. Vos données aussi. Point.</li>
-            <li><strong>Boutique e‑commerce</strong> : souvent en continuité avec WordPress. Des boutiques simples à gérer, adaptées à votre réalité terrain.</li>
-            <li><strong>Automatisation &amp; numérisation des tâches</strong> : tableaux Excel sur-mesure, petites applications, outils web. Objectif : moins de tâches répétitives, plus de temps pour ce que vous savez faire de mieux.</li>
-            <li><strong>Applications web sur-mesure</strong> : quand un concept ne rentre dans aucun outil existant. Traduire une idée métier en produit numérique utile.</li>
+            <li><strong>Site vitrine sur-mesure</strong> : quand un thème générique ne suffit pas. Un site clair,
+              rapide, aligné avec votre identité, sans surcharge inutile.</li>
+            <li><strong>Site avec interface d’administration (CMS – souvent WordPress)</strong> : pour être autonome sur
+              vos contenus, sans dépendre d’un prestataire à chaque modification. WordPress, quand il est bien
+              configuré, est un excellent outil. On peut également choisir parmi des milliers de designs existants et
+              personnaliser l’apparence de votre site.</li>
+            <li><strong>Hébergement &amp; nom de domaine</strong> : choisir un hébergeur, configurer un nom de domaine,
+              ce n’est pas le plus compliqué. Le plus important, c’est qui garde les clés. Je vois régulièrement des
+              clients arriver sans accès à leur site, otages involontaires d’un prestataire qui ne les a jamais rendus
+              autonomes. Ce n’est pas ma vision du métier. Vos accès vous appartiennent. Vos données aussi. Point.</li>
+            <li><strong>Boutique e‑commerce</strong> : souvent en continuité avec WordPress. Des boutiques simples à
+              gérer, adaptées à votre réalité terrain.</li>
+            <li><strong>Automatisation &amp; numérisation des tâches</strong> : tableaux Excel sur-mesure, petites
+              applications, outils web. Objectif : moins de tâches répétitives, plus de temps pour ce que vous savez
+              faire de mieux.</li>
+            <li><strong>Applications web sur-mesure</strong> : quand un concept ne rentre dans aucun outil existant.
+              Traduire une idée métier en produit numérique utile.</li>
           </ul>
         </div>
       </article>
@@ -772,8 +1030,10 @@
           <!-- Icône animée pour Audit & Cadrage (document) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+              <path
+                d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+              <path
+                d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
             </svg>
           </div>
           <div class="block-title">Audit &amp; Cadrage <span>150 €</span></div>
@@ -782,7 +1042,8 @@
         <div class="block-body">
           <p class="micro-copy">Pour décider avant d’investir.</p>
 
-          <p>Ce n’est pas un devis déguisé. Ce n’est pas un engagement. C’est un vrai travail de fond, dont vous repartez avec de la valeur, même si nous ne travaillons pas ensemble ensuite.</p>
+          <p>Ce n’est pas un devis déguisé. Ce n’est pas un engagement. C’est un vrai travail de fond, dont vous
+            repartez avec de la valeur, même si nous ne travaillons pas ensemble ensuite.</p>
           <p>Cet audit vous permet :</p>
           <ul>
             <li>De clarifier votre besoin réel.</li>
@@ -792,7 +1053,8 @@
             <li>De savoir précisément par où commencer… ou s’il vaut mieux attendre.</li>
           </ul>
           <p>Vous repartez avec une vision claire et exploitable.</p>
-          <p>Parlons-en simplement. Expliquez-moi votre situation par mail, même si ce n’est pas clair ou fixons un rendez-vous pour un audit. Je vous répondrai de manière personnalisée, sans pression ni engagement.</p>
+          <p>Parlons-en simplement. Expliquez-moi votre situation par mail, même si ce n’est pas clair ou fixons un
+            rendez-vous pour un audit. Je vous répondrai de manière personnalisée, sans pression ni engagement.</p>
           <p>Si cela vous aide, vous pouvez préciser :</p>
           <ul>
             <li>Votre activité.</li>
@@ -803,7 +1065,8 @@
 
           <!-- Appel à l'action pour réserver l'audit : placé en bas de la section pour conclure la lecture -->
           <p class="cta-call">
-            <a href="mailto:informatiquecerdagne@gmail.com?subject=Réservation%20audit%20150%20€%20–%20[Nom/Entreprise]&body=Bonjour%20Rémy,%0A%0AMon%20activité :%20%0AMes%20blocages :%20%0AMes%20objectifs :%20%0AVos%20contraintes :%20%0A%0AMerci." class="cta-primary" data-magnet="20" data-rotate="4">RESERVER</a>
+            <a href="mailto:informatiquecerdagne@gmail.com?subject=Réservation%20audit%20150%20€%20–%20[Nom/Entreprise]&body=Bonjour%20Rémy,%0A%0AMon%20activité :%20%0AMes%20blocages :%20%0AMes%20objectifs :%20%0AVos%20contraintes :%20%0A%0AMerci."
+              class="cta-primary" data-magnet="20" data-rotate="4">RESERVER</a>
           </p>
         </div>
       </article>
@@ -814,13 +1077,14 @@
           <!-- Icône animée pour Budgets & TJM (monnaie) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+              <path
+                d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z" />
             </svg>
           </div>
           <div class="block-title">Budgets &amp; <span>TJM</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
           <p class="micro-copy">Des repères clairs pour savoir où vous allez.</p>
           <p>Chaque projet est unique, mais pour vous donner des repères :</p>
@@ -849,16 +1113,18 @@
           <!-- Icône animée pour Votre autonomie (cadenas) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+              <path fill-rule="evenodd"
+                d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3" />
             </svg>
           </div>
           <div class="block-title">Votre <span>autonomie</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
           <p class="micro-copy">Vous rendre autonome, pas dépendant.</p>
-          <p>Beaucoup de projets numériques créent une dépendance implicite : au moindre changement, il faut repasser par le prestataire. Ce n’est pas ma vision.</p>
+          <p>Beaucoup de projets numériques créent une dépendance implicite : au moindre changement, il faut repasser
+            par le prestataire. Ce n’est pas ma vision.</p>
           <p>À l’issue d’un projet, je vous accompagne pour :</p>
           <ul>
             <li>Comprendre le fonctionnement de votre site ou de votre outil.</li>
@@ -866,9 +1132,12 @@
             <li>Gérer les actions courantes en toute autonomie.</li>
             <li>Savoir quand une intervention extérieure est réellement nécessaire.</li>
           </ul>
-          <p>Je refuse volontairement : le vite fait pas cher, les abonnements imposés, la dépendance, les solutions surdimensionnées.</p>
-          <p>Cet accompagnement à la prise en main est intégré à ma démarche, alors qu’il est encore trop souvent absent du marché, ou facturé à part.</p>
-          <p>Mon objectif n’est pas de vous garder captif, mais de vous permettre d’utiliser votre outil en toute confiance.</p>
+          <p>Je refuse volontairement : le vite fait pas cher, les abonnements imposés, la dépendance, les solutions
+            surdimensionnées.</p>
+          <p>Cet accompagnement à la prise en main est intégré à ma démarche, alors qu’il est encore trop souvent absent
+            du marché, ou facturé à part.</p>
+          <p>Mon objectif n’est pas de vous garder captif, mais de vous permettre d’utiliser votre outil en toute
+            confiance.</p>
         </div>
       </article>
 
@@ -878,18 +1147,20 @@
           <!-- Icône animée pour MVP (fusée) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M8 8c.828 0 1.5-.895 1.5-2S8.828 4 8 4s-1.5.895-1.5 2S7.172 8 8 8"/>
-              <path d="M11.953 8.81c-.195-3.388-.968-5.507-1.777-6.819C9.707 1.233 9.23.751 8.857.454a3.5 3.5 0 0 0-.463-.315A2 2 0 0 0 8.25.064.55.55 0 0 0 8 0a.55.55 0 0 0-.266.073 2 2 0 0 0-.142.08 4 4 0 0 0-.459.33c-.37.308-.844.803-1.31 1.57-.805 1.322-1.577 3.433-1.774 6.756l-1.497 1.826-.004.005A2.5 2.5 0 0 0 2 12.202V15.5a.5.5 0 0 0 .9.3l1.125-1.5c.166-.222.42-.4.752-.57.214-.108.414-.192.625-.281l.198-.084c.7.428 1.55.635 2.4.635s1.7-.207 2.4-.635q.1.044.196.083c.213.09.413.174.627.282.332.17.586.348.752.57l1.125 1.5a.5.5 0 0 0 .9-.3v-3.298a2.5 2.5 0 0 0-.548-1.562zM12 10.445v.055c0 .866-.284 1.585-.75 2.14.146.064.292.13.425.199.39.197.8.46 1.1.86L13 14v-1.798a1.5 1.5 0 0 0-.327-.935zM4.75 12.64C4.284 12.085 4 11.366 4 10.5v-.054l-.673.82a1.5 1.5 0 0 0-.327.936V14l.225-.3c.3-.4.71-.664 1.1-.861.133-.068.279-.135.425-.199M8.009 1.073q.096.06.226.163c.284.226.683.621 1.09 1.28C10.137 3.836 11 6.237 11 10.5c0 .858-.374 1.48-.943 1.893C9.517 12.786 8.781 13 8 13s-1.517-.214-2.057-.607C5.373 11.979 5 11.358 5 10.5c0-4.182.86-6.586 1.677-7.928.409-.67.81-1.082 1.096-1.32q.136-.113.236-.18Z"/>
-              <path d="M9.479 14.361c-.48.093-.98.139-1.479.139s-.999-.046-1.479-.139L7.6 15.8a.5.5 0 0 0 .8 0z"/>
+              <path d="M8 8c.828 0 1.5-.895 1.5-2S8.828 4 8 4s-1.5.895-1.5 2S7.172 8 8 8" />
+              <path
+                d="M11.953 8.81c-.195-3.388-.968-5.507-1.777-6.819C9.707 1.233 9.23.751 8.857.454a3.5 3.5 0 0 0-.463-.315A2 2 0 0 0 8.25.064.55.55 0 0 0 8 0a.55.55 0 0 0-.266.073 2 2 0 0 0-.142.08 4 4 0 0 0-.459.33c-.37.308-.844.803-1.31 1.57-.805 1.322-1.577 3.433-1.774 6.756l-1.497 1.826-.004.005A2.5 2.5 0 0 0 2 12.202V15.5a.5.5 0 0 0 .9.3l1.125-1.5c.166-.222.42-.4.752-.57.214-.108.414-.192.625-.281l.198-.084c.7.428 1.55.635 2.4.635s1.7-.207 2.4-.635q.1.044.196.083c.213.09.413.174.627.282.332.17.586.348.752.57l1.125 1.5a.5.5 0 0 0 .9-.3v-3.298a2.5 2.5 0 0 0-.548-1.562zM12 10.445v.055c0 .866-.284 1.585-.75 2.14.146.064.292.13.425.199.39.197.8.46 1.1.86L13 14v-1.798a1.5 1.5 0 0 0-.327-.935zM4.75 12.64C4.284 12.085 4 11.366 4 10.5v-.054l-.673.82a1.5 1.5 0 0 0-.327.936V14l.225-.3c.3-.4.71-.664 1.1-.861.133-.068.279-.135.425-.199M8.009 1.073q.096.06.226.163c.284.226.683.621 1.09 1.28C10.137 3.836 11 6.237 11 10.5c0 .858-.374 1.48-.943 1.893C9.517 12.786 8.781 13 8 13s-1.517-.214-2.057-.607C5.373 11.979 5 11.358 5 10.5c0-4.182.86-6.586 1.677-7.928.409-.67.81-1.082 1.096-1.32q.136-.113.236-.18Z" />
+              <path d="M9.479 14.361c-.48.093-.98.139-1.479.139s-.999-.046-1.479-.139L7.6 15.8a.5.5 0 0 0 .8 0z" />
             </svg>
           </div>
           <div class="block-title">Le <span>MVP</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
-          <p class="micro-copy">Tester avant de construire.</p> 
-          <p>Avant de créer une application complète ou un outil complexe, je propose souvent de passer par un&nbsp;<strong>MVP&nbsp;(Produit&nbsp;Minimum&nbsp;Viable)</strong>.</p>
+          <p class="micro-copy">Tester avant de construire.</p>
+          <p>Avant de créer une application complète ou un outil complexe, je propose souvent de passer par
+            un&nbsp;<strong>MVP&nbsp;(Produit&nbsp;Minimum&nbsp;Viable)</strong>.</p>
           <p>Dit simplement : on construit d’abord la version utile, pas la version parfaite.</p>
           <p>Comme une maquette fonctionnelle :</p>
           <ul>
@@ -913,17 +1184,20 @@
           <!-- Icône animée pour Méthode Agile & Scrum (cycle/refresh arrows) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
-              <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+              <path
+                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9" />
+              <path fill-rule="evenodd"
+                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z" />
             </svg>
           </div>
           <div class="block-title">Gestion de projet <span>Agile</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
           <p class="micro-copy">Découper et valider chaque étape pour avancer en confiance.</p>
-          <p>Une méthode progressive, claire et rassurante. Je travaille avec des principes issus de la gestion de projet en méthodologie agile (dont Scrum).</p>
+          <p>Une méthode progressive, claire et rassurante. Je travaille avec des principes issus de la gestion de
+            projet en méthodologie agile (dont Scrum).</p>
           <p>Concrètement :</p>
           <ul>
             <li>Le projet est découpé en étapes compréhensibles.</li>
@@ -931,7 +1205,8 @@
             <li>On avance de semaine en semaine.</li>
             <li>Vous avez une vision réelle de l’avancement.</li>
           </ul>
-          <p>Un projet numérique n’est pas un développement à l’aveugle où l’on voit le résultat qu’à la fin, mais une construction progressive.</p>
+          <p>Un projet numérique n’est pas un développement à l’aveugle où l’on voit le résultat qu’à la fin, mais une
+            construction progressive.</p>
           <p>Un schéma simple peut illustrer mon fonctionnement avec vous :</p>
           <div class="process">
             <span class="process-step">Cadrage</span>
@@ -949,25 +1224,29 @@
           <!-- Icône animée pour SEO (loupe) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
             </svg>
           </div>
           <div class="block-title">Référencement <span>SEO</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
           <p class="micro-copy">Être visible naturellement sur les moteurs de recherche.</p>
           <p>Un site ou une application qui n’est pas visible est un outil inutile.</p>
-          <p>Le référencement naturel (SEO) consiste à faire en sorte que votre projet soit compréhensible et exploitable par les moteurs de recherche, comme Google.</p>
+          <p>Le référencement naturel (SEO) consiste à faire en sorte que votre projet soit compréhensible et
+            exploitable par les moteurs de recherche, comme Google.</p>
           <p>Concrètement, cela signifie :</p>
           <ul>
             <li>Une structure de site claire et logique.</li>
             <li>Des bases techniques propres (performance, lisibilité, balisage).</li>
             <li>Un contenu organisé autour de votre activité réelle, pas de mots‑clés artificiels.</li>
           </ul>
-          <p>Je n’annonce jamais de promesses irréalistes du type « première position sur Google en X semaines ». Ce serait malhonnête.</p>
-          <p>En revanche, je m’engage à ce que votre projet parte sur des fondations saines, visibles et durables, pour que le référencement puisse réellement travailler dans le temps.</p>
+          <p>Je n’annonce jamais de promesses irréalistes du type « première position sur Google en X semaines ». Ce
+            serait malhonnête.</p>
+          <p>En revanche, je m’engage à ce que votre projet parte sur des fondations saines, visibles et durables, pour
+            que le référencement puisse réellement travailler dans le temps.</p>
           <p>Le SEO n’est pas une option ajoutée après coup. Il fait partie intégrante de la conception.</p>
         </div>
       </article>
@@ -980,8 +1259,9 @@
         </div>
 
         <div class="block-body">
-          <p class="micro-copy">Vous n’avez pas besoin d’être expert pour prendre une bonne décision.</p> 
-          <p>La majorité des entreprises, artisans, TPE, associations ou hébergeurs touristiques que j’accompagne arrivent avec du flou.</p> 
+          <p class="micro-copy">Vous n’avez pas besoin d’être expert pour prendre une bonne décision.</p>
+          <p>La majorité des entreprises, artisans, TPE, associations ou hébergeurs touristiques que j’accompagne
+            arrivent avec du flou.</p>
           <p>C’est normal : le numérique est devenu complexe, rempli de jargon et de promesses marketing.</p>
           <p>Le problème n’est pas votre niveau technique. Le problème, c’est d’avancer sans cadre clair.</p>
           <p>Le vrai risque est de décider sans visibilité. Un projet lancé trop vite peut devenir :</p>
@@ -1001,7 +1281,8 @@
           <!-- Icône animée pour Parcours & références (chemin) -->
           <div class="block-icon">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M2 14 Q4 10 8 12 Q12 14 14 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 14 Q4 10 8 12 Q12 14 14 8" fill="none" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round" />
               <circle cx="2" cy="14" r="1.4" fill="currentColor" />
               <circle cx="14" cy="8" r="1.4" fill="currentColor" />
             </svg>
@@ -1009,28 +1290,41 @@
           <div class="block-title">Parcours &amp; <span>références</span></div>
           <div class="block-underline"></div>
         </div>
-    
+
         <div class="block-body">
-          <p class="micro-copy">Et parce que je ne me suis pas encore présenté…</p> 
+          <p class="micro-copy">Et parce que je ne me suis pas encore présenté…</p>
           <p>Je m’appelle Rémy Roger.</p>
           <p>Je travaille dans le domaine de l’informatique et du numérique depuis + de 10 ans.</p>
-          <p>Mon parcours m’a amené à exercer professionnellement les activités de développeur web, chef de projet digital et coach consultant.</p>
-          <p>Ces expériences ont profondément façonné ma manière de travailler : je ne conçois pas la technique sans une compréhension attentive du besoin, et je ne pilote pas un projet sans en maîtriser les implications techniques réelles.</p>
-          <p>J’ai exercé plusieurs années comme développeur et en gestion de projet web, au sein d’environnements exigeants, sur des projets à forte visibilité, à forts enjeux métiers et à contraintes multiples.</p>
+          <p>Mon parcours m’a amené à exercer professionnellement les activités de développeur web, chef de projet
+            digital et coach consultant.</p>
+          <p>Ces expériences ont profondément façonné ma manière de travailler : je ne conçois pas la technique sans une
+            compréhension attentive du besoin, et je ne pilote pas un projet sans en maîtriser les implications
+            techniques réelles.</p>
+          <p>J’ai exercé plusieurs années comme développeur et en gestion de projet web, au sein d’environnements
+            exigeants, sur des projets à forte visibilité, à forts enjeux métiers et à contraintes multiples.</p>
           <p>Projets et environnements réalisés :</p>
           <ul>
-            <li><strong>Électricité de Strasbourg</strong> : portails clients et sites institutionnels : particuliers.es.fr, strasbourg-electricite-reseaux.fr, ejp.es.fr, groupe.es.fr.</li>
-            <li><strong>Cromology – Zolpan – Robbialac – Tollens</strong> : réseaux de sites et plateformes pour des marques de peinture grand public et professionnelles : zolpan.fr, tintasrobbialac.pt, tollens.com.</li>
+            <li><strong>Électricité de Strasbourg</strong> : portails clients et sites institutionnels :
+              particuliers.es.fr, strasbourg-electricite-reseaux.fr, ejp.es.fr, groupe.es.fr.</li>
+            <li><strong>Cromology – Zolpan – Robbialac – Tollens</strong> : réseaux de sites et plateformes pour des
+              marques de peinture grand public et professionnelles : zolpan.fr, tintasrobbialac.pt, tollens.com.</li>
             <li><strong>Aéroport Nice Côte d’Azur</strong>.</li>
-            <li><strong>Essilor</strong> : sites institutionnels internationaux : essilor.fr, essilor.co.uk, essilor.nl.</li>
+            <li><strong>Essilor</strong> : sites institutionnels internationaux : essilor.fr, essilor.co.uk, essilor.nl.
+            </li>
             <li><strong>REFRAM</strong> : Réseau francophone des régulateurs des médias : refram.org.</li>
-            <li><strong>CLAAS</strong> : application web interne dédiée à la gestion du parc machines agricoles : maintenance, logistique, transport, vente.</li>
+            <li><strong>CLAAS</strong> : application web interne dédiée à la gestion du parc machines agricoles :
+              maintenance, logistique, transport, vente.</li>
             <li><strong>Psychologies – Mon Psy</strong> : annuaire de psychothérapeutes : monpsy.psychologies.com.</li>
             <li><strong>Thermor</strong> : espace client : moncompte.thermor.fr.</li>
-            <li><strong>Mois sans Tabac</strong> : campagne nationale de santé publique : mois-sans-tabac.tabac-info-service.fr.</li>
+            <li><strong>Mois sans Tabac</strong> : campagne nationale de santé publique :
+              mois-sans-tabac.tabac-info-service.fr.</li>
           </ul>
-          <p>Ces projets m’ont confronté à des réalités très variées : grand public, B2B, institutions, santé, industrie, logistique, internationalisation, performance, sécurité, expérience utilisateur, contraintes réglementaires.</p>
-          <p>Environnements techniques : Linux, Docker, Varnish, Git, Solr, Symfony, Doctrine, SQL, eZ Publish / eZ Platform, HTML/CSS, PHP, JavaScript, Wordpress, ainsi que les méthodologies Agile / Scrum, avec des outils de pilotage comme JIRA.</p>
+          <p>Ces projets m’ont confronté à des réalités très variées : grand public, B2B, institutions, santé,
+            industrie, logistique, internationalisation, performance, sécurité, expérience utilisateur, contraintes
+            réglementaires.</p>
+          <p>Environnements techniques : Linux, Docker, Varnish, Git, Solr, Symfony, Doctrine, SQL,
+            eZ Publish / eZ Platform, HTML/CSS, PHP, JavaScript, Wordpress, ainsi que les méthodologies Agile / Scrum,
+            avec des outils de pilotage comme JIRA.</p>
         </div>
       </article>
 
@@ -1225,4 +1519,5 @@
     });
   </script>
 </body>
+
 </html>
