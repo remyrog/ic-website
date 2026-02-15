@@ -170,11 +170,15 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
     // ScrollTrigger pour chaque section
+    // Objectif : mettre à jour la sticky-nav dès que le TITRE du bloc devient visible.
     sections.forEach((section) => {
+        const titleTrigger = section.querySelector('.block-title') || section;
         ScrollTrigger.create({
-            trigger: section,
-            start: 'top center',
-            end: 'bottom center',
+            trigger: titleTrigger,
+            // Quand le haut du titre arrive dans la zone basse de l'écran, on considère qu'on est "dans" le bloc.
+            start: 'top 85%',
+            // On garde une fenêtre raisonnable pour éviter le clignotement.
+            end: 'bottom 20%',
             onEnter: () => updateNav(section),
             onEnterBack: () => updateNav(section)
         });
