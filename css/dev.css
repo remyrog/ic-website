@@ -771,5 +771,29 @@ a.cta-primary:focus-visible {
 /* Optionnel : un léger “respir” au-dessus du sommaire */
 #sommaire {
     margin-top: 0.2rem;
-    /* ou 0 si tu trouves que c’est trop */
+
+    /* Fix robuste du chevauchement avec le premier bloc (Mon rôle)
+       - padding ne collapse jamais (contrairement aux marges)
+       - flow-root isole le contexte et évite certains effets de layout
+       - z-index sécurise l’empilement si une animation/transform intervient */
+    padding-bottom: 3.5rem;
+    display: flow-root;
+    position: relative;
+    z-index: 2;
+}
+
+/* Espace garanti au-dessus de la grille de contenu (débutant par “Mon rôle”) */
+section.grid {
+    padding-top: 2.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 720px) {
+    #sommaire {
+        padding-bottom: 4rem;
+    }
+    section.grid {
+        padding-top: 2.75rem;
+    }
 }
