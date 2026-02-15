@@ -362,11 +362,17 @@ strong {
 .block-icon svg {
     width: 100%;
     height: 100%;
+    display: block;
+
     stroke: currentColor;
     fill: none;
     stroke-width: 1.5;
-    padding: 4px;
-    box-sizing: border-box;
+
+    /* Chrome coupe parfois le tracé (stroke) car l'overflow SVG est caché par défaut.
+       Safari est plus permissif. On force visible + on réduit légèrement pour garder de l'air. */
+    overflow: visible;
+    transform: scale(0.92);
+    transform-origin: 50% 50%;
 }
 
 .block-icon path {
