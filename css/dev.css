@@ -794,3 +794,185 @@ section.grid {
     position: relative;
     z-index: 1;
 }
+
+/* =========================
+   Réserver : Flip card modal
+   ========================= */
+.reserve-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+}
+
+.reserve-overlay[hidden] { display: none; }
+
+.reserve-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.reserve-dialog {
+  position: relative;
+  width: min(560px, calc(100vw - 2.4rem));
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, rgba(5,8,22,0.92), rgba(5,8,22,0.86));
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 28px 80px rgba(0,0,0,.75);
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.reserve-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+}
+
+.reserve-close:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+}
+
+.reserve-flip {
+  perspective: 1200px;
+  padding: 1.4rem 1.35rem 1.25rem;
+}
+
+.reserve-flip-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  min-height: 260px;
+}
+
+.reserve-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: .75rem;
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+
+.reserve-front {
+  background:
+    radial-gradient(1200px 480px at 50% 0%, rgba(236,72,153,0.14), transparent 55%),
+    radial-gradient(900px 360px at 50% 100%, rgba(247,198,0,0.12), transparent 55%);
+}
+
+.reserve-front-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #fefce8;
+  opacity: .9;
+}
+
+.reserve-front-title {
+  font-size: 1.4rem;
+  font-weight: 750;
+}
+
+.reserve-front-sub {
+  color: var(--muted);
+  font-size: .95rem;
+  max-width: 36ch;
+}
+
+.reserve-back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(1000px 420px at 50% 0%, rgba(247,198,0,0.12), transparent 58%),
+    radial-gradient(900px 360px at 50% 100%, rgba(236,72,153,0.12), transparent 58%);
+}
+
+.reserve-back h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.reserve-contact {
+  display: grid;
+  justify-items: center;
+  gap: .5rem;
+  margin: 0;
+}
+
+.reserve-contact a {
+  color: #fefce8;
+  text-decoration: none;
+  font-weight: 650;
+}
+
+.reserve-contact a:hover { text-decoration: underline; }
+
+.reserve-actions {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: .25rem;
+}
+
+.reserve-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: .65rem .9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.reserve-pill:hover { transform: translateY(-1px); }
+
+.reserve-pill:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+}
+
+.reserve-note {
+  margin-top: .65rem;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reserve-pill:hover { transform: none; }
+}
+
+
+/* Scroll lock quand le modal est ouvert */
+html.reserve-scroll-lock, body.reserve-scroll-lock {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+}
