@@ -11,14 +11,7 @@
   const EMAIL = "informatiquecerdagne@gmail.com";
   const PHONE_FR = "0698998001";
   const WA_E164 = "33698998001"; // sans "+" et sans espaces
-  const WA_PREFILL = "Bonjour, je souhaite réserver un créneau pour parler de mon projet.
-
-Nom / Entreprise : 
-Objectif : 
-Contraintes : 
-Créneaux possibles : 
-
-Merci !";
+  const WA_PREFILL = "Bonjour, je souhaite réserver un audit pour parler de mon projet.";
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
 
   // Scroll lock (préserve la position, iOS-friendly)
