@@ -976,3 +976,153 @@ html.reserve-scroll-lock, body.reserve-scroll-lock {
   overscroll-behavior: contain;
   touch-action: none;
 }
+
+
+/* =========================================================
+   Réserver modal — V2 premium overrides (buttons + microcopy + close fix)
+   ========================================================= */
+
+.reserve-flip { position: relative; z-index: 1; }
+.reserve-close { z-index: 10; }
+
+.reserve-close {
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background:
+    radial-gradient(140% 140% at 30% 20%, rgba(247,198,0,0.20), rgba(255,255,255,0.04) 55%),
+    rgba(255,255,255,0.03);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+}
+.reserve-close:hover {
+  transform: translateY(-1px);
+  border-color: rgba(247,198,0,0.55);
+}
+.reserve-close:active { transform: translateY(0); }
+.reserve-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(247,198,0,0.25), 0 12px 28px rgba(0,0,0,.55);
+}
+
+/* Micro-copy */
+.reserve-front-meta {
+  margin-top: .25rem;
+  font-size: .92rem;
+  color: rgba(229,231,235,0.78);
+}
+.reserve-title {
+  letter-spacing: .02em;
+}
+.reserve-subtitle {
+  margin: 0;
+  max-width: 42ch;
+  color: rgba(229,231,235,0.78);
+  font-size: .98rem;
+  line-height: 1.35;
+}
+.reserve-block {
+  width: 100%;
+  max-width: 520px;
+  text-align: left;
+  padding: .85rem .9rem;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(255,255,255,0.03);
+}
+.reserve-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.reserve-hint {
+  margin-top: .5rem;
+  font-size: .88rem;
+  color: rgba(229,231,235,0.62);
+}
+
+/* Buttons — luxury */
+.reserve-btn,
+.reserve-pill {
+  --btn-bg: rgba(255,255,255,0.05);
+  --btn-border: rgba(148, 163, 184, 0.24);
+  --btn-text: var(--text);
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .78rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-weight: 800;
+  letter-spacing: .01em;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+}
+.reserve-btn::before,
+.reserve-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 140% at 20% 0%, rgba(255,255,255,0.14), transparent 45%);
+  opacity: .55;
+  z-index: -1;
+  pointer-events: none;
+}
+.reserve-btn:hover,
+.reserve-pill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(247,198,0,0.45);
+  box-shadow: 0 16px 34px rgba(0,0,0,.40);
+}
+.reserve-btn:active,
+.reserve-pill:active { transform: translateY(0); }
+.reserve-btn:focus-visible,
+.reserve-pill:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(247,198,0,0.22), 0 18px 40px rgba(0,0,0,.55);
+}
+
+.reserve-btn--primary {
+  --btn-border: rgba(247,198,0,0.30);
+  --btn-text: #050816;
+  background: linear-gradient(135deg, rgba(247,198,0,0.95), rgba(236,72,153,0.75));
+}
+.reserve-btn--primary:hover {
+  border-color: rgba(247,198,0,0.75);
+  box-shadow: 0 20px 44px rgba(0,0,0,.55);
+}
+
+.reserve-btn--ghost {
+  --btn-bg: rgba(255,255,255,0.04);
+  --btn-border: rgba(148, 163, 184, 0.24);
+}
+
+.reserve-btn--sm {
+  padding: .58rem .82rem;
+  font-weight: 800;
+  font-size: .92rem;
+}
+
+/* Layout actions */
+.reserve-actions {
+  display: grid;
+  width: 100%;
+  max-width: 520px;
+  grid-template-columns: 1fr 1fr;
+  gap: .7rem;
+  margin-top: .15rem;
+}
+@media (max-width: 520px) {
+  .reserve-actions { grid-template-columns: 1fr; }
+  .reserve-row { justify-content: flex-start; }
+}
+

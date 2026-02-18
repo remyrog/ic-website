@@ -11,7 +11,7 @@
   const EMAIL = "informatiquecerdagne@gmail.com";
   const PHONE_FR = "0698998001";
   const WA_E164 = "33698998001"; // sans "+" et sans espaces
-  const WA_PREFILL = "Bonjour, je souhaite réserver un audit pour parler de mon projet.";
+  const WA_PREFILL = "Bonjour, je souhaite réserver un créneau pour parler de mon projet.";
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
 
   // Scroll lock (préserve la position, iOS-friendly)
@@ -81,27 +81,36 @@
         <div class="reserve-flip">
           <div class="reserve-flip-inner">
             <div class="reserve-face reserve-front" aria-hidden="false">
-              <div class="reserve-front-badge">Réserver</div>
-              <div class="reserve-front-title">Audit à 150€</div>
-              <div class="reserve-front-sub">Flip pour afficher mes coordonnées</div>
+              <div class="reserve-front-badge">Réservation</div>
+              <div class="reserve-front-title">Parlons de votre projet</div>
+              <div class="reserve-front-sub">Un message suffit — réponse sous 24h ouvrées.</div>
+              <div class="reserve-front-meta">Flip premium pour révéler mes coordonnées.</div>
             </div>
 
             <div class="reserve-face reserve-back" aria-hidden="true">
-              <h3 id="reserve-title">Contact</h3>
+              <h3 id="reserve-title" class="reserve-title">Contact direct</h3>
+              <p class="reserve-subtitle">Choisis ton canal — je te réponds vite, avec un échange clair et cadré.</p>
 
-              <p class="reserve-contact">
-                <a href="mailto:${EMAIL}" class="reserve-mail">${EMAIL}</a>
-                <span class="reserve-actions">
-                  <button class="reserve-pill" type="button" data-copy="${EMAIL}">Copier l’email</button>
-                </span>
-              </p>
+              <div class="reserve-block">
+                <div class="reserve-row">
+                  <a href="mailto:${EMAIL}" class="reserve-mail">${EMAIL}</a>
+                  <button class="reserve-btn reserve-btn--ghost reserve-btn--sm" type="button" data-copy="${EMAIL}">
+                    Copier l’email
+                  </button>
+                </div>
+                <div class="reserve-hint">Astuce : tu peux coller l’adresse directement dans ton outil de messagerie.</div>
+              </div>
 
-              <p class="reserve-contact">
-                <a class="reserve-pill" href="${WA_URL}" target="_blank" rel="noopener">WhatsApp : écrire un message</a>
-                <a class="reserve-pill" href="tel:${PHONE_FR}">Appeler : ${PHONE_FR}</a>
-              </p>
+              <div class="reserve-actions">
+                <a class="reserve-btn reserve-btn--primary" href="${WA_URL}" target="_blank" rel="noopener">
+                  Écrire sur WhatsApp
+                </a>
+                <a class="reserve-btn reserve-btn--ghost" href="tel:${PHONE_FR}">
+                  Appeler : ${PHONE_FR}
+                </a>
+              </div>
 
-              <p class="reserve-note">Réponse rapide (souvent dans la journée).</p>
+              <p class="reserve-note">Confidentialité : tes infos restent entre nous.</p>
             </div>
           </div>
         </div>
@@ -188,8 +197,17 @@
 
       setFaceState(false);
       gsap.set(overlay, { opacity: 0 });
-      gsap.set(dialog, { x: dx, y: dy, scale: 0.35, transformOrigin: "50% 50%" });
-      gsap.set(inner, { rotateY: 0, transformOrigin: "50% 50%" });
+      gsap.set(dialog, {
+        x: dx, y: dy, scale: 0.22,
+        rotateX: 18, rotateY: -14, rotateZ: -2,
+        z: -220,
+        transformPerspective: 1200,
+        transformOrigin: "50% 50%",
+        filter: "blur(10px)"
+      });
+      gsap.set(inner, { rotateY: 0, rotateX: 8, transformOrigin: "50% 50%" });
+
+      if (tl) tl.kill();
 
       tl = gsap.timeline({
         defaults: { ease: "power3.out" },
@@ -200,14 +218,29 @@
         }
       });
 
-      tl.to(overlay, { opacity: 1, duration: 0.18 });
+      tl.to(overlay, { opacity: 1, duration: 0.18, ease: "power2.out" });
 
       if (reduce) {
-        tl.to(dialog, { x: 0, y: 0, scale: 1, duration: 0.25 }, 0);
-        tl.set(inner, { rotateY: 180 }, 0.02);
+        tl.to(dialog, { x: 0, y: 0, scale: 1, rotateX: 0, rotateY: 0, rotateZ: 0, z: 0, filter: "blur(0px)", duration: 0.25 }, 0);
+        tl.set(inner, { rotateY: 180, rotateX: 0 }, 0.02);
       } else {
-        tl.to(dialog, { x: 0, y: 0, scale: 1, duration: 0.38 }, 0);
-        tl.to(inner, { rotateY: 180, duration: prefersReducedMotion ? 0.01 : 0.55, ease: "power2.inOut" }, 0.12);
+        // Fly-in premium
+        tl.to(dialog, {
+          x: 0, y: 0, scale: 1,
+          rotateX: 0, rotateY: 0, rotateZ: 0,
+          z: 0,
+          filter: "blur(0px)",
+          duration: 0.7,
+          ease: "expo.out"
+        }, 0);
+
+        // Flip spectaculaire : dépassement puis verrouillage à 180°
+        tl.to(inner, {
+          keyframes: [
+            { rotateY: 220, rotateX: -10, duration: 0.42, ease: "power4.in" },
+            { rotateY: 180, rotateX: 0, duration: 0.38, ease: "elastic.out(1, 0.65)" }
+          ]
+        }, 0.18);
       }
 
       document.addEventListener("keydown", onKeydown, true);
@@ -215,22 +248,65 @@
 
     function close() {
       if (!isOpen) return;
-      unlockScroll();
       isOpen = false;
 
       document.removeEventListener("keydown", onKeydown, true);
 
-      if (tl) {
-        setFaceState(false);
-        tl.eventCallback("onReverseComplete", () => {
-          overlay.hidden = true;
-          if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
-        });
-        tl.reverse();
-      } else {
+      const reduce = prefersReducedMotion();
+
+      // Recalcule la trajectoire vers le bouton (responsive / resize-safe)
+      const btnRect = trigger.getBoundingClientRect();
+      const btnCx = btnRect.left + btnRect.width / 2;
+      const btnCy = btnRect.top + btnRect.height / 2;
+      const vpCx = window.innerWidth / 2;
+      const vpCy = window.innerHeight / 2;
+      const dx = btnCx - vpCx;
+      const dy = btnCy - vpCy;
+
+      const finalize = () => {
         overlay.hidden = true;
+        // Remet à zéro l’opacité pour la prochaine ouverture
+        gsap.set(overlay, { opacity: 0 });
+        unlockScroll();
         if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+      };
+
+      if (tl) tl.kill();
+
+      if (reduce) {
+        setFaceState(false);
+        finalize();
+        return;
       }
+
+      setFaceState(false);
+
+      // Assure un point de départ propre
+      gsap.set(inner, { rotateY: 180, rotateX: 0, transformOrigin: "50% 50%" });
+
+      tl = gsap.timeline({
+        defaults: { ease: "power2.inOut" },
+        onComplete: finalize
+      });
+
+      // Flip spectaculaire (retour vers la face avant) + retour vers le bouton
+      tl.to(inner, {
+        keyframes: [
+          { rotateY: 360, rotateX: 10, duration: 0.26, ease: "power3.in" },
+          { rotateY: 0, rotateX: 0, duration: 0.26, ease: "power3.out" }
+        ]
+      }, 0);
+
+      tl.to(dialog, {
+        x: dx, y: dy, scale: 0.22,
+        rotateX: -16, rotateY: 14, rotateZ: 2,
+        z: -220,
+        filter: "blur(10px)",
+        duration: 0.55,
+        ease: "expo.in"
+      }, 0.06);
+
+      tl.to(overlay, { opacity: 0, duration: 0.22, ease: "power1.out" }, 0.32);
     }
 
     function onKeydown(e) {
