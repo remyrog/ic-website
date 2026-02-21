@@ -15,7 +15,7 @@
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
 
   // Réglages timing (ici tu ajustes facilement)
-  const FLIP_START_AT = 1.15;   // quand le flip démarre (front reste visible jusque là)
+  const FLIP_START_AT = 3;   // quand le flip démarre (front reste visible jusque là)
   const FLIP_DUR_IN = 0.55;     // phase vers 220°
   const FLIP_DUR_OUT = 0.55;    // settle vers 180°
   const FACE_SWAP_EPS = 0.05;   // marge pour basculer l'ARIA juste avant la fin du flip
