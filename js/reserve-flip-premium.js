@@ -199,6 +199,8 @@
       overlay.hidden = false;
       // Calcule la vraie hauteur avant l’anim (après affichage)
       syncCardHeight();
+      requestAnimationFrame(syncCardHeight);
+      setTimeout(syncCardHeight, 120);
 
       const btnRect = trigger.getBoundingClientRect();
       const btnCx = btnRect.left + btnRect.width / 2;

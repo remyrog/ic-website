@@ -799,182 +799,191 @@ section.grid {
    Réserver : Flip card modal
    ========================= */
 .reserve-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: 1.2rem;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 1.2rem;
 }
 
-.reserve-overlay[hidden] { display: none; }
+.reserve-overlay[hidden] {
+    display: none;
+}
 
 .reserve-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(2, 6, 23, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .reserve-dialog {
-  position: relative;
-  width: min(560px, calc(100vw - 2.4rem));
-  border-radius: var(--radius-xl);
-  background: linear-gradient(180deg, rgba(5,8,22,0.92), rgba(5,8,22,0.86));
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  box-shadow: 0 28px 80px rgba(0,0,0,.75);
-  overflow: hidden;
-  transform-style: preserve-3d;
+    position: relative;
+    width: min(560px, calc(100vw - 2.4rem));
+    border-radius: var(--radius-xl);
+    background: linear-gradient(180deg, rgba(5, 8, 22, 0.92), rgba(5, 8, 22, 0.86));
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, .75);
+    overflow: hidden;
+    transform-style: preserve-3d;
 }
 
 .reserve-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  background: rgba(255,255,255,0.04);
-  color: var(--text);
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  display: inline-grid;
-  place-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-grid;
+    place-items: center;
 }
 
 .reserve-close:focus-visible {
-  outline: 2px solid var(--pink);
-  outline-offset: 2px;
+    outline: 2px solid var(--pink);
+    outline-offset: 2px;
 }
 
 .reserve-flip {
-  perspective: 1200px;
-  padding: 1.4rem 1.35rem 1.25rem;
+    perspective: 1200px;
+    padding: 1.4rem 1.35rem 1.25rem;
 }
 
 .reserve-flip-inner {
-  position: relative;
-  transform-style: preserve-3d;
-  min-height: 260px;
+    position: relative;
+    transform-style: preserve-3d;
+    min-height: 260px;
 }
 
 .reserve-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: .75rem;
-  padding: 1.2rem 1rem;
-  text-align: center;
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: .75rem;
+    padding: 1.2rem 1rem;
+    text-align: center;
 }
 
 .reserve-front {
-  background:
-    radial-gradient(1200px 480px at 50% 0%, rgba(236,72,153,0.14), transparent 55%),
-    radial-gradient(900px 360px at 50% 100%, rgba(247,198,0,0.12), transparent 55%);
+    background:
+        radial-gradient(1200px 480px at 50% 0%, rgba(236, 72, 153, 0.14), transparent 55%),
+        radial-gradient(900px 360px at 50% 100%, rgba(247, 198, 0, 0.12), transparent 55%);
 }
 
 .reserve-front-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-  font-size: .78rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: #fefce8;
-  opacity: .9;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #fefce8;
+    opacity: .9;
 }
 
 .reserve-front-title {
-  font-size: 1.4rem;
-  font-weight: 750;
+    font-size: 1.4rem;
+    font-weight: 750;
 }
 
 .reserve-front-sub {
-  color: var(--muted);
-  font-size: .95rem;
-  max-width: 36ch;
+    color: var(--muted);
+    font-size: .95rem;
+    max-width: 36ch;
 }
 
 .reserve-back {
-  transform: rotateY(180deg);
-  background:
-    radial-gradient(1000px 420px at 50% 0%, rgba(247,198,0,0.12), transparent 58%),
-    radial-gradient(900px 360px at 50% 100%, rgba(236,72,153,0.12), transparent 58%);
+    transform: rotateY(180deg);
+    background:
+        radial-gradient(1000px 420px at 50% 0%, rgba(247, 198, 0, 0.12), transparent 58%),
+        radial-gradient(900px 360px at 50% 100%, rgba(236, 72, 153, 0.12), transparent 58%);
 }
 
 .reserve-back h3 {
-  margin: 0;
-  font-size: 1.15rem;
+    margin: 0;
+    font-size: 1.15rem;
 }
 
 .reserve-contact {
-  display: grid;
-  justify-items: center;
-  gap: .5rem;
-  margin: 0;
+    display: grid;
+    justify-items: center;
+    gap: .5rem;
+    margin: 0;
 }
 
 .reserve-contact a {
-  color: #fefce8;
-  text-decoration: none;
-  font-weight: 650;
+    color: #fefce8;
+    text-decoration: none;
+    font-weight: 650;
 }
 
-.reserve-contact a:hover { text-decoration: underline; }
+.reserve-contact a:hover {
+    text-decoration: underline;
+}
 
 .reserve-actions {
-  display: flex;
-  gap: .6rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: .25rem;
+    display: flex;
+    gap: .6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: .25rem;
 }
 
 .reserve-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .45rem;
-  padding: .65rem .9rem;
-  border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  background: rgba(255,255,255,0.05);
-  color: var(--text);
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    padding: .65rem .9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.reserve-pill:hover { transform: translateY(-1px); }
+.reserve-pill:hover {
+    transform: translateY(-1px);
+}
 
 .reserve-pill:focus-visible {
-  outline: 2px solid var(--pink);
-  outline-offset: 2px;
+    outline: 2px solid var(--pink);
+    outline-offset: 2px;
 }
 
 .reserve-note {
-  margin-top: .65rem;
-  color: var(--muted);
-  font-size: .9rem;
+    margin-top: .65rem;
+    color: var(--muted);
+    font-size: .9rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reserve-pill:hover { transform: none; }
+    .reserve-pill:hover {
+        transform: none;
+    }
 }
 
 
 /* Scroll lock quand le modal est ouvert */
-html.reserve-scroll-lock, body.reserve-scroll-lock {
-  overflow: hidden;
-  overscroll-behavior: contain;
-  touch-action: none;
+html.reserve-scroll-lock,
+body.reserve-scroll-lock {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: none;
 }
 
 
@@ -982,148 +991,177 @@ html.reserve-scroll-lock, body.reserve-scroll-lock {
    Réserver modal — V2 premium overrides (buttons + microcopy + close fix)
    ========================================================= */
 
-.reserve-flip { position: relative; z-index: 1; }
-.reserve-close { z-index: 10; }
+.reserve-flip {
+    position: relative;
+    z-index: 1;
+}
 
 .reserve-close {
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  background:
-    radial-gradient(140% 140% at 30% 20%, rgba(247,198,0,0.20), rgba(255,255,255,0.04) 55%),
-    rgba(255,255,255,0.03);
-  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+    z-index: 10;
 }
+
+.reserve-close {
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background:
+        radial-gradient(140% 140% at 30% 20%, rgba(247, 198, 0, 0.20), rgba(255, 255, 255, 0.04) 55%),
+        rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
+}
+
 .reserve-close:hover {
-  transform: translateY(-1px);
-  border-color: rgba(247,198,0,0.55);
+    transform: translateY(-1px);
+    border-color: rgba(247, 198, 0, 0.55);
 }
-.reserve-close:active { transform: translateY(0); }
+
+.reserve-close:active {
+    transform: translateY(0);
+}
+
 .reserve-close:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(247,198,0,0.25), 0 12px 28px rgba(0,0,0,.55);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(247, 198, 0, 0.25), 0 12px 28px rgba(0, 0, 0, .55);
 }
 
 /* Micro-copy */
 .reserve-front-meta {
-  margin-top: .25rem;
-  font-size: .92rem;
-  color: rgba(229,231,235,0.78);
+    margin-top: .25rem;
+    font-size: .92rem;
+    color: rgba(229, 231, 235, 0.78);
 }
+
 .reserve-title {
-  letter-spacing: .02em;
+    letter-spacing: .02em;
 }
+
 .reserve-subtitle {
-  margin: 0;
-  max-width: 42ch;
-  color: rgba(229,231,235,0.78);
-  font-size: .98rem;
-  line-height: 1.35;
+    margin: 0;
+    max-width: 42ch;
+    color: rgba(229, 231, 235, 0.78);
+    font-size: .98rem;
+    line-height: 1.35;
 }
+
 .reserve-block {
-  width: 100%;
-  max-width: 520px;
-  text-align: left;
-  padding: .85rem .9rem;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  background: rgba(255,255,255,0.03);
+    width: 100%;
+    max-width: 520px;
+    text-align: left;
+    padding: .85rem .9rem;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    background: rgba(255, 255, 255, 0.03);
 }
+
 .reserve-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .6rem;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    align-items: center;
+    justify-content: space-between;
 }
+
 .reserve-hint {
-  margin-top: .5rem;
-  font-size: .88rem;
-  color: rgba(229,231,235,0.62);
+    margin-top: .5rem;
+    font-size: .88rem;
+    color: rgba(229, 231, 235, 0.62);
 }
 
 /* Buttons — luxury */
 .reserve-btn,
 .reserve-pill {
-  --btn-bg: rgba(255,255,255,0.05);
-  --btn-border: rgba(148, 163, 184, 0.24);
-  --btn-text: var(--text);
+    --btn-bg: rgba(255, 255, 255, 0.05);
+    --btn-border: rgba(148, 163, 184, 0.24);
+    --btn-text: var(--text);
 
-  position: relative;
-  isolation: isolate;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  padding: .78rem 1.05rem;
-  border-radius: 999px;
-  border: 1px solid var(--btn-border);
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  font-weight: 800;
-  letter-spacing: .01em;
-  text-decoration: none;
-  cursor: pointer;
-  user-select: none;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
-  box-shadow: 0 10px 24px rgba(0,0,0,.28);
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .78rem 1.05rem;
+    border-radius: 999px;
+    border: 1px solid var(--btn-border);
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    font-weight: 800;
+    letter-spacing: .01em;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .28);
 }
+
 .reserve-btn::before,
 .reserve-pill::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(120% 140% at 20% 0%, rgba(255,255,255,0.14), transparent 45%);
-  opacity: .55;
-  z-index: -1;
-  pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(120% 140% at 20% 0%, rgba(255, 255, 255, 0.14), transparent 45%);
+    opacity: .55;
+    z-index: -1;
+    pointer-events: none;
 }
+
 .reserve-btn:hover,
 .reserve-pill:hover {
-  transform: translateY(-1px);
-  border-color: rgba(247,198,0,0.45);
-  box-shadow: 0 16px 34px rgba(0,0,0,.40);
+    transform: translateY(-1px);
+    border-color: rgba(247, 198, 0, 0.45);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .40);
 }
+
 .reserve-btn:active,
-.reserve-pill:active { transform: translateY(0); }
+.reserve-pill:active {
+    transform: translateY(0);
+}
+
 .reserve-btn:focus-visible,
 .reserve-pill:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(247,198,0,0.22), 0 18px 40px rgba(0,0,0,.55);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(247, 198, 0, 0.22), 0 18px 40px rgba(0, 0, 0, .55);
 }
 
 .reserve-btn--primary {
-  --btn-border: rgba(247,198,0,0.30);
-  --btn-text: #050816;
-  background: linear-gradient(135deg, rgba(247,198,0,0.95), rgba(236,72,153,0.75));
+    --btn-border: rgba(247, 198, 0, 0.30);
+    --btn-text: #050816;
+    background: linear-gradient(135deg, rgba(247, 198, 0, 0.95), rgba(236, 72, 153, 0.75));
 }
+
 .reserve-btn--primary:hover {
-  border-color: rgba(247,198,0,0.75);
-  box-shadow: 0 20px 44px rgba(0,0,0,.55);
+    border-color: rgba(247, 198, 0, 0.75);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, .55);
 }
 
 .reserve-btn--ghost {
-  --btn-bg: rgba(255,255,255,0.04);
-  --btn-border: rgba(148, 163, 184, 0.24);
+    --btn-bg: rgba(255, 255, 255, 0.04);
+    --btn-border: rgba(148, 163, 184, 0.24);
 }
 
 .reserve-btn--sm {
-  padding: .58rem .82rem;
-  font-weight: 800;
-  font-size: .92rem;
+    padding: .58rem .82rem;
+    font-weight: 800;
+    font-size: .92rem;
 }
 
 /* Layout actions */
 .reserve-actions {
-  display: grid;
-  width: 100%;
-  max-width: 520px;
-  grid-template-columns: 1fr 1fr;
-  gap: .7rem;
-  margin-top: .15rem;
+    display: grid;
+    width: 100%;
+    max-width: 520px;
+    grid-template-columns: 1fr 1fr;
+    gap: .7rem;
+    margin-top: .15rem;
 }
+
 @media (max-width: 520px) {
-  .reserve-actions { grid-template-columns: 1fr; }
-  .reserve-row { justify-content: flex-start; }
+    .reserve-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .reserve-row {
+        justify-content: flex-start;
+    }
 }
 
 /* =========================================================
@@ -1132,37 +1170,95 @@ html.reserve-scroll-lock, body.reserve-scroll-lock {
    - si ça dépasse l'écran : c'est l'overlay qui scroll
    ========================================================= */
 
-/* L’overlay peut scroller si nécessaire (pas la carte) */
-.reserve-overlay{
-  position: fixed;
-  inset: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 2.2rem 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* =========================================================
+   Réserver modal — clean clipping (radius) + no internal scroll
+   - la card ne scrolle pas
+   - si ça dépasse, l’overlay scrolle
+   - la dialog garde overflow:hidden pour clipper proprement
+   ========================================================= */
+
+/* Overlay scrollable (pas la carte) */
+.reserve-overlay {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 2.2rem 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Si la hauteur écran est petite, on aligne en haut pour éviter le contenu hors champ */
-@media (max-height: 760px){
-  .reserve-overlay{ align-items: flex-start; }
+@media (max-height:760px) {
+    .reserve-overlay {
+        align-items: flex-start;
+    }
 }
 
-/* IMPORTANT : ne pas contraindre la modale en hauteur, et ne pas couper le contenu */
-.reserve-dialog{
-  max-height: none !important;
-  overflow: visible !important; /* <-- évite le rognage */
+/* La modale garde le clipping propre */
+.reserve-dialog {
+    max-height: none !important;
+    overflow: hidden !important;
+    /* <-- coins arrondis propres */
 }
 
-/* IMPORTANT : rien ne coupe la flip-card */
+/* On évite de couper à l’intérieur : c’est la hauteur JS qui garantit la place */
 .reserve-flip,
 .reserve-flip-inner,
-.reserve-face{
-  overflow: visible !important;
+.reserve-face {
+    overflow: hidden;
+    /* pas besoin de visible, on veut clean */
 }
 
-/* On va piloter la hauteur via JS */
-.reserve-flip-inner{
-  height: var(--reserve-card-h, auto);
+/* Hauteur pilotée via JS : empêche le rognage du contenu */
+.reserve-flip-inner {
+    height: var(--reserve-card-h, auto);
+}
+
+/* Email link premium */
+.reserve-mail {
+    color: rgba(255, 255, 255, .92);
+    text-decoration: none;
+    font-weight: 850;
+    letter-spacing: .01em;
+
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+
+    padding: .55rem .75rem;
+    border-radius: 999px;
+
+    border: 1px solid rgba(148, 163, 184, .22);
+    background: rgba(255, 255, 255, .035);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .22);
+
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reserve-mail::before {
+    content: "✉";
+    font-size: 1.05em;
+    opacity: .9;
+}
+
+.reserve-mail:hover {
+    transform: translateY(-1px);
+    border-color: rgba(247, 198, 0, .42);
+    background: rgba(255, 255, 255, .06);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .38);
+}
+
+.reserve-mail:active {
+    transform: translateY(0);
+}
+
+.reserve-mail:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(247, 198, 0, .22), 0 18px 40px rgba(0, 0, 0, .55);
 }
