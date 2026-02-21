@@ -1165,19 +1165,10 @@ body.reserve-scroll-lock {
 }
 
 /* =========================================================
-   Réserver modal — V2.1 no internal scroll / no crop
-   - pas de scroll interne dans la carte
-   - si ça dépasse l'écran : c'est l'overlay qui scroll
+   Réserver modal
    ========================================================= */
 
-/* =========================================================
-   Réserver modal — clean clipping (radius) + no internal scroll
-   - la card ne scrolle pas
-   - si ça dépasse, l’overlay scrolle
-   - la dialog garde overflow:hidden pour clipper proprement
-   ========================================================= */
-
-/* Overlay scrollable (pas la carte) */
+/* L’overlay peut scroller si nécessaire (pas la carte) */
 .reserve-overlay {
     position: fixed;
     inset: 0;
@@ -1189,33 +1180,33 @@ body.reserve-scroll-lock {
     justify-content: center;
 }
 
-@media (max-height:760px) {
+/* Si la hauteur écran est petite, on aligne en haut pour éviter le contenu hors champ */
+@media (max-height: 760px) {
     .reserve-overlay {
         align-items: flex-start;
     }
 }
 
-/* La modale garde le clipping propre */
+/* IMPORTANT : ne pas contraindre la modale en hauteur, et ne pas couper le contenu */
 .reserve-dialog {
     max-height: none !important;
-    overflow: hidden !important;
-    /* <-- coins arrondis propres */
+    overflow: visible !important;
+    /* <-- évite le rognage */
 }
 
-/* On évite de couper à l’intérieur : c’est la hauteur JS qui garantit la place */
+/* IMPORTANT : rien ne coupe la flip-card */
 .reserve-flip,
 .reserve-flip-inner,
 .reserve-face {
-    overflow: hidden;
-    /* pas besoin de visible, on veut clean */
+    overflow: visible !important;
 }
 
-/* Hauteur pilotée via JS : empêche le rognage du contenu */
+/* On va piloter la hauteur via JS */
 .reserve-flip-inner {
     height: var(--reserve-card-h, auto);
 }
 
-/* Email link premium */
+/* Email link premium (remplace le bleu/souligné navigateur) */
 .reserve-mail {
     color: rgba(255, 255, 255, .92);
     text-decoration: none;
@@ -1229,12 +1220,11 @@ body.reserve-scroll-lock {
     padding: .55rem .75rem;
     border-radius: 999px;
 
-    border: 1px solid rgba(148, 163, 184, .22);
-    background: rgba(255, 255, 255, .035);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: rgba(255, 255, 255, 0.035);
     box-shadow: 0 10px 22px rgba(0, 0, 0, .22);
 
     transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
-
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -1249,8 +1239,8 @@ body.reserve-scroll-lock {
 
 .reserve-mail:hover {
     transform: translateY(-1px);
-    border-color: rgba(247, 198, 0, .42);
-    background: rgba(255, 255, 255, .06);
+    border-color: rgba(247, 198, 0, 0.42);
+    background: rgba(255, 255, 255, 0.06);
     box-shadow: 0 16px 34px rgba(0, 0, 0, .38);
 }
 
@@ -1260,5 +1250,5 @@ body.reserve-scroll-lock {
 
 .reserve-mail:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(247, 198, 0, .22), 0 18px 40px rgba(0, 0, 0, .55);
+    box-shadow: 0 0 0 3px rgba(247, 198, 0, 0.22), 0 18px 40px rgba(0, 0, 0, .55);
 }
