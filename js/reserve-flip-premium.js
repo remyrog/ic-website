@@ -223,16 +223,16 @@
 
       if (tl) tl.kill();
 
-      tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
-        onComplete: () => {
-          setFaceState(true);
-          const closeBtn = overlay.querySelector(".reserve-close");
-          closeBtn && closeBtn.focus();
-        }
-      });
+      tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.to(overlay, { opacity: 1, duration: 0.18, ease: "power2.out" });
+
+      const FACE_SWAP_AT = 1.5; // <-- en secondes : augmente pour garder le front plus longtemps
+      tl.call(() => {
+        setFaceState(true);
+        const closeBtn = overlay.querySelector(".reserve-close");
+        closeBtn && closeBtn.focus();
+      }, null, FACE_SWAP_AT);
 
       if (reduce) {
         tl.to(dialog, { x: 0, y: 0, scale: 1, rotateX: 0, rotateY: 0, rotateZ: 0, z: 0, filter: "blur(0px)", duration: 0.25 }, 0);
