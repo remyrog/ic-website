@@ -151,7 +151,7 @@
     ta.setAttribute("readonly", "true");
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand("copy"); } catch (e) {}
+    try { document.execCommand("copy"); } catch (e) { }
     document.body.removeChild(ta);
     return Promise.resolve();
   }
@@ -167,6 +167,19 @@
     const inner = overlay.querySelector(".reserve-flip-inner");
     const back = overlay.querySelector(".reserve-back");
     const front = overlay.querySelector(".reserve-front");
+
+    function syncCardHeight() {
+      // Assure que le back est mesurable (même si aria-hidden)
+      // Les faces sont souvent en absolute => on fixe la hauteur du conteneur inner.
+      // On prend la hauteur réelle du contenu (scrollHeight est plus fiable ici).
+      const hFront = front ? front.scrollHeight : 0;
+      const hBack = back ? back.scrollHeight : 0;
+      const h = Math.max(hFront, hBack);
+
+      if (h > 0) {
+        inner.style.setProperty("--reserve-card-h", `${h}px`);
+      }
+    }
 
     let lastFocus = null;
     let isOpen = false;
@@ -184,6 +197,8 @@
       lastFocus = document.activeElement;
 
       overlay.hidden = false;
+      // Calcule la vraie hauteur avant l’anim (après affichage)
+      syncCardHeight();
 
       const btnRect = trigger.getBoundingClientRect();
       const btnCx = btnRect.left + btnRect.width / 2;
@@ -345,6 +360,10 @@
       });
     });
   }
+
+  window.addEventListener("resize", () => {
+    if (!overlay.hidden) syncCardHeight();
+  }, { passive: true });
 
   function boot() {
     if (document.readyState === "loading") {

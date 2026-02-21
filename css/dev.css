@@ -1126,3 +1126,43 @@ html.reserve-scroll-lock, body.reserve-scroll-lock {
   .reserve-row { justify-content: flex-start; }
 }
 
+/* =========================================================
+   Réserver modal — V2.1 no internal scroll / no crop
+   - pas de scroll interne dans la carte
+   - si ça dépasse l'écran : c'est l'overlay qui scroll
+   ========================================================= */
+
+/* L’overlay peut scroller si nécessaire (pas la carte) */
+.reserve-overlay{
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2.2rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Si la hauteur écran est petite, on aligne en haut pour éviter le contenu hors champ */
+@media (max-height: 760px){
+  .reserve-overlay{ align-items: flex-start; }
+}
+
+/* IMPORTANT : ne pas contraindre la modale en hauteur, et ne pas couper le contenu */
+.reserve-dialog{
+  max-height: none !important;
+  overflow: visible !important; /* <-- évite le rognage */
+}
+
+/* IMPORTANT : rien ne coupe la flip-card */
+.reserve-flip,
+.reserve-flip-inner,
+.reserve-face{
+  overflow: visible !important;
+}
+
+/* On va piloter la hauteur via JS */
+.reserve-flip-inner{
+  height: var(--reserve-card-h, auto);
+}
