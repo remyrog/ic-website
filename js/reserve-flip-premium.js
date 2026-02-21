@@ -91,6 +91,12 @@
               <div class="reserve-front-title">Parlons de votre projet</div>
               <div class="reserve-front-sub">Un message suffit — réponse sous 24h ouvrées.</div>
               <div class="reserve-front-meta">Flip premium pour révéler mes coordonnées.</div>
+              <div class="reserve-front-loader" aria-hidden="true">
+                <span class="reserve-front-loader-label">Préparation du contact</span>
+                <span class="reserve-front-dots" aria-hidden="true">
+                  <i></i><i></i><i></i>
+                </span>
+              </div>
             </div>
 
             <div class="reserve-face reserve-back" aria-hidden="true">
@@ -154,7 +160,7 @@
     ta.setAttribute("readonly", "true");
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand("copy"); } catch (e) {}
+    try { document.execCommand("copy"); } catch (e) { }
     document.body.removeChild(ta);
     return Promise.resolve();
   }
@@ -257,10 +263,15 @@
         // Flip (commence plus tard => front reste visible plus longtemps)
         tl.to(inner, {
           keyframes: [
-            { rotateY: 220, rotateX: -10, duration: FLIP_DUR_IN,  ease: "power4.in" },
-            { rotateY: 180, rotateX: 0,  duration: FLIP_DUR_OUT, ease: "elastic.out(1, 0.65)" }
+            { rotateY: 220, rotateX: -10, duration: FLIP_DUR_IN, ease: "power4.in" },
+            { rotateY: 180, rotateX: 0, duration: FLIP_DUR_OUT, ease: "elastic.out(1, 0.65)" }
           ]
         }, FLIP_START_AT);
+
+        const loader = overlay.querySelector(".reserve-front-loader");
+        if (loader) {
+          tl.to(loader, { opacity: 0, y: -4, duration: 0.25, ease: "power2.out" }, FLIP_START_AT - 0.15);
+        }
 
         // Bascule ARIA + focus juste avant la fin du flip
         const FACE_SWAP_AT = FLIP_START_AT + FLIP_DUR_IN + FLIP_DUR_OUT - FACE_SWAP_EPS;
