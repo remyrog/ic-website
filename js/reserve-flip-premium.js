@@ -227,7 +227,7 @@
 
       tl.to(overlay, { opacity: 1, duration: 0.18, ease: "power2.out" });
 
-      const FACE_SWAP_AT = 1.5; // <-- en secondes : augmente pour garder le front plus longtemps
+      const FACE_SWAP_AT = 3; // <-- en secondes : augmente pour garder le front plus longtemps
       tl.call(() => {
         setFaceState(true);
         const closeBtn = overlay.querySelector(".reserve-close");
