@@ -1165,90 +1165,109 @@ body.reserve-scroll-lock {
 }
 
 /* =========================================================
-   Réserver modal
+   Réserver modal — sobre premium (mail gradient + titre coloré)
    ========================================================= */
 
-/* L’overlay peut scroller si nécessaire (pas la carte) */
-.reserve-overlay {
-    position: fixed;
-    inset: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 2.2rem 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Garde overlay scrollable */
+.reserve-overlay{
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2.2rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-height:760px){ .reserve-overlay{ align-items:flex-start; } }
+
+/* IMPORTANT : rendu clean (clipping coins arrondis) */
+.reserve-dialog{
+  max-height: none !important;
+  overflow: hidden !important;
 }
 
-/* Si la hauteur écran est petite, on aligne en haut pour éviter le contenu hors champ */
-@media (max-height: 760px) {
-    .reserve-overlay {
-        align-items: flex-start;
-    }
+/* On pilote la hauteur via JS */
+.reserve-flip-inner{ height: var(--reserve-card-h, auto); }
+
+/* Titre coloré (gradient subtil) */
+.reserve-title{
+  margin: 0 0 .35rem;
+  font-weight: 900;
+  letter-spacing: .02em;
+  background: linear-gradient(135deg, rgba(247,198,0,.95), rgba(236,72,153,.75));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* IMPORTANT : ne pas contraindre la modale en hauteur, et ne pas couper le contenu */
-.reserve-dialog {
-    max-height: none !important;
-    overflow: visible !important;
-    /* <-- évite le rognage */
+/* Sous-titre plus discret, plus “luxe” */
+.reserve-subtitle{
+  margin: 0 0 1.0rem;
+  font-size: .92rem;          /* plus petit */
+  line-height: 1.35;
+  color: rgba(229,231,235,.70);
 }
 
-/* IMPORTANT : rien ne coupe la flip-card */
-.reserve-flip,
-.reserve-flip-inner,
-.reserve-face {
-    overflow: visible !important;
+/* Block email : plus sobre (moins “grosse carte”) */
+.reserve-block{
+  width: 100%;
+  max-width: 520px;
+  text-align: left;
+  padding: .75rem .85rem;
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,.16);
+  background: rgba(255,255,255,.02);
 }
 
-/* On va piloter la hauteur via JS */
-.reserve-flip-inner {
-    height: var(--reserve-card-h, auto);
+/* Row : mail + copy sur une ligne */
+.reserve-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .7rem;
+}
+.reserve-row > *{ min-width: 0; } /* crucial pour l’ellipsis dans un flex */
+
+/* EMAIL : texte fin + gradient, sans bulle */
+.reserve-mail{
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding: 0;                 /* pas de pill */
+  border: 0;
+  background: none;
+  box-shadow: none;
+
+  font-weight: 650;           /* plus fin */
+  letter-spacing: .01em;
+  text-decoration: none;
+
+  background: linear-gradient(135deg, rgba(247,198,0,.95), rgba(236,72,153,.85));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  opacity: .95;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.reserve-mail:hover{ opacity: 1; transform: translateY(-1px); }
+.reserve-mail:focus-visible{
+  outline: none;
+  text-shadow: 0 0 18px rgba(247,198,0,.18);
 }
 
-/* Email link premium (remplace le bleu/souligné navigateur) */
-.reserve-mail {
-    color: rgba(255, 255, 255, .92);
-    text-decoration: none;
-    font-weight: 850;
-    letter-spacing: .01em;
-
-    display: inline-flex;
-    align-items: center;
-    gap: .55rem;
-
-    padding: .55rem .75rem;
-    border-radius: 999px;
-
-    border: 1px solid rgba(148, 163, 184, 0.22);
-    background: rgba(255, 255, 255, 0.035);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, .22);
-
-    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+/* Bouton copier : petit pill clean (déjà premium) */
+.reserve-btn--sm{
+  padding: .56rem .82rem;
+  font-weight: 850;
+  font-size: .92rem;
 }
 
-.reserve-mail::before {
-    content: "✉";
-    font-size: 1.05em;
-    opacity: .9;
-}
-
-.reserve-mail:hover {
-    transform: translateY(-1px);
-    border-color: rgba(247, 198, 0, 0.42);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, .38);
-}
-
-.reserve-mail:active {
-    transform: translateY(0);
-}
-
-.reserve-mail:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(247, 198, 0, 0.22), 0 18px 40px rgba(0, 0, 0, .55);
+/* Actions : garde ton layout, juste un peu plus compact */
+.reserve-actions{
+  margin-top: .85rem;
 }

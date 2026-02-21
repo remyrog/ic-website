@@ -89,7 +89,7 @@
 
             <div class="reserve-face reserve-back" aria-hidden="true">
               <h3 id="reserve-title" class="reserve-title">Contact direct</h3>
-              <p class="reserve-subtitle">Choisis ton canal — je te réponds vite, avec un échange clair et cadré.</p>
+              <p class="reserve-subtitle">Choisis ton canal — réponse rapide et cadrée.</p>
 
               <div class="reserve-block">
                 <div class="reserve-row">
@@ -98,7 +98,6 @@
                     Copier l’email
                   </button>
                 </div>
-                <div class="reserve-hint">Astuce : tu peux coller l’adresse directement dans ton outil de messagerie.</div>
               </div>
 
               <div class="reserve-actions">
@@ -109,8 +108,6 @@
                   Appeler : ${PHONE_FR}
                 </a>
               </div>
-
-              <p class="reserve-note">Confidentialité : tes infos restent entre nous.</p>
             </div>
           </div>
         </div>
@@ -199,6 +196,8 @@
       overlay.hidden = false;
       // Calcule la vraie hauteur avant l’anim (après affichage)
       syncCardHeight();
+      requestAnimationFrame(syncCardHeight);
+      setTimeout(syncCardHeight, 60);
 
       const btnRect = trigger.getBoundingClientRect();
       const btnCx = btnRect.left + btnRect.width / 2;
@@ -359,11 +358,13 @@
         setTimeout(() => { btn.textContent = old; }, 900);
       });
     });
-  }
 
-  window.addEventListener("resize", () => {
-    if (!overlay.hidden) syncCardHeight();
-  }, { passive: true });
+    window.addEventListener("resize", () => {
+      if (!overlay.hidden) {
+        syncCardHeight();
+      }
+    }, { passive: true });
+  }
 
   function boot() {
     if (document.readyState === "loading") {
