@@ -1,7 +1,7 @@
 /**
  * Réserver : Flip card modal (GSAP)
  * - Trigger: #reserve-btn (garde le mailto en fallback si JS off)
- * - Animation: "fly" depuis le bouton + flip 3D
+ * - Animation: fly-in depuis le bouton + flip 3D (front reste visible plus longtemps)
  * - UX: close (click outside / ESC), focus basic, copy mail, WhatsApp deep-link
  */
 (function () {
@@ -13,6 +13,12 @@
   const WA_E164 = "33698998001"; // sans "+" et sans espaces
   const WA_PREFILL = "Bonjour, je souhaite réserver un créneau pour parler de mon projet.";
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
+
+  // Réglages timing (ici tu ajustes facilement)
+  const FLIP_START_AT = 1.15;   // quand le flip démarre (front reste visible jusque là)
+  const FLIP_DUR_IN = 0.55;     // phase vers 220°
+  const FLIP_DUR_OUT = 0.55;    // settle vers 180°
+  const FACE_SWAP_EPS = 0.05;   // marge pour basculer l'ARIA juste avant la fin du flip
 
   // Scroll lock (préserve la position, iOS-friendly)
   let scrollYBeforeLock = 0;
@@ -148,7 +154,7 @@
     ta.setAttribute("readonly", "true");
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand("copy"); } catch (e) { }
+    try { document.execCommand("copy"); } catch (e) {}
     document.body.removeChild(ta);
     return Promise.resolve();
   }
@@ -166,16 +172,10 @@
     const front = overlay.querySelector(".reserve-front");
 
     function syncCardHeight() {
-      // Assure que le back est mesurable (même si aria-hidden)
-      // Les faces sont souvent en absolute => on fixe la hauteur du conteneur inner.
-      // On prend la hauteur réelle du contenu (scrollHeight est plus fiable ici).
       const hFront = front ? front.scrollHeight : 0;
       const hBack = back ? back.scrollHeight : 0;
       const h = Math.max(hFront, hBack);
-
-      if (h > 0) {
-        inner.style.setProperty("--reserve-card-h", `${h}px`);
-      }
+      if (h > 0) inner.style.setProperty("--reserve-card-h", `${h}px`);
     }
 
     let lastFocus = null;
@@ -194,10 +194,11 @@
       lastFocus = document.activeElement;
 
       overlay.hidden = false;
-      // Calcule la vraie hauteur avant l’anim (après affichage)
+
+      // Stabilise hauteur (fonts/blur/3D)
       syncCardHeight();
       requestAnimationFrame(syncCardHeight);
-      setTimeout(syncCardHeight, 60);
+      setTimeout(syncCardHeight, 120);
 
       const btnRect = trigger.getBoundingClientRect();
       const btnCx = btnRect.left + btnRect.width / 2;
@@ -222,21 +223,26 @@
       gsap.set(inner, { rotateY: 0, rotateX: 8, transformOrigin: "50% 50%" });
 
       if (tl) tl.kill();
-
       tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.to(overlay, { opacity: 1, duration: 0.18, ease: "power2.out" });
-
-      const FACE_SWAP_AT = 5; // <-- en secondes : augmente pour garder le front plus longtemps
-      tl.call(() => {
-        setFaceState(true);
-        const closeBtn = overlay.querySelector(".reserve-close");
-        closeBtn && closeBtn.focus();
-      }, null, FACE_SWAP_AT);
+      tl.to(overlay, { opacity: 1, duration: 0.18, ease: "power2.out" }, 0);
 
       if (reduce) {
-        tl.to(dialog, { x: 0, y: 0, scale: 1, rotateX: 0, rotateY: 0, rotateZ: 0, z: 0, filter: "blur(0px)", duration: 0.25 }, 0);
+        tl.to(dialog, {
+          x: 0, y: 0, scale: 1,
+          rotateX: 0, rotateY: 0, rotateZ: 0,
+          z: 0,
+          filter: "blur(0px)",
+          duration: 0.25
+        }, 0);
         tl.set(inner, { rotateY: 180, rotateX: 0 }, 0.02);
+
+        tl.call(() => {
+          setFaceState(true);
+          const closeBtn = overlay.querySelector(".reserve-close");
+          closeBtn && closeBtn.focus();
+        }, null, 0.05);
+
       } else {
         // Fly-in premium
         tl.to(dialog, {
@@ -248,13 +254,21 @@
           ease: "expo.out"
         }, 0);
 
-        // Flip spectaculaire : dépassement puis verrouillage à 180°
+        // Flip (commence plus tard => front reste visible plus longtemps)
         tl.to(inner, {
           keyframes: [
-            { rotateY: 220, rotateX: -10, duration: 0.42, ease: "power4.in" },
-            { rotateY: 180, rotateX: 0, duration: 0.38, ease: "elastic.out(1, 0.65)" }
+            { rotateY: 220, rotateX: -10, duration: FLIP_DUR_IN,  ease: "power4.in" },
+            { rotateY: 180, rotateX: 0,  duration: FLIP_DUR_OUT, ease: "elastic.out(1, 0.65)" }
           ]
-        }, 0.18);
+        }, FLIP_START_AT);
+
+        // Bascule ARIA + focus juste avant la fin du flip
+        const FACE_SWAP_AT = FLIP_START_AT + FLIP_DUR_IN + FLIP_DUR_OUT - FACE_SWAP_EPS;
+        tl.call(() => {
+          setFaceState(true);
+          const closeBtn = overlay.querySelector(".reserve-close");
+          closeBtn && closeBtn.focus();
+        }, null, FACE_SWAP_AT);
       }
 
       document.addEventListener("keydown", onKeydown, true);
@@ -268,7 +282,6 @@
 
       const reduce = prefersReducedMotion();
 
-      // Recalcule la trajectoire vers le bouton (responsive / resize-safe)
       const btnRect = trigger.getBoundingClientRect();
       const btnCx = btnRect.left + btnRect.width / 2;
       const btnCy = btnRect.top + btnRect.height / 2;
@@ -279,7 +292,6 @@
 
       const finalize = () => {
         overlay.hidden = true;
-        // Remet à zéro l’opacité pour la prochaine ouverture
         gsap.set(overlay, { opacity: 0 });
         unlockScroll();
         if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
@@ -294,8 +306,6 @@
       }
 
       setFaceState(false);
-
-      // Assure un point de départ propre
       gsap.set(inner, { rotateY: 180, rotateX: 0, transformOrigin: "50% 50%" });
 
       tl = gsap.timeline({
@@ -303,7 +313,6 @@
         onComplete: finalize
       });
 
-      // Flip spectaculaire (retour vers la face avant) + retour vers le bouton
       tl.to(inner, {
         keyframes: [
           { rotateY: 360, rotateX: 10, duration: 0.26, ease: "power3.in" },
@@ -325,7 +334,6 @@
 
     function onKeydown(e) {
       if (!isOpen) return;
-
       if (e.key === "Escape") {
         e.preventDefault();
         close();
@@ -360,9 +368,7 @@
     });
 
     window.addEventListener("resize", () => {
-      if (!overlay.hidden) {
-        syncCardHeight();
-      }
+      if (!overlay.hidden) syncCardHeight();
     }, { passive: true });
   }
 
