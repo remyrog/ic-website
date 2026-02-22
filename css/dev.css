@@ -872,6 +872,57 @@ section.grid {
     z-index: 1;
 }
 
+.tech-stack {
+    margin-top: .9rem;
+    color: rgba(229, 231, 235, .86);
+}
+
+.tech-stack .tech-label {
+    font-weight: 750;
+    color: rgba(254, 252, 232, .92);
+}
+
+.tech-tags {
+    margin-top: .65rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .55rem;
+}
+
+.tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+
+    padding: .45rem .7rem;
+    border-radius: 999px;
+
+    font-size: .88rem;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: .01em;
+
+    color: rgba(229, 231, 235, .92);
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid rgba(148, 163, 184, .18);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .22);
+}
+
+.tech-tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--yellow), var(--pink));
+    opacity: .9;
+}
+
+@media (max-width: 720px) {
+    .tech-tags {
+        justify-content: center;
+    }
+}
+
 /* =========================================================
    RESERVE MODAL — CLEAN FINAL (blue night background)
    - Front & Back: dark blue night like page background
