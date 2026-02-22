@@ -394,12 +394,14 @@ strong {
     color: var(--text);
 }
 
-.block-body p + ul{
-  margin-top: .85rem;   /* espace après un paragraphe avant une liste */
+.block-body p+ul {
+    margin-top: .85rem;
+    /* espace après un paragraphe avant une liste */
 }
 
-.block-body ul + p{
-  margin-top: .95rem;   /* espace après une liste avant un paragraphe */
+.block-body ul+p {
+    margin-top: .95rem;
+    /* espace après une liste avant un paragraphe */
 }
 
 .block-body p+p {
@@ -439,6 +441,73 @@ strong {
     border-radius: 2px;
     transform-origin: left;
     transform: scaleX(0);
+}
+
+/* Schéma Agile (process) */
+.process {
+    margin-top: .9rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .55rem .75rem;
+}
+
+/* Les étapes en “pills” premium */
+.process-step {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: .55rem .85rem;
+    border-radius: 999px;
+
+    font-weight: 750;
+    font-size: .92rem;
+    letter-spacing: .01em;
+    line-height: 1;
+
+    color: rgba(229, 231, 235, .92);
+    background: rgba(255, 255, 255, .035);
+    border: 1px solid rgba(148, 163, 184, .22);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .28);
+
+    white-space: nowrap;
+}
+
+/* Petit accent (pastille) + glow discret */
+.process-step::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    margin-right: .55rem;
+    background: linear-gradient(135deg, var(--yellow), var(--pink));
+    box-shadow: 0 0 10px rgba(247, 198, 0, .18), 0 0 10px rgba(236, 72, 153, .14);
+}
+
+/* “Connecteurs” entre pills (desktop/tablette) */
+@media (min-width: 680px) {
+    .process-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: -0.75rem;
+        top: 50%;
+        width: 0.75rem;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, rgba(247, 198, 0, .55), rgba(236, 72, 153, .45));
+        opacity: .75;
+        border-radius: 999px;
+    }
+}
+
+/* Mobile : centrage harmonieux */
+@media (max-width: 680px) {
+    .process {
+        justify-content: center;
+    }
 }
 
 /* Sticky nav (tous écrans) : barre en bas */
@@ -1193,56 +1262,58 @@ section.grid {
 
 /* Mobile — centered perfectly inside the modal */
 @media (max-width: 520px) {
-  .reserve-overlay{
-    padding: 1.2rem .85rem;
-    align-items: center;
-    justify-content: center;
-  }
+    .reserve-overlay {
+        padding: 1.2rem .85rem;
+        align-items: center;
+        justify-content: center;
+    }
 
-  .reserve-dialog{
-    width: min(480px, calc(100vw - 1.4rem));
-    margin-left: auto;
-    margin-right: auto;
-  }
+    .reserve-dialog {
+        width: min(480px, calc(100vw - 1.4rem));
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-  .reserve-face{
-    padding: 1.05rem .95rem;
-    gap: .62rem;
-  }
+    .reserve-face {
+        padding: 1.05rem .95rem;
+        gap: .62rem;
+    }
 
-  /* Bloc email bien centré par rapport à la modale */
-  .reserve-block{
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center; /* <-- important */
-  }
+    /* Bloc email bien centré par rapport à la modale */
+    .reserve-block {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        /* <-- important */
+    }
 
-  /* On force un empilement propre, centré */
-  .reserve-row{
-    flex-wrap: wrap;
-    justify-content: center;  /* <-- au lieu de flex-start */
-    align-items: center;
-    gap: .6rem;
-  }
+    /* On force un empilement propre, centré */
+    .reserve-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        /* <-- au lieu de flex-start */
+        align-items: center;
+        gap: .6rem;
+    }
 
-  /* Mail sur sa ligne, centré */
-  .reserve-mail{
-    flex: 1 1 100%;
-    text-align: center;
-  }
+    /* Mail sur sa ligne, centré */
+    .reserve-mail {
+        flex: 1 1 100%;
+        text-align: center;
+    }
 
-  /* Bouton copier centré (et pas collé à gauche) */
-  .reserve-btn--sm{
-    margin-left: auto;
-    margin-right: auto;
-  }
+    /* Bouton copier centré (et pas collé à gauche) */
+    .reserve-btn--sm {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-  /* Actions en colonne, centrées */
-  .reserve-actions{
-    grid-template-columns: 1fr;
-    gap: .65rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    /* Actions en colonne, centrées */
+    .reserve-actions {
+        grid-template-columns: 1fr;
+        gap: .65rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
