@@ -11,11 +11,13 @@
   <!-- CSS -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="../ccs/reserve-modal.css">
 
   <!-- Libs: GSAP (+ plugins) -->
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
+  <script defer src="js/reserve-modal.js"></script>
 
   <!-- App -->
   <script defer src="js/main.js"></script>
@@ -212,7 +214,7 @@
       <a data-scrolllink href="#prestations" data-magnet>Prestations</a>
       <a data-scrolllink href="#expertise" data-magnet>Expertise</a>
       <a data-scrolllink href="#avis" data-magnet>Avis</a>
-      <a data-scrolllink href="#contact" class="btn btn-primary btn-magnet" data-magnet>Contact</a>
+      <a href="" class="btn btn-primary btn-magnet" data-magnet data-reserve-trigger>Contact</a>
     </div>
 
     <!-- Mobile: bouton -->
@@ -282,7 +284,7 @@
             <span class="mnav__chev">›</span>
           </a>
 
-          <a data-scrolllink href="#contact" class="mnav__item mnav__item--cta" data-magnet>
+          <a href="" class="mnav__item mnav__item--cta" data-magnet>
             <span class="mnav__icon">
               <svg viewBox="0 0 64 64" aria-hidden="true">
                 <use href="#ic-phone" />
@@ -387,7 +389,7 @@
         </p>
 
         <div class="cta">
-          <a data-scroll-link href="#contact" class="btn btn-primary btn-magnet" data-magnet>
+          <a href="" class="btn btn-primary btn-magnet" data-magnet data-reserve-trigger>
             Demander un devis
           </a>
           <a data-scroll-link href="#prestations" class="btn btn-ghost btn-magnet" data-magnet>
@@ -561,7 +563,7 @@
           <div class="profile__txt">
             <h3>Rémy ROGER</h3>
             <p>Un amoureux de la relation client, à votre service en Cerdagne.</p>
-            <a data-scrolllink href="#contact" class="btn btn-primary small btn-magnet">Me contacter</a>
+            <a href="" class="btn btn-primary small btn-magnet" data-reserve-trigger>Me contacter</a>
           </div>
         </div>
       </div>
@@ -882,4 +884,5 @@
   </footer>
 
 </body>
+
 </html>
