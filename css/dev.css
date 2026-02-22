@@ -1165,174 +1165,223 @@ body.reserve-scroll-lock {
 }
 
 /* =========================================================
-   RESERVE MODAL — Mobile harmony + Dark sober background (override final)
-   Colle tout en bas du CSS (prioritaire)
+   RESERVE MODAL — FIX Desktop + Mobile (scope) + Charte jaune/rose sur BACK
+   Colle TOUT en bas (prioritaire)
    ========================================================= */
 
-/* Overlay : garder scroll + centrage, z-index sûr */
-.reserve-overlay{
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 1.1rem 1.0rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* 1) Overlay/backdrop/dialog : fond sobre, propre, stable */
+.reserve-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Backdrop plus sobre (moins “gris jaune”) */
-.reserve-backdrop{
-  background: rgba(2, 6, 23, 0.78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+.reserve-overlay[hidden] {
+    display: none;
 }
 
-/* Dialog : fond sombre premium, sans voile jaune */
-.reserve-dialog{
-  width: min(560px, calc(100vw - 2rem));
-  border-radius: var(--radius-xl);
-  background: linear-gradient(180deg, rgba(5,8,22,.94), rgba(5,8,22,.88));
-  border: 1px solid rgba(148,163,184,.22);
-  box-shadow: 0 28px 80px rgba(0,0,0,.78);
-  overflow: hidden !important;
+.reserve-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
-/* Close : sobre, sans dégradé jaune */
-.reserve-close{
-  border: 1px solid rgba(148,163,184,0.22);
-  background: rgba(255,255,255,0.05);
-  box-shadow: 0 10px 26px rgba(0,0,0,.45);
-}
-.reserve-close:hover{
-  border-color: rgba(236,72,153,.55);
-}
-.reserve-close:focus-visible{
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(236,72,153,.22), 0 12px 28px rgba(0,0,0,.55);
+.reserve-dialog {
+    position: relative;
+    width: min(560px, calc(100vw - 2.4rem));
+    border-radius: var(--radius-xl);
+    background: linear-gradient(180deg, rgba(5, 8, 22, .94), rgba(5, 8, 22, .88));
+    border: 1px solid rgba(148, 163, 184, .22);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, .78);
+    overflow: hidden !important;
+    /* clipping clean */
+    transform-style: preserve-3d;
 }
 
-/* Faces : retirer les gros fonds jaunes/roses */
-.reserve-front,
-.reserve-back{
-  background:
-    radial-gradient(900px 380px at 50% 0%, rgba(236,72,153,0.10), transparent 58%),
-    radial-gradient(900px 380px at 50% 100%, rgba(148,163,184,0.07), transparent 60%);
+/* Close sobre (mais charte) */
+.reserve-close {
+    z-index: 10;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
 }
 
-/* Padding & rythme : plus compact et centré */
-.reserve-flip{
-  padding: 1.15rem 1.05rem 1.05rem;
-}
-.reserve-face{
-  gap: .6rem;
-  padding: 1.05rem .95rem;
-  text-align: center;
+.reserve-close:hover {
+    border-color: rgba(247, 198, 0, 0.55);
 }
 
-/* Titre : gradient plus “noble” (rose -> violet), moins jaune */
-.reserve-title{
-  margin: 0 0 .25rem;
-  font-weight: 950;
-  letter-spacing: .01em;
-  background: linear-gradient(135deg, rgba(236,72,153,0.95), rgba(167,139,250,0.90));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.reserve-close:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(247, 198, 0, 0.20), 0 12px 28px rgba(0, 0, 0, .55);
 }
 
-/* Sous-titre : plus petit et plus doux */
-.reserve-subtitle{
-  margin: 0 0 .85rem;
-  font-size: .90rem;
-  line-height: 1.32;
-  color: rgba(229,231,235,.66);
-  max-width: 36ch;
+/* 2) Faces : FRONT sobre, BACK garde jaune/rose */
+.reserve-front {
+    background:
+        radial-gradient(1000px 420px at 50% 0%, rgba(148, 163, 184, 0.08), transparent 60%),
+        radial-gradient(900px 360px at 50% 100%, rgba(236, 72, 153, 0.08), transparent 62%);
 }
 
-/* Bloc email : plus compact, plus aligné */
-.reserve-block{
-  padding: .65rem .75rem;
-  border-radius: 16px;
-  border: 1px solid rgba(148,163,184,.14);
-  background: rgba(255,255,255,.02);
+.reserve-back {
+    /* charte éditoriale jaune/rose */
+    background:
+        radial-gradient(1000px 420px at 50% 0%, rgba(247, 198, 0, 0.14), transparent 58%),
+        radial-gradient(900px 360px at 50% 100%, rgba(236, 72, 153, 0.12), transparent 60%);
 }
 
-/* Email + Copier : SUR UNE LIGNE (important) */
-.reserve-row{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .65rem;
-  flex-wrap: nowrap;       /* <-- empêche le passage à la ligne */
-}
-.reserve-row > *{ min-width: 0; }
-
-/* Email : ellipsis + gradient fin */
-.reserve-mail{
-  display: inline-block;
-  min-width: 0;
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  padding: 0;
-  border: 0;
-  background: none;
-  box-shadow: none;
-
-  font-weight: 650;
-  letter-spacing: .01em;
-  text-decoration: none;
-
-  background: linear-gradient(135deg, rgba(236,72,153,0.95), rgba(167,139,250,0.90));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-
-  opacity: .95;
+/* 3) Typo back : titre + sous-titre (desktop OK) */
+.reserve-title {
+    margin: 0 0 .35rem;
+    font-weight: 900;
+    letter-spacing: .02em;
+    background: linear-gradient(90deg, var(--yellow), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-/* Copier : petit pill plus discret (et moins haut) */
-.reserve-btn--sm{
-  padding: .52rem .72rem;
-  font-weight: 850;
-  font-size: .90rem;
-  white-space: nowrap;
+.reserve-subtitle {
+    margin: 0 0 1rem;
+    max-width: 42ch;
+    color: rgba(229, 231, 235, .72);
+    font-size: .96rem;
+    line-height: 1.35;
+    text-align: center;
 }
 
-/* Actions : sur mobile, full width, centrées, harmonieuses */
-.reserve-actions{
-  margin-top: .85rem;
-  display: grid;
-  width: 100%;
-  max-width: 520px;
-  grid-template-columns: 1fr;
-  gap: .65rem;
-}
-.reserve-actions .reserve-btn{
-  width: 100%;
-  justify-content: center;
+/* 4) Email row : desktop = une ligne (si place), sinon ellipsis, copy à droite */
+.reserve-block {
+    width: 100%;
+    max-width: 520px;
+    text-align: left;
+    padding: .80rem .90rem;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, .18);
+    background: rgba(255, 255, 255, .03);
 }
 
-/* Bouton primaire : garde gradient mais plus “deep”, moins jaune */
-.reserve-btn--primary{
-  --btn-text: #050816;
-  background: linear-gradient(135deg, rgba(236,72,153,0.92), rgba(167,139,250,0.88));
-  --btn-border: rgba(236,72,153,0.34);
-}
-.reserve-btn--primary:hover{
-  border-color: rgba(236,72,153,0.70);
-  box-shadow: 0 20px 44px rgba(0,0,0,.55);
+.reserve-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    flex-wrap: nowrap;
+    /* important desktop aussi */
 }
 
-/* Ajustements mobile */
-@media (max-width: 520px){
-  .reserve-overlay{ padding: 1.05rem .85rem; }
-  .reserve-dialog{ width: min(520px, calc(100vw - 1.4rem)); }
-  .reserve-front-title{ font-size: 1.25rem; }
-  .reserve-front-sub{ font-size: .92rem; }
-  .reserve-front-meta{ font-size: .88rem; }
+.reserve-row>* {
+    min-width: 0;
+}
+
+.reserve-mail {
+    display: inline-block;
+    min-width: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+
+    font-weight: 650;
+    letter-spacing: .01em;
+    text-decoration: none;
+
+    background: linear-gradient(90deg, var(--yellow), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.reserve-btn--sm {
+    padding: .58rem .82rem;
+    font-weight: 850;
+    font-size: .92rem;
+    white-space: nowrap;
+}
+
+/* 5) Actions : DESKTOP = 2 colonnes (répare ton “cassé”) */
+.reserve-actions {
+    display: grid;
+    width: 100%;
+    max-width: 520px;
+    grid-template-columns: 1fr 1fr;
+    /* desktop */
+    gap: .7rem;
+    margin-top: .9rem;
+}
+
+.reserve-actions .reserve-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* 6) Bouton primaire : garde ton jaune/rose */
+.reserve-btn--primary {
+    --btn-border: rgba(247, 198, 0, 0.30);
+    --btn-text: #050816;
+    background: linear-gradient(135deg, rgba(247, 198, 0, 0.95), rgba(236, 72, 153, 0.75));
+}
+
+.reserve-btn--primary:hover {
+    border-color: rgba(247, 198, 0, 0.75);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, .55);
+}
+
+/* 7) MOBILE ONLY : stack actions + compaction (sans casser desktop) */
+@media (max-width: 520px) {
+    .reserve-overlay {
+        padding: 1.05rem .85rem;
+    }
+
+    .reserve-dialog {
+        width: min(520px, calc(100vw - 1.4rem));
+    }
+
+    .reserve-flip {
+        padding: 1.15rem 1.05rem 1.05rem;
+    }
+
+    .reserve-face {
+        padding: 1.05rem .95rem;
+        gap: .6rem;
+    }
+
+    .reserve-subtitle {
+        font-size: .90rem;
+        margin-bottom: .85rem;
+        max-width: 36ch;
+    }
+
+    .reserve-block {
+        padding: .68rem .78rem;
+    }
+
+    /* Sur mobile : actions en colonne (plus harmonieux) */
+    .reserve-actions {
+        grid-template-columns: 1fr;
+        gap: .65rem;
+    }
+
+    /* Sur mobile : si manque de place, on autorise wrap du row */
+    .reserve-row {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: .6rem;
+    }
+
+    .reserve-mail {
+        flex: 1 1 100%;
+    }
 }
