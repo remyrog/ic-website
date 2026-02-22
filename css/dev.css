@@ -1183,58 +1183,56 @@ section.grid {
     width: 100%;
 }
 
-/* Mobile */
+/* Mobile — centered perfectly inside the modal */
 @media (max-width: 520px) {
-    .reserve-overlay {
-        padding: 1.05rem .85rem;
-    }
-
-    .reserve-dialog {
-        width: min(520px, calc(100vw - 1.4rem));
-    }
-
-    .reserve-actions {
-        grid-template-columns: 1fr;
-        gap: .65rem;
-    }
-
-    .reserve-row {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: .6rem;
-    }
-
-    .reserve-mail {
-        flex: 1 1 100%;
-    }
-}
-
-@media (max-width: 520px) {
-  /* Modale un peu plus “centrée” visuellement dans l’écran */
-  .reserve-overlay {
-    padding: 1.2rem 0.85rem; /* un poil plus de breathing top/bottom */
-    align-items: center;     /* reste bien centré */
+  .reserve-overlay{
+    padding: 1.2rem .85rem;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Contenu légèrement plus étroit => impression premium + centré */
-  .reserve-dialog {
+  .reserve-dialog{
     width: min(480px, calc(100vw - 1.4rem));
-  }
-
-  /* On recentre le contenu et on compacte un poil les espaces */
-  .reserve-face {
-    padding: 1.05rem 0.95rem;
-    gap: 0.62rem;
-  }
-
-  /* Bloc email plus “dans l’axe” */
-  .reserve-block {
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* Actions : un peu plus resserrées et centrées */
-  .reserve-actions {
+  .reserve-face{
+    padding: 1.05rem .95rem;
+    gap: .62rem;
+  }
+
+  /* Bloc email bien centré par rapport à la modale */
+  .reserve-block{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center; /* <-- important */
+  }
+
+  /* On force un empilement propre, centré */
+  .reserve-row{
+    flex-wrap: wrap;
+    justify-content: center;  /* <-- au lieu de flex-start */
+    align-items: center;
+    gap: .6rem;
+  }
+
+  /* Mail sur sa ligne, centré */
+  .reserve-mail{
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  /* Bouton copier centré (et pas collé à gauche) */
+  .reserve-btn--sm{
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Actions en colonne, centrées */
+  .reserve-actions{
+    grid-template-columns: 1fr;
+    gap: .65rem;
     max-width: 480px;
     margin-left: auto;
     margin-right: auto;
