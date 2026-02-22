@@ -90,9 +90,9 @@
               <div class="reserve-front-badge">Réservation</div>
               <div class="reserve-front-title">Parlons de votre projet</div>
               <div class="reserve-front-sub">Un message suffit — réponse sous 24h ouvrées.</div>
-              <div class="reserve-front-meta">Flip premium pour révéler mes coordonnées.</div>
+              <div class="reserve-front-meta">Le premier contact ne vend rien : il ouvre une confiance.</div>
               <div class="reserve-front-loader" aria-hidden="true">
-                <span class="reserve-front-loader-label">Préparation du contact</span>
+                <span class="reserve-front-loader-label">Chargement de la confiance...</span>
                 <span class="reserve-front-dots" aria-hidden="true">
                   <i></i><i></i><i></i>
                 </span>
@@ -101,7 +101,7 @@
 
             <div class="reserve-face reserve-back" aria-hidden="true">
               <h3 id="reserve-title" class="reserve-title">Contact direct</h3>
-              <p class="reserve-subtitle">Choisis ton canal — réponse rapide et cadrée.</p>
+              <p class="reserve-subtitle">La relation commence au moment où l’on se sent écouté.</p>
 
               <div class="reserve-block">
                 <div class="reserve-row">
@@ -200,6 +200,21 @@
       lastFocus = document.activeElement;
 
       overlay.hidden = false;
+
+      const loader = overlay.querySelector(".reserve-front-loader");
+      if (loader) {
+        // remet l'état visuel du loader (si on l'a fade-out la fois précédente)
+        gsap.set(loader, { opacity: 1, y: 0, clearProps: "transform" });
+
+        // optionnel : relance l'anim des dots (au cas où le browser fige l'animation)
+        const dots = loader.querySelector(".reserve-front-dots");
+        if (dots) {
+          dots.style.animation = "none";
+          // force reflow
+          void dots.offsetHeight;
+          dots.style.animation = "";
+        }
+      }
 
       // Stabilise hauteur (fonts/blur/3D)
       syncCardHeight();
