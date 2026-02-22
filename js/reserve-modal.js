@@ -15,7 +15,7 @@
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
 
   // Réglages timing
-  const FLIP_START_AT = 0.5;     // seconds (front visible before flip)
+  const FLIP_START_AT = 5;     // seconds (front visible before flip)
   const FLIP_DUR_IN = 0.55;
   const FLIP_DUR_OUT = 0.55;
   const FACE_SWAP_EPS = 0.05;
@@ -144,7 +144,7 @@
         await navigator.clipboard.writeText(text);
         return true;
       }
-    } catch (_) {}
+    } catch (_) { }
 
     const ta = document.createElement("textarea");
     ta.value = text;
@@ -182,6 +182,49 @@
       if (h > 0) inner.style.setProperty("--reserve-card-h", `${h}px`);
     }
 
+    function resetFrontState() {
+      // Toujours repartir “front” visible et flip à 0
+      setFaceState(false);
+
+      // Reset inline styles du dialog/overlay (au cas où)
+      overlay.style.opacity = "";
+      dialog.style.transform = "";
+
+      const loader = overlay.querySelector(".reserve-front-loader");
+      if (loader) {
+        // Remet le loader visible
+        loader.style.opacity = "1";
+        loader.style.transform = "translateY(0)";
+      }
+
+      // Relance l’animation CSS des dots (utile si certains navigateurs figent)
+      const dots = overlay.querySelector(".reserve-front-dots");
+      if (dots) {
+        dots.style.animation = "none";
+        // force reflow
+        void dots.offsetHeight;
+        dots.style.animation = "";
+      }
+    }
+
+    function resetGsapFrontState(dx, dy) {
+      // Prépare l’état initial “fly-in depuis le bouton”
+      window.gsap.set(dialog, {
+        x: dx, y: dy, scale: 0.22,
+        rotateX: -16, rotateY: 14, rotateZ: 2,
+        z: -220,
+        filter: "blur(10px)",
+        transformOrigin: "50% 50%"
+      });
+      window.gsap.set(inner, { rotateY: 0, rotateX: 0, transformOrigin: "50% 50%" });
+      window.gsap.set(overlay, { opacity: 0 });
+
+      const loader = overlay.querySelector(".reserve-front-loader");
+      if (loader) {
+        window.gsap.set(loader, { opacity: 1, y: 0, clearProps: "transform" });
+      }
+    }
+
     let lastFocus = null;
     let isOpen = false;
     let tl = null;
@@ -213,6 +256,8 @@
 
       overlay.hidden = false;
 
+      resetFrontState();
+
       // Stabilise hauteur
       syncCardHeight();
       requestAnimationFrame(syncCardHeight);
@@ -232,15 +277,7 @@
         return;
       }
 
-      window.gsap.set(dialog, {
-        x: dx, y: dy, scale: 0.22,
-        rotateX: -16, rotateY: 14, rotateZ: 2,
-        z: -220,
-        filter: "blur(10px)",
-        transformOrigin: "50% 50%"
-      });
-      window.gsap.set(inner, { rotateY: 0, rotateX: 0, transformOrigin: "50% 50%" });
-      window.gsap.set(overlay, { opacity: 0 });
+      resetGsapFrontState(dx, dy);
 
       if (tl) tl.kill();
       tl = window.gsap.timeline({ defaults: { ease: "power3.out" } });
