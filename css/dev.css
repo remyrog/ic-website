@@ -394,6 +394,14 @@ strong {
     color: var(--text);
 }
 
+.block-body p + ul{
+  margin-top: .85rem;   /* espace après un paragraphe avant une liste */
+}
+
+.block-body ul + p{
+  margin-top: .95rem;   /* espace après une liste avant un paragraphe */
+}
+
 .block-body p+p {
     margin-top: .65rem;
 }
