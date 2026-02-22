@@ -1,9 +1,7 @@
 RewriteEngine On
 
-# Si la requête correspond à un fichier ou un dossier existant, on ne touche à rien
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
+# /dev, /dev/, /dev.html  => sous-domaine (canonical)
+RewriteRule ^dev(?:\.html)?/?$ https://dev.informatique-cerdagne.fr/ [R=301,L]
 
 RewriteRule ^mentions-legales\.html$ /mentions-legales/ [R=301,L]
 RewriteRule ^mentions-legales/?$ /mentions-legales.html [L]

@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Evite /index.html (canonical)
+RewriteRule ^index\.html$ / [R=301,L]
