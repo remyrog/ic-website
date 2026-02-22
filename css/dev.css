@@ -1183,6 +1183,32 @@ section.grid {
     width: 100%;
 }
 
+/* Mobile */
+@media (max-width: 520px) {
+    .reserve-overlay {
+        padding: 1.05rem .85rem;
+    }
+
+    .reserve-dialog {
+        width: min(520px, calc(100vw - 1.4rem));
+    }
+
+    .reserve-actions {
+        grid-template-columns: 1fr;
+        gap: .65rem;
+    }
+
+    .reserve-row {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: .6rem;
+    }
+
+    .reserve-mail {
+        flex: 1 1 100%;
+    }
+}
+
 @media (max-width: 520px) {
   /* Modale un peu plus “centrée” visuellement dans l’écran */
   .reserve-overlay {
