@@ -169,6 +169,47 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // ===== Fix scroll offset sticky-nav + sommaire (évite titres coupés) =====
+    function getTopOffset() {
+        const topBar = document.querySelector('.top-bar');
+        const h = topBar ? topBar.getBoundingClientRect().height : 0;
+        return h + 18; // marge visuelle
+    }
+
+    function scrollToSection(id) {
+        const section = document.getElementById(id);
+        if (!section) return;
+
+        // On vise le header/titre (pas le top de l’article)
+        const target =
+            section.querySelector('.block-header') ||
+            section.querySelector('.block-title') ||
+            section;
+
+        const y = target.getBoundingClientRect().top + window.pageYOffset - getTopOffset();
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        history.replaceState(null, '', `#${id}`);
+    }
+
+    function bindSmartAnchor(a) {
+        if (!a) return;
+        a.addEventListener('click', (e) => {
+            const href = a.getAttribute('href') || '';
+            if (!href.startsWith('#') || href === '#') return;
+            e.preventDefault();
+            scrollToSection(href.slice(1));
+        }, { passive: false });
+    }
+
+    // 1) Sticky nav prev/next + home
+    bindSmartAnchor(document.querySelector('#stickyNav .prev-section'));
+    bindSmartAnchor(document.querySelector('#stickyNav .next-section'));
+    bindSmartAnchor(document.querySelector('#stickyNav .nav-home'));
+
+    // 2) Cartes du sommaire
+    document.querySelectorAll('a.toc-card[href^="#"]').forEach(bindSmartAnchor);
+    
     // ScrollTrigger pour chaque section
     // Objectif : mettre à jour la sticky-nav dès que le TITRE du bloc devient visible.
     sections.forEach((section) => {
