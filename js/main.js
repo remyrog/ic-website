@@ -1,27 +1,4 @@
 (() => {
-  const isTabletTouch = window.matchMedia('(hover: none) and (pointer: coarse) and (min-width: 800px)').matches;
-
-  if (isTabletTouch && window.ScrollTrigger) {
-    ScrollTrigger.normalizeScroll(true);
-    ScrollTrigger.config({
-      ignoreMobileResize: true
-    });
-  }
-
-  // --- SAFETY: ne jamais bloquer le scroll sur desktop ---
-  const isDesktopFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  if (isDesktopFine) {
-    // si un overflow:hidden est resté (menu, bug, etc.), on nettoie
-    document.documentElement.style.overflow = "";
-    document.body.style.overflow = "";
-
-    // si normalizeScroll a déjà été activé par erreur, on le coupe
-    if (window.ScrollTrigger && ScrollTrigger.normalizeScroll) {
-      ScrollTrigger.normalizeScroll(false);
-    }
-  }
-
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
@@ -35,7 +12,7 @@
     if (pre) pre.classList.add("is-done");
   }, 3000);
 
-  // 3) Scroll doux sur les liens internes (offset gÃ©rÃ© par scroll-padding-top en CSS)
+  // 3) Scroll doux sur les liens internes
   $$(".nav [data-scrolllink], [data-scrolllink]").forEach(a => {
     a.addEventListener("click", e => {
       const href = a.getAttribute("href");
@@ -183,43 +160,6 @@
 
   gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
-  // =========================
-  // SAFETY WHEEL (desktop only)
-  // Si Chrome reçoit wheel mais ne scroll pas, on force scrollBy.
-  // Ne s'active que si le scroll natif ne bouge pas.
-  // =========================
-  (() => {
-    const isDesktopFine = matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (!isDesktopFine) return;
-
-    let lastY = window.scrollY;
-    let lastT = 0;
-
-    window.addEventListener("wheel", (e) => {
-      // Laisse les gestes natifs utiles (zoom trackpad)
-      if (e.ctrlKey) return;
-
-      // Throttle léger
-      const now = performance.now();
-      if (now - lastT < 8) return;
-      lastT = now;
-
-      const before = window.scrollY;
-
-      // On attend la fin du tick pour voir si le scroll natif a bougé
-      requestAnimationFrame(() => {
-        const after = window.scrollY;
-
-        // Si ça n'a pas bougé -> on force le scroll
-        // (on tolère les minuscules variations)
-        if (Math.abs(after - before) < 1) {
-          window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: "auto" });
-        }
-      });
-    }, { passive: true });
-
-  })();
-
   const endEl =
     document.querySelector("#hero + .section") ||
     document.querySelectorAll(".section")[1];
@@ -237,7 +177,7 @@
       start: "top top",
       endTrigger: endEl,
       end: "top top",
-      scrub: isTabletTouch ? 0.6 : true,   // <- change ici
+      scrub: true,
       invalidateOnRefresh: true,
       fastScrollEnd: true
     }
@@ -585,15 +525,6 @@
     let curY = 0;
     let dragging = false;
 
-    const lockScroll = (lock) => {
-      // ne lock jamais sur desktop
-      const isDesktopFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (isDesktopFine) lock = false;
-
-      document.documentElement.style.overflow = lock ? "hidden" : "";
-      document.body.style.overflow = lock ? "hidden" : "";
-    };
-
     const openMenu = () => {
       if (isOpen) return;
       isOpen = true;
@@ -601,7 +532,6 @@
       nav.classList.add("is-menu-open");
       btn.setAttribute("aria-expanded", "true");
       mnav.setAttribute("aria-hidden", "false");
-      lockScroll(true);
 
       // petite “haptique” si dispo (optionnel)
       if (navigator.vibrate) navigator.vibrate(12);
@@ -641,7 +571,6 @@
           mnav.classList.remove("is-open");
           nav.classList.remove("is-menu-open");
           mnav.setAttribute("aria-hidden", "true");
-          lockScroll(false);
         }
       });
 
@@ -652,7 +581,7 @@
     backdrop.addEventListener("click", closeMenu);
     closeEls.forEach(el => el.addEventListener("click", closeMenu));
 
-    // fermer quand on clique un lien (scrolllink déjà géré chez toi)
+    // fermer quand on clique un lien
     links.forEach(a => a.addEventListener("click", () => setTimeout(closeMenu, 120)));
 
     // ESC pour fermer
