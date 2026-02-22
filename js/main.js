@@ -183,6 +183,43 @@
 
   gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
+  // =========================
+  // SAFETY WHEEL (desktop only)
+  // Si Chrome reçoit wheel mais ne scroll pas, on force scrollBy.
+  // Ne s'active que si le scroll natif ne bouge pas.
+  // =========================
+  (() => {
+    const isDesktopFine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!isDesktopFine) return;
+
+    let lastY = window.scrollY;
+    let lastT = 0;
+
+    window.addEventListener("wheel", (e) => {
+      // Laisse les gestes natifs utiles (zoom trackpad)
+      if (e.ctrlKey) return;
+
+      // Throttle léger
+      const now = performance.now();
+      if (now - lastT < 8) return;
+      lastT = now;
+
+      const before = window.scrollY;
+
+      // On attend la fin du tick pour voir si le scroll natif a bougé
+      requestAnimationFrame(() => {
+        const after = window.scrollY;
+
+        // Si ça n'a pas bougé -> on force le scroll
+        // (on tolère les minuscules variations)
+        if (Math.abs(after - before) < 1) {
+          window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: "auto" });
+        }
+      });
+    }, { passive: true });
+
+  })();
+
   const endEl =
     document.querySelector("#hero + .section") ||
     document.querySelectorAll(".section")[1];
@@ -676,4 +713,3 @@
   })();
 
 })();
-
