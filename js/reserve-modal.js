@@ -255,6 +255,7 @@
       lastFocus = document.activeElement;
 
       overlay.hidden = false;
+      document.documentElement.classList.add("reserve-modal-open");
 
       resetFrontState();
 
@@ -327,6 +328,7 @@
         overlay.hidden = true;
         overlay.style.opacity = "";
         unlockScroll();
+        document.documentElement.classList.remove("reserve-modal-open");
         if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
       };
 

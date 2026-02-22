@@ -1,3 +1,10 @@
+html.reserve-modal-open .nav {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
 /* === RESERVE MODAL : variables + reset local (pour rendu identique partout) === */
 :root {
     /* Fallbacks si la page ne définit pas ces tokens (ex: site principal) */
