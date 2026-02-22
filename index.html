@@ -231,17 +231,16 @@
       <div class="mnav__backdrop" data-close></div>
 
       <aside class="mnav__sheet" role="dialog" aria-modal="true" aria-label="Menu">
-        <div class="mnav__handle" data-close aria-label="Fermer">
-          <span></span>
-        </div>
-
-        <div class="mnav__peek">
-          <div class="mnav__peek-pill">
-            <span class="mnav__dot"></span>
-            <span>Menu</span>
-            <span class="mnav__hint">glisse ↓ pour fermer</span>
+        <header class="mnav__top" aria-label="En-tête du menu">
+          <div class="mnav__top-left">
+            <span class="mnav__dot" aria-hidden="true"></span>
+            <span class="mnav__title">Menu</span>
           </div>
-        </div>
+
+          <button class="mnav__close" type="button" aria-label="Fermer le menu" data-close>
+            ×
+          </button>
+        </header>
 
         <nav class="mnav__items" aria-label="Navigation mobile">
           <a data-scrolllink href="#demarche" class="mnav__item" data-magnet>
@@ -283,21 +282,13 @@
             <span class="mnav__label">Avis</span>
             <span class="mnav__chev">›</span>
           </a>
-
-          <a href="#" class="mnav__item mnav__item--cta" data-magnet>
-            <span class="mnav__icon">
-              <svg viewBox="0 0 64 64" aria-hidden="true">
-                <use href="#ic-phone" />
-              </svg>
-            </span>
-            <span class="mnav__label">Contact</span>
-            <span class="mnav__chev">›</span>
-          </a>
         </nav>
-
-        <div class="mnav__footer">
-          <div class="mnav__shine" aria-hidden="true"></div>
-          <p>Un petit swipe, et hop… ✨</p>
+        <div class="mnav__cta">
+          <button class="mnav__cta-btn" type="button" data-reserve-trigger>
+            <span class="mnav__cta-kicker">Contact</span>
+            <span class="mnav__cta-title">Parlons de votre projet</span>
+            <span class="mnav__cta-sub">Réponse sous 48h ouvrées</span>
+          </button>
         </div>
       </aside>
     </div>

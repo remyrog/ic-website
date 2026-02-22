@@ -1260,7 +1260,7 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   Mobile Apple-vibe Menu
+   Mobile  Menu
    ========================= */
 
 .nav__burger {
@@ -1291,6 +1291,7 @@ a.premium:focus-visible::after {
   transform-origin: 12px 12px;
 }
 
+/* Menu mobile = écran plein + fond opaque (le site disparaît) */
 .mnav {
   position: fixed;
   inset: 0;
@@ -1298,211 +1299,162 @@ a.premium:focus-visible::after {
   pointer-events: none;
 }
 
+/* backdrop: opaque */
 .mnav__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, .72);
+  background: #020617;
+  /* fond plein */
   opacity: 0;
-  transition: opacity .25s ease;
+  transition: opacity .22s ease;
 }
 
+/* sheet: panneau centré (pas transparent) */
 .mnav__sheet {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 60px;
-  border-radius: 22px;
+  position: relative;
+  width: min(640px, calc(100% - 24px));
+  margin: 72px auto 0;
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, .10);
-
-  /* OPTION 3 : opaque + texture lumineuse */
-  background:
-    radial-gradient(800px 500px at 15% 0%, rgba(247, 198, 0, .12), transparent 55%),
-    radial-gradient(700px 500px at 90% 100%, rgba(255, 94, 142, .12), transparent 55%),
-    #0d0f18;
-
-  /* Pas de blur, puisque c’est opaque */
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  /* On garde la profondeur + le “lift” */
-  box-shadow:
-    0 30px 90px rgba(0, 0, 0, .75),
-    inset 0 1px 0 rgba(255, 255, 255, .06);
-
-  transform: translateY(-14px) scale(.985);
-  opacity: 0;
   overflow: hidden;
+
+  background:
+    radial-gradient(900px 520px at 18% 10%, rgba(247, 198, 0, .10), transparent 60%),
+    radial-gradient(900px 520px at 85% 95%, rgba(255, 94, 142, .12), transparent 62%),
+    #0b0c11;
+
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .85);
+  transform: translateY(-10px) scale(.985);
+  opacity: 0;
+
   will-change: transform, opacity;
 }
 
-.mnav__sheet::after {
-  content: "";
-  position: absolute;
-  inset: -30%;
-  pointer-events: none;
-  opacity: .065;
-  mix-blend-mode: overlay;
-
-  /* Faux grain CSS : 2 couches + répétition */
-  background:
-    repeating-linear-gradient(0deg,
-      rgba(255, 255, 255, .018) 0 1px,
-      rgba(255, 255, 255, 0) 1px 3px),
-    repeating-linear-gradient(90deg,
-      rgba(0, 0, 0, .016) 0 1px,
-      rgba(0, 0, 0, 0) 1px 4px);
-
-  transform: rotate(12deg);
-  border-radius: inherit;
-}
-
-.mnav__handle {
-  display: grid;
-  place-items: center;
-  padding: 12px 0 6px;
-  cursor: pointer;
-}
-
-.mnav__handle span {
-  width: 44px;
-  height: 5px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .22);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .10);
-}
-
-.mnav__peek {
-  padding: 0 14px 12px;
-}
-
-.mnav__peek-pill {
+/* Header du menu */
+.mnav__top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(2, 6, 23, .55);
+}
+
+.mnav__top-left {
+  display: flex;
+  align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+}
+
+.mnav__title {
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+.mnav__close {
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid rgba(255, 255, 255, .10);
+  border: 1px solid rgba(148, 163, 184, .22);
+  background: rgba(255, 255, 255, .05);
+  color: #f7f7f7;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .55);
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
 }
 
-.mnav__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--pink), var(--yellow));
-  box-shadow: 0 0 14px rgba(255, 94, 142, .35);
+.mnav__close:hover {
+  border-color: rgba(247, 198, 0, .55);
+  transform: translateY(-1px);
 }
 
-.mnav__hint {
-  opacity: .7;
-  font-size: .85rem;
-  color: var(--muted);
+.mnav__close:active {
+  transform: translateY(0);
 }
 
+.mnav__close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(247, 198, 0, .22), 0 14px 34px rgba(0, 0, 0, .65);
+}
+
+/* items (garde ton style existant, juste ajuste le padding top) */
 .mnav__items {
   display: grid;
   gap: 10px;
-  padding: 0 14px 14px;
+  padding: 14px;
 }
 
-.mnav__item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 14px;
-  border-radius: 18px;
-  text-decoration: none;
-  color: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
-  border: 1px solid rgba(255, 255, 255, .10);
-  transform: translateZ(0);
+/* CTA premium isolé */
+.mnav__cta {
+  padding: 0 14px 16px;
+}
+
+.mnav__cta-btn {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(247, 198, 0, .22);
+  border-radius: 22px;
+  padding: 16px 16px;
+  cursor: pointer;
+  color: #050816;
+  background: linear-gradient(135deg, rgba(247, 198, 0, .95), rgba(255, 94, 142, .78));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .55);
   position: relative;
   overflow: hidden;
 }
 
-.mnav__item::before {
+.mnav__cta-btn::after {
   content: "";
   position: absolute;
-  inset: -40%;
-  background: radial-gradient(circle at 30% 20%, rgba(247, 198, 0, .22), transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(255, 94, 142, .18), transparent 45%);
-  opacity: 0;
-  transition: opacity .35s ease;
+  inset: -40% -60%;
+  background: linear-gradient(110deg,
+      transparent 35%,
+      rgba(255, 255, 255, .16) 45%,
+      rgba(255, 255, 255, .30) 50%,
+      rgba(255, 255, 255, .16) 55%,
+      transparent 65%);
+  transform: translateX(-40%) rotate(10deg);
+  opacity: .0;
 }
 
-.mnav__item:hover::before {
-  opacity: 1;
+.mnav__cta-btn:hover::after {
+  opacity: .9;
+  animation: mnavCtaSheen 900ms cubic-bezier(.2, .9, .2, 1) both;
 }
 
-.mnav__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: rgba(2, 6, 23, .75);
-  border: 1px solid rgba(148, 163, 184, .35);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, .55);
-  flex-shrink: 0;
-}
-
-.mnav__icon svg {
-  width: 26px;
-  height: 26px;
-  transform-origin: center;
-  transition: transform .45s cubic-bezier(.2, .8, .2, 1), filter .25s ease;
-}
-
-.mnav__label {
-  font-weight: 900;
-  letter-spacing: .2px;
-}
-
-.mnav__chev {
-  margin-left: auto;
-  opacity: .75;
-  font-size: 22px;
-  transform: translateX(0);
-  transition: transform .25s ease, opacity .25s ease;
-}
-
-.mnav__item:hover .mnav__icon svg {
-  transform: translateY(-2px) rotate(-6deg) scale(1.06);
-  filter: drop-shadow(0 0 10px rgba(247, 198, 0, .18));
-}
-
-.mnav__item:hover .mnav__chev {
-  transform: translateX(4px);
-  opacity: 1;
-}
-
-.mnav__item--cta {
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: linear-gradient(135deg, rgba(255, 94, 142, .22), rgba(247, 198, 0, .16));
-}
-
-.mnav__footer {
-  position: relative;
-  padding: 12px 16px 16px;
-  border-top: 1px solid rgba(255, 255, 255, .08);
-  color: rgba(248, 250, 252, .82);
-}
-
-.mnav__shine {
-  position: absolute;
-  inset: -60% -30%;
-  background: conic-gradient(from 180deg, rgba(255, 94, 142, .0), rgba(255, 94, 142, .18), rgba(247, 198, 0, .12), rgba(255, 94, 142, .0));
-  filter: blur(22px);
-  opacity: .55;
-  animation: mnavShine 4.8s linear infinite;
-  pointer-events: none;
-}
-
-@keyframes mnavShine {
+@keyframes mnavCtaSheen {
   to {
-    transform: rotate(360deg);
+    transform: translateX(40%) rotate(10deg);
+    opacity: 0;
   }
+}
+
+.mnav__cta-kicker {
+  display: block;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: .72rem;
+  opacity: .8;
+}
+
+.mnav__cta-title {
+  display: block;
+  font-weight: 950;
+  font-size: 1.15rem;
+  margin-top: 2px;
+}
+
+.mnav__cta-sub {
+  display: block;
+  margin-top: 4px;
+  font-weight: 750;
+  opacity: .75;
+  font-size: .92rem;
 }
 
 /* état ouvert */
@@ -1519,121 +1471,14 @@ a.premium:focus-visible::after {
   transform: translateY(0) scale(1);
 }
 
-/* burger -> X */
-.nav.is-menu-open .burger-top {
-  transform: translateY(5px) rotate(45deg);
-}
-
-.nav.is-menu-open .burger-mid {
-  opacity: 0;
-  transform: scaleX(.7);
-}
-
-.nav.is-menu-open .burger-bot {
-  transform: translateY(-5px) rotate(-45deg);
-}
-
-/* Mobile only */
-@media (max-width: 760px) {
-  .nav__links {
-    display: none;
-  }
-
-  .nav__burger {
-    display: inline-grid;
-    place-items: center;
-  }
-}
-
-/* === Insolent FX === */
-
-/* Sheen qui traverse chaque item à l'ouverture / hover */
-.mnav__item::after {
-  content: "";
-  position: absolute;
-  inset: -40% -60%;
-  background: linear-gradient(110deg,
-      transparent 35%,
-      rgba(255, 255, 255, .10) 45%,
-      rgba(255, 255, 255, .22) 50%,
-      rgba(255, 255, 255, .10) 55%,
-      transparent 65%);
-  transform: translateX(-30%) rotate(12deg);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.mnav.is-open .mnav__item::after {
-  animation: mnavSheen 900ms cubic-bezier(.2, .9, .2, 1) both;
-  animation-delay: calc(var(--i, 0) * 60ms);
-}
-
-@keyframes mnavSheen {
-  0% {
-    opacity: 0;
-    transform: translateX(-55%) rotate(12deg);
-  }
-
-  15% {
-    opacity: .55;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(55%) rotate(12deg);
-  }
-}
-
-/* Hover: petit "insolent wiggle" */
-.mnav__item:hover {
-  transform: translateY(-1px) scale(1.01);
-}
-
-/* Icônes: un poil plus "pop" */
-.mnav__icon {
-  position: relative;
-  overflow: hidden;
-}
-
-.mnav__icon::after {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  background: radial-gradient(circle at 30% 25%, rgba(247, 198, 0, .24), transparent 45%),
-    radial-gradient(circle at 70% 80%, rgba(255, 94, 142, .20), transparent 50%);
-  opacity: .0;
-  transition: opacity .25s ease;
-}
-
-.mnav__item:hover .mnav__icon::after {
-  opacity: .9;
-}
-
-/* Une légère “respiration” sur le handle */
-.mnav.is-open .mnav__handle span {
-  animation: mnavBreath 1.8s ease-in-out infinite;
-}
-
-@keyframes mnavBreath {
-
-  0%,
-  100% {
-    transform: scaleX(1);
-    opacity: .85;
-  }
-
-  50% {
-    transform: scaleX(1.12);
-    opacity: 1;
-  }
-}
-
 /* FIX SCROLL HORIZONTAL */
-html, body {
+html,
+body {
   overflow-x: clip;
 }
 
 /* Le SVG hero ne doit jamais créer une largeur scrollable */
 .scene {
-  overflow: hidden; /* au lieu de visible */
+  overflow: hidden;
+  /* au lieu de visible */
 }
