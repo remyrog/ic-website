@@ -183,4 +183,46 @@ window.addEventListener('DOMContentLoaded', () => {
             onEnterBack: () => updateNav(section)
         });
     });
+
+    (function () {
+        const p = document.querySelector(".tech-stack");
+        if (!p) return;
+
+        const raw = p.textContent || "";
+
+        // Sépare le label "Environnements techniques :" du reste
+        const split = raw.split(":");
+        if (split.length < 2) return;
+
+        const label = split[0].trim() + " :";
+        const rest = split.slice(1).join(":").trim();
+
+        // On coupe avant "ainsi que" / "avec" pour ne garder que la stack en tags
+        const cut = rest
+            .split(/\bainsi que\b|\bavec des outils\b|\bavec un outil\b/i)[0]
+            .trim()
+            .replace(/\.$/, "");
+
+        // Tokenize: virgules + slashes
+        const tokens = cut
+            .split(",")
+            .map(s => s.trim())
+            .filter(Boolean)
+            .flatMap(s => s.includes(" / ") ? s.split(" / ").map(x => x.trim()) : [s]);
+
+        // Reconstruit un rendu premium
+        p.innerHTML = `<span class="tech-label">${label}</span>`;
+
+        const wrap = document.createElement("div");
+        wrap.className = "tech-tags";
+
+        tokens.forEach(t => {
+            const tag = document.createElement("span");
+            tag.className = "tech-tag";
+            tag.textContent = t;
+            wrap.appendChild(tag);
+        });
+
+        p.appendChild(wrap);
+    })();
 });
