@@ -1471,15 +1471,56 @@ a.premium:focus-visible::after {
   transform: translateY(0) scale(1);
 }
 
-/* Mobile only: on cache le menu desktop, on affiche le burger */
-@media (max-width: 760px) {
-  .nav__links { display: none !important; }
-  .nav__burger { display: inline-grid !important; place-items: center; }
+.mnav__brand{
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.55));
+  opacity: .95;
 }
 
-/* Quand le menu mobile est ouvert, la nav ne doit pas interférer */
-.nav.is-menu-open { z-index: 1; }      /* ou opacity:0 si tu préfères */
-.mnav { z-index: 3000; }               /* au-dessus de tout */
+/* =========================
+   MOBILE NAV: burger only
+   ========================= */
+@media (max-width: 760px) {
+
+  /* On cache tout ce qui fait "sticky bar" */
+  .nav {
+    /* on garde la nav EXISTANTE (sinon .mnav devient invisible) */
+    width: auto;
+    margin: 0;
+    inset-inline: auto;
+    left: auto;
+    right: 12px;
+    top: 12px;
+
+    /* plus de barre */
+    background: transparent;
+    border: 0;
+    backdrop-filter: none;
+    padding: 0;
+    border-radius: 0;
+
+    /* évite tout effet "barre" */
+    box-shadow: none;
+  }
+
+  /* Logo + liens + progress = off */
+  .nav > .logo,
+  .nav__links,
+  .progress {
+    display: none !important;
+  }
+
+  /* Burger = on */
+  .nav__burger {
+    display: inline-grid !important;
+    place-items: center;
+  }
+
+  /* Assure le menu au-dessus de tout */
+  .mnav { z-index: 3000; }
+}
 
 /* FIX SCROLL HORIZONTAL */
 html,
