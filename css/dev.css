@@ -1165,152 +1165,174 @@ body.reserve-scroll-lock {
 }
 
 /* =========================================================
-   Réserver modal — sobre premium (mail gradient + titre coloré)
+   RESERVE MODAL — Mobile harmony + Dark sober background (override final)
+   Colle tout en bas du CSS (prioritaire)
    ========================================================= */
 
-/* Garde overlay scrollable */
+/* Overlay : garder scroll + centrage, z-index sûr */
 .reserve-overlay{
   position: fixed;
   inset: 0;
+  z-index: 1000;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 2.2rem 1.2rem;
+  padding: 1.1rem 1.0rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-@media (max-height:760px){ .reserve-overlay{ align-items:flex-start; } }
 
-/* IMPORTANT : rendu clean (clipping coins arrondis) */
+/* Backdrop plus sobre (moins “gris jaune”) */
+.reserve-backdrop{
+  background: rgba(2, 6, 23, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Dialog : fond sombre premium, sans voile jaune */
 .reserve-dialog{
-  max-height: none !important;
+  width: min(560px, calc(100vw - 2rem));
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, rgba(5,8,22,.94), rgba(5,8,22,.88));
+  border: 1px solid rgba(148,163,184,.22);
+  box-shadow: 0 28px 80px rgba(0,0,0,.78);
   overflow: hidden !important;
 }
 
-/* On pilote la hauteur via JS */
-.reserve-flip-inner{ height: var(--reserve-card-h, auto); }
+/* Close : sobre, sans dégradé jaune */
+.reserve-close{
+  border: 1px solid rgba(148,163,184,0.22);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+}
+.reserve-close:hover{
+  border-color: rgba(236,72,153,.55);
+}
+.reserve-close:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(236,72,153,.22), 0 12px 28px rgba(0,0,0,.55);
+}
 
-/* Titre coloré (gradient subtil) */
+/* Faces : retirer les gros fonds jaunes/roses */
+.reserve-front,
+.reserve-back{
+  background:
+    radial-gradient(900px 380px at 50% 0%, rgba(236,72,153,0.10), transparent 58%),
+    radial-gradient(900px 380px at 50% 100%, rgba(148,163,184,0.07), transparent 60%);
+}
+
+/* Padding & rythme : plus compact et centré */
+.reserve-flip{
+  padding: 1.15rem 1.05rem 1.05rem;
+}
+.reserve-face{
+  gap: .6rem;
+  padding: 1.05rem .95rem;
+  text-align: center;
+}
+
+/* Titre : gradient plus “noble” (rose -> violet), moins jaune */
 .reserve-title{
-  margin: 0 0 .35rem;
-  font-weight: 900;
-  letter-spacing: .02em;
-  background: linear-gradient(135deg, rgba(247,198,0,.95), rgba(236,72,153,.75));
+  margin: 0 0 .25rem;
+  font-weight: 950;
+  letter-spacing: .01em;
+  background: linear-gradient(135deg, rgba(236,72,153,0.95), rgba(167,139,250,0.90));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Sous-titre plus discret, plus “luxe” */
+/* Sous-titre : plus petit et plus doux */
 .reserve-subtitle{
-  margin: 0 0 1.0rem;
-  font-size: .92rem;          /* plus petit */
-  line-height: 1.35;
-  color: rgba(229,231,235,.70);
+  margin: 0 0 .85rem;
+  font-size: .90rem;
+  line-height: 1.32;
+  color: rgba(229,231,235,.66);
+  max-width: 36ch;
 }
 
-/* Block email : plus sobre (moins “grosse carte”) */
+/* Bloc email : plus compact, plus aligné */
 .reserve-block{
-  width: 100%;
-  max-width: 520px;
-  text-align: left;
-  padding: .75rem .85rem;
+  padding: .65rem .75rem;
   border-radius: 16px;
-  border: 1px solid rgba(148,163,184,.16);
+  border: 1px solid rgba(148,163,184,.14);
   background: rgba(255,255,255,.02);
 }
 
-/* Row : mail + copy sur une ligne */
+/* Email + Copier : SUR UNE LIGNE (important) */
 .reserve-row{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .7rem;
+  gap: .65rem;
+  flex-wrap: nowrap;       /* <-- empêche le passage à la ligne */
 }
-.reserve-row > *{ min-width: 0; } /* crucial pour l’ellipsis dans un flex */
+.reserve-row > *{ min-width: 0; }
 
-/* EMAIL : texte fin + gradient, sans bulle */
+/* Email : ellipsis + gradient fin */
 .reserve-mail{
   display: inline-block;
+  min-width: 0;
   max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  padding: 0;                 /* pas de pill */
+  padding: 0;
   border: 0;
   background: none;
   box-shadow: none;
 
-  font-weight: 650;           /* plus fin */
+  font-weight: 650;
   letter-spacing: .01em;
   text-decoration: none;
 
-  background: linear-gradient(135deg, rgba(247,198,0,.95), rgba(236,72,153,.85));
+  background: linear-gradient(135deg, rgba(236,72,153,0.95), rgba(167,139,250,0.90));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 
   opacity: .95;
-  transition: opacity .18s ease, transform .18s ease;
-}
-.reserve-mail:hover{ opacity: 1; transform: translateY(-1px); }
-.reserve-mail:focus-visible{
-  outline: none;
-  text-shadow: 0 0 18px rgba(247,198,0,.18);
 }
 
-/* Bouton copier : petit pill clean (déjà premium) */
+/* Copier : petit pill plus discret (et moins haut) */
 .reserve-btn--sm{
-  padding: .56rem .82rem;
+  padding: .52rem .72rem;
   font-weight: 850;
-  font-size: .92rem;
+  font-size: .90rem;
+  white-space: nowrap;
 }
 
-/* Actions : garde ton layout, juste un peu plus compact */
+/* Actions : sur mobile, full width, centrées, harmonieuses */
 .reserve-actions{
   margin-top: .85rem;
-}
-
-.reserve-front-loader{
-  margin-top: .85rem;
-  display: inline-flex;
-  align-items: center;
+  display: grid;
+  width: 100%;
+  max-width: 520px;
+  grid-template-columns: 1fr;
   gap: .65rem;
-  opacity: .86;
+}
+.reserve-actions .reserve-btn{
+  width: 100%;
+  justify-content: center;
 }
 
-.reserve-front-loader-label{
-  font-size: .9rem;
-  color: rgba(229,231,235,.66);
-  letter-spacing: .01em;
-  font-weight: 650;
+/* Bouton primaire : garde gradient mais plus “deep”, moins jaune */
+.reserve-btn--primary{
+  --btn-text: #050816;
+  background: linear-gradient(135deg, rgba(236,72,153,0.92), rgba(167,139,250,0.88));
+  --btn-border: rgba(236,72,153,0.34);
+}
+.reserve-btn--primary:hover{
+  border-color: rgba(236,72,153,0.70);
+  box-shadow: 0 20px 44px rgba(0,0,0,.55);
 }
 
-.reserve-front-dots{
-  display: inline-flex;
-  gap: .28rem;
-  transform: translateY(1px);
-}
-
-.reserve-front-dots i{
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: rgba(247,198,0,.85);
-  opacity: .35;
-  animation: reserveDotPulse 1.2s infinite ease-in-out;
-}
-
-.reserve-front-dots i:nth-child(2){ animation-delay: .12s; }
-.reserve-front-dots i:nth-child(3){ animation-delay: .24s; }
-
-@keyframes reserveDotPulse{
-  0%, 100%{ transform: translateY(0); opacity: .28; }
-  50%{ transform: translateY(-4px); opacity: .9; }
-}
-
-/* Respecte le reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .reserve-front-dots i{ animation: none; opacity: .6; }
+/* Ajustements mobile */
+@media (max-width: 520px){
+  .reserve-overlay{ padding: 1.05rem .85rem; }
+  .reserve-dialog{ width: min(520px, calc(100vw - 1.4rem)); }
+  .reserve-front-title{ font-size: 1.25rem; }
+  .reserve-front-sub{ font-size: .92rem; }
+  .reserve-front-meta{ font-size: .88rem; }
 }
