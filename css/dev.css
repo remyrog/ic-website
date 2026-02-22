@@ -1233,3 +1233,31 @@ section.grid {
   background-clip: text;
   color: transparent;
 }
+
+/* =========================================================
+   RESERVE MODAL — Fond sombre FRONT + BACK (override final)
+   Colle tout en bas
+   ========================================================= */
+
+/* Annule le transparent forcé */
+.reserve-front,
+.reserve-back{
+  background: none !important; /* reset */
+}
+
+/* Fond sombre identique sur les 2 faces (sobre premium) */
+.reserve-front,
+.reserve-back{
+  background:
+    radial-gradient(1000px 520px at 50% 0%, rgba(148,163,184,0.10), transparent 62%),
+    radial-gradient(900px 480px at 50% 100%, rgba(5,8,22,0.72), transparent 64%),
+    linear-gradient(180deg, rgba(5,8,22,0.28), rgba(5,8,22,0.12)) !important;
+}
+
+/* Si tu veux garder une touche charte sur le BACK, ultra légère, sans "voile jaune terne" */
+.reserve-back{
+  background:
+    radial-gradient(900px 420px at 50% 0%, rgba(247,198,0,0.08), transparent 66%),
+    radial-gradient(900px 420px at 50% 100%, rgba(236,72,153,0.08), transparent 68%),
+    linear-gradient(180deg, rgba(5,8,22,0.26), rgba(5,8,22,0.12)) !important;
+}
