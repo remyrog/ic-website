@@ -133,11 +133,19 @@
 
     function computeBounds() {
       if (!svg) return;
+
       const vb = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
       const width = vb ? vb.width : svg.clientWidth;
 
-      const bb = sun.getBBox();
-      // Distance restante vers la droite avant de toucher le bord (en tenant compte de la marge)
+      let bb;
+      try {
+        bb = sun.getBBox();
+      } catch (e) {
+        // Chrome peut throw si pas “rendered” au moment T → on réessaie au prochain frame
+        requestAnimationFrame(computeBounds);
+        return;
+      }
+
       maxX = Math.max(0, (width - marginR) - (bb.x + bb.width));
     }
 
