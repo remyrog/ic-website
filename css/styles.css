@@ -1620,3 +1620,13 @@ a.premium:focus-visible::after {
     opacity: 1;
   }
 }
+
+/* FIX SCROLL HORIZONTAL */
+html, body {
+  overflow-x: clip;
+}
+
+/* Le SVG hero ne doit jamais créer une largeur scrollable */
+.scene {
+  overflow: hidden; /* au lieu de visible */
+}
