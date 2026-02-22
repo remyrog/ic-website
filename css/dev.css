@@ -796,11 +796,10 @@ section.grid {
 }
 
 /* =========================================================
-   RESERVE MODAL — SINGLE SOURCE OF TRUTH (paste at very end)
-   - Front: dark premium (no yellow wash)
-   - Back: yellow/pink brand accents
-   - Restores buttons/blocks/layout so no default blue links
-   - Highlights quote + restores loader dots
+   RESERVE MODAL — CLEAN FINAL (blue night background)
+   - Front & Back: dark blue night like page background
+   - Brand colors only as accents (title/email/CTA/loader)
+   - Quote subtle + premium
    ========================================================= */
 
 .reserve-overlay{
@@ -814,7 +813,7 @@ section.grid {
   align-items: center;
   justify-content: center;
 }
-.reserve-overlay[hidden]{ display:none; }
+.reserve-overlay[hidden]{ display: none; }
 
 .reserve-backdrop{
   position: absolute;
@@ -828,11 +827,24 @@ section.grid {
   position: relative;
   width: min(560px, calc(100vw - 2.4rem));
   border-radius: var(--radius-xl);
-  background: linear-gradient(180deg, rgba(5,8,22,.94), rgba(5,8,22,.88));
+  background: var(--bg); /* bleu nuit */
   border: 1px solid rgba(148,163,184,.22);
   box-shadow: 0 28px 80px rgba(0,0,0,.78);
   overflow: hidden;
   transform-style: preserve-3d;
+}
+
+/* léger “sheen” premium sans jaune terne */
+.reserve-dialog::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .75;
+  background:
+    radial-gradient(900px 420px at 20% 10%, rgba(236,72,153,0.10), transparent 60%),
+    radial-gradient(900px 420px at 80% 20%, rgba(247,198,0,0.08), transparent 62%),
+    radial-gradient(900px 520px at 50% 100%, rgba(148,163,184,0.07), transparent 65%);
 }
 
 .reserve-close{
@@ -852,8 +864,12 @@ section.grid {
   display: inline-grid;
   place-items: center;
   box-shadow: 0 10px 26px rgba(0,0,0,.45);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
-.reserve-close:hover{ border-color: rgba(247,198,0,0.55); transform: translateY(-1px); }
+.reserve-close:hover{
+  border-color: rgba(247,198,0,0.55);
+  transform: translateY(-1px);
+}
 .reserve-close:active{ transform: translateY(0); }
 .reserve-close:focus-visible{
   outline: none;
@@ -868,9 +884,10 @@ section.grid {
   position: relative;
   transform-style: preserve-3d;
   min-height: 260px;
-  height: var(--reserve-card-h, auto); /* piloté par ton JS */
+  height: var(--reserve-card-h, auto); /* piloté par le JS */
 }
 
+/* Faces : fond bleu nuit identique (front & back) */
 .reserve-face{
   position: absolute;
   inset: 0;
@@ -882,15 +899,14 @@ section.grid {
   gap: .72rem;
   padding: 1.15rem 1.05rem;
   text-align: center;
+  background: transparent; /* on laisse la dialog gérer le fond */
+}
+.reserve-front{ /* pas de fond “jaune” */ }
+.reserve-back{
+  transform: rotateY(180deg);
 }
 
-/* FRONT — dark premium, no yellow wash */
-.reserve-front{
-  background:
-    radial-gradient(900px 420px at 50% 0%, rgba(148,163,184,0.08), transparent 60%),
-    radial-gradient(900px 420px at 50% 100%, rgba(5,8,22,0.65), transparent 62%),
-    linear-gradient(180deg, rgba(5,8,22,0.35), rgba(5,8,22,0.15));
-}
+/* FRONT */
 .reserve-front-badge{
   display: inline-flex;
   align-items: center;
@@ -898,13 +914,17 @@ section.grid {
   font-size: .78rem;
   letter-spacing: .10em;
   text-transform: uppercase;
-  color: rgba(254,252,232,0.92);
-  opacity: .9;
+  color: rgba(229,231,235,0.78);
+  opacity: .95;
 }
 .reserve-front-title{
   font-size: 1.55rem;
   font-weight: 850;
   letter-spacing: -.02em;
+  background: linear-gradient(90deg, var(--yellow), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .reserve-front-sub{
   color: rgba(156,163,175,0.92);
@@ -912,36 +932,31 @@ section.grid {
   max-width: 40ch;
 }
 
-/* Quote highlight (front meta) */
+/* Citation (subtile, premium) */
 .reserve-front-meta{
   margin-top: .25rem;
-  max-width: 48ch;
-  font-size: 1.08rem;
-  line-height: 1.35;
-  color: rgba(229,231,235,0.92);
-  font-weight: 650;
+  max-width: 52ch;
+  font-size: .98rem;
+  line-height: 1.45;
+  color: rgba(229,231,235,0.74);
+  font-weight: 600;
   letter-spacing: .005em;
-
-  padding: .85rem 1.05rem;
-  border-radius: 18px;
-  border: 1px solid rgba(148,163,184,0.16);
-  background: rgba(255,255,255,0.03);
-  box-shadow: 0 14px 34px rgba(0,0,0,.35);
+  padding: .25rem 0 .25rem .85rem;
+  position: relative;
 }
 .reserve-front-meta::before{
-  content: "“";
-  display: block;
-  font-size: 2rem;
-  line-height: 1;
-  margin-bottom: .15rem;
-  background: linear-gradient(90deg, var(--yellow), var(--pink));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  opacity: .9;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .35rem;
+  bottom: .35rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--pink), var(--yellow));
+  opacity: .85;
 }
 
-/* Loader restored */
+/* Loader */
 .reserve-front-loader{
   margin-top: .85rem;
   display: inline-flex;
@@ -978,15 +993,7 @@ section.grid {
   .reserve-front-dots i{ animation: none; opacity: .65; }
 }
 
-/* BACK — brand accents yellow/pink */
-.reserve-back{
-  transform: rotateY(180deg);
-  background:
-    radial-gradient(1000px 420px at 50% 0%, rgba(247,198,0,0.12), transparent 62%),
-    radial-gradient(900px 360px at 50% 100%, rgba(236,72,153,0.12), transparent 64%),
-    linear-gradient(180deg, rgba(5,8,22,0.10), rgba(5,8,22,0.06));
-}
-
+/* BACK */
 .reserve-title{
   margin: 0 0 .35rem;
   font-weight: 900;
@@ -1023,7 +1030,6 @@ section.grid {
 }
 .reserve-row > *{ min-width: 0; }
 
-/* Email: gradient text, not browser blue */
 .reserve-mail{
   display: inline-block;
   min-width: 0;
@@ -1031,7 +1037,6 @@ section.grid {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
   color: transparent;
   text-decoration: none;
   font-weight: 650;
@@ -1042,7 +1047,7 @@ section.grid {
 }
 .reserve-mail:hover{ filter: brightness(1.08); transform: translateY(-1px); }
 
-/* Premium buttons (restore!) */
+/* Buttons */
 .reserve-btn{
   --btn-bg: rgba(255,255,255,0.05);
   --btn-border: rgba(148,163,184,0.24);
@@ -1087,7 +1092,6 @@ section.grid {
   outline: none;
   box-shadow: 0 0 0 3px rgba(247,198,0,0.22), 0 18px 40px rgba(0,0,0,.55);
 }
-
 .reserve-btn--ghost{
   --btn-bg: rgba(255,255,255,0.04);
   --btn-border: rgba(148,163,184,0.24);
@@ -1108,7 +1112,7 @@ section.grid {
   white-space: nowrap;
 }
 
-/* Actions: desktop 2 cols, mobile 1 col */
+/* Actions layout */
 .reserve-actions{
   display: grid;
   width: 100%;
@@ -1123,7 +1127,6 @@ section.grid {
 @media (max-width: 520px){
   .reserve-overlay{ padding: 1.05rem .85rem; }
   .reserve-dialog{ width: min(520px, calc(100vw - 1.4rem)); }
-
   .reserve-actions{ grid-template-columns: 1fr; gap: .65rem; }
 
   .reserve-row{
@@ -1132,132 +1135,4 @@ section.grid {
     gap: .6rem;
   }
   .reserve-mail{ flex: 1 1 100%; }
-}
-
-/* =========================================================
-   RESERVE MODAL — Front more colorful + No face backgrounds + Quote subtle
-   Colle tout en bas
-   ========================================================= */
-
-/* 1) On enlève le "fond" des faces (front/back) */
-.reserve-front,
-.reserve-back{
-  background: transparent !important;
-}
-
-/* 2) On met le rendu premium + couleurs sur la DIALOG (pas sur les faces) */
-.reserve-dialog{
-  /* base dark + accents */
-  background:
-    radial-gradient(900px 420px at 50% 0%, rgba(236,72,153,0.16), transparent 58%),
-    radial-gradient(900px 420px at 50% 100%, rgba(247,198,0,0.12), transparent 62%),
-    linear-gradient(180deg, rgba(5,8,22,.94), rgba(5,8,22,.88)) !important;
-}
-
-/* Optionnel : un léger voile "premium" qui ne gêne pas le texte */
-.reserve-dialog::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: .85;
-  background:
-    radial-gradient(700px 320px at 20% 10%, rgba(247,198,0,0.12), transparent 55%),
-    radial-gradient(700px 320px at 80% 20%, rgba(236,72,153,0.14), transparent 58%);
-}
-
-/* 3) PLUS de couleurs sur la phase FRONT uniquement (sans repeindre le back) */
-.reserve-front{
-  /* on rajoute un glow via le texte plutôt que via un gros fond */
-}
-.reserve-front-title{
-  background: linear-gradient(90deg, rgba(247,198,0,0.95), rgba(236,72,153,0.92));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 18px rgba(236,72,153,0.14);
-}
-.reserve-front-badge{
-  color: rgba(254,252,232,0.92);
-}
-.reserve-front-sub{
-  color: rgba(229,231,235,0.70);
-}
-
-/* Loader un peu plus "coloré" */
-.reserve-front-dots i{
-  background: linear-gradient(135deg, rgba(247,198,0,1), rgba(236,72,153,1)) !important;
-}
-
-/* 4) Citation plus discrète / premium */
-.reserve-front-meta{
-  margin-top: .35rem;
-  max-width: 52ch;
-  font-size: .98rem;
-  line-height: 1.45;
-  color: rgba(229,231,235,0.74);
-  font-weight: 600;
-  letter-spacing: .005em;
-
-  /* plus de gros bloc */
-  padding: .25rem 0 .25rem .85rem;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  border-radius: 0;
-
-  position: relative;
-}
-.reserve-front-meta::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: .35rem;
-  bottom: .35rem;
-  width: 3px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--pink), var(--yellow));
-  opacity: .85;
-}
-
-/* On enlève le gros guillemet */
-.reserve-front-meta::after{
-  content: none;
-}
-
-/* 5) Back garde la charte via tes titres/boutons/email (pas via un fond) */
-.reserve-title,
-.reserve-mail{
-  background: linear-gradient(90deg, var(--yellow), var(--pink));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* =========================================================
-   RESERVE MODAL — Fond sombre FRONT + BACK (override final)
-   Colle tout en bas
-   ========================================================= */
-
-/* Annule le transparent forcé */
-.reserve-front,
-.reserve-back{
-  background: none !important; /* reset */
-}
-
-/* Fond sombre identique sur les 2 faces (sobre premium) */
-.reserve-front,
-.reserve-back{
-  background:
-    radial-gradient(1000px 520px at 50% 0%, rgba(148,163,184,0.10), transparent 62%),
-    radial-gradient(900px 480px at 50% 100%, rgba(5,8,22,0.72), transparent 64%),
-    linear-gradient(180deg, rgba(5,8,22,0.28), rgba(5,8,22,0.12)) !important;
-}
-
-/* Si tu veux garder une touche charte sur le BACK, ultra légère, sans "voile jaune terne" */
-.reserve-back{
-  background:
-    radial-gradient(900px 420px at 50% 0%, rgba(247,198,0,0.08), transparent 66%),
-    radial-gradient(900px 420px at 50% 100%, rgba(236,72,153,0.08), transparent 68%),
-    linear-gradient(180deg, rgba(5,8,22,0.26), rgba(5,8,22,0.12)) !important;
 }
