@@ -1,3 +1,25 @@
+/* === RESERVE MODAL : variables + reset local (pour rendu identique partout) === */
+:root {
+    /* Fallbacks si la page ne définit pas ces tokens (ex: site principal) */
+    --reserve-bg: var(--bg, #020617);
+    --reserve-text: var(--text, #e5e7eb);
+    --reserve-radius-xl: var(--radius-xl, 26px);
+    --reserve-radius-full: var(--radius-full, 999px);
+}
+
+/* Reset local (évite dépendance au reset de dev.css) */
+.reserve-overlay,
+.reserve-overlay * {
+    box-sizing: border-box;
+}
+
+.reserve-overlay {
+    z-index: 3000;
+    /* > nav (1200) et > menu mobile (2000) */
+    color: var(--reserve-text);
+    font-family: inherit;
+}
+
 /* =========================================================
    RESERVE MODAL — CLEAN FINAL (blue night background)
    - Front & Back: dark blue night like page background
@@ -32,8 +54,8 @@
 .reserve-dialog {
     position: relative;
     width: min(560px, calc(100vw - 2.4rem));
-    border-radius: var(--radius-xl);
-    background: var(--bg);
+    border-radius: var(--reserve-radius-xl);
+    background: var(--reserve-bg);
     /* bleu nuit */
     border: 1px solid rgba(148, 163, 184, .22);
     box-shadow: 0 28px 80px rgba(0, 0, 0, .78);
@@ -61,10 +83,10 @@
     z-index: 10;
     width: 42px;
     height: 42px;
-    border-radius: 999px;
+    border-radius: var(--reserve-radius-full);
     border: 1px solid rgba(148, 163, 184, 0.22);
     background: rgba(255, 255, 255, 0.05);
-    color: var(--text);
+    color: var(--reserve-text);
     font-size: 24px;
     line-height: 1;
     cursor: pointer;
@@ -72,6 +94,7 @@
     place-items: center;
     box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
     transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+
 }
 
 .reserve-close:hover {
@@ -243,6 +266,8 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    font-size: 1.35rem;
+    line-height: 1.15;
 }
 
 .reserve-subtitle {
