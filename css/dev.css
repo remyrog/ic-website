@@ -1133,3 +1133,103 @@ section.grid {
   }
   .reserve-mail{ flex: 1 1 100%; }
 }
+
+/* =========================================================
+   RESERVE MODAL — Front more colorful + No face backgrounds + Quote subtle
+   Colle tout en bas
+   ========================================================= */
+
+/* 1) On enlève le "fond" des faces (front/back) */
+.reserve-front,
+.reserve-back{
+  background: transparent !important;
+}
+
+/* 2) On met le rendu premium + couleurs sur la DIALOG (pas sur les faces) */
+.reserve-dialog{
+  /* base dark + accents */
+  background:
+    radial-gradient(900px 420px at 50% 0%, rgba(236,72,153,0.16), transparent 58%),
+    radial-gradient(900px 420px at 50% 100%, rgba(247,198,0,0.12), transparent 62%),
+    linear-gradient(180deg, rgba(5,8,22,.94), rgba(5,8,22,.88)) !important;
+}
+
+/* Optionnel : un léger voile "premium" qui ne gêne pas le texte */
+.reserve-dialog::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .85;
+  background:
+    radial-gradient(700px 320px at 20% 10%, rgba(247,198,0,0.12), transparent 55%),
+    radial-gradient(700px 320px at 80% 20%, rgba(236,72,153,0.14), transparent 58%);
+}
+
+/* 3) PLUS de couleurs sur la phase FRONT uniquement (sans repeindre le back) */
+.reserve-front{
+  /* on rajoute un glow via le texte plutôt que via un gros fond */
+}
+.reserve-front-title{
+  background: linear-gradient(90deg, rgba(247,198,0,0.95), rgba(236,72,153,0.92));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(236,72,153,0.14);
+}
+.reserve-front-badge{
+  color: rgba(254,252,232,0.92);
+}
+.reserve-front-sub{
+  color: rgba(229,231,235,0.70);
+}
+
+/* Loader un peu plus "coloré" */
+.reserve-front-dots i{
+  background: linear-gradient(135deg, rgba(247,198,0,1), rgba(236,72,153,1)) !important;
+}
+
+/* 4) Citation plus discrète / premium */
+.reserve-front-meta{
+  margin-top: .35rem;
+  max-width: 52ch;
+  font-size: .98rem;
+  line-height: 1.45;
+  color: rgba(229,231,235,0.74);
+  font-weight: 600;
+  letter-spacing: .005em;
+
+  /* plus de gros bloc */
+  padding: .25rem 0 .25rem .85rem;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+
+  position: relative;
+}
+.reserve-front-meta::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .35rem;
+  bottom: .35rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--pink), var(--yellow));
+  opacity: .85;
+}
+
+/* On enlève le gros guillemet */
+.reserve-front-meta::after{
+  content: none;
+}
+
+/* 5) Back garde la charte via tes titres/boutons/email (pas via un fond) */
+.reserve-title,
+.reserve-mail{
+  background: linear-gradient(90deg, var(--yellow), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
