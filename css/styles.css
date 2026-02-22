@@ -1471,6 +1471,16 @@ a.premium:focus-visible::after {
   transform: translateY(0) scale(1);
 }
 
+/* Mobile only: on cache le menu desktop, on affiche le burger */
+@media (max-width: 760px) {
+  .nav__links { display: none !important; }
+  .nav__burger { display: inline-grid !important; place-items: center; }
+}
+
+/* Quand le menu mobile est ouvert, la nav ne doit pas interférer */
+.nav.is-menu-open { z-index: 1; }      /* ou opacity:0 si tu préfères */
+.mnav { z-index: 3000; }               /* au-dessus de tout */
+
 /* FIX SCROLL HORIZONTAL */
 html,
 body {
