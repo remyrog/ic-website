@@ -15,7 +15,7 @@
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
 
   // Réglages timing (ici tu ajustes facilement)
-  const FLIP_START_AT = 3;   // quand le flip démarre (front reste visible jusque là)
+  const FLIP_START_AT = 5;   // quand le flip démarre (front reste visible jusque là)
   const FLIP_DUR_IN = 0.55;     // phase vers 220°
   const FLIP_DUR_OUT = 0.55;    // settle vers 180°
   const FACE_SWAP_EPS = 0.05;   // marge pour basculer l'ARIA juste avant la fin du flip
@@ -89,7 +89,7 @@
             <div class="reserve-face reserve-front" aria-hidden="false">
               <div class="reserve-front-badge">Réservation</div>
               <div class="reserve-front-title">Parlons de votre projet</div>
-              <div class="reserve-front-sub">Un message suffit — réponse sous 24h ouvrées.</div>
+              <div class="reserve-front-sub">Réponse sous 48h ouvrées.</div>
               <div class="reserve-front-meta">Le premier contact ne vend rien : il ouvre une confiance.</div>
               <div class="reserve-front-loader" aria-hidden="true">
                 <span class="reserve-front-loader-label">Chargement de la confiance...</span>
