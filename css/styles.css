@@ -1571,93 +1571,77 @@ a.premium:focus-visible::after {
 
 @media (max-width: 760px) {
 
-  /* Nav = juste une rangée de bulles (logo gauche + burger droite) */
-  .nav {
-    width: auto;
+  /* Nav mobile : logo gauche / burger droite (solide iOS) */
+  .nav{
+    position: fixed;
+    top: 12px;
     left: 12px;
     right: 12px;
-    top: 12px;
+
+    width: auto;                /* left+right => largeur */
     margin: 0;
-    inset-inline: auto;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     background: transparent;
     border: 0;
     backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     padding: 0;
     border-radius: 0;
     box-shadow: none;
   }
 
   /* On cache les liens desktop uniquement */
-  .nav__links {
-    display: none !important;
-  }
+  .nav__links{ display: none !important; }
 
-  /* Logo sticky (sans bulle) */
-  .nav>.logo {
+  /* Logo sticky : pas de bulle, mais un peu d’air + hitbox */
+  .nav > .logo{
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
 
-    width: auto;
-    height: auto;
-    padding: 0;
-
+    padding: 6px 4px;          /* ✅ évite “collé au bord” + zone de tap */
+    margin: 0;
     background: transparent;
     border: 0;
     box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     border-radius: 0;
+    text-decoration: none;
   }
 
-  .nav>.logo .logo__img {
+  .nav > .logo .logo__img{
     height: 28px;
-    /* ajuste si tu veux 24px */
     width: auto;
     display: block;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, .55));
-    /* lisible sur fond sombre */
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,.55));
   }
 
-  /* Burger bulle (tu gardes ton style) */
-  .nav__burger {
+  /* Burger : force à droite quoi qu’il arrive */
+  .nav__burger{
     display: inline-grid !important;
     place-items: center;
+    margin-left: auto;         /* ✅ pousse à droite */
   }
 
-  /* Progress bar: on la garde, mais on la transforme en bandeau fin en haut */
-  .progress {
+  /* Progress bar : on la garde en bandeau haut */
+  .progress{
     display: block !important;
-
     position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: auto;
-
+    left: 0; right: 0; top: 0; bottom: auto;
     height: 3px;
     margin: 0;
     border-radius: 0;
-    background: rgba(255, 255, 255, .06);
+    background: rgba(255,255,255,.06);
     overflow: hidden;
-
     z-index: 2500;
     pointer-events: none;
   }
 
-  .progress span {
-    height: 100%;
-  }
+  .progress span{ height: 100%; }
 
-  /* Assure le menu au-dessus de tout */
-  .mnav {
-    z-index: 3000;
-  }
+  .mnav{ z-index: 3000; }
 }
 
 /* liseré gradient très fin */
