@@ -14,35 +14,44 @@ body {
 body {
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color: #f7f7f7;
-  background: #0c0d12;
+  color: var(--text);
+  background: var(--bg);
   line-height: 1.55;
   overflow-x: hidden;
   min-height: 100%;
 }
 
 :root {
-  /* Brand */
-  --pink: #FF5E8E;
-  --yellow: #F7C600;
 
-  /* UI */
-  --muted: #b9bfd6;
-  --card: #141723;
-  --glass: rgba(255, 255, 255, 0.06);
+  --bg: #020617;
+  --card: #050816;
+  --card-soft: #050818;
+  --border-soft: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --yellow: #f7c600;
+  --pink: #ec4899;
 
-  /* Accent utilitaire */
+  --shadow-soft: 0 24px 60px rgba(0, 0, 0, .75);
+
+  --glass: rgba(255, 255, 255, 0.03);
   --accent-color: var(--yellow);
 
-  /* Border radius */
-  --radius-full: 999px;
-  --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
+  --radius-xl: 26px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
 
-  /* Layout */
+  --neon-outer: 0 10px 30px rgba(236, 72, 153, .12);
+  --neon-inset: inset 0 0 0 1px rgba(236, 72, 153, .12);
+  --neon-inset-quiet: inset 0 0 0 1px rgba(236, 72, 153, .08);
+
   --roadGap: clamp(16px, 3vw, 42px);
   --roadH: clamp(200px, 18.75vw, 420px);
+  --carScaleSections: 1;
+  --carScaleSectionsSm: 1;
+  --carYOffset: 0px;
 }
 
 /* =========================
@@ -53,7 +62,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 1999;
-  background: radial-gradient(1200px 600px at 50% 20%, #0c0d12 0%, #0c0d12 60%);
+  background: radial-gradient(1200px 600px at 50% 20%, var(--bg) 0%, var(--bg) 60%);
   display: grid;
   place-items: center;
   gap: 18px;
@@ -84,8 +93,8 @@ body {
 }
 
 #preloader p {
-  color: #dbe2ff;
-  opacity: .8;
+  color: var(--muted);
+  opacity: 1;
   font-size: .95rem
 }
 
@@ -140,11 +149,12 @@ body {
   justify-content: space-between;
   width: min(1120px, 92vw);
   margin-inline: auto;
-  background: rgba(10, 11, 18, .55);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, .08);
   border-radius: var(--radius-lg);
   padding: 10px 14px;
+  background: rgba(5, 8, 22, 0.72);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.72);
 }
 
 .logo__img {
@@ -195,9 +205,9 @@ body {
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, .08);
-  color: inherit;
-  border: 1px solid rgba(255, 255, 255, .15)
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid var(--border-soft);
+  color: var(--text);
 }
 
 .btn.small {
@@ -211,7 +221,7 @@ body {
   right: 14px;
   bottom: -8px;
   height: 4px;
-  background: rgba(255, 255, 255, .06);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-full);
   overflow: hidden
 }
@@ -229,7 +239,7 @@ body {
 .hero {
   padding: 0;
   min-height: 100svh;
-  background: #0c0d12;
+  background: var(--bg);
   position: relative;
 }
 
@@ -262,8 +272,9 @@ body {
   display: inline-block;
   padding: 8px 12px;
   border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, .08);
-  border: 1px solid rgba(255, 255, 255, .12);
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  color: var(--muted);
   font-weight: 700;
   letter-spacing: .3px;
   font-size: clamp(0.8rem, 2vw, 1rem);
@@ -357,10 +368,10 @@ a.accent,
 
 /* SECTION DEMARCHE - Fond distinct */
 .demarche {
-  background: radial-gradient(1200px 600px at 50% -10%,
-      #1a1c2e 0%,
-      #0d0e16 50%,
-      #0c0d12 100%);
+  background:
+    radial-gradient(700px 420px at 30% 10%, rgba(120, 160, 255, .10), transparent 55%),
+    radial-gradient(700px 420px at 85% 90%, rgba(80, 120, 255, .08), transparent 60%),
+    var(--bg);
   padding-top: clamp(40px, 6vw, 60px) !important;
 }
 
@@ -384,8 +395,9 @@ a.accent,
 }
 
 .values li {
-  background: var(--glass);
-  border: 1px solid rgba(255, 255, 255, .08);
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .65);
   padding: 12px 14px;
   border-radius: var(--radius-md);
   display: flex;
@@ -394,10 +406,11 @@ a.accent,
 }
 
 .card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
-  border: 1px solid rgba(255, 255, 255, .1);
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius-lg);
   padding: 16px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .85);
 }
 
 .card.profile {
@@ -412,11 +425,14 @@ a.accent,
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, .2);
+  border: 3px solid var(--border-soft);
 }
 
 .prestations {
-  background: radial-gradient(1200px 600px at 10% 10%, #1e2030 0%, #0b0c11 60%)
+  background:
+    radial-gradient(700px 420px at 30% 10%, rgba(120, 160, 255, .10), transparent 55%),
+    radial-gradient(700px 420px at 85% 90%, rgba(80, 120, 255, .08), transparent 60%),
+    var(--bg);
 }
 
 .grid-cards {
@@ -430,8 +446,9 @@ a.accent,
   position: relative;
   overflow: hidden;
   grid-column: span 2;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .03));
-  border: 1px solid rgba(255, 255, 255, .12);
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .65);
   padding: 18px;
   border-radius: var(--radius-lg);
   min-height: 170px;
@@ -453,13 +470,10 @@ a.accent,
 }
 
 .expertise .tick li {
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid rgba(255, 255, 255, .08);
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
   padding: 10px 12px;
-  border-radius: 10px
-}
-
-.expertise .tick li {
+  border-radius: 10px;
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
@@ -479,10 +493,10 @@ a.accent,
 }
 
 .chips span {
-  background: rgba(255, 255, 255, .08);
-  border: 1px solid rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid var(--border-soft);
   padding: 8px 10px;
-  border-radius: var(--radius-full)
+  border-radius: var(--radius-full);
 }
 
 /* =========================
@@ -490,9 +504,10 @@ a.accent,
    ========================= */
 .footer {
   padding: 40px 0;
-  background: #0a0b10;
-  border-top: 1px solid rgba(255, 255, 255, .08);
-  color: #e6e8ff
+  background: var(--bg);
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text);
 }
 
 .footer__grid {
@@ -554,12 +569,6 @@ a.accent,
 /* =========================
    [data-magnet]
    ========================= */
-:root {
-  --neon-outer: 0 10px 30px rgba(255, 94, 142, .12);
-  --neon-inset: inset 0 0 0 1px rgba(255, 94, 142, .12);
-  --neon-inset-quiet: inset 0 0 0 1px rgba(255, 94, 142, .08);
-}
-
 [data-magnet] {
   box-shadow: var(--neon-inset-quiet);
   transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
@@ -580,14 +589,6 @@ a.accent,
 /* =========================
    Road + Car - Sections
    ========================= */
-:root {
-  --roadGap: clamp(16px, 3vw, 42px);
-  --roadH: clamp(200px, 18.75vw, 420px);
-  --carScaleSections: 1;
-  --carScaleSectionsSm: 1;
-  --carYOffset: 0px;
-}
-
 .section-road {
   position: absolute;
   left: 0;
@@ -651,10 +652,10 @@ a.accent,
    Section Avis
    ========================= */
 .avis {
-  background: conic-gradient(from 180deg at 50% 120%,
-      #111217 0deg,
-      #141724 120deg,
-      #0c0d12 360deg);
+  background:
+    radial-gradient(900px 420px at 18% 20%, rgba(247, 198, 0, .12), transparent 55%),
+    radial-gradient(900px 420px at 85% 90%, rgba(236, 72, 153, .10), transparent 60%),
+    var(--bg);
 }
 
 a.premium {
@@ -714,9 +715,10 @@ a.premium:focus-visible::after {
   grid-template-columns: 72px 1fr;
   gap: 18px;
   align-items: flex-start;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .85);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .review__avatar {
@@ -770,9 +772,9 @@ a.premium:focus-visible::after {
 }
 
 .reviews__controls button {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: inherit;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-soft);
+  color: var(--text);
   font-weight: 800;
   border-radius: 10px;
   padding: 8px 12px;
@@ -780,7 +782,7 @@ a.premium:focus-visible::after {
 }
 
 .reviews__controls button:hover {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .reviews__summary {
@@ -790,7 +792,7 @@ a.premium:focus-visible::after {
   background:
     radial-gradient(circle at 0% 0%, rgba(247, 198, 0, 0.35), transparent 55%),
     radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.18), transparent 55%);
-  border: 1px solid rgba(248, 250, 252, 0.16);
+  border: 1px solid var(--border-soft);
   display: inline-flex;
   align-items: center;
   gap: 18px;
@@ -828,7 +830,7 @@ a.premium:focus-visible::after {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(248, 250, 252, 0.75);
+  color: var(--muted);
   margin: 0;
 }
 
@@ -847,7 +849,7 @@ a.premium:focus-visible::after {
 .reviews__summary-unit {
   font-size: 0.9rem;
   font-weight: 600;
-  color: rgba(248, 250, 252, 0.88);
+  color: rgba(229, 231, 235, 0.86);
 }
 
 .reviews__summary-stars {
@@ -863,7 +865,7 @@ a.premium:focus-visible::after {
   transition:
     opacity 0.25s ease-out,
     transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
-  color: rgba(248, 250, 252, 0.7);
+  color: rgba(229, 231, 235, 0.55);
 }
 
 .reviews__summary-star.is-active {
@@ -903,7 +905,7 @@ a.premium:focus-visible::after {
 .prestations .service-tagline {
   margin: 0;
   font-weight: 500;
-  color: rgba(248, 250, 252, 0.88);
+  color: var(--muted);
 }
 
 .prestations .service-list {
@@ -930,7 +932,7 @@ a.premium:focus-visible::after {
   height: 6px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, var(--yellow), var(--pink));
-  box-shadow: 0 0 6px rgba(248, 250, 252, 0.6);
+  box-shadow: 0 0 10px rgba(247, 198, 0, .18), 0 0 10px rgba(236, 72, 153, .14);
 }
 
 /* =========================
@@ -966,7 +968,7 @@ a.premium:focus-visible::after {
   margin-right: 0.6rem;
   flex-shrink: 0;
   background: #050816;
-  border: 1px solid rgba(148, 163, 184, 0.5);
+  border: 1px solid var(--border-soft);
   box-shadow:
     0 10px 22px rgba(0, 0, 0, 0.7),
     0 0 0 1px rgba(15, 23, 42, 0.9);
@@ -987,7 +989,7 @@ a.premium:focus-visible::after {
   border-radius: var(--radius-full);
   background: radial-gradient(circle at 30% 20%, #111827, #020617);
   box-shadow:
-    0 0 0 1px rgba(148, 163, 184, 0.35),
+    0 0 0 1px var(--border-soft),
     0 10px 25px rgba(0, 0, 0, 0.8);
 }
 
@@ -1260,8 +1262,8 @@ a.premium:focus-visible::after {
 
 .nav__burger {
   display: none;
-  border: 1px solid rgba(255, 255, 255, .14);
-  background: rgba(255, 255, 255, .08);
+  border: 1px solid var(--border-soft);
+  background: var(--glass);
   border-radius: 14px;
   padding: 10px 12px;
   cursor: pointer;
@@ -1299,7 +1301,7 @@ a.premium:focus-visible::after {
   /* fond plein */
   opacity: 0;
   transition: opacity .22s ease;
-  background: radial-gradient(900px 600px at 50% 15%, rgba(20, 35, 80, .55), rgba(2, 6, 23, 1) 55%);
+  background: radial-gradient(900px 600px at 50% 15%, rgba(5, 8, 22, .85), rgba(2, 6, 23, 1) 55%);
 }
 
 .mnav__sheet {
@@ -1307,7 +1309,7 @@ a.premium:focus-visible::after {
   width: min(640px, calc(100% - 24px));
   margin: 72px auto 0;
   border-radius: 24px;
-  border: 1px solid rgba(148, 163, 184, .18);
+  border: 1px solid var(--border-soft);
   overflow: auto;
   background:
     radial-gradient(700px 420px at 30% 10%, rgba(120, 160, 255, .10), transparent 55%),
@@ -1341,8 +1343,9 @@ a.premium:focus-visible::after {
   border-radius: 18px;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
-  border: 1px solid rgba(148, 163, 184, .14);
+  background: var(--card-soft);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .65);
 }
 
 .mnav__item:active {
@@ -1352,7 +1355,8 @@ a.premium:focus-visible::after {
 @media (hover:hover) and (pointer:fine) {
   .mnav__item:hover {
     border-color: rgba(247, 198, 0, .28);
-    background: linear-gradient(180deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, .04));
+    background: var(--card-soft);
+    box-shadow: 0 18px 32px rgba(0, 0, 0, .8), 0 0 10px rgba(236, 72, 153, .18), 0 0 8px rgba(247, 198, 0, .12);
   }
 }
 
@@ -1365,7 +1369,7 @@ a.premium:focus-visible::after {
   box-shadow: 0 10px 22px rgba(0, 0, 0, .45);
   flex-shrink: 0;
   background: rgba(2, 6, 23, .88);
-  border: 1px solid rgba(148, 163, 184, .20);
+  border: 1px solid var(--border-soft);
 }
 
 .mnav__icon svg {
@@ -1390,7 +1394,7 @@ a.premium:focus-visible::after {
   align-items: center;
   justify-content: space-between;
   padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  border-bottom: 1px solid var(--border-soft);
   background: rgba(2, 6, 23, .55);
 }
 
@@ -1409,7 +1413,7 @@ a.premium:focus-visible::after {
   width: 44px;
   height: 44px;
   border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, .22);
+  border: 1px solid var(--border-soft);
   background: rgba(255, 255, 255, .05);
   color: #f7f7f7;
   font-size: 26px;
@@ -1447,7 +1451,7 @@ a.premium:focus-visible::after {
   padding: 16px 16px;
   cursor: pointer;
   color: #050816;
-  background: linear-gradient(135deg, rgba(247, 198, 0, .95), rgba(255, 94, 142, .78));
+  background: linear-gradient(135deg, rgba(247, 198, 0, .95), rgba(236, 72, 153, .78));
   box-shadow: 0 22px 60px rgba(0, 0, 0, .55);
   position: relative;
   overflow: hidden;
@@ -1517,12 +1521,12 @@ a.premium:focus-visible::after {
   overflow: hidden;
   background:
     radial-gradient(900px 420px at 18% 20%, rgba(247, 198, 0, .18), transparent 55%),
-    radial-gradient(900px 420px at 85% 90%, rgba(255, 94, 142, .14), transparent 60%),
-    linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .02));
+    radial-gradient(900px 420px at 85% 90%, rgba(236, 72, 153, .14), transparent 60%),
+    var(--card-soft);
   border: 1px solid rgba(247, 198, 0, .22);
   box-shadow:
     0 18px 45px rgba(0, 0, 0, .55),
-    0 0 0 1px rgba(255, 94, 142, .08) inset;
+    0 0 0 1px rgba(236, 72, 153, .08) inset;
 }
 
 .mnav__cta-avatar {
@@ -1534,7 +1538,7 @@ a.premium:focus-visible::after {
   border: 2px solid rgba(247, 198, 0, .45);
   box-shadow:
     0 10px 25px rgba(0, 0, 0, .55),
-    0 0 0 4px rgba(255, 94, 142, .12);
+    0 0 0 4px rgba(236, 72, 153, .12);
 }
 
 .mnav__cta-text {
@@ -1572,13 +1576,14 @@ a.premium:focus-visible::after {
 @media (max-width: 760px) {
 
   /* Nav mobile : logo gauche / burger droite (solide iOS) */
-  .nav{
+  .nav {
     position: fixed;
     top: 12px;
     left: 12px;
     right: 12px;
 
-    width: auto;                /* left+right => largeur */
+    width: auto;
+    /* left+right => largeur */
     margin: 0;
 
     display: flex;
@@ -1594,15 +1599,18 @@ a.premium:focus-visible::after {
   }
 
   /* On cache les liens desktop uniquement */
-  .nav__links{ display: none !important; }
+  .nav__links {
+    display: none !important;
+  }
 
   /* Logo sticky : pas de bulle, mais un peu d’air + hitbox */
-  .nav > .logo{
+  .nav>.logo {
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
 
-    padding: 6px 4px;          /* ✅ évite “collé au bord” + zone de tap */
+    padding: 6px 4px;
+    /* ✅ évite “collé au bord” + zone de tap */
     margin: 0;
     background: transparent;
     border: 0;
@@ -1611,37 +1619,45 @@ a.premium:focus-visible::after {
     text-decoration: none;
   }
 
-  .nav > .logo .logo__img{
+  .nav>.logo .logo__img {
     height: 28px;
     width: auto;
     display: block;
-    filter: drop-shadow(0 10px 22px rgba(0,0,0,.55));
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, .55));
   }
 
   /* Burger : force à droite quoi qu’il arrive */
-  .nav__burger{
+  .nav__burger {
     display: inline-grid !important;
     place-items: center;
-    margin-left: auto;         /* ✅ pousse à droite */
+    margin-left: auto;
+    /* ✅ pousse à droite */
   }
 
   /* Progress bar : on la garde en bandeau haut */
-  .progress{
+  .progress {
     display: block !important;
     position: fixed;
-    left: 0; right: 0; top: 0; bottom: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
     height: 3px;
     margin: 0;
     border-radius: 0;
-    background: rgba(255,255,255,.06);
+    background: rgba(255, 255, 255, 0.06);
     overflow: hidden;
     z-index: 2500;
     pointer-events: none;
   }
 
-  .progress span{ height: 100%; }
+  .progress span {
+    height: 100%;
+  }
 
-  .mnav{ z-index: 3000; }
+  .mnav {
+    z-index: 3000;
+  }
 }
 
 /* liseré gradient très fin */
@@ -1651,7 +1667,7 @@ a.premium:focus-visible::after {
   inset: -2px;
   border-radius: 24px;
   padding: 2px;
-  background: linear-gradient(135deg, rgba(247, 198, 0, .85), rgba(255, 94, 142, .65));
+  background: linear-gradient(135deg, rgba(247, 198, 0, .85), rgba(236, 72, 153, .65));
   mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
