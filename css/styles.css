@@ -1572,7 +1572,7 @@ a.premium:focus-visible::after {
 @media (max-width: 760px) {
 
   /* Nav = juste une rangée de bulles (logo gauche + burger droite) */
-  .nav{
+  .nav {
     width: auto;
     left: 12px;
     right: 12px;
@@ -1593,38 +1593,45 @@ a.premium:focus-visible::after {
   }
 
   /* On cache les liens desktop uniquement */
-  .nav__links{
+  .nav__links {
     display: none !important;
   }
 
-  /* Logo bulle sticky (cliquable => remonte #hero via data-scrolllink) */
-  .nav > .logo{
-    display: inline-grid !important;
-    place-items: center;
-    width: 46px;
-    height: 46px;
-    padding: 10px;
-    border-radius: 16px;
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(148,163,184,.18);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 18px 45px rgba(0,0,0,.45);
+  /* Logo sticky (sans bulle) */
+  .nav>.logo {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
+    height: auto;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
   }
 
-  .nav > .logo .logo__img{
-    height: 24px;
+  .nav>.logo .logo__img {
+    height: 28px;
+    /* ajuste si tu veux 24px */
     width: auto;
+    display: block;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, .55));
+    /* lisible sur fond sombre */
   }
 
   /* Burger bulle (tu gardes ton style) */
-  .nav__burger{
+  .nav__burger {
     display: inline-grid !important;
     place-items: center;
   }
 
   /* Progress bar: on la garde, mais on la transforme en bandeau fin en haut */
-  .progress{
+  .progress {
     display: block !important;
 
     position: fixed;
@@ -1636,19 +1643,21 @@ a.premium:focus-visible::after {
     height: 3px;
     margin: 0;
     border-radius: 0;
-    background: rgba(255,255,255,.06);
+    background: rgba(255, 255, 255, .06);
     overflow: hidden;
 
     z-index: 2500;
     pointer-events: none;
   }
 
-  .progress span{
+  .progress span {
     height: 100%;
   }
 
   /* Assure le menu au-dessus de tout */
-  .mnav{ z-index: 3000; }
+  .mnav {
+    z-index: 3000;
+  }
 }
 
 /* liseré gradient très fin */
