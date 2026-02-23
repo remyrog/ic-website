@@ -253,11 +253,6 @@
 
       lockScroll();
 
-      document.querySelector(".mnav")?.classList.remove("is-open");
-      document.querySelector(".nav")?.classList.remove("is-menu-open");
-      document.querySelector(".nav__burger")?.setAttribute("aria-expanded", "false");
-      document.getElementById("mnav")?.setAttribute("aria-hidden", "true");
-
       lastFocus = document.activeElement;
 
       overlay.hidden = false;

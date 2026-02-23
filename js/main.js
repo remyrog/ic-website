@@ -469,211 +469,240 @@
   // =========================
   // Mobile Menu (Apple vibe)
   // =========================
-(function initMobileMenu() {
-  const nav = document.querySelector(".nav");
-  const btn = document.querySelector(".nav__burger");
-  const mnav = document.getElementById("mnav");
-  if (!nav || !btn || !mnav) return;
+  (function initMobileMenu() {
+    const nav = document.querySelector(".nav");
+    const btn = document.querySelector(".nav__burger");
+    const mnav = document.getElementById("mnav");
+    if (!nav || !btn || !mnav) return;
 
-  const sheet = mnav.querySelector(".mnav__sheet");
-  const backdrop = mnav.querySelector(".mnav__backdrop");
-  const closeEls = mnav.querySelectorAll("[data-close]");
-  const links = mnav.querySelectorAll("a[data-scrolllink]");
+    const sheet = mnav.querySelector(".mnav__sheet");
+    const backdrop = mnav.querySelector(".mnav__backdrop");
+    const closeEls = mnav.querySelectorAll("[data-close]");
+    const links = mnav.querySelectorAll("a[data-scrolllink]");
 
-  if (!sheet || !backdrop) return;
+    if (!sheet || !backdrop) return;
 
-  // -------------------------
-  // Helpers: lock/unlock scroll (iOS safe)
-  // -------------------------
-  let scrollY = 0;
-  const lockScroll = () => {
-    scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
-  };
+    // -------------------------
+    // Helpers: lock/unlock scroll (iOS safe)
+    // -------------------------
+    let scrollY = 0;
+    const lockScroll = () => {
+      scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    };
 
-  const unlockScroll = () => {
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    document.body.style.width = "";
-    window.scrollTo(0, scrollY);
-  };
+    const unlockScroll = () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, scrollY);
+    };
 
-  // -------------------------
-  // Magnet / tilt: only desktop (pas sur tactile)
-  // -------------------------
-  const isTouch =
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0 ||
-    window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    // -------------------------
+    // Magnet / tilt: only desktop (pas sur tactile)
+    // -------------------------
+    const isTouch =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
-  if (!isTouch) {
-    const magnets = mnav.querySelectorAll("[data-magnet]");
-    magnets.forEach((el) => {
-      const icon = el.querySelector(".mnav__icon svg");
-      let raf = null;
+    if (!isTouch) {
+      const magnets = mnav.querySelectorAll("[data-magnet]");
+      magnets.forEach((el) => {
+        const icon = el.querySelector(".mnav__icon svg");
+        let raf = null;
 
-      const move = (ev) => {
-        const r = el.getBoundingClientRect();
-        const x = ev.clientX - (r.left + r.width / 2);
-        const y = ev.clientY - (r.top + r.height / 2);
+        const move = (ev) => {
+          const r = el.getBoundingClientRect();
+          const x = ev.clientX - (r.left + r.width / 2);
+          const y = ev.clientY - (r.top + r.height / 2);
 
-        const dx = Math.max(-18, Math.min(18, (x / (r.width / 2)) * 18));
-        const dy = Math.max(-10, Math.min(10, (y / (r.height / 2)) * 10));
+          const dx = Math.max(-18, Math.min(18, (x / (r.width / 2)) * 18));
+          const dy = Math.max(-10, Math.min(10, (y / (r.height / 2)) * 10));
 
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          gsap.to(el, { x: dx * 0.35, y: dy * 0.25, duration: 0.25, ease: "power2.out" });
-          if (icon) gsap.to(icon, { rotate: dx * 0.35, y: -Math.abs(dy) * 0.12, duration: 0.25, ease: "power2.out" });
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            gsap.to(el, { x: dx * 0.35, y: dy * 0.25, duration: 0.25, ease: "power2.out" });
+            if (icon) gsap.to(icon, { rotate: dx * 0.35, y: -Math.abs(dy) * 0.12, duration: 0.25, ease: "power2.out" });
+          });
+        };
+
+        const leave = () => {
+          gsap.to(el, { x: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.7)" });
+          if (icon) gsap.to(icon, { rotate: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.7)" });
+        };
+
+        el.addEventListener("mousemove", move);
+        el.addEventListener("mouseleave", leave);
+
+        el.addEventListener("mouseenter", () => {
+          if (!icon) return;
+          gsap.fromTo(
+            icon,
+            { rotate: -6 },
+            { rotate: 6, duration: 0.18, yoyo: true, repeat: 3, ease: "power1.inOut" }
+          );
         });
-      };
-
-      const leave = () => {
-        gsap.to(el, { x: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.7)" });
-        if (icon) gsap.to(icon, { rotate: 0, y: 0, duration: 0.35, ease: "elastic.out(1, 0.7)" });
-      };
-
-      el.addEventListener("mousemove", move);
-      el.addEventListener("mouseleave", leave);
-
-      el.addEventListener("mouseenter", () => {
-        if (!icon) return;
-        gsap.fromTo(
-          icon,
-          { rotate: -6 },
-          { rotate: 6, duration: 0.18, yoyo: true, repeat: 3, ease: "power1.inOut" }
-        );
       });
-    });
-  }
+    }
 
-  // -------------------------
-  // Open/close
-  // -------------------------
-  let isOpen = false;
+    // -------------------------
+    // Open/close
+    // -------------------------
+    let isOpen = false;
 
-  const openMenu = () => {
-    if (isOpen) return;
-    isOpen = true;
-
-    // State + a11y
-    mnav.classList.add("is-open");
-    nav.classList.add("is-menu-open");
-    btn.setAttribute("aria-expanded", "true");
-    mnav.setAttribute("aria-hidden", "false");
-
-    // Lock page scroll
-    lockScroll();
-
-    if (navigator.vibrate) navigator.vibrate(12);
-
-    // Animations
-    gsap.killTweensOf(sheet);
-    gsap.fromTo(
-      sheet,
-      { y: -14, scale: 0.985, opacity: 0 },
-      { y: 0, scale: 1, opacity: 1, duration: 0.55, ease: "elastic.out(1, 0.85)" }
-    );
-
-    mnav.querySelectorAll(".mnav__item").forEach((el, idx) => el.style.setProperty("--i", idx));
-
-    const items = mnav.querySelectorAll(".mnav__item");
-    gsap.fromTo(
-      items,
-      { y: 18, opacity: 0, scale: 0.985, rotateX: -8, transformOrigin: "50% 0%" },
-      { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.38, ease: "power3.out", stagger: 0.06, delay: 0.05 }
-    );
-
-    const icons = mnav.querySelectorAll(".mnav__icon svg");
-    gsap.fromTo(
-      icons,
-      { scale: 0.6, rotate: -18, y: 6, opacity: 0 },
-      { scale: 1, rotate: 0, y: 0, opacity: 1, duration: 0.55, ease: "elastic.out(1, 0.55)", stagger: 0.05, delay: 0.12 }
-    );
-  };
-
-  const closeMenu = () => {
-    if (!isOpen) return;
-    isOpen = false;
-
-    btn.setAttribute("aria-expanded", "false");
-
-    gsap.killTweensOf(sheet);
-    gsap.to(sheet, {
-      y: -16,
-      scale: 0.985,
-      opacity: 0,
-      duration: 0.22,
-      ease: "power2.in",
-      onComplete: () => {
-        mnav.classList.remove("is-open");
-        nav.classList.remove("is-menu-open");
-        mnav.setAttribute("aria-hidden", "true");
-
-        // Unlock page scroll
-        unlockScroll();
-      }
-    });
-
-    if (navigator.vibrate) navigator.vibrate(8);
-  };
-
-  // -------------------------
-  // Events
-  // -------------------------
-  btn.addEventListener("click", () => (isOpen ? closeMenu() : openMenu()));
-  backdrop.addEventListener("click", closeMenu);
-  closeEls.forEach((el) => el.addEventListener("click", closeMenu));
-
-  // clic sur un lien interne => scroll + fermeture
-  links.forEach((a) =>
-    a.addEventListener("click", () => {
-      // on laisse scrollIntoView faire son job puis on ferme
-      setTimeout(closeMenu, 120);
-    })
-  );
-
-  // CTA contact (data-reserve-trigger) dans le menu => fermer puis laisser reserve-modal ouvrir
-  mnav.addEventListener("click", (e) => {
-    const target = e.target;
-    if (!(target instanceof Element)) return;
-
-    const trigger = target.closest("[data-reserve-trigger]");
-    if (!trigger) return;
-
-    // ferme vite, ensuite reserve-modal.js ouvre la modal
-    closeMenu();
-  });
-
-  // ESC
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeMenu();
-  });
-
-  // Peek (optionnel, tu peux supprimer ce bloc si tu veux)
-  let lastScroll = window.scrollY;
-  let peeked = false;
-  window.addEventListener(
-    "scroll",
-    () => {
+    const openMenu = () => {
       if (isOpen) return;
-      const now = window.scrollY;
-      const up = now < lastScroll;
-      lastScroll = now;
+      isOpen = true;
 
-      if (window.matchMedia("(max-width: 760px)").matches && up && now > 120 && !peeked) {
-        peeked = true;
-        gsap.fromTo(btn, { y: 0 }, { y: -6, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" });
-        setTimeout(() => (peeked = false), 1600);
-      }
-    },
-    { passive: true }
-  );
-})();
+      // State + a11y
+      mnav.classList.add("is-open");
+      nav.classList.add("is-menu-open");
+      btn.setAttribute("aria-expanded", "true");
+      mnav.setAttribute("aria-hidden", "false");
+
+      // Lock page scroll
+      lockScroll();
+
+      if (navigator.vibrate) navigator.vibrate(12);
+
+      // Animations
+      gsap.killTweensOf(sheet);
+      gsap.fromTo(
+        sheet,
+        { y: -14, scale: 0.985, opacity: 0 },
+        { y: 0, scale: 1, opacity: 1, duration: 0.55, ease: "elastic.out(1, 0.85)" }
+      );
+
+      mnav.querySelectorAll(".mnav__item").forEach((el, idx) => el.style.setProperty("--i", idx));
+
+      const items = mnav.querySelectorAll(".mnav__item");
+      gsap.fromTo(
+        items,
+        { y: 18, opacity: 0, scale: 0.985, rotateX: -8, transformOrigin: "50% 0%" },
+        { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.38, ease: "power3.out", stagger: 0.06, delay: 0.05 }
+      );
+
+      const icons = mnav.querySelectorAll(".mnav__icon svg");
+      gsap.fromTo(
+        icons,
+        { scale: 0.6, rotate: -18, y: 6, opacity: 0 },
+        { scale: 1, rotate: 0, y: 0, opacity: 1, duration: 0.55, ease: "elastic.out(1, 0.55)", stagger: 0.05, delay: 0.12 }
+      );
+    };
+
+    const closeMenu = (afterClose) => {
+      if (!isOpen) { if (typeof afterClose === "function") afterClose(); return; }
+      isOpen = false;
+
+      btn.setAttribute("aria-expanded", "false");
+
+      gsap.killTweensOf(sheet);
+      gsap.to(sheet, {
+        y: -16,
+        scale: 0.985,
+        opacity: 0,
+        duration: 0.22,
+        ease: "power2.in",
+        onComplete: () => {
+          mnav.classList.remove("is-open");
+          nav.classList.remove("is-menu-open");
+          mnav.setAttribute("aria-hidden", "true");
+
+          unlockScroll();
+
+          if (typeof afterClose === "function") afterClose();
+        }
+      });
+
+      if (navigator.vibrate) navigator.vibrate(8);
+    };
+
+    // -------------------------
+    // Events
+    // -------------------------
+    btn.addEventListener("click", () => (isOpen ? closeMenu() : openMenu()));
+    backdrop.addEventListener("click", closeMenu);
+    closeEls.forEach((el) => el.addEventListener("click", closeMenu));
+
+    // clic sur un lien interne => fermer puis scroll (sinon unlockScroll remet au scroll précédent)
+    links.forEach((a) => {
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href");
+        if (!href || !href.startsWith("#")) return;
+
+        // IMPORTANT: on neutralise le handler global [data-scrolllink]
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetEl = document.querySelector(href);
+
+        // on ferme d'abord, puis on scroll après unlock
+        closeMenu(() => {
+          if (!targetEl) return;
+          // laisse un micro temps au repaint iOS
+          requestAnimationFrame(() => {
+            targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      }, { passive: false });
+    });
+
+    // CTA contact (data-reserve-trigger) => fermer puis laisser reserve-modal ouvrir
+    mnav.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+
+      const trigger = target.closest("[data-reserve-trigger]");
+      if (!trigger) return;
+
+      // anti-boucle: 2e clic programmatique doit passer au plugin reserve-modal
+      if (trigger.dataset.rmForward === "1") return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      trigger.dataset.rmForward = "1";
+
+      closeMenu(() => {
+        // après fermeture: on relance le click pour que reserve-modal.js ouvre la modale
+        setTimeout(() => {
+          trigger.click();
+          trigger.dataset.rmForward = "";
+        }, 0);
+      });
+    }, { passive: false });
+
+    // ESC
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    // Peek (optionnel, tu peux supprimer ce bloc si tu veux)
+    let lastScroll = window.scrollY;
+    let peeked = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (isOpen) return;
+        const now = window.scrollY;
+        const up = now < lastScroll;
+        lastScroll = now;
+
+        if (window.matchMedia("(max-width: 760px)").matches && up && now > 120 && !peeked) {
+          peeked = true;
+          gsap.fromTo(btn, { y: 0 }, { y: -6, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" });
+          setTimeout(() => (peeked = false), 1600);
+        }
+      },
+      { passive: true }
+    );
+  })();
 
 })();
