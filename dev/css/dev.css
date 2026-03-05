@@ -631,6 +631,22 @@ strong {
     touch-action: manipulation;
 }
 
+/* Sticky-nav buttons: robust on all screens */
+.sticky-nav .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0; /* évite le gap baseline */
+}
+
+/* Home icon: give it a size on all screens */
+.sticky-nav .nav-home-ico {
+    width: 22px;
+    height: 22px;
+    display: block;
+    color: var(--pink);
+}
+
 .sticky-nav a:hover {
     text-decoration: underline;
 }
@@ -802,7 +818,8 @@ a.cta-primary:focus-visible {
         border-radius: var(--radius-full);
         display: inline-flex;
         align-items: center;
-        line-height: 0; /* évite un “baseline gap” */
+        line-height: 0;
+        /* évite un “baseline gap” */
         justify-content: center;
         text-decoration: none;
 
@@ -817,15 +834,7 @@ a.cta-primary:focus-visible {
         line-height: 1;
         color: var(--pink);
     }
-
-    /* Sticky-nav home icon (tous écrans) */
-    .sticky-nav .nav-home-ico {
-        width: 22px;
-        height: 22px;
-        display: block;
-        color: var(--pink);
-    }
-
+    
     /* titre au centre : prend le max */
     .sticky-nav .current-section {
         flex: 1;
