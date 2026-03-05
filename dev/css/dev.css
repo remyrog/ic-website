@@ -39,6 +39,8 @@
     --cream-92: rgb(var(--cream-rgb) / 0.92);
 
     /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
     --radius-xl: 26px;
     --radius-lg: 18px;
     --radius-full: 999px;
@@ -53,21 +55,22 @@
     /* Nav / overlay */
     --nav-bg: rgb(var(--card-rgb) / 0.72);
 
-    /* Light / helpers */
-    --white-glow: rgb(248 250 252 / 0.60);
-    --white-line: rgb(248 250 252 / 0.25);
+    /* White helpers (fusion) */
+    --white-15: rgb(var(--white-rgb) / 0.15);
+    --white-30: rgb(var(--white-rgb) / 0.30);
+    --white-60: rgb(var(--white-rgb) / 0.60);
 
-    /* Accent glows (3 niveaux) */
-    --pink-glow-strong: rgb(var(--pink-rgb) / 0.60);
-    --pink-glow: rgb(var(--pink-rgb) / 0.45);
-    --pink-glow-soft: rgb(var(--pink-rgb) / 0.18);
+    /* Extra accent alphas used by existing design */
+    --yellow-10: rgb(var(--yellow-rgb) / 0.10);
+    --yellow-30: rgb(var(--yellow-rgb) / 0.30);
+    --yellow-50: rgb(var(--yellow-rgb) / 0.50);
 
-    --yellow-glow: rgb(var(--yellow-rgb) / 0.40);
-    --yellow-glow-soft: rgb(var(--yellow-rgb) / 0.18);
-    --yellow-glow-tiny: rgb(var(--yellow-rgb) / 0.10);
+    --pink-15: rgb(var(--pink-rgb) / 0.15);
+    --pink-50: rgb(var(--pink-rgb) / 0.50);
+    --pink-75: rgb(var(--pink-rgb) / 0.75);
 
     /* Shadows */
-    --shadow-hero: 0 24px 60px rgb(var(--black-rgb) / 0.75);
+    --shadow-hero: 0 24px 60px rgb(var(--black-rgb) / 0.80);
     --shadow-card: 0 12px 28px rgb(var(--black-rgb) / 0.65);
     --shadow-hover: 0 18px 32px rgb(var(--black-rgb) / 0.80);
     --shadow-nav: 0 18px 45px rgb(var(--black-rgb) / 0.72);
@@ -76,6 +79,10 @@
 
     /* CTA text (remplace #111) */
     --ink: rgb(17 17 17);
+
+    --neon-outer: 0 10px 30px var(--pink-15);
+    --neon-inset: inset 0 0 0 1px var(--pink-15);
+    --neon-inset-quiet: inset 0 0 0 1px rgb(var(--pink-rgb) / 0.08);
 }
 
 * {
@@ -199,7 +206,7 @@ header.hero {
     height: 7px;
     border-radius: var(--radius-full);
     background: radial-gradient(circle at 30% 0%, var(--yellow), var(--pink));
-    box-shadow: 0 0 10px var(--white-glow);
+    box-shadow: 0 0 10px var(--white-60);
 }
 
 h1 {
@@ -295,17 +302,17 @@ strong {
 .toc-card:hover,
 .toc-card:focus-visible {
     transform: translateY(-4px) rotateX(1deg) rotateY(-1deg);
-    box-shadow: var(--shadow-hover), 0 0 14px var(--pink-glow), 0 0 10px var(--yellow-glow);
+    box-shadow: var(--shadow-hover), 0 0 14px var(--pink-50), 0 0 10px var(--yellow-50);
 }
 
 .toc-card.active {
     border-color: var(--pink);
-    box-shadow: 0 0 0 1px var(--pink), 0 0 14px var(--pink-glow-strong), 0 0 10px var(--yellow-glow);
+    box-shadow: 0 0 0 1px var(--pink), 0 0 14px var(--pink-75), 0 0 10px var(--yellow-50);
 }
 
 .toc-card.highlight {
     border-color: var(--pink);
-    box-shadow: 0 0 0 1px var(--pink), 0 0 12px var(--pink-glow), 0 0 8px var(--yellow-glow);
+    box-shadow: 0 0 0 1px var(--pink), 0 0 12px var(--pink-50), 0 0 8px var(--yellow-50);
 }
 
 /* Titres sommaire */
@@ -503,7 +510,7 @@ strong {
     height: 7px;
     border-radius: var(--radius-full);
     background: linear-gradient(135deg, var(--yellow), var(--pink));
-    box-shadow: 0 0 7px var(--white-glow);
+    box-shadow: 0 0 7px var(--white-60);
 }
 
 .block-underline {
@@ -557,7 +564,7 @@ strong {
     border-radius: var(--radius-full);
     margin-right: .55rem;
     background: linear-gradient(135deg, var(--yellow), var(--pink));
-    box-shadow: 0 0 10px var(--yellow-glow-soft), 0 0 10px var(--pink-glow-soft);
+    box-shadow: 0 0 10px var(--yellow-30), 0 0 10px var(--pink-15);
 }
 
 /* “Connecteurs” entre pills (desktop/tablette) */
@@ -570,7 +577,7 @@ strong {
         width: 0.75rem;
         height: 2px;
         transform: translateY(-50%);
-        background: linear-gradient(90deg, var(--yellow-glow), var(--pink-glow));
+        background: linear-gradient(90deg, var(--yellow-50), var(--pink-50));
         opacity: .75;
         border-radius: var(--radius-full);
     }
@@ -672,7 +679,7 @@ strong {
     letter-spacing: .05em;
     text-transform: uppercase;
     background: var(--glass);
-    border: 1px solid var(--white-line);
+    border: 1px solid var(--white-30);
     color: var(--muted);
     backdrop-filter: blur(6px);
 }
@@ -683,12 +690,12 @@ strong {
     0%,
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 var(--pink-glow);
+        box-shadow: 0 0 0 0 var(--pink-50);
     }
 
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 20px 6px var(--pink-glow);
+        box-shadow: 0 0 20px 6px var(--pink-50);
     }
 }
 
@@ -778,7 +785,7 @@ a.cta-primary:focus-visible {
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
 
-        box-shadow: var(--shadow-nav), 0 0 14px var(--pink-glow-soft), 0 0 10px var(--yellow-glow-tiny);
+        box-shadow: var(--shadow-nav), 0 0 14px var(--pink-15), 0 0 10px var(--yellow-10);
         z-index: 999;
     }
 
@@ -991,4 +998,24 @@ section.grid {
     .tech-tags {
         justify-content: center;
     }
+}
+
+/* =========================
+   Neon / Magnet (opt-in)
+   ========================= */
+[data-magnet] {
+    box-shadow: var(--neon-inset-quiet);
+    transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+[data-magnet]:hover,
+[data-magnet]:focus-visible {
+    box-shadow: var(--neon-outer), var(--neon-inset);
+    outline: none;
+}
+
+[data-magnet]:active {
+    transform: translateY(1px) scale(.98);
 }
