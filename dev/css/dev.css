@@ -802,6 +802,7 @@ a.cta-primary:focus-visible {
         border-radius: var(--radius-full);
         display: inline-flex;
         align-items: center;
+        line-height: 0; /* évite un “baseline gap” */
         justify-content: center;
         text-decoration: none;
 
@@ -817,10 +818,11 @@ a.cta-primary:focus-visible {
         color: var(--pink);
     }
 
-    /* home SVG */
+    /* Sticky-nav home icon (tous écrans) */
     .sticky-nav .nav-home-ico {
         width: 22px;
         height: 22px;
+        display: block;
         color: var(--pink);
     }
 
