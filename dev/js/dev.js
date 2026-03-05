@@ -1,170 +1,229 @@
 // Animations d’entrée et de scroll haut de gamme via GSAP
-window.addEventListener('DOMContentLoaded', () => {
-    if (typeof gsap === 'undefined') return;
+window.addEventListener("DOMContentLoaded", () => {
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
-    // Animation d’arrivée pour le hero
-    gsap.from('.hero-inner', {
+
+    // ====== Magnet / tilt (desktop only) — GSAP-friendly ======
+    const isTouch =
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+    function initMagnets(root = document) {
+        if (isTouch) return;
+
+        root.querySelectorAll("[data-magnet]").forEach((el) => {
+            if (el.__magnetInit) return;
+            el.__magnetInit = true;
+
+            const strength = parseFloat(el.dataset.magnet);
+            const maxRot = parseFloat(el.dataset.rotate);
+
+            const s = Number.isFinite(strength) ? strength : 20; // px
+            const r = Number.isFinite(maxRot) ? maxRot : 4; // deg
+
+            // Quick setters (super smooth)
+            const toX = gsap.quickTo(el, "x", { duration: 0.25, ease: "power2.out" });
+            const toY = gsap.quickTo(el, "y", { duration: 0.25, ease: "power2.out" });
+            const toR = gsap.quickTo(el, "rotation", { duration: 0.25, ease: "power2.out" });
+
+            const onMove = (e) => {
+                const rect = el.getBoundingClientRect();
+                const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // -1..1
+                const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2; // -1..1
+
+                toX(nx * s);
+                toY(ny * s * 0.6);
+                toR(-nx * r);
+            };
+
+            const reset = () => {
+                toX(0);
+                toY(0);
+                toR(0);
+            };
+
+            el.addEventListener("mousemove", onMove);
+            el.addEventListener("mouseleave", reset);
+
+            // Petit polish : si on clique pendant le hover, on reset immédiatement
+            el.addEventListener("pointerdown", reset);
+        });
+    }
+
+    initMagnets();
+
+    // ====== Animations d’arrivée ======
+    gsap.from(".hero-inner", {
         opacity: 0,
         y: 60,
         duration: 1.3,
-        ease: 'power3.out'
+        ease: "power3.out",
     });
+
     // Apparition en cascade des cartes de sommaire
-    gsap.from('.toc-card', {
+    // -> on initMagnets après l'anim pour éviter un ressenti "bizarre" au tout début
+    gsap.from(".toc-card", {
         opacity: 0,
         y: 40,
         duration: 1,
-        ease: 'power3.out',
+        ease: "power3.out",
         stagger: 0.15,
-        delay: 0.3
+        delay: 0.3,
+        onComplete: () => initMagnets(),
     });
+
     // Révélations au scroll des blocs principaux
-    document.querySelectorAll('.block').forEach((el) => {
+    document.querySelectorAll(".block").forEach((el) => {
         gsap.from(el, {
             opacity: 0,
             y: 80,
             duration: 0.9,
-            ease: 'power3.out',
+            ease: "power3.out",
             scrollTrigger: {
                 trigger: el,
-                start: 'top 80%',
-                end: 'bottom 60%',
-                toggleActions: 'play none none reverse'
-            }
+                start: "top 80%",
+                end: "bottom 60%",
+                toggleActions: "play none none reverse",
+            },
         });
     });
 
     // Animation des soulignages décoratifs sous les titres
-    document.querySelectorAll('.block-underline').forEach((underline) => {
-        gsap.fromTo(underline, { scaleX: 0 }, {
-            scaleX: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: underline.parentElement.parentElement,
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
+    document.querySelectorAll(".block-underline").forEach((underline) => {
+        gsap.fromTo(
+            underline,
+            { scaleX: 0 },
+            {
+                scaleX: 1,
+                duration: 0.8,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: underline.parentElement?.parentElement || underline,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
             }
-        });
+        );
     });
 
     // Animation d'apparition des icônes de section
-    document.querySelectorAll('.block-icon').forEach((icon) => {
+    document.querySelectorAll(".block-icon").forEach((icon) => {
         gsap.from(icon, {
             opacity: 0,
             y: 20,
             rotation: -15,
             duration: 0.8,
-            ease: 'power3.out',
+            ease: "power3.out",
             scrollTrigger: {
-                trigger: icon.parentElement.parentElement,
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            }
+                trigger: icon.parentElement?.parentElement || icon,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
         });
     });
 
     // Animation de tracé des icônes (dessin au trait)
-    document.querySelectorAll('.block-icon path').forEach((path) => {
+    document.querySelectorAll(".block-icon path").forEach((path) => {
         const length = path.getTotalLength ? path.getTotalLength() : 300;
-        // Réinitialiser dasharray et dashoffset à la longueur
-        path.style.strokeDasharray = length;
-        path.style.strokeDashoffset = length;
+        path.style.strokeDasharray = String(length);
+        path.style.strokeDashoffset = String(length);
+
         gsap.to(path, {
             strokeDashoffset: 0,
             duration: 1.2,
-            ease: 'power2.out',
+            ease: "power2.out",
             scrollTrigger: {
-                trigger: path.closest('.block'),
-                start: 'top 80%',
-                toggleActions: 'play none none reverse'
-            }
+                trigger: path.closest(".block") || path,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+            },
         });
     });
 
     // ====== Animation premium : poignée de main et personnages ======
-    // Mise en scène au scroll : les deux personnages glissent vers le centre et se serrent la main.
-    const clientPerson = document.getElementById('client-person');
-    const providerPerson = document.getElementById('provider-person');
-    const leftArm = document.getElementById('left-arm');
-    const rightArm = document.getElementById('right-arm');
-    const labelContainer = document.querySelector('.handshake-labels');
+    const clientPerson = document.getElementById("client-person");
+    const providerPerson = document.getElementById("provider-person");
+    const leftArm = document.getElementById("left-arm");
+    const rightArm = document.getElementById("right-arm");
+    const labelContainer = document.querySelector(".handshake-labels");
+
     if (clientPerson && providerPerson && leftArm && rightArm && labelContainer) {
-        // Définir les positions initiales hors du cadre
         gsap.set([clientPerson, leftArm], { x: -200, opacity: 0 });
         gsap.set([providerPerson, rightArm], { x: 200, opacity: 0 });
         gsap.set(labelContainer, { opacity: 0, y: 20 });
-        gsap.set('#handshake-svg', { opacity: 1 });
-        // Animation synchronisée avec le défilement
-        const tlHandshake = gsap.timeline({
+        gsap.set("#handshake-svg", { opacity: 1 });
+
+        gsap.timeline({
             scrollTrigger: {
-                trigger: document.getElementById('hero'),
-                start: 'top top',
-                end: '+=400',
-                scrub: true
-            }
-        });
-        tlHandshake.to(clientPerson, { x: 0, opacity: 1, ease: 'power2.out' }, 0);
-        tlHandshake.to(providerPerson, { x: 0, opacity: 1, ease: 'power2.out' }, 0);
-        tlHandshake.to(leftArm, { x: 0, opacity: 1, ease: 'power2.out' }, 0.15);
-        tlHandshake.to(rightArm, { x: 0, opacity: 1, ease: 'power2.out' }, 0.15);
-        tlHandshake.to(labelContainer, { opacity: 1, y: -10, ease: 'power2.out' }, 0.3);
+                trigger: document.getElementById("hero"),
+                start: "top top",
+                end: "+=400",
+                scrub: true,
+            },
+        })
+            .to(clientPerson, { x: 0, opacity: 1, ease: "power2.out" }, 0)
+            .to(providerPerson, { x: 0, opacity: 1, ease: "power2.out" }, 0)
+            .to(leftArm, { x: 0, opacity: 1, ease: "power2.out" }, 0.15)
+            .to(rightArm, { x: 0, opacity: 1, ease: "power2.out" }, 0.15)
+            .to(labelContainer, { opacity: 1, y: -10, ease: "power2.out" }, 0.3);
     }
 
     // ====== Sticky navigation et scrollspy ======
-    const tocSection = document.getElementById('sommaire');
-    const stickyNav = document.getElementById('stickyNav');
-    const currentSpan = stickyNav ? stickyNav.querySelector('.current-section') : null;
-    const prevLink = stickyNav ? stickyNav.querySelector('.prev-section') : null;
-    const nextLink = stickyNav ? stickyNav.querySelector('.next-section') : null;
-    const cards = Array.from(document.querySelectorAll('.toc-card'));
-    const sections = Array.from(document.querySelectorAll('.grid .block'));
-    const sectionIds = sections.map(s => s.id);
+    const tocSection = document.getElementById("sommaire");
+    const stickyNav = document.getElementById("stickyNav");
+    const currentSpan = stickyNav ? stickyNav.querySelector(".current-section") : null;
+    const prevLink = stickyNav ? stickyNav.querySelector(".prev-section") : null;
+    const nextLink = stickyNav ? stickyNav.querySelector(".next-section") : null;
 
-    // Affichage de la sticky nav quand le sommaire est scrolled hors de la vue
+    const cards = Array.from(document.querySelectorAll(".toc-card"));
+    const sections = Array.from(document.querySelectorAll(".grid .block"));
+    const sectionIds = sections.map((s) => s.id);
+
     if (tocSection && stickyNav) {
         ScrollTrigger.create({
             trigger: tocSection,
-            start: 'bottom top-=80',
-            end: 'bottom top',
-            onEnter: () => stickyNav.classList.add('show'),
-            onLeaveBack: () => stickyNav.classList.remove('show')
+            start: "bottom top-=80",
+            end: "bottom top",
+            onEnter: () => stickyNav.classList.add("show"),
+            onLeaveBack: () => stickyNav.classList.remove("show"),
         });
     }
 
-    /*
-     * Mise à jour de la navigation et des cartes actives au scroll
-     * On utilise ScrollTrigger plutôt qu'IntersectionObserver pour plus de fiabilité.
-     */
     function updateNav(section) {
         const id = section.id;
-        // activer la carte correspondante
-        cards.forEach(card => {
-            card.classList.toggle('active', card.getAttribute('href') === `#${id}`);
+
+        // Carte active
+        cards.forEach((card) => {
+            card.classList.toggle("active", card.getAttribute("href") === `#${id}`);
         });
-        // mettre à jour le texte courant et les liens prev/next
+
+        // Sticky nav
         if (stickyNav && currentSpan) {
-            const titleEl = section.querySelector('.block-title');
-            currentSpan.textContent = titleEl ? titleEl.textContent.trim() : '';
+            const titleEl = section.querySelector(".block-title");
+            currentSpan.textContent = titleEl ? titleEl.textContent.trim() : "";
+
             const index = sectionIds.indexOf(id);
             const prevId = sectionIds[index - 1];
             const nextId = sectionIds[index + 1];
+
             if (prevLink) {
                 if (prevId) {
                     prevLink.href = `#${prevId}`;
-                    prevLink.style.visibility = 'visible';
+                    prevLink.style.visibility = "visible";
                 } else {
-                    prevLink.href = '#';
-                    prevLink.style.visibility = 'hidden';
+                    prevLink.href = "#";
+                    prevLink.style.visibility = "hidden";
                 }
             }
+
             if (nextLink) {
                 if (nextId) {
                     nextLink.href = `#${nextId}`;
-                    nextLink.style.visibility = 'visible';
+                    nextLink.style.visibility = "visible";
                 } else {
-                    nextLink.href = '#';
-                    nextLink.style.visibility = 'hidden';
+                    nextLink.href = "#";
+                    nextLink.style.visibility = "hidden";
                 }
             }
         }
@@ -172,92 +231,91 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // ===== Fix scroll offset sticky-nav + sommaire (évite titres coupés) =====
     function getTopOffset() {
-        const topBar = document.querySelector('.top-bar');
+        const topBar = document.querySelector(".top-bar");
         const h = topBar ? topBar.getBoundingClientRect().height : 0;
-        return h + 18; // marge visuelle
+        return h + 18;
     }
 
     function scrollToSection(id) {
         const section = document.getElementById(id);
         if (!section) return;
 
-        // On vise le header/titre (pas le top de l’article)
         const target =
-            section.querySelector('.block-header') ||
-            section.querySelector('.block-title') ||
+            section.querySelector(".block-header") ||
+            section.querySelector(".block-title") ||
             section;
 
         const y = target.getBoundingClientRect().top + window.pageYOffset - getTopOffset();
-        window.scrollTo({ top: y, behavior: 'smooth' });
-        history.replaceState(null, '', `#${id}`);
+        window.scrollTo({ top: y, behavior: "smooth" });
+        history.replaceState(null, "", `#${id}`);
     }
 
     function bindSmartAnchor(a) {
-        if (!a) return;
-        a.addEventListener('click', (e) => {
-            const href = a.getAttribute('href') || '';
-            if (!href.startsWith('#') || href === '#') return;
-            e.preventDefault();
-            scrollToSection(href.slice(1));
-        }, { passive: false });
+        if (!a || a.__scrollInit) return;
+        a.__scrollInit = true;
+
+        a.addEventListener(
+            "click",
+            (e) => {
+                const href = a.getAttribute("href") || "";
+                if (!href.startsWith("#") || href === "#") return;
+                e.preventDefault();
+                scrollToSection(href.slice(1));
+            },
+            { passive: false }
+        );
     }
 
     // 1) Sticky nav prev/next + home
-    bindSmartAnchor(document.querySelector('#stickyNav .prev-section'));
-    bindSmartAnchor(document.querySelector('#stickyNav .next-section'));
-    bindSmartAnchor(document.querySelector('#stickyNav .nav-home'));
+    bindSmartAnchor(document.querySelector("#stickyNav .prev-section"));
+    bindSmartAnchor(document.querySelector("#stickyNav .next-section"));
+    bindSmartAnchor(document.querySelector("#stickyNav .nav-home"));
 
-    // 2) Cartes du sommaire
-    document.querySelectorAll('a.toc-card[href^="#"]').forEach(bindSmartAnchor);
-    
-    // ScrollTrigger pour chaque section
-    // Objectif : mettre à jour la sticky-nav dès que le TITRE du bloc devient visible.
+    // 2) Tous les liens internes marqués data-scrolllink (cohérent avec main.js)
+    document.querySelectorAll('[data-scrolllink][href^="#"]').forEach(bindSmartAnchor);
+
+    // ScrollTrigger pour chaque section (maj sticky-nav dès que le titre devient visible)
     sections.forEach((section) => {
-        const titleTrigger = section.querySelector('.block-title') || section;
+        const titleTrigger = section.querySelector(".block-title") || section;
+
         ScrollTrigger.create({
             trigger: titleTrigger,
-            // Quand le haut du titre arrive dans la zone basse de l'écran, on considère qu'on est "dans" le bloc.
-            start: 'top 85%',
-            // On garde une fenêtre raisonnable pour éviter le clignotement.
-            end: 'bottom 20%',
+            start: "top 85%",
+            end: "bottom 20%",
             onEnter: () => updateNav(section),
-            onEnterBack: () => updateNav(section)
+            onEnterBack: () => updateNav(section),
         });
     });
 
+    // ====== Tech stack -> tags ======
     (function () {
         const p = document.querySelector(".tech-stack");
         if (!p) return;
 
         const raw = p.textContent || "";
-
-        // Sépare le label "Environnements techniques :" du reste
         const split = raw.split(":");
         if (split.length < 2) return;
 
         const label = split[0].trim() + " :";
         const rest = split.slice(1).join(":").trim();
 
-        // On coupe avant "ainsi que" / "avec" pour ne garder que la stack en tags
         const cut = rest
             .split(/\bainsi que\b|\bavec des outils\b|\bavec un outil\b/i)[0]
             .trim()
             .replace(/\.$/, "");
 
-        // Tokenize: virgules + slashes
         const tokens = cut
             .split(",")
-            .map(s => s.trim())
+            .map((s) => s.trim())
             .filter(Boolean)
-            .flatMap(s => s.includes(" / ") ? s.split(" / ").map(x => x.trim()) : [s]);
+            .flatMap((s) => (s.includes(" / ") ? s.split(" / ").map((x) => x.trim()) : [s]));
 
-        // Reconstruit un rendu premium
         p.innerHTML = `<span class="tech-label">${label}</span>`;
 
         const wrap = document.createElement("div");
         wrap.className = "tech-tags";
 
-        tokens.forEach(t => {
+        tokens.forEach((t) => {
             const tag = document.createElement("span");
             tag.className = "tech-tag";
             tag.textContent = t;
@@ -265,5 +323,8 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         p.appendChild(wrap);
+
+        // Si tu veux des magnets sur les tags, tu peux décommenter :
+        // initMagnets(wrap);
     })();
 });
