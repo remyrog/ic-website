@@ -180,11 +180,17 @@ window.addEventListener("DOMContentLoaded", () => {
     const sections = Array.from(document.querySelectorAll(".grid .block"));
     const sectionIds = sections.map((s) => s.id);
 
+    // offset CSS (utilisé par le navigateur pour les ancres)
+    const getOffset = () => {
+        const v = getComputedStyle(document.documentElement).getPropertyValue("--scroll-offset").trim();
+        const n = parseFloat(v);
+        return Number.isFinite(n) ? n : 0;
+    };
+
     if (tocSection && stickyNav) {
         ScrollTrigger.create({
             trigger: tocSection,
-            start: "bottom top-=80",
-            end: "bottom top",
+            start: () => `bottom top+=${getOffset()}`,
             onEnter: () => stickyNav.classList.add("show"),
             onLeaveBack: () => stickyNav.classList.remove("show"),
         });
@@ -229,18 +235,19 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ScrollTrigger pour chaque section (maj sticky-nav dès que le titre devient visible)
+    // ScrollSpy robuste : la section est "active" quand son top passe sous la top-bar (offset CSS)
     sections.forEach((section) => {
-        const titleTrigger = section.querySelector(".block-title") || section;
-
         ScrollTrigger.create({
-            trigger: titleTrigger,
-            start: "top 85%",
-            end: "bottom 20%",
+            trigger: section,
+            start: () => `top top+=${getOffset()}`,
+            end: () => `bottom top+=${getOffset()}`,
             onEnter: () => updateNav(section),
             onEnterBack: () => updateNav(section),
         });
     });
+
+    // Après avoir créé les triggers (et tes gsap.from), on force un recalcul
+    ScrollTrigger.refresh();
 
     // ====== Tech stack -> tags ======
     (function () {
