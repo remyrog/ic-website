@@ -89,7 +89,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: var(--scroll-offset, 96px);
+    scroll-padding-top: var(--scroll-offset);
 }
 
 * {
@@ -421,14 +421,7 @@ strong {
     grid-template-columns: auto minmax(0, 1fr);
     column-gap: 1rem;
     row-gap: .5rem;
-    scroll-margin-top: var(--scroll-offset, 96px);
-}
-
-@media (max-width: 720px) {
-    .block {
-        scroll-margin-top: 140px;
-        /* mobile : plus safe (Safari) */
-    }
+    scroll-margin-top: var(--scroll-offset);
 }
 
 .block-header {
@@ -946,18 +939,13 @@ a.cta-primary:focus-visible {
     margin-bottom: 2.8rem;
 }
 
-/* Optionnel : un léger “respir” au-dessus du sommaire */
 #sommaire {
     margin-top: 0.2rem;
-
-    /* Fix robuste du chevauchement avec le premier bloc (Mon rôle)
-       - padding ne collapse jamais (contrairement aux marges)
-       - flow-root isole le contexte et évite certains effets de layout
-       - z-index sécurise l’empilement si une animation/transform intervient */
     padding-bottom: 2.1rem;
     display: flow-root;
     position: relative;
     z-index: 2;
+    scroll-margin-top: var(--scroll-offset);
 }
 
 /* Espace garanti au-dessus de la grille de contenu (débutant par “Mon rôle”) */
