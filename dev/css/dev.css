@@ -84,7 +84,7 @@
     --neon-inset: inset 0 0 0 1px var(--pink-15);
     --neon-inset-quiet: inset 0 0 0 1px rgb(var(--pink-rgb) / 0.08);
 
-    --scroll-offset: 200px;
+    --scroll-offset: 100px;
 }
 
 html {
