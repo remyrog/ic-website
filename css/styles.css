@@ -138,8 +138,6 @@ body {
 
   /* Neon magnet */
   --neon-outer: 0 10px 30px var(--pink-15);
-  --neon-inset: inset 0 0 0 1px var(--pink-15);
-  --neon-inset-quiet: inset 0 0 0 1px rgb(var(--pink-rgb) / 0.08);
 }
 
 /* =========================
@@ -658,7 +656,7 @@ a.accent,
    [data-magnet]
    ========================= */
 [data-magnet] {
-  box-shadow: var(--neon-inset-quiet);
+  box-shadow: none;
   transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
   will-change: transform;
   transform: translateZ(0);
@@ -666,7 +664,8 @@ a.accent,
 
 [data-magnet]:hover,
 [data-magnet]:focus-visible {
-  box-shadow: var(--neon-outer), var(--neon-inset);
+  /* halo seulement, zéro bordure */
+  box-shadow: var(--neon-outer);
   outline: none;
 }
 
