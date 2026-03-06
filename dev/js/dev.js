@@ -318,13 +318,12 @@ window.addEventListener("DOMContentLoaded", () => {
         tokens.forEach((t) => {
             const tag = document.createElement("span");
             tag.className = "tech-tag";
+            tag.setAttribute("data-magnet");
             tag.textContent = t;
             wrap.appendChild(tag);
         });
 
         p.appendChild(wrap);
-
-        // Si tu veux des magnets sur les tags, tu peux décommenter :
-        // initMagnets(wrap);
+        initMagnets(wrap);
     })();
 });
