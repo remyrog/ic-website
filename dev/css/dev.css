@@ -1024,3 +1024,15 @@ section.grid {
 [data-magnet]:active {
     transform: translateY(1px) scale(.98);
 }
+
+.sticky-nav .nav-btn.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
+    text-decoration: none;
+}
+
+.sticky-nav .nav-btn:focus-visible {
+    outline: 2px solid var(--pink);
+    outline-offset: 2px;
+}

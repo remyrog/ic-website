@@ -1,9 +1,157 @@
-// Animations d’entrée et de scroll haut de gamme via GSAP
 window.addEventListener("DOMContentLoaded", () => {
-    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+    initStickyNav();
+    initAnimations();
+});
+
+function initStickyNav() {
+    const stickyNav = document.getElementById("stickyNav");
+    if (!stickyNav) return;
+
+    const currentSectionLabel = stickyNav.querySelector(".current-section");
+    const prevButton = stickyNav.querySelector(".prev-section");
+    const nextButton = stickyNav.querySelector(".next-section");
+
+    if (!currentSectionLabel || !prevButton || !nextButton) return;
+
+    const sections = [
+        document.getElementById("role"),
+        document.getElementById("approche"),
+        document.getElementById("solutions"),
+        document.getElementById("audit"),
+        document.getElementById("budgets"),
+        document.getElementById("autonomie"),
+        document.getElementById("mvp"),
+        document.getElementById("agile"),
+        document.getElementById("seo"),
+        document.getElementById("risques"),
+        document.getElementById("parcours"),
+    ].filter(Boolean);
+
+    if (!sections.length) return;
+
+    const getScrollOffset = () => {
+        const cssOffset = getComputedStyle(document.documentElement)
+            .getPropertyValue("--scroll-offset")
+            .trim();
+
+        const parsed = Number.parseFloat(cssOffset);
+        return Number.isFinite(parsed) ? parsed : 75;
+    };
+
+    const getSectionTitle = (section) => {
+        const title = section.querySelector(".block-title");
+        return title ? title.textContent.replace(/\s+/g, " ").trim() : "";
+    };
+
+    const scrollToSection = (section) => {
+        if (!section) return;
+
+        const offset = getScrollOffset();
+        const top = window.scrollY + section.getBoundingClientRect().top - offset;
+
+        window.scrollTo({
+            top,
+            behavior: "smooth",
+        });
+    };
+
+    const setButtonState = (button, targetSection, disabled) => {
+        if (!button) return;
+
+        if (disabled || !targetSection) {
+            button.setAttribute("aria-disabled", "true");
+            button.classList.add("is-disabled");
+            button.removeAttribute("href");
+            return;
+        }
+
+        button.setAttribute("aria-disabled", "false");
+        button.classList.remove("is-disabled");
+        button.setAttribute("href", `#${targetSection.id}`);
+    };
+
+    let activeIndex = 0;
+    let ticking = false;
+
+    const updateStickyNav = () => {
+        const offset = getScrollOffset();
+        const activationLine = offset + 12;
+
+        let bestIndex = 0;
+        let bestDistance = Number.POSITIVE_INFINITY;
+
+        sections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            const distance = Math.abs(rect.top - activationLine);
+
+            if (rect.top <= activationLine && distance < bestDistance) {
+                bestDistance = distance;
+                bestIndex = index;
+            }
+        });
+
+        const firstRect = sections[0].getBoundingClientRect();
+        const shouldShow = firstRect.top <= activationLine;
+
+        stickyNav.classList.toggle("show", shouldShow);
+
+        activeIndex = bestIndex;
+
+        const currentSection = sections[activeIndex];
+        const previousSection = sections[activeIndex - 1] || null;
+        const nextSection = sections[activeIndex + 1] || null;
+
+        currentSectionLabel.textContent = getSectionTitle(currentSection) || "Section";
+
+        setButtonState(prevButton, previousSection, !previousSection);
+        setButtonState(nextButton, nextSection, !nextSection);
+    };
+
+    const requestUpdate = () => {
+        if (ticking) return;
+
+        ticking = true;
+        window.requestAnimationFrame(() => {
+            updateStickyNav();
+            ticking = false;
+        });
+    };
+
+    prevButton.addEventListener("click", (event) => {
+        const targetSection = sections[activeIndex - 1];
+        if (!targetSection) {
+            event.preventDefault();
+            return;
+        }
+
+        event.preventDefault();
+        scrollToSection(targetSection);
+    });
+
+    nextButton.addEventListener("click", (event) => {
+        const targetSection = sections[activeIndex + 1];
+        if (!targetSection) {
+            event.preventDefault();
+            return;
+        }
+
+        event.preventDefault();
+        scrollToSection(targetSection);
+    });
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    updateStickyNav();
+}
+
+function initAnimations() {
+    if (typeof window.gsap === "undefined" || typeof window.ScrollTrigger === "undefined") {
+        return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // ====== Magnet / tilt (desktop only) — GSAP-friendly ======
     const isTouch =
         "ontouchstart" in window ||
         navigator.maxTouchPoints > 0 ||
@@ -12,48 +160,53 @@ window.addEventListener("DOMContentLoaded", () => {
     function initMagnets(root = document) {
         if (isTouch) return;
 
-        root.querySelectorAll("[data-magnet]").forEach((el) => {
-            if (el.__magnetInit) return;
-            el.__magnetInit = true;
+        root.querySelectorAll("[data-magnet]").forEach((element) => {
+            if (element.__magnetInit) return;
+            element.__magnetInit = true;
 
-            const strength = parseFloat(el.dataset.magnet);
-            const maxRot = parseFloat(el.dataset.rotate);
+            const strength = parseFloat(element.dataset.magnet);
+            const maxRotation = parseFloat(element.dataset.rotate);
 
-            const s = Number.isFinite(strength) ? strength : 20; // px
-            const r = Number.isFinite(maxRot) ? maxRot : 4; // deg
+            const magnetStrength = Number.isFinite(strength) ? strength : 20;
+            const rotationStrength = Number.isFinite(maxRotation) ? maxRotation : 4;
 
-            // Quick setters (super smooth)
-            const toX = gsap.quickTo(el, "x", { duration: 0.25, ease: "power2.out" });
-            const toY = gsap.quickTo(el, "y", { duration: 0.25, ease: "power2.out" });
-            const toR = gsap.quickTo(el, "rotation", { duration: 0.25, ease: "power2.out" });
+            const animateX = gsap.quickTo(element, "x", {
+                duration: 0.25,
+                ease: "power2.out",
+            });
+            const animateY = gsap.quickTo(element, "y", {
+                duration: 0.25,
+                ease: "power2.out",
+            });
+            const animateRotation = gsap.quickTo(element, "rotation", {
+                duration: 0.25,
+                ease: "power2.out",
+            });
 
-            const onMove = (e) => {
-                const rect = el.getBoundingClientRect();
-                const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // -1..1
-                const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2; // -1..1
+            const onMove = (event) => {
+                const rect = element.getBoundingClientRect();
+                const normalizedX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+                const normalizedY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
 
-                toX(nx * s);
-                toY(ny * s * 0.6);
-                toR(-nx * r);
+                animateX(normalizedX * magnetStrength);
+                animateY(normalizedY * magnetStrength * 0.6);
+                animateRotation(-normalizedX * rotationStrength);
             };
 
             const reset = () => {
-                toX(0);
-                toY(0);
-                toR(0);
+                animateX(0);
+                animateY(0);
+                animateRotation(0);
             };
 
-            el.addEventListener("mousemove", onMove);
-            el.addEventListener("mouseleave", reset);
-
-            // Petit polish : si on clique pendant le hover, on reset immédiatement
-            el.addEventListener("pointerdown", reset);
+            element.addEventListener("mousemove", onMove);
+            element.addEventListener("mouseleave", reset);
+            element.addEventListener("pointerdown", reset);
         });
     }
 
     initMagnets();
 
-    // ====== Animations d’arrivée ======
     gsap.from(".hero-inner", {
         opacity: 0,
         y: 60,
@@ -61,8 +214,6 @@ window.addEventListener("DOMContentLoaded", () => {
         ease: "power3.out",
     });
 
-    // Apparition en cascade des cartes de sommaire
-    // -> on initMagnets après l'anim pour éviter un ressenti "bizarre" au tout début
     gsap.from(".toc-card", {
         opacity: 0,
         y: 40,
@@ -73,15 +224,14 @@ window.addEventListener("DOMContentLoaded", () => {
         onComplete: () => initMagnets(),
     });
 
-    // Révélations au scroll des blocs principaux
-    document.querySelectorAll(".block").forEach((el) => {
-        gsap.from(el, {
+    document.querySelectorAll(".block").forEach((element) => {
+        gsap.from(element, {
             opacity: 0,
             y: 80,
             duration: 0.9,
             ease: "power3.out",
             scrollTrigger: {
-                trigger: el,
+                trigger: element,
                 start: "top 80%",
                 end: "bottom 60%",
                 toggleActions: "play none none reverse",
@@ -89,7 +239,6 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Animation des soulignages décoratifs sous les titres
     document.querySelectorAll(".block-underline").forEach((underline) => {
         gsap.fromTo(
             underline,
@@ -107,7 +256,6 @@ window.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    // Animation d'apparition des icônes de section
     document.querySelectorAll(".block-icon").forEach((icon) => {
         gsap.from(icon, {
             opacity: 0,
@@ -123,7 +271,6 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Animation de tracé des icônes (dessin au trait)
     document.querySelectorAll(".block-icon path").forEach((path) => {
         const length = path.getTotalLength ? path.getTotalLength() : 300;
         path.style.strokeDasharray = String(length);
@@ -141,7 +288,6 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ====== Animation premium : poignée de main et personnages ======
     const clientPerson = document.getElementById("client-person");
     const providerPerson = document.getElementById("provider-person");
     const leftArm = document.getElementById("left-arm");
@@ -169,43 +315,42 @@ window.addEventListener("DOMContentLoaded", () => {
             .to(labelContainer, { opacity: 1, y: -10, ease: "power2.out" }, 0.3);
     }
 
-    // ====== Tech stack -> tags ======
-    (function () {
-        const p = document.querySelector(".tech-stack");
-        if (!p) return;
+    (() => {
+        const paragraph = document.querySelector(".tech-stack");
+        if (!paragraph) return;
 
-        const raw = p.textContent || "";
+        const raw = paragraph.textContent || "";
         const split = raw.split(":");
         if (split.length < 2) return;
 
-        const label = split[0].trim() + " :";
+        const label = `${split[0].trim()} :`;
         const rest = split.slice(1).join(":").trim();
 
-        const cut = rest
+        const trimmedList = rest
             .split(/\bainsi que\b|\bavec des outils\b|\bavec un outil\b/i)[0]
             .trim()
             .replace(/\.$/, "");
 
-        const tokens = cut
+        const tokens = trimmedList
             .split(",")
-            .map((s) => s.trim())
+            .map((item) => item.trim())
             .filter(Boolean)
-            .flatMap((s) => (s.includes(" / ") ? s.split(" / ").map((x) => x.trim()) : [s]));
+            .flatMap((item) => (item.includes(" / ") ? item.split(" / ").map((sub) => sub.trim()) : [item]));
 
-        p.innerHTML = `<span class="tech-label">${label}</span>`;
+        paragraph.innerHTML = `<span class="tech-label">${label}</span>`;
 
-        const wrap = document.createElement("div");
-        wrap.className = "tech-tags";
+        const wrapper = document.createElement("div");
+        wrapper.className = "tech-tags";
 
-        tokens.forEach((t) => {
+        tokens.forEach((token) => {
             const tag = document.createElement("span");
             tag.className = "tech-tag";
             tag.setAttribute("data-magnet", "");
-            tag.textContent = t;
-            wrap.appendChild(tag);
+            tag.textContent = token;
+            wrapper.appendChild(tag);
         });
 
-        p.appendChild(wrap);
-        initMagnets(wrap);
+        paragraph.appendChild(wrapper);
+        initMagnets(wrapper);
     })();
-});
+}
