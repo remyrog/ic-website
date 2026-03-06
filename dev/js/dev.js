@@ -43,14 +43,26 @@ function initStickyNav() {
         return title ? title.textContent.replace(/\s+/g, " ").trim() : "";
     };
 
+    const getDocumentTop = (element) => {
+        let top = 0;
+        let current = element;
+
+        while (current) {
+            top += current.offsetTop;
+            current = current.offsetParent;
+        }
+
+        return top;
+    };
+
     const scrollToSection = (section) => {
         if (!section) return;
 
         const offset = getScrollOffset();
-        const top = window.scrollY + section.getBoundingClientRect().top - offset;
+        const top = getDocumentTop(section) - offset;
 
         window.scrollTo({
-            top,
+            top: Math.max(0, top),
             behavior: "smooth",
         });
     };
