@@ -169,7 +169,7 @@ window.addEventListener("DOMContentLoaded", () => {
             .to(labelContainer, { opacity: 1, y: -10, ease: "power2.out" }, 0.3);
     }
 
-    // ====== Sticky navigation et scrollspy ======
+    // ====== Sticky navigation (robuste, sans ScrollTrigger) ======
     const tocSection = document.getElementById("sommaire");
     const stickyNav = document.getElementById("stickyNav");
     const currentSpan = stickyNav ? stickyNav.querySelector(".current-section") : null;
@@ -180,74 +180,98 @@ window.addEventListener("DOMContentLoaded", () => {
     const sections = Array.from(document.querySelectorAll(".grid .block"));
     const sectionIds = sections.map((s) => s.id);
 
-    // offset CSS (utilisé par le navigateur pour les ancres)
-    const getOffset = () => {
-        const v = getComputedStyle(document.documentElement).getPropertyValue("--scroll-offset").trim();
-        const n = parseFloat(v);
-        return Number.isFinite(n) ? n : 0;
-    };
+    if (stickyNav && sections.length) {
+        const getOffset = () => {
+            const v = getComputedStyle(document.documentElement)
+                .getPropertyValue("--scroll-offset")
+                .trim();
+            const n = parseFloat(v);
+            return Number.isFinite(n) ? n : 0;
+        };
 
-    if (tocSection && stickyNav) {
-        ScrollTrigger.create({
-            trigger: tocSection,
-            start: () => `bottom top+=${getOffset()}`,
-            onEnter: () => stickyNav.classList.add("show"),
-            onLeaveBack: () => stickyNav.classList.remove("show"),
-        });
-    }
+        function updateNav(section) {
+            if (!section) return;
+            const id = section.id;
 
-    function updateNav(section) {
-        const id = section.id;
+            // Carte active
+            cards.forEach((card) => {
+                card.classList.toggle("active", card.getAttribute("href") === `#${id}`);
+            });
 
-        // Carte active
-        cards.forEach((card) => {
-            card.classList.toggle("active", card.getAttribute("href") === `#${id}`);
-        });
-
-        // Sticky nav
-        if (stickyNav && currentSpan) {
-            const titleEl = section.querySelector(".block-title");
-            currentSpan.textContent = titleEl ? titleEl.textContent.trim() : "";
+            // Sticky nav
+            if (currentSpan) {
+                const titleEl = section.querySelector(".block-title");
+                currentSpan.textContent = titleEl ? titleEl.textContent.trim() : id;
+            }
 
             const index = sectionIds.indexOf(id);
             const prevId = sectionIds[index - 1];
             const nextId = sectionIds[index + 1];
 
             if (prevLink) {
-                if (prevId) {
-                    prevLink.href = `#${prevId}`;
-                    prevLink.style.visibility = "visible";
-                } else {
-                    prevLink.href = "#";
-                    prevLink.style.visibility = "hidden";
-                }
+                prevLink.href = prevId ? `#${prevId}` : "#";
+                prevLink.style.visibility = prevId ? "visible" : "hidden";
             }
-
             if (nextLink) {
-                if (nextId) {
-                    nextLink.href = `#${nextId}`;
-                    nextLink.style.visibility = "visible";
-                } else {
-                    nextLink.href = "#";
-                    nextLink.style.visibility = "hidden";
-                }
+                nextLink.href = nextId ? `#${nextId}` : "#";
+                nextLink.style.visibility = nextId ? "visible" : "hidden";
             }
         }
+
+        function getActiveSection() {
+            const offset = getOffset() + 1; // +1 pour éviter les flottements
+            const y = window.scrollY + getOffset() + 1;
+
+            // 1) on est avant la grille => pas de sticky-nav
+            const first = sections[0];
+            const firstTop = first.getBoundingClientRect().top + window.scrollY;
+            if (y < firstTop) return null;
+
+            // 2) on cherche la section qui contient la "ligne" y
+            // (top <= y < bottom)
+            for (let i = 0; i < sections.length; i++) {
+                const s = sections[i];
+                const top = s.getBoundingClientRect().top + window.scrollY;
+                const bottom = top + s.getBoundingClientRect().height;
+                if (y >= top && y < bottom) return s;
+            }
+
+            // 3) si on est après tout, dernière section
+            return sections[sections.length - 1];
+        }
+
+        function updateStickyVisibility() {
+            if (!tocSection || !stickyNav) return;
+            const offset = getOffset();
+            const tocBottom = tocSection.getBoundingClientRect().bottom;
+            // sticky visible quand le sommaire est "au-dessus" de la top-bar (offset)
+            stickyNav.classList.toggle("show", tocBottom <= (offset + 10));
+        }
+
+        let raf = 0;
+        function onScroll() {
+            if (raf) return;
+            raf = requestAnimationFrame(() => {
+                raf = 0;
+
+                updateStickyVisibility();
+
+                const active = getActiveSection();
+                if (active) updateNav(active);
+            });
+        }
+
+        // Init
+        updateStickyVisibility();
+        const activeInit = getActiveSection();
+        if (activeInit) updateNav(activeInit);
+
+        // Events
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+
+        requestAnimationFrame(onScroll);
     }
-
-    // ScrollSpy robuste : la section est "active" quand son top passe sous la top-bar (offset CSS)
-    sections.forEach((section) => {
-        ScrollTrigger.create({
-            trigger: section,
-            start: () => `top top+=${getOffset()}`,
-            end: () => `bottom top+=${getOffset()}`,
-            onEnter: () => updateNav(section),
-            onEnterBack: () => updateNav(section),
-        });
-    });
-
-    // Après avoir créé les triggers (et tes gsap.from), on force un recalcul
-    ScrollTrigger.refresh();
 
     // ====== Tech stack -> tags ======
     (function () {
