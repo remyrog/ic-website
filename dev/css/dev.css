@@ -83,6 +83,13 @@
     --neon-outer: 0 10px 30px var(--pink-15);
     --neon-inset: inset 0 0 0 1px var(--pink-15);
     --neon-inset-quiet: inset 0 0 0 1px rgb(var(--pink-rgb) / 0.08);
+
+    --scroll-offset: 110px;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--scroll-offset, 96px);
 }
 
 * {
@@ -414,8 +421,7 @@ strong {
     grid-template-columns: auto minmax(0, 1fr);
     column-gap: 1rem;
     row-gap: .5rem;
-    scroll-margin-top: 110px;
-    /* desktop */
+    scroll-margin-top: var(--scroll-offset, 96px);
 }
 
 @media (max-width: 720px) {
@@ -636,7 +642,8 @@ strong {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    line-height: 0; /* évite le gap baseline */
+    line-height: 0;
+    /* évite le gap baseline */
 }
 
 /* Home icon: give it a size on all screens */
@@ -834,7 +841,7 @@ a.cta-primary:focus-visible {
         line-height: 1;
         color: var(--pink);
     }
-    
+
     /* titre au centre : prend le max */
     .sticky-nav .current-section {
         flex: 1;

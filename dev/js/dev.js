@@ -229,25 +229,47 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ===== Fix scroll offset sticky-nav + sommaire (évite titres coupés) =====
-    function getTopOffset() {
+    // ===== Scroll offset global (évite titres rognés par la top-bar) =====
+    function updateScrollOffset() {
         const topBar = document.querySelector(".top-bar");
         const h = topBar ? topBar.getBoundingClientRect().height : 0;
-        return h + 18;
+        const offset = Math.round(h + 18); // marge visuelle
+        document.documentElement.style.setProperty("--scroll-offset", `${offset}px`);
+        return offset;
     }
+
+    // init + resize
+    updateScrollOffset();
+
+    const topBar = document.querySelector(".top-bar");
+    if (topBar && "ResizeObserver" in window) {
+        const ro = new ResizeObserver(() => updateScrollOffset());
+        ro.observe(topBar);
+    }
+
+    window.addEventListener("resize", updateScrollOffset, { passive: true });
 
     function scrollToSection(id) {
         const section = document.getElementById(id);
         if (!section) return;
 
+        // On vise le header/titre
         const target =
             section.querySelector(".block-header") ||
             section.querySelector(".block-title") ||
             section;
 
-        const y = target.getBoundingClientRect().top + window.pageYOffset - getTopOffset();
-        window.scrollTo({ top: y, behavior: "smooth" });
+        // scrollIntoView respecte html{scroll-padding-top:...}
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // met à jour l’URL sans jump natif
         history.replaceState(null, "", `#${id}`);
+    }
+
+    // Fix: ouverture directe avec un hash => resnap sous la top-bar
+    if (location.hash && location.hash.length > 1) {
+        const id = decodeURIComponent(location.hash.slice(1));
+        requestAnimationFrame(() => scrollToSection(id));
     }
 
     function bindSmartAnchor(a) {
