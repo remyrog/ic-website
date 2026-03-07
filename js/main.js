@@ -111,13 +111,13 @@
 
   function applyHeroMobileSceneTuning() {
     const scene = document.querySelector(".scene");
-    const sun = document.getElementById("sun");
+    const sunPath = document.getElementById("sunPath");
     const car = document.getElementById("carHero");
     const roadBg = document.getElementById("roadBg");
     const roadDash = document.getElementById("roadDash");
     const roadPathHero = document.getElementById("roadPathHero");
 
-    if (!scene || !sun || !car || !roadBg || !roadDash || !roadPathHero) return;
+    if (!scene || !sunPath || !car || !roadBg || !roadDash || !roadPathHero) return;
 
     const isMobile = window.matchMedia("(max-width: 760px)").matches;
     const isSmallMobile = window.matchMedia("(max-width: 560px)").matches;
@@ -126,15 +126,11 @@
       scene.setAttribute("viewBox", "0 0 1440 810");
       scene.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
-      sun.setAttribute("data-sun-duration", "25");
-      sun.setAttribute("data-sun-arc", "15");
-      sun.setAttribute("data-sun-margin", "120");
-      sun.setAttribute("data-offset-y", "60");
-      sun.setAttribute("data-travel-ratio", "1");
-
+      const desktopSunPath = "M 220 110 C 520 40 900 70 1240 190";
       const desktopRoad =
         "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660";
 
+      sunPath.setAttribute("d", desktopSunPath);
       roadBg.setAttribute("d", desktopRoad);
       roadDash.setAttribute("d", desktopRoad);
       roadPathHero.setAttribute("d", desktopRoad);
@@ -144,141 +140,88 @@
     }
 
     if (isSmallMobile) {
-      scene.setAttribute("viewBox", "0 0 1440 760");
+      scene.setAttribute("viewBox", "0 0 1440 820");
       scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-      // Soleil : plus haut, déplacement moins large, plus lent
-      sun.setAttribute("data-sun-duration", "34");
-      sun.setAttribute("data-sun-arc", "10");
-      sun.setAttribute("data-sun-margin", "260");
-      sun.setAttribute("data-offset-y", "18");
-      sun.setAttribute("data-travel-ratio", "0.56");
+      // Soleil plus haut, trajectoire réelle et visible sur mobile
+      const mobileSunPath =
+        "M 320 150 C 500 78 760 58 980 96 C 1130 122 1210 146 1270 174";
 
-      // Route : plus basse et visuellement plus grande
+      // Route moins zoomée, plus basse, avec davantage de caractère
       const mobileRoad =
-        "M-120,735 C80,700 220,690 360,675 C520,658 650,632 790,640 C950,650 1100,690 1245,700 C1360,708 1450,704 1540,696";
+        "M-120,760 C40,730 190,700 330,718 C470,736 600,680 745,698 C900,717 1030,760 1175,745 C1310,730 1435,720 1560,736";
 
+      sunPath.setAttribute("d", mobileSunPath);
       roadBg.setAttribute("d", mobileRoad);
       roadDash.setAttribute("d", mobileRoad);
       roadPathHero.setAttribute("d", mobileRoad);
 
-      car.setAttribute("transform", "translate(-120,735) scale(0.9)");
+      car.setAttribute("transform", "translate(-120,760) scale(0.88)");
       return;
     }
 
-    scene.setAttribute("viewBox", "0 0 1440 780");
+    scene.setAttribute("viewBox", "0 0 1440 800");
     scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-    // Soleil : plus haut, déplacement moins large, plus lent
-    sun.setAttribute("data-sun-duration", "30");
-    sun.setAttribute("data-sun-arc", "12");
-    sun.setAttribute("data-sun-margin", "240");
-    sun.setAttribute("data-offset-y", "24");
-    sun.setAttribute("data-travel-ratio", "0.62");
+    const tabletSunPath =
+      "M 280 138 C 500 62 790 52 1040 94 C 1175 116 1265 142 1330 176";
 
-    // Route : plus basse et plus grande
     const tabletRoad =
-      "M-110,748 C95,710 235,700 375,684 C535,666 660,640 800,648 C960,658 1110,698 1250,708 C1370,716 1455,710 1540,702";
+      "M-110,748 C55,716 210,690 355,706 C500,722 625,668 775,686 C930,705 1065,746 1210,734 C1345,722 1450,712 1560,728";
 
+    sunPath.setAttribute("d", tabletSunPath);
     roadBg.setAttribute("d", tabletRoad);
     roadDash.setAttribute("d", tabletRoad);
     roadPathHero.setAttribute("d", tabletRoad);
 
-    car.setAttribute("transform", "translate(-120,748) scale(0.94)");
+    car.setAttribute("transform", "translate(-115,748) scale(0.92)");
   }
-  applyHeroMobileSceneTuning();
 
-  (() => {
+  let heroSunTween = null;
+  let heroSunSpinTween = null;
+
+  function initHeroSunMotion() {
+    if (!(hasGSAP && hasMotionPath)) return;
+
     const sun = document.getElementById("sun");
-    if (!sun) return;
+    const sunPath = document.getElementById("sunPath");
+    const sunRays = document.getElementById("sunRays");
 
-    const svg = sun.ownerSVGElement;
-    let minX = 0;
-    let maxX = 0;
-    let base = "";
+    if (!sun || !sunPath) return;
 
-    function readSettings() {
-      return {
-        duration: parseFloat(sun.dataset.sunDuration || "30"),
-        arc: parseFloat(sun.dataset.sunArc || "22"),
-        marginR: parseFloat(sun.dataset.sunMargin || "12"),
-        offsetY: parseFloat(sun.dataset.offsetY || "108"),
-        travelRatio: parseFloat(sun.dataset.travelRatio || "1"),
-      };
+    heroSunTween?.kill();
+    heroSunSpinTween?.kill();
+
+    gsap.set(sun, {
+      clearProps: "x,y,rotation,transform",
+      transformOrigin: "50% 50%",
+    });
+
+    heroSunTween = gsap.to(sun, {
+      duration: window.matchMedia("(max-width: 560px)").matches ? 8.5 : window.matchMedia("(max-width: 760px)").matches ? 9.5 : 12,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      motionPath: {
+        path: sunPath,
+        align: sunPath,
+        alignOrigin: [0.5, 0.5],
+        autoRotate: false,
+        start: 0.06,
+        end: 0.94,
+      },
+    });
+
+    if (sunRays) {
+      heroSunSpinTween = gsap.to(sunRays, {
+        rotation: 360,
+        transformOrigin: "50% 50%",
+        duration: 18,
+        repeat: -1,
+        ease: "none",
+      });
     }
-
-    function refreshBaseTransform() {
-      const current = sun.getAttribute("transform") || "";
-      base = current.replace(/translate\([^)]+\)\s*rotate\([^)]+\)\s*$/i, "").trim();
-    }
-
-    function computeBounds() {
-      if (!svg) return;
-
-      const { marginR, travelRatio } = readSettings();
-      const vb = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
-      const width = vb ? vb.width : svg.clientWidth;
-
-      let bb;
-      try {
-        bb = sun.getBBox();
-      } catch {
-        requestAnimationFrame(computeBounds);
-        return;
-      }
-
-      const fullTravel = Math.max(0, width - marginR - (bb.x + bb.width));
-      const ratio = Math.max(0.2, Math.min(1, travelRatio));
-
-      const visibleTravel = fullTravel * ratio;
-      const sideOffset = (fullTravel - visibleTravel) / 2;
-
-      minX = sideOffset;
-      maxX = sideOffset + visibleTravel;
-
-      refreshBaseTransform();
-    }
-
-    let x = 0;
-    let dir = 1;
-    let last = 0;
-
-    function step(t) {
-      if (!last) last = t;
-      const dt = (t - last) / 1000;
-      last = t;
-
-      const { duration, arc, offsetY } = readSettings();
-      const travel = Math.max(1, maxX - minX);
-      const safeDuration = Math.max(0.1, duration);
-      const speed = travel / safeDuration;
-
-      if (x < minX || x > maxX) x = minX;
-
-      x += dir * speed * dt;
-
-      if (x >= maxX) {
-        x = maxX;
-        dir = -1;
-      }
-      if (x <= minX) {
-        x = minX;
-        dir = 1;
-      }
-
-      const p = travel > 0 ? (x - minX) / travel : 0;
-      const y = offsetY + Math.sin(p * Math.PI) * -arc;
-      const r = p * 180;
-
-      sun.setAttribute("transform", `${base} translate(${x},${y}) rotate(${r})`.trim());
-
-      requestAnimationFrame(step);
-    }
-
-    computeBounds();
-    window.addEventListener("resize", computeBounds, { passive: true });
-    requestAnimationFrame(step);
-  })();
+  }
 
   const hasGSAP = typeof window.gsap !== "undefined";
   const hasScrollTrigger = typeof window.ScrollTrigger !== "undefined";
@@ -295,6 +238,9 @@
   if (hasGSAP && hasMotionPath) {
     gsap.registerPlugin(window.MotionPathPlugin);
   }
+
+  applyHeroMobileSceneTuning();
+  initHeroSunMotion();
 
   let heroCarTween = null;
 
@@ -346,6 +292,7 @@
       clearTimeout(heroResizeTimer);
       heroResizeTimer = setTimeout(() => {
         applyHeroMobileSceneTuning();
+        initHeroSunMotion();
         initHeroCarMotion();
       }, 120);
     },

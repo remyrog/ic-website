@@ -1219,13 +1219,13 @@ a.premium:focus-visible::after {
   }
 
   .scene #roadBg {
-    stroke-width: 92 !important;
+    stroke-width: 76 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 6 !important;
-    stroke-dasharray: 24 18 !important;
-    opacity: 0.78;
+    stroke-width: 5 !important;
+    stroke-dasharray: 22 18 !important;
+    opacity: 0.8;
   }
 
   .scene #carHero {
@@ -1279,12 +1279,12 @@ a.premium:focus-visible::after {
   }
 
   .scene #roadBg {
-    stroke-width: 82 !important;
+    stroke-width: 68 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 5 !important;
-    stroke-dasharray: 20 16 !important;
+    stroke-width: 4.5 !important;
+    stroke-dasharray: 18 15 !important;
   }
 }
 
