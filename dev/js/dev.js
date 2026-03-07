@@ -87,7 +87,11 @@ function initStickyNav() {
 
     const updateStickyNav = () => {
         const offset = getScrollOffset();
-        const activationLine = offset + 12;
+
+        // Ligne d’activation plus naturelle :
+        // - jamais trop haute (au moins sous la top bar)
+        // - mais suffisamment basse pour suivre la section réellement “en lecture”
+        const activationLine = Math.max(offset + 24, window.innerHeight * 0.32);
 
         let bestIndex = 0;
         let bestDistance = Number.POSITIVE_INFINITY;
