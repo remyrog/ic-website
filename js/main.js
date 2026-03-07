@@ -109,199 +109,7 @@
 
   initMagnets();
 
-function applyHeroMobileSceneTuning() {
-  const scene = document.querySelector(".scene");
-  const sunPath = document.getElementById("sunPath");
-  const car = document.getElementById("carHero");
-  const roadBg = document.getElementById("roadBg");
-  const roadDash = document.getElementById("roadDash");
-  const roadPathHero = document.getElementById("roadPathHero");
-
-  if (!scene || !sunPath || !car || !roadBg || !roadDash || !roadPathHero) return;
-
-  const isMobile = window.matchMedia("(max-width: 760px)").matches;
-  const isSmallMobile = window.matchMedia("(max-width: 560px)").matches;
-
-  if (!isMobile) {
-    scene.setAttribute("viewBox", "0 0 1440 810");
-    scene.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
-    const desktopSunPath = "M 220 110 C 520 40 900 70 1240 190";
-    const desktopRoad =
-      "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660";
-
-    sunPath.setAttribute("d", desktopSunPath);
-    roadBg.setAttribute("d", desktopRoad);
-    roadDash.setAttribute("d", desktopRoad);
-    roadPathHero.setAttribute("d", desktopRoad);
-
-    car.setAttribute("transform", "translate(-100,720) scale(1)");
-    return;
-  }
-
-  if (isSmallMobile) {
-    scene.setAttribute("viewBox", "0 0 1440 875");
-    scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
-
-    const mobileSunPath =
-      "M 360 86 C 540 24 770 18 980 34 C 1135 46 1240 66 1325 96";
-
-    // Version mobile beaucoup plus fidèle au rythme desktop
-    const mobileRoad =
-      "M-120,805 C30,770 150,778 285,772 C420,766 520,720 640,682 C760,644 880,650 995,700 C1105,748 1205,780 1310,764 C1420,748 1510,726 1605,732";
-
-    sunPath.setAttribute("d", mobileSunPath);
-    roadBg.setAttribute("d", mobileRoad);
-    roadDash.setAttribute("d", mobileRoad);
-    roadPathHero.setAttribute("d", mobileRoad);
-
-    car.setAttribute("transform", "translate(-108,805) scale(0.76)");
-    return;
-  }
-
-  scene.setAttribute("viewBox", "0 0 1440 850");
-  scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
-
-  const tabletSunPath =
-    "M 320 98 C 520 28 790 22 1045 40 C 1195 52 1305 76 1390 108";
-
-  // Version tablette : même ADN que desktop, juste recadrée
-  const tabletRoad =
-    "M-90,790 C70,748 205,758 345,750 C485,742 590,695 715,655 C840,615 960,626 1075,678 C1188,728 1295,760 1405,744 C1515,728 1605,706 1705,714";
-
-  sunPath.setAttribute("d", tabletSunPath);
-  roadBg.setAttribute("d", tabletRoad);
-  roadDash.setAttribute("d", tabletRoad);
-  roadPathHero.setAttribute("d", tabletRoad);
-
-  car.setAttribute("transform", "translate(-92,790) scale(0.82)");
-}
-
-  let heroSunTween = null;
-  let heroSunSpinTween = null;
-
-  function initHeroSunMotion() {
-    if (!(hasGSAP && hasMotionPath)) return;
-
-    const sun = document.getElementById("sun");
-    const sunPath = document.getElementById("sunPath");
-    const sunRays = document.getElementById("sunRays");
-
-    if (!sun || !sunPath) return;
-
-    heroSunTween?.kill();
-    heroSunSpinTween?.kill();
-
-    gsap.set(sun, {
-      clearProps: "x,y,rotation,transform",
-      transformOrigin: "50% 50%",
-    });
-
-    heroSunTween = gsap.to(sun, {
-      duration: window.matchMedia("(max-width: 560px)").matches
-        ? 11.5
-        : window.matchMedia("(max-width: 760px)").matches
-          ? 12
-          : 12,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut",
-      motionPath: {
-        path: sunPath,
-        align: sunPath,
-        alignOrigin: [0.5, 0.5],
-        autoRotate: false,
-        start: 0.1,
-        end: 0.86,
-      },
-    });
-
-    if (sunRays) {
-      heroSunSpinTween = gsap.to(sunRays, {
-        rotation: 360,
-        transformOrigin: "50% 50%",
-        duration: 18,
-        repeat: -1,
-        ease: "none",
-      });
-    }
-  }
-
   const hasGSAP = typeof window.gsap !== "undefined";
-  const hasScrollTrigger = typeof window.ScrollTrigger !== "undefined";
-  const hasMotionPath = typeof window.MotionPathPlugin !== "undefined";
-
-  const endEl =
-    document.querySelector("#hero + .section") ||
-    document.querySelectorAll(".section")[1] ||
-    null;
-
-  if (hasGSAP && hasScrollTrigger) {
-    gsap.registerPlugin(window.ScrollTrigger);
-  }
-  if (hasGSAP && hasMotionPath) {
-    gsap.registerPlugin(window.MotionPathPlugin);
-  }
-
-  applyHeroMobileSceneTuning();
-  initHeroSunMotion();
-
-  let heroCarTween = null;
-
-  function initHeroCarMotion() {
-    if (!(hasGSAP && hasScrollTrigger && hasMotionPath)) return;
-
-    const car = document.querySelector("#carHero");
-    const road = document.querySelector("#roadPathHero");
-    const hero = document.querySelector("#hero");
-
-    if (!car || !road || !hero) return;
-
-    if (heroCarTween) {
-      heroCarTween.scrollTrigger?.kill();
-      heroCarTween.kill();
-      heroCarTween = null;
-    }
-
-    gsap.set(car, { clearProps: "x,y,rotation,rotationZ" });
-
-    heroCarTween = gsap.to(car, {
-      motionPath: {
-        path: road,
-        align: road,
-        autoRotate: true,
-        alignOrigin: [0.5, 0.5],
-      },
-      ease: "none",
-      scrollTrigger: {
-        trigger: hero,
-        start: "top top",
-        endTrigger: endEl || undefined,
-        end: endEl ? "top top" : "+=800",
-        scrub: true,
-        invalidateOnRefresh: true,
-        fastScrollEnd: true,
-      },
-    });
-
-    window.ScrollTrigger.refresh();
-  }
-
-  initHeroCarMotion();
-
-  let heroResizeTimer = null;
-  window.addEventListener(
-    "resize",
-    () => {
-      clearTimeout(heroResizeTimer);
-      heroResizeTimer = setTimeout(() => {
-        applyHeroMobileSceneTuning();
-        initHeroSunMotion();
-        initHeroCarMotion();
-      }, 120);
-    },
-    { passive: true }
-  );
 
   // =========================
   //  Avis locaux Google
@@ -810,4 +618,218 @@ function applyHeroMobileSceneTuning() {
   })();
 
   window.initMagnets = initMagnets;
+})();
+
+(() => {
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+
+  const hasGSAP = typeof window.gsap !== "undefined";
+  const hasScrollTrigger = typeof window.ScrollTrigger !== "undefined";
+  const hasMotionPath = typeof window.MotionPathPlugin !== "undefined";
+
+  if (hasGSAP && hasScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+  if (hasGSAP && hasMotionPath) gsap.registerPlugin(window.MotionPathPlugin);
+
+  const scene = $(".scene");
+  const sun = $("#sun");
+  const sunPath = $("#sunPath");
+  const sunRays = $("#sunRays");
+  const roadBg = $("#roadBg");
+  const roadDash = $("#roadDash");
+  const roadPathHero = $("#roadPathHero");
+  const car = $("#carHero");
+  const hero = $("#hero");
+
+  if (!scene || !sun || !sunPath || !sunRays || !roadBg || !roadDash || !roadPathHero || !car || !hero) return;
+
+  let heroSunTween = null;
+  let heroSunSpinTween = null;
+  let heroCarTween = null;
+
+  const mqMobile = window.matchMedia("(max-width: 760px)");
+  const mqSmall = window.matchMedia("(max-width: 560px)");
+
+  function getHeroConfig() {
+    const isMobile = mqMobile.matches;
+    const isSmall = mqSmall.matches;
+
+    if (!isMobile) {
+      return {
+        viewBox: "0 0 1440 810",
+        preserve: "xMidYMid meet",
+        sunPath: "M 220 110 C 520 40 900 70 1240 190",
+        road: "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660",
+        carTransform: "translate(-100,720) scale(1)",
+        sunScale: 1,
+        sunStart: 0.06,
+        sunEnd: 0.94,
+        sunDuration: 12
+      };
+    }
+
+    if (isSmall) {
+      return {
+        viewBox: "0 0 1440 900",
+        preserve: "xMidYMid slice",
+
+        // Soleil plus haut + course beaucoup plus courte
+        sunPath: "M 430 92 C 610 54 820 48 1010 60 C 1140 68 1235 84 1310 106",
+
+        // Route mobile calquée sur la logique desktop :
+        // léger plat -> montée -> sommet -> redescente -> relance douce
+        road: "M-120,812 C60,780 210,790 360,790 C520,790 635,695 760,660 C900,630 1025,720 1150,760 C1270,796 1390,756 1605,730",
+
+        // voiture plus petite
+        carTransform: "translate(-118,812) scale(0.68)",
+
+        sunScale: 0.46,
+        sunStart: 0.16,
+        sunEnd: 0.74,
+        sunDuration: 9.5
+      };
+    }
+
+    return {
+      viewBox: "0 0 1440 860",
+      preserve: "xMidYMid slice",
+      sunPath: "M 380 98 C 590 52 820 42 1030 56 C 1175 66 1285 86 1370 114",
+      road: "M-110,800 C70,770 220,780 380,778 C545,776 665,688 795,652 C935,622 1060,706 1185,748 C1300,786 1410,754 1610,726",
+      carTransform: "translate(-108,800) scale(0.74)",
+      sunScale: 0.52,
+      sunStart: 0.14,
+      sunEnd: 0.78,
+      sunDuration: 10.2
+    };
+  }
+
+  function applyHeroGeometry() {
+    const cfg = getHeroConfig();
+
+    scene.setAttribute("viewBox", cfg.viewBox);
+    scene.setAttribute("preserveAspectRatio", cfg.preserve);
+
+    sunPath.setAttribute("d", cfg.sunPath);
+    roadBg.setAttribute("d", cfg.road);
+    roadDash.setAttribute("d", cfg.road);
+    roadPathHero.setAttribute("d", cfg.road);
+    car.setAttribute("transform", cfg.carTransform);
+
+    const sunSprite = $("#sunSprite");
+    if (sunSprite) {
+      sunSprite.style.transformBox = "fill-box";
+      sunSprite.style.transformOrigin = "center";
+      sunSprite.style.transform = `scale(${cfg.sunScale})`;
+    }
+  }
+
+  function initHeroSunMotion() {
+    if (!(hasGSAP && hasMotionPath)) return;
+
+    const cfg = getHeroConfig();
+
+    heroSunTween?.kill();
+    heroSunSpinTween?.kill();
+
+    // on nettoie seulement ce qui est nécessaire
+    gsap.set(sun, {
+      clearProps: "x,y,rotation",
+      transformOrigin: "50% 50%"
+    });
+
+    heroSunTween = gsap.to(sun, {
+      duration: cfg.sunDuration,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      motionPath: {
+        path: sunPath,
+        align: sunPath,
+        alignOrigin: [0.5, 0.5],
+        autoRotate: false,
+        start: cfg.sunStart,
+        end: cfg.sunEnd
+      }
+    });
+
+    // rotation indépendante et persistante des rayons
+    heroSunSpinTween = gsap.to(sunRays, {
+      rotation: 360,
+      transformOrigin: "50% 50%",
+      duration: 18,
+      repeat: -1,
+      ease: "none"
+    });
+  }
+
+  function initHeroCarMotion() {
+    if (!(hasGSAP && hasScrollTrigger && hasMotionPath)) return;
+
+    const endEl =
+      document.querySelector("#hero + .section") ||
+      document.querySelectorAll(".section")[1] ||
+      null;
+
+    heroCarTween?.scrollTrigger?.kill();
+    heroCarTween?.kill();
+
+    gsap.set(car, { x: 0, y: 0, rotation: 0, rotationZ: 0 });
+
+    heroCarTween = gsap.to(car, {
+      motionPath: {
+        path: roadPathHero,
+        align: roadPathHero,
+        autoRotate: true,
+        alignOrigin: [0.5, 0.5]
+      },
+      ease: "none",
+      scrollTrigger: {
+        trigger: hero,
+        start: "top top",
+        endTrigger: endEl || undefined,
+        end: endEl ? "top top" : "+=800",
+        scrub: true,
+        invalidateOnRefresh: true,
+        fastScrollEnd: true
+      }
+    });
+
+    window.ScrollTrigger.refresh();
+  }
+
+  function initHeroAll() {
+    applyHeroGeometry();
+    initHeroSunMotion();
+    initHeroCarMotion();
+  }
+
+  initHeroAll();
+
+  // IMPORTANT :
+  // Sur mobile, le navigateur déclenche des resize pendant le scroll
+  // (barres d’URL, viewport dynamique). On ignore ces faux resize.
+  let lastWidth = window.innerWidth;
+  let lastHeight = window.innerHeight;
+  let resizeTimer = null;
+
+  window.addEventListener("resize", () => {
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
+
+    const widthChanged = Math.abs(newWidth - lastWidth) > 8;
+    const heightChanged = Math.abs(newHeight - lastHeight) > 120;
+
+    lastWidth = newWidth;
+    lastHeight = newHeight;
+
+    // En mobile, on ne relance pas tout pour les petits changements de hauteur
+    // liés au scroll tactile / UI browser.
+    if (mqMobile.matches && !widthChanged && !heightChanged) {
+      return;
+    }
+
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      initHeroAll();
+    }, 140);
+  }, { passive: true });
 })();

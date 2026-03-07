@@ -349,8 +349,8 @@ body {
   position: relative;
   z-index: 10;
   text-align: center;
-  margin-top: clamp(48px, 10vh, 120px);
-  padding-bottom: clamp(120px, 14vw, 170px);
+  margin-top: clamp(26px, 4vh, 44px);
+  padding-bottom: clamp(236px, 31vh, 286px);
   padding-inline: clamp(16px, 5vw, 0px);
 }
 
@@ -364,8 +364,8 @@ body {
   font-weight: 700;
   letter-spacing: .3px;
   font-size: clamp(0.8rem, 2vw, 1rem);
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 6px;
 }
 
 h1 {
@@ -1219,7 +1219,6 @@ a.premium:focus-visible::after {
   .scene #sunSprite {
     transform-box: fill-box;
     transform-origin: center;
-    transform: scale(0.60);
   }
 
   .scene #roadBg {
@@ -1227,8 +1226,8 @@ a.premium:focus-visible::after {
   }
 
   .scene #roadDash {
-    stroke-width: 4.4 !important;
-    stroke-dasharray: 18 14 !important;
+    stroke-width: 4.2 !important;
+    stroke-dasharray: 16 13 !important;
     opacity: 0.84;
   }
 
@@ -1283,8 +1282,8 @@ a.premium:focus-visible::after {
   }
 
   .hero__content {
-    margin-top: clamp(24px, 4.5vh, 42px);
-    padding-bottom: clamp(228px, 31vh, 286px);
+    margin-top: clamp(18px, 3.2vh, 30px);
+    padding-bottom: clamp(220px, 29vh, 272px);
   }
 
   .hero__badge {
@@ -1300,8 +1299,8 @@ a.premium:focus-visible::after {
   }
 
   .scene #roadDash {
-    stroke-width: 3.8 !important;
-    stroke-dasharray: 15 12 !important;
+    stroke-width: 3.7 !important;
+    stroke-dasharray: 14 11 !important;
   }
 }
 
