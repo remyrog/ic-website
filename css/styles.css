@@ -1238,7 +1238,7 @@ a.premium:focus-visible::after {
     z-index: 10;
     margin-top: clamp(74px, 12vh, 110px);
     padding-inline: 14px;
-    padding-bottom: clamp(190px, 26vh, 260px);
+    padding-bottom: clamp(250px, 34vh, 320px);
   }
 
   .hero__credits {
@@ -1275,7 +1275,7 @@ a.premium:focus-visible::after {
 
   .hero__content {
     margin-top: clamp(72px, 11vh, 92px);
-    padding-bottom: clamp(170px, 24vh, 220px);
+    padding-bottom: clamp(230px, 31vh, 290px);
   }
 
   .scene #roadBg {

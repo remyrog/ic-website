@@ -124,77 +124,68 @@
 
     if (!isMobile) {
       scene.setAttribute("viewBox", "0 0 1440 810");
+      scene.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
       sun.setAttribute("data-sun-duration", "25");
       sun.setAttribute("data-sun-arc", "15");
       sun.setAttribute("data-sun-margin", "120");
       sun.setAttribute("data-offset-y", "60");
+      sun.setAttribute("data-travel-ratio", "1");
 
-      roadBg.setAttribute(
-        "d",
-        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
-      );
-      roadDash.setAttribute(
-        "d",
-        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
-      );
-      roadPathHero.setAttribute(
-        "d",
-        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
-      );
+      const desktopRoad =
+        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660";
+
+      roadBg.setAttribute("d", desktopRoad);
+      roadDash.setAttribute("d", desktopRoad);
+      roadPathHero.setAttribute("d", desktopRoad);
 
       car.setAttribute("transform", "translate(-100,720) scale(1)");
       return;
     }
 
     if (isSmallMobile) {
-      scene.setAttribute("viewBox", "0 0 1440 980");
+      scene.setAttribute("viewBox", "0 0 1440 760");
+      scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-      sun.setAttribute("data-sun-duration", "18");
+      // Soleil : plus haut, déplacement moins large, plus lent
+      sun.setAttribute("data-sun-duration", "34");
       sun.setAttribute("data-sun-arc", "10");
-      sun.setAttribute("data-sun-margin", "150");
-      sun.setAttribute("data-offset-y", "92");
+      sun.setAttribute("data-sun-margin", "260");
+      sun.setAttribute("data-offset-y", "18");
+      sun.setAttribute("data-travel-ratio", "0.56");
 
-      roadBg.setAttribute(
-        "d",
-        "M-80,850 C120,810 250,800 380,780 C520,760 650,720 780,730 C930,742 1080,790 1220,800 C1320,808 1400,804 1520,790"
-      );
-      roadDash.setAttribute(
-        "d",
-        "M-80,850 C120,810 250,800 380,780 C520,760 650,720 780,730 C930,742 1080,790 1220,800 C1320,808 1400,804 1520,790"
-      );
-      roadPathHero.setAttribute(
-        "d",
-        "M-80,850 C120,810 250,800 380,780 C520,760 650,720 780,730 C930,742 1080,790 1220,800 C1320,808 1400,804 1520,790"
-      );
+      // Route : plus basse et visuellement plus grande
+      const mobileRoad =
+        "M-120,735 C80,700 220,690 360,675 C520,658 650,632 790,640 C950,650 1100,690 1245,700 C1360,708 1450,704 1540,696";
 
-      car.setAttribute("transform", "translate(-100,850) scale(0.78)");
+      roadBg.setAttribute("d", mobileRoad);
+      roadDash.setAttribute("d", mobileRoad);
+      roadPathHero.setAttribute("d", mobileRoad);
+
+      car.setAttribute("transform", "translate(-120,735) scale(0.9)");
       return;
     }
 
-    scene.setAttribute("viewBox", "0 0 1440 920");
+    scene.setAttribute("viewBox", "0 0 1440 780");
+    scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-    sun.setAttribute("data-sun-duration", "20");
+    // Soleil : plus haut, déplacement moins large, plus lent
+    sun.setAttribute("data-sun-duration", "30");
     sun.setAttribute("data-sun-arc", "12");
-    sun.setAttribute("data-sun-margin", "135");
-    sun.setAttribute("data-offset-y", "82");
+    sun.setAttribute("data-sun-margin", "240");
+    sun.setAttribute("data-offset-y", "24");
+    sun.setAttribute("data-travel-ratio", "0.62");
 
-    roadBg.setAttribute(
-      "d",
-      "M-80,800 C140,750 260,760 390,740 C540,720 650,680 790,690 C930,700 1080,748 1210,758 C1330,766 1420,760 1520,748"
-    );
-    roadDash.setAttribute(
-      "d",
-      "M-80,800 C140,750 260,760 390,740 C540,720 650,680 790,690 C930,700 1080,748 1210,758 C1330,766 1420,760 1520,748"
-    );
-    roadPathHero.setAttribute(
-      "d",
-      "M-80,800 C140,750 260,760 390,740 C540,720 650,680 790,690 C930,700 1080,748 1210,758 C1330,766 1420,760 1520,748"
-    );
+    // Route : plus basse et plus grande
+    const tabletRoad =
+      "M-110,748 C95,710 235,700 375,684 C535,666 660,640 800,648 C960,658 1110,698 1250,708 C1370,716 1455,710 1540,702";
 
-    car.setAttribute("transform", "translate(-100,800) scale(0.86)");
+    roadBg.setAttribute("d", tabletRoad);
+    roadDash.setAttribute("d", tabletRoad);
+    roadPathHero.setAttribute("d", tabletRoad);
+
+    car.setAttribute("transform", "translate(-120,748) scale(0.94)");
   }
-
   applyHeroMobileSceneTuning();
 
   (() => {
@@ -202,6 +193,7 @@
     if (!sun) return;
 
     const svg = sun.ownerSVGElement;
+    let minX = 0;
     let maxX = 0;
     let base = "";
 
@@ -211,6 +203,7 @@
         arc: parseFloat(sun.dataset.sunArc || "22"),
         marginR: parseFloat(sun.dataset.sunMargin || "12"),
         offsetY: parseFloat(sun.dataset.offsetY || "108"),
+        travelRatio: parseFloat(sun.dataset.travelRatio || "1"),
       };
     }
 
@@ -222,7 +215,7 @@
     function computeBounds() {
       if (!svg) return;
 
-      const { marginR } = readSettings();
+      const { marginR, travelRatio } = readSettings();
       const vb = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
       const width = vb ? vb.width : svg.clientWidth;
 
@@ -234,7 +227,15 @@
         return;
       }
 
-      maxX = Math.max(0, width - marginR - (bb.x + bb.width));
+      const fullTravel = Math.max(0, width - marginR - (bb.x + bb.width));
+      const ratio = Math.max(0.2, Math.min(1, travelRatio));
+
+      const visibleTravel = fullTravel * ratio;
+      const sideOffset = (fullTravel - visibleTravel) / 2;
+
+      minX = sideOffset;
+      maxX = sideOffset + visibleTravel;
+
       refreshBaseTransform();
     }
 
@@ -248,8 +249,11 @@
       last = t;
 
       const { duration, arc, offsetY } = readSettings();
+      const travel = Math.max(1, maxX - minX);
       const safeDuration = Math.max(0.1, duration);
-      const speed = maxX / safeDuration;
+      const speed = travel / safeDuration;
+
+      if (x < minX || x > maxX) x = minX;
 
       x += dir * speed * dt;
 
@@ -257,12 +261,12 @@
         x = maxX;
         dir = -1;
       }
-      if (x <= 0) {
-        x = 0;
+      if (x <= minX) {
+        x = minX;
         dir = 1;
       }
 
-      const p = maxX > 0 ? x / maxX : 0;
+      const p = travel > 0 ? (x - minX) / travel : 0;
       const y = offsetY + Math.sin(p * Math.PI) * -arc;
       const r = p * 180;
 
