@@ -70,16 +70,14 @@
     --pink-75: rgb(var(--pink-rgb) / 0.75);
 
     /* Hero title palette */
-    --gold-soft-rgb: 210 198 168;
     --gold-deep-rgb: 214 152 32;
     --gold-accent-rgb: 232 178 28;
     --rose-deep-rgb: 201 92 138;
     --rose-mid-rgb: 210 88 156;
     --coral-warm-rgb: 220 120 92;
-    --sand-warm-rgb: 202 188 160;
     --coral-accent-rgb: 232 122 70;
-    --rose-soft-rgb: 170 108 142;
-    --rose-shadow-rgb: 152 82 130;
+    --hero-soft-rgb: 236 230 214;
+    --hero-soft-strong-rgb: 248 241 224;
 
     /* Shadows */
     --shadow-hero: 0 24px 60px rgb(var(--black-rgb) / 0.80);
@@ -238,44 +236,56 @@ header.hero {
     display: block;
     width: fit-content;
     max-width: 100%;
+}
+
+.hero-title .title-line--secondary {
+    margin-top: 0.08em;
+}
+
+.hero-title .title-soft,
+.hero-title .title-gradient,
+.hero-title .accent {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-.hero-title .title-line--primary {
+.hero-title .title-soft {
     background-image: linear-gradient(90deg,
-            rgb(var(--rose-shadow-rgb) / 0.94) 0%,
-            rgb(var(--rose-deep-rgb) / 0.97) 20%,
-            rgb(var(--gold-accent-rgb) / 0.98) 42%,
-            rgb(var(--gold-deep-rgb) / 0.98) 58%,
-            rgb(var(--rose-deep-rgb) / 0.98) 80%,
-            rgb(var(--pink-rgb) / 0.98) 100%);
+            rgb(var(--hero-soft-strong-rgb) / 0.98) 0%,
+            rgb(var(--hero-soft-rgb) / 0.94) 100%);
+    filter: drop-shadow(0 0 8px rgb(var(--white-rgb) / 0.05));
 }
 
-.hero-title .title-line--secondary {
+.hero-title .title-gradient--primary {
     background-image: linear-gradient(90deg,
-            rgb(var(--rose-shadow-rgb) / 0.92) 0%,
-            rgb(var(--rose-mid-rgb) / 0.95) 16%,
-            rgb(var(--gold-accent-rgb) / 0.97) 34%,
-            rgb(var(--yellow-rgb) / 0.98) 48%,
-            rgb(var(--coral-warm-rgb) / 0.98) 66%,
-            rgb(var(--rose-mid-rgb) / 0.98) 84%,
+            rgb(var(--gold-accent-rgb) / 0.98) 0%,
+            rgb(var(--gold-deep-rgb) / 0.98) 28%,
+            rgb(var(--rose-deep-rgb) / 0.98) 68%,
             rgb(var(--pink-rgb) / 0.98) 100%);
+    filter:
+        drop-shadow(0 0 8px rgb(var(--yellow-rgb) / 0.10)) drop-shadow(0 0 18px rgb(var(--pink-rgb) / 0.18));
+}
+
+.hero-title .title-gradient--secondary {
+    background-image: linear-gradient(90deg,
+            rgb(var(--gold-accent-rgb) / 0.98) 0%,
+            rgb(var(--yellow-rgb) / 0.98) 20%,
+            rgb(var(--coral-warm-rgb) / 0.98) 52%,
+            rgb(var(--rose-mid-rgb) / 0.98) 78%,
+            rgb(var(--pink-rgb) / 0.98) 100%);
+    filter:
+        drop-shadow(0 0 6px rgb(var(--yellow-rgb) / 0.08)) drop-shadow(0 0 16px rgb(var(--pink-rgb) / 0.16));
 }
 
 .hero-title .accent {
     background-image: linear-gradient(90deg,
-            rgb(var(--rose-mid-rgb) / 0.98) 0%,
-            rgb(var(--gold-accent-rgb) / 1) 22%,
-            rgb(var(--yellow-rgb) / 1) 42%,
-            rgb(var(--coral-accent-rgb) / 1) 68%,
+            rgb(var(--gold-accent-rgb) / 1) 0%,
+            rgb(var(--yellow-rgb) / 1) 22%,
+            rgb(var(--coral-accent-rgb) / 1) 58%,
             rgb(var(--pink-rgb) / 1) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
     filter:
-        drop-shadow(0 0 6px rgb(var(--gold-accent-rgb) / 0.10)) drop-shadow(0 0 18px rgb(var(--pink-rgb) / 0.22));
+        drop-shadow(0 0 6px rgb(var(--yellow-rgb) / 0.10)) drop-shadow(0 0 18px rgb(var(--pink-rgb) / 0.22));
 }
 
 .hero-subtitle {
