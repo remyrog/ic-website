@@ -1,30 +1,23 @@
-/**
- * Réserver : Flip card modal (GSAP)
- * - Triggers: #reserve-btn (mailto fallback) + [data-reserve-trigger]
- * - Robust: event delegation (works even if href="" or elements injected later)
- * - UX: close (click outside / ESC), focus trap, copy email, WhatsApp deep-link
- */
 (() => {
   "use strict";
 
   const TRIGGER_SELECTOR = "#reserve-btn, [data-reserve-trigger]";
   const EMAIL = "informatiquecerdagne@gmail.com";
   const PHONE_FR = "0698998001";
-  const WA_E164 = "33698998001"; // sans "+" et sans espaces
+  const WA_E164 = "33698998001";
   const WA_PREFILL = "Bonjour, je souhaite réserver un créneau pour parler de mon projet.";
   const WA_URL = `https://wa.me/${WA_E164}?text=${encodeURIComponent(WA_PREFILL)}`;
 
-  // Réglages timing
-  const FLIP_START_AT = 5;     // seconds (front visible before flip)
+  const FLIP_START_AT = 5;
   const FLIP_DUR_IN = 0.55;
   const FLIP_DUR_OUT = 0.55;
   const FACE_SWAP_EPS = 0.05;
 
-  // Scroll lock (préserve la position, iOS-friendly)
   let scrollYBeforeLock = 0;
+
   function lockScroll() {
     scrollYBeforeLock = window.scrollY || window.pageYOffset || 0;
-    document.documentElement.classList.add("reserve-scroll-lock");
+    document.documentElement.classList.add("reserve-scroll-lock", "reserve-modal-open");
     document.body.classList.add("reserve-scroll-lock");
     document.body.style.position = "fixed";
     document.body.style.top = `-${scrollYBeforeLock}px`;
@@ -34,14 +27,16 @@
   }
 
   function unlockScroll() {
-    document.documentElement.classList.remove("reserve-scroll-lock");
+    document.documentElement.classList.remove("reserve-scroll-lock", "reserve-modal-open");
     document.body.classList.remove("reserve-scroll-lock");
+
     const top = document.body.style.top;
     document.body.style.position = "";
     document.body.style.top = "";
     document.body.style.left = "";
     document.body.style.right = "";
     document.body.style.width = "";
+
     const y = top ? Math.abs(parseInt(top, 10)) : scrollYBeforeLock;
     window.scrollTo(0, Number.isFinite(y) ? y : scrollYBeforeLock);
   }
@@ -59,7 +54,9 @@
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
-  function q(id) { return document.getElementById(id); }
+  function q(id) {
+    return document.getElementById(id);
+  }
 
   function createModal() {
     const overlay = document.createElement("div");
@@ -121,8 +118,9 @@
 
   function trapFocus(container, e) {
     if (e.key !== "Tab") return;
+
     const focusables = Array.from(container.querySelectorAll(focusableSelector))
-      .filter(el => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
+      .filter((el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true");
 
     if (!focusables.length) return;
 
@@ -153,6 +151,7 @@
     ta.setAttribute("readonly", "true");
     document.body.appendChild(ta);
     ta.select();
+
     try {
       document.execCommand("copy");
       return true;
@@ -161,6 +160,77 @@
     } finally {
       document.body.removeChild(ta);
     }
+  }
+
+  function getMobileMenuState() {
+    const mnav = document.getElementById("mnav");
+    const burger = document.querySelector(".nav__burger");
+    const closeBtn = mnav?.querySelector(".mnav__close");
+    const backdrop = mnav?.querySelector(".mnav__backdrop[data-close]");
+
+    return { mnav, burger, closeBtn, backdrop };
+  }
+
+  function isMobileMenuOpen() {
+    const { mnav, burger } = getMobileMenuState();
+    if (!mnav) return false;
+
+    return (
+      mnav.getAttribute("aria-hidden") === "false" ||
+      burger?.getAttribute("aria-expanded") === "true" ||
+      mnav.classList.contains("is-open") ||
+      mnav.classList.contains("open") ||
+      mnav.classList.contains("active")
+    );
+  }
+
+  function hardCloseMobileMenu() {
+    const { mnav, burger } = getMobileMenuState();
+    if (!mnav) return;
+
+    mnav.setAttribute("aria-hidden", "true");
+    burger?.setAttribute("aria-expanded", "false");
+
+    mnav.classList.remove("is-open", "open", "active");
+    document.documentElement.classList.remove("mnav-open", "menu-open", "nav-open");
+    document.body.classList.remove("mnav-open", "menu-open", "nav-open");
+  }
+
+  async function closeMobileMenuIfNeeded(triggerEl) {
+    if (!triggerEl?.closest(".mnav, .mnav__sheet, .mnav__cta, .mnav__items")) return;
+
+    const { closeBtn, backdrop } = getMobileMenuState();
+
+    document.dispatchEvent(new CustomEvent("reserve:request-mobile-menu-close", { bubbles: true }));
+
+    if (closeBtn) {
+      closeBtn.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    } else if (backdrop) {
+      backdrop.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    }
+
+    const start = performance.now();
+
+    await new Promise((resolve) => {
+      const tick = () => {
+        const elapsed = performance.now() - start;
+
+        if (!isMobileMenuOpen()) {
+          resolve();
+          return;
+        }
+
+        if (elapsed > 260) {
+          hardCloseMobileMenu();
+          resolve();
+          return;
+        }
+
+        requestAnimationFrame(tick);
+      };
+
+      tick();
+    });
   }
 
   function boot() {
@@ -175,6 +245,12 @@
     const back = overlay.querySelector(".reserve-back");
     const front = overlay.querySelector(".reserve-front");
 
+    let lastFocus = null;
+    let isOpen = false;
+    let isTransitioning = false;
+    let tl = null;
+    let activeTrigger = triggersNow[0];
+
     function syncCardHeight() {
       const hFront = front ? front.scrollHeight : 0;
       const hBack = back ? back.scrollHeight : 0;
@@ -182,41 +258,63 @@
       if (h > 0) inner.style.setProperty("--reserve-card-h", `${h}px`);
     }
 
+    function setFaceState(isBackVisible) {
+      front?.setAttribute("aria-hidden", String(isBackVisible));
+      back?.setAttribute("aria-hidden", String(!isBackVisible));
+    }
+
     function resetFrontState() {
-      // Toujours repartir “front” visible et flip à 0
       setFaceState(false);
 
-      // Reset inline styles du dialog/overlay (au cas où)
       overlay.style.opacity = "";
       dialog.style.transform = "";
 
       const loader = overlay.querySelector(".reserve-front-loader");
       if (loader) {
-        // Remet le loader visible
         loader.style.opacity = "1";
         loader.style.transform = "translateY(0)";
       }
 
-      // Relance l’animation CSS des dots (utile si certains navigateurs figent)
       const dots = overlay.querySelector(".reserve-front-dots");
       if (dots) {
         dots.style.animation = "none";
-        // force reflow
         void dots.offsetHeight;
         dots.style.animation = "";
       }
     }
 
+    function getTriggerGeometry() {
+      const el = activeTrigger;
+      if (!el || typeof el.getBoundingClientRect !== "function") return { dx: 0, dy: 0 };
+
+      const rect = el.getBoundingClientRect();
+      const btnCx = rect.left + rect.width / 2;
+      const btnCy = rect.top + rect.height / 2;
+      const vpCx = window.innerWidth / 2;
+      const vpCy = window.innerHeight / 2;
+
+      return { dx: btnCx - vpCx, dy: btnCy - vpCy };
+    }
+
     function resetGsapFrontState(dx, dy) {
-      // Prépare l’état initial “fly-in depuis le bouton”
       window.gsap.set(dialog, {
-        x: dx, y: dy, scale: 0.22,
-        rotateX: -16, rotateY: 14, rotateZ: 2,
+        x: dx,
+        y: dy,
+        scale: 0.22,
+        rotateX: -16,
+        rotateY: 14,
+        rotateZ: 2,
         z: -220,
         filter: "blur(10px)",
         transformOrigin: "50% 50%"
       });
-      window.gsap.set(inner, { rotateY: 0, rotateX: 0, transformOrigin: "50% 50%" });
+
+      window.gsap.set(inner, {
+        rotateY: 0,
+        rotateX: 0,
+        transformOrigin: "50% 50%"
+      });
+
       window.gsap.set(overlay, { opacity: 0 });
 
       const loader = overlay.querySelector(".reserve-front-loader");
@@ -225,50 +323,29 @@
       }
     }
 
-    let lastFocus = null;
-    let isOpen = false;
-    let tl = null;
-    let activeTrigger = triggersNow[0];
+    async function open(fromEl) {
+      if (isOpen || isTransitioning) return;
+      isTransitioning = true;
 
-    function setFaceState(isBackVisible) {
-      front?.setAttribute("aria-hidden", String(isBackVisible));
-      back?.setAttribute("aria-hidden", String(!isBackVisible));
-    }
-
-    function getTriggerGeometry() {
-      const el = activeTrigger;
-      if (!el || typeof el.getBoundingClientRect !== "function") return { dx: 0, dy: 0 };
-      const btnRect = el.getBoundingClientRect();
-      const btnCx = btnRect.left + btnRect.width / 2;
-      const btnCy = btnRect.top + btnRect.height / 2;
-      const vpCx = window.innerWidth / 2;
-      const vpCy = window.innerHeight / 2;
-      return { dx: btnCx - vpCx, dy: btnCy - vpCy };
-    }
-
-    function open(fromEl) {
-      if (isOpen) return;
-      isOpen = true;
       if (fromEl) activeTrigger = fromEl;
+
+      await closeMobileMenuIfNeeded(activeTrigger);
+
+      isOpen = true;
+      lastFocus = document.activeElement;
 
       lockScroll();
 
-      lastFocus = document.activeElement;
-
       overlay.hidden = false;
-      document.documentElement.classList.add("reserve-modal-open");
-
       resetFrontState();
 
-      // Stabilise hauteur
       syncCardHeight();
       requestAnimationFrame(syncCardHeight);
       setTimeout(syncCardHeight, 120);
 
       const reduce = prefersReducedMotion();
-      const { dx, dy } = getTriggerGeometry();
-
       const hasGSAP = typeof window.gsap !== "undefined";
+      const { dx, dy } = getTriggerGeometry();
 
       if (!hasGSAP || reduce) {
         overlay.style.opacity = "1";
@@ -276,24 +353,36 @@
         setFaceState(true);
         overlay.querySelector(".reserve-close")?.focus();
         document.addEventListener("keydown", onKeydown, true);
+        isTransitioning = false;
         return;
       }
 
       resetGsapFrontState(dx, dy);
 
       if (tl) tl.kill();
-      tl = window.gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl = window.gsap.timeline({
+        defaults: { ease: "power3.out" }
+      });
 
       tl.to(overlay, { opacity: 1, duration: 0.18, ease: "power2.out" }, 0);
 
       tl.to(dialog, {
-        x: 0, y: 0, scale: 1,
-        rotateX: 0, rotateY: 0, rotateZ: 0,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotateX: 0,
+        rotateY: 0,
+        rotateZ: 0,
         z: 0,
         filter: "blur(0px)",
         duration: 0.7,
         ease: "expo.out"
       }, 0);
+
+      tl.call(() => {
+        isTransitioning = false;
+      }, null, 0.72);
 
       tl.to(inner, {
         keyframes: [
@@ -317,8 +406,10 @@
     }
 
     function close() {
-      if (!isOpen) return;
+      if (!isOpen || isTransitioning) return;
+      isTransitioning = true;
       isOpen = false;
+
       document.removeEventListener("keydown", onKeydown, true);
 
       const reduce = prefersReducedMotion();
@@ -329,8 +420,10 @@
         overlay.hidden = true;
         overlay.style.opacity = "";
         unlockScroll();
-        document.documentElement.classList.remove("reserve-modal-open");
-        if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+        if (lastFocus && typeof lastFocus.focus === "function") {
+          lastFocus.focus();
+        }
+        isTransitioning = false;
       };
 
       if (!hasGSAP || reduce) {
@@ -340,10 +433,18 @@
       }
 
       if (tl) tl.kill();
-      setFaceState(false);
-      window.gsap.set(inner, { rotateY: 180, rotateX: 0, transformOrigin: "50% 50%" });
 
-      tl = window.gsap.timeline({ defaults: { ease: "power2.inOut" }, onComplete: finalize });
+      setFaceState(false);
+      window.gsap.set(inner, {
+        rotateY: 180,
+        rotateX: 0,
+        transformOrigin: "50% 50%"
+      });
+
+      tl = window.gsap.timeline({
+        defaults: { ease: "power2.inOut" },
+        onComplete: finalize
+      });
 
       tl.to(inner, {
         keyframes: [
@@ -353,28 +454,37 @@
       }, 0);
 
       tl.to(dialog, {
-        x: dx, y: dy, scale: 0.22,
-        rotateX: -16, rotateY: 14, rotateZ: 2,
+        x: dx,
+        y: dy,
+        scale: 0.22,
+        rotateX: -16,
+        rotateY: 14,
+        rotateZ: 2,
         z: -220,
         filter: "blur(10px)",
         duration: 0.55,
         ease: "expo.in"
       }, 0.06);
 
-      tl.to(overlay, { opacity: 0, duration: 0.22, ease: "power1.out" }, 0.32);
+      tl.to(overlay, {
+        opacity: 0,
+        duration: 0.22,
+        ease: "power1.out"
+      }, 0.32);
     }
 
     function onKeydown(e) {
       if (!isOpen) return;
+
       if (e.key === "Escape") {
         e.preventDefault();
         close();
         return;
       }
+
       trapFocus(dialog, e);
     }
 
-    // Event delegation (capture) : capte aussi le cas href="" et les éléments dans le menu mobile
     document.addEventListener("click", (e) => {
       const target = e.target;
       if (!(target instanceof Element)) return;
@@ -383,7 +493,10 @@
       if (triggerEl) {
         e.preventDefault();
         e.stopPropagation();
-        if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+        if (typeof e.stopImmediatePropagation === "function") {
+          e.stopImmediatePropagation();
+        }
+
         open(triggerEl);
         return;
       }
@@ -392,6 +505,7 @@
 
       if (target.closest("[data-reserve-close='true']")) {
         e.preventDefault();
+        e.stopPropagation();
         close();
         return;
       }
@@ -399,15 +513,17 @@
       const copyBtn = target.closest("[data-copy]");
       if (copyBtn) {
         e.preventDefault();
+
         const value = copyBtn.getAttribute("data-copy") || "";
         copyToClipboard(value).then((ok) => {
           const old = copyBtn.textContent;
           copyBtn.textContent = ok ? "Copié ✓" : "Impossible";
-          window.setTimeout(() => { copyBtn.textContent = old; }, 900);
+          window.setTimeout(() => {
+            copyBtn.textContent = old;
+          }, 900);
         });
       }
     }, { capture: true });
-
   }
 
   if (document.readyState === "loading") {
