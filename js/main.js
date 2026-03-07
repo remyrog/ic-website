@@ -140,41 +140,39 @@
     }
 
     if (isSmallMobile) {
-      scene.setAttribute("viewBox", "0 0 1440 820");
+      scene.setAttribute("viewBox", "0 0 1440 860");
       scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-      // Soleil plus haut, trajectoire réelle et visible sur mobile
       const mobileSunPath =
-        "M 320 150 C 500 78 760 58 980 96 C 1130 122 1210 146 1270 174";
+        "M 360 118 C 520 52 760 38 980 62 C 1120 78 1215 102 1290 132";
 
-      // Route moins zoomée, plus basse, avec davantage de caractère
       const mobileRoad =
-        "M-120,760 C40,730 190,700 330,718 C470,736 600,680 745,698 C900,717 1030,760 1175,745 C1310,730 1435,720 1560,736";
+        "M-140,790 C10,736 145,680 285,706 C420,732 540,650 690,678 C845,707 980,786 1125,760 C1260,736 1405,700 1580,730";
 
       sunPath.setAttribute("d", mobileSunPath);
       roadBg.setAttribute("d", mobileRoad);
       roadDash.setAttribute("d", mobileRoad);
       roadPathHero.setAttribute("d", mobileRoad);
 
-      car.setAttribute("transform", "translate(-120,760) scale(0.88)");
+      car.setAttribute("transform", "translate(-125,790) scale(0.84)");
       return;
     }
 
-    scene.setAttribute("viewBox", "0 0 1440 800");
+    scene.setAttribute("viewBox", "0 0 1440 840");
     scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
     const tabletSunPath =
-      "M 280 138 C 500 62 790 52 1040 94 C 1175 116 1265 142 1330 176";
+      "M 320 126 C 520 56 790 42 1035 70 C 1180 88 1280 116 1360 150";
 
     const tabletRoad =
-      "M-110,748 C55,716 210,690 355,706 C500,722 625,668 775,686 C930,705 1065,746 1210,734 C1345,722 1450,712 1560,728";
+      "M-130,775 C25,730 165,684 310,704 C450,724 575,654 725,676 C880,699 1015,770 1160,748 C1295,728 1425,705 1570,724";
 
     sunPath.setAttribute("d", tabletSunPath);
     roadBg.setAttribute("d", tabletRoad);
     roadDash.setAttribute("d", tabletRoad);
     roadPathHero.setAttribute("d", tabletRoad);
 
-    car.setAttribute("transform", "translate(-115,748) scale(0.92)");
+    car.setAttribute("transform", "translate(-120,775) scale(0.88)");
   }
 
   let heroSunTween = null;
@@ -198,7 +196,11 @@
     });
 
     heroSunTween = gsap.to(sun, {
-      duration: window.matchMedia("(max-width: 560px)").matches ? 8.5 : window.matchMedia("(max-width: 760px)").matches ? 9.5 : 12,
+      duration: window.matchMedia("(max-width: 560px)").matches
+        ? 10.5
+        : window.matchMedia("(max-width: 760px)").matches
+          ? 11.5
+          : 12,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut",
@@ -207,8 +209,8 @@
         align: sunPath,
         alignOrigin: [0.5, 0.5],
         autoRotate: false,
-        start: 0.06,
-        end: 0.94,
+        start: 0.08,
+        end: 0.9,
       },
     });
 

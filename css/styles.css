@@ -1218,14 +1218,20 @@ a.premium:focus-visible::after {
     opacity: 0.92;
   }
 
+  .scene #sunSprite {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.64);
+  }
+
   .scene #roadBg {
-    stroke-width: 76 !important;
+    stroke-width: 72 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 5 !important;
-    stroke-dasharray: 22 18 !important;
-    opacity: 0.8;
+    stroke-width: 4.8 !important;
+    stroke-dasharray: 20 16 !important;
+    opacity: 0.82;
   }
 
   .scene #carHero {
@@ -1278,13 +1284,17 @@ a.premium:focus-visible::after {
     padding-bottom: clamp(230px, 31vh, 290px);
   }
 
+  .scene #sunSprite {
+    transform: scale(0.54);
+  }
+
   .scene #roadBg {
-    stroke-width: 68 !important;
+    stroke-width: 64 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 4.5 !important;
-    stroke-dasharray: 18 15 !important;
+    stroke-width: 4.2 !important;
+    stroke-dasharray: 17 14 !important;
   }
 }
 
