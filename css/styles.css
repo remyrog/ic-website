@@ -1187,7 +1187,6 @@ a.premium:focus-visible::after {
    Mobile
 ========================= */
 @media (max-width: 760px) {
-
   .hero {
     min-height: 100svh;
     overflow: clip;
@@ -1209,7 +1208,6 @@ a.premium:focus-visible::after {
     pointer-events: none;
   }
 
-  /* On compacte la scène pour le mobile */
   .scene #sun {
     transform-origin: center;
   }
@@ -1221,17 +1219,17 @@ a.premium:focus-visible::after {
   .scene #sunSprite {
     transform-box: fill-box;
     transform-origin: center;
-    transform: scale(0.64);
+    transform: scale(0.60);
   }
 
   .scene #roadBg {
-    stroke-width: 72 !important;
+    stroke-width: 70 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 4.8 !important;
-    stroke-dasharray: 20 16 !important;
-    opacity: 0.82;
+    stroke-width: 4.6 !important;
+    stroke-dasharray: 19 15 !important;
+    opacity: 0.84;
   }
 
   .scene #carHero {
@@ -1242,9 +1240,14 @@ a.premium:focus-visible::after {
   .hero__content {
     position: relative;
     z-index: 10;
-    margin-top: clamp(74px, 12vh, 110px);
+    margin-top: clamp(32px, 5.5vh, 56px);
     padding-inline: 14px;
     padding-bottom: clamp(250px, 34vh, 320px);
+  }
+
+  .hero__badge {
+    margin-top: 0;
+    margin-bottom: 8px;
   }
 
   .hero__credits {
@@ -1280,27 +1283,25 @@ a.premium:focus-visible::after {
   }
 
   .hero__content {
-    margin-top: clamp(72px, 11vh, 92px);
-    padding-bottom: clamp(230px, 31vh, 290px);
+    margin-top: clamp(24px, 4.5vh, 42px);
+    padding-bottom: clamp(228px, 31vh, 286px);
+  }
+
+  .hero__badge {
+    margin-bottom: 6px;
   }
 
   .scene #sunSprite {
-    transform: scale(0.54);
+    transform: scale(0.50);
   }
 
   .scene #roadBg {
-    stroke-width: 64 !important;
+    stroke-width: 61 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 4.2 !important;
-    stroke-dasharray: 17 14 !important;
-  }
-}
-
-@media (min-width: 700px) {
-  .hero__content {
-    margin-top: clamp(78px, 11vh, 150px);
+    stroke-width: 4 !important;
+    stroke-dasharray: 16 13 !important;
   }
 }
 

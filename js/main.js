@@ -140,39 +140,39 @@
     }
 
     if (isSmallMobile) {
-      scene.setAttribute("viewBox", "0 0 1440 860");
+      scene.setAttribute("viewBox", "0 0 1440 875");
       scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
       const mobileSunPath =
-        "M 360 118 C 520 52 760 38 980 62 C 1120 78 1215 102 1290 132";
+        "M 360 86 C 540 24 770 18 980 34 C 1135 46 1240 66 1325 96";
 
       const mobileRoad =
-        "M-140,790 C10,736 145,680 285,706 C420,732 540,650 690,678 C845,707 980,786 1125,760 C1260,736 1405,700 1580,730";
+        "M-170,812 C-20,748 120,682 265,708 C405,734 530,642 682,674 C842,707 982,806 1135,776 C1280,748 1418,688 1608,734";
 
       sunPath.setAttribute("d", mobileSunPath);
       roadBg.setAttribute("d", mobileRoad);
       roadDash.setAttribute("d", mobileRoad);
       roadPathHero.setAttribute("d", mobileRoad);
 
-      car.setAttribute("transform", "translate(-125,790) scale(0.84)");
+      car.setAttribute("transform", "translate(-132,812) scale(0.79)");
       return;
     }
 
-    scene.setAttribute("viewBox", "0 0 1440 840");
+    scene.setAttribute("viewBox", "0 0 1440 850");
     scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
     const tabletSunPath =
-      "M 320 126 C 520 56 790 42 1035 70 C 1180 88 1280 116 1360 150";
+      "M 320 98 C 520 28 790 22 1045 40 C 1195 52 1305 76 1390 108";
 
     const tabletRoad =
-      "M-130,775 C25,730 165,684 310,704 C450,724 575,654 725,676 C880,699 1015,770 1160,748 C1295,728 1425,705 1570,724";
+      "M-155,792 C0,740 145,688 295,708 C442,728 570,648 725,674 C886,702 1028,790 1185,764 C1330,740 1462,694 1610,726";
 
     sunPath.setAttribute("d", tabletSunPath);
     roadBg.setAttribute("d", tabletRoad);
     roadDash.setAttribute("d", tabletRoad);
     roadPathHero.setAttribute("d", tabletRoad);
 
-    car.setAttribute("transform", "translate(-120,775) scale(0.88)");
+    car.setAttribute("transform", "translate(-128,792) scale(0.84)");
   }
 
   let heroSunTween = null;
@@ -197,9 +197,9 @@
 
     heroSunTween = gsap.to(sun, {
       duration: window.matchMedia("(max-width: 560px)").matches
-        ? 10.5
+        ? 11.5
         : window.matchMedia("(max-width: 760px)").matches
-          ? 11.5
+          ? 12
           : 12,
       repeat: -1,
       yoyo: true,
@@ -209,8 +209,8 @@
         align: sunPath,
         alignOrigin: [0.5, 0.5],
         autoRotate: false,
-        start: 0.08,
-        end: 0.9,
+        start: 0.1,
+        end: 0.86,
       },
     });
 
