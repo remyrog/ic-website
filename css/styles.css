@@ -1223,12 +1223,12 @@ a.premium:focus-visible::after {
   }
 
   .scene #roadBg {
-    stroke-width: 70 !important;
+    stroke-width: 66 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 4.6 !important;
-    stroke-dasharray: 19 15 !important;
+    stroke-width: 4.4 !important;
+    stroke-dasharray: 18 14 !important;
     opacity: 0.84;
   }
 
@@ -1296,12 +1296,12 @@ a.premium:focus-visible::after {
   }
 
   .scene #roadBg {
-    stroke-width: 61 !important;
+    stroke-width: 58 !important;
   }
 
   .scene #roadDash {
-    stroke-width: 4 !important;
-    stroke-dasharray: 16 13 !important;
+    stroke-width: 3.8 !important;
+    stroke-dasharray: 15 12 !important;
   }
 }
 

@@ -109,71 +109,73 @@
 
   initMagnets();
 
-  function applyHeroMobileSceneTuning() {
-    const scene = document.querySelector(".scene");
-    const sunPath = document.getElementById("sunPath");
-    const car = document.getElementById("carHero");
-    const roadBg = document.getElementById("roadBg");
-    const roadDash = document.getElementById("roadDash");
-    const roadPathHero = document.getElementById("roadPathHero");
+function applyHeroMobileSceneTuning() {
+  const scene = document.querySelector(".scene");
+  const sunPath = document.getElementById("sunPath");
+  const car = document.getElementById("carHero");
+  const roadBg = document.getElementById("roadBg");
+  const roadDash = document.getElementById("roadDash");
+  const roadPathHero = document.getElementById("roadPathHero");
 
-    if (!scene || !sunPath || !car || !roadBg || !roadDash || !roadPathHero) return;
+  if (!scene || !sunPath || !car || !roadBg || !roadDash || !roadPathHero) return;
 
-    const isMobile = window.matchMedia("(max-width: 760px)").matches;
-    const isSmallMobile = window.matchMedia("(max-width: 560px)").matches;
+  const isMobile = window.matchMedia("(max-width: 760px)").matches;
+  const isSmallMobile = window.matchMedia("(max-width: 560px)").matches;
 
-    if (!isMobile) {
-      scene.setAttribute("viewBox", "0 0 1440 810");
-      scene.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  if (!isMobile) {
+    scene.setAttribute("viewBox", "0 0 1440 810");
+    scene.setAttribute("preserveAspectRatio", "xMidYMid meet");
 
-      const desktopSunPath = "M 220 110 C 520 40 900 70 1240 190";
-      const desktopRoad =
-        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660";
+    const desktopSunPath = "M 220 110 C 520 40 900 70 1240 190";
+    const desktopRoad =
+      "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660";
 
-      sunPath.setAttribute("d", desktopSunPath);
-      roadBg.setAttribute("d", desktopRoad);
-      roadDash.setAttribute("d", desktopRoad);
-      roadPathHero.setAttribute("d", desktopRoad);
+    sunPath.setAttribute("d", desktopSunPath);
+    roadBg.setAttribute("d", desktopRoad);
+    roadDash.setAttribute("d", desktopRoad);
+    roadPathHero.setAttribute("d", desktopRoad);
 
-      car.setAttribute("transform", "translate(-100,720) scale(1)");
-      return;
-    }
+    car.setAttribute("transform", "translate(-100,720) scale(1)");
+    return;
+  }
 
-    if (isSmallMobile) {
-      scene.setAttribute("viewBox", "0 0 1440 875");
-      scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
-
-      const mobileSunPath =
-        "M 360 86 C 540 24 770 18 980 34 C 1135 46 1240 66 1325 96";
-
-      const mobileRoad =
-        "M-170,812 C-20,748 120,682 265,708 C405,734 530,642 682,674 C842,707 982,806 1135,776 C1280,748 1418,688 1608,734";
-
-      sunPath.setAttribute("d", mobileSunPath);
-      roadBg.setAttribute("d", mobileRoad);
-      roadDash.setAttribute("d", mobileRoad);
-      roadPathHero.setAttribute("d", mobileRoad);
-
-      car.setAttribute("transform", "translate(-132,812) scale(0.79)");
-      return;
-    }
-
-    scene.setAttribute("viewBox", "0 0 1440 850");
+  if (isSmallMobile) {
+    scene.setAttribute("viewBox", "0 0 1440 875");
     scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
 
-    const tabletSunPath =
-      "M 320 98 C 520 28 790 22 1045 40 C 1195 52 1305 76 1390 108";
+    const mobileSunPath =
+      "M 360 86 C 540 24 770 18 980 34 C 1135 46 1240 66 1325 96";
 
-    const tabletRoad =
-      "M-155,792 C0,740 145,688 295,708 C442,728 570,648 725,674 C886,702 1028,790 1185,764 C1330,740 1462,694 1610,726";
+    // Version mobile beaucoup plus fidèle au rythme desktop
+    const mobileRoad =
+      "M-120,805 C30,770 150,778 285,772 C420,766 520,720 640,682 C760,644 880,650 995,700 C1105,748 1205,780 1310,764 C1420,748 1510,726 1605,732";
 
-    sunPath.setAttribute("d", tabletSunPath);
-    roadBg.setAttribute("d", tabletRoad);
-    roadDash.setAttribute("d", tabletRoad);
-    roadPathHero.setAttribute("d", tabletRoad);
+    sunPath.setAttribute("d", mobileSunPath);
+    roadBg.setAttribute("d", mobileRoad);
+    roadDash.setAttribute("d", mobileRoad);
+    roadPathHero.setAttribute("d", mobileRoad);
 
-    car.setAttribute("transform", "translate(-128,792) scale(0.84)");
+    car.setAttribute("transform", "translate(-108,805) scale(0.76)");
+    return;
   }
+
+  scene.setAttribute("viewBox", "0 0 1440 850");
+  scene.setAttribute("preserveAspectRatio", "xMidYMid slice");
+
+  const tabletSunPath =
+    "M 320 98 C 520 28 790 22 1045 40 C 1195 52 1305 76 1390 108";
+
+  // Version tablette : même ADN que desktop, juste recadrée
+  const tabletRoad =
+    "M-90,790 C70,748 205,758 345,750 C485,742 590,695 715,655 C840,615 960,626 1075,678 C1188,728 1295,760 1405,744 C1515,728 1605,706 1705,714";
+
+  sunPath.setAttribute("d", tabletSunPath);
+  roadBg.setAttribute("d", tabletRoad);
+  roadDash.setAttribute("d", tabletRoad);
+  roadPathHero.setAttribute("d", tabletRoad);
+
+  car.setAttribute("transform", "translate(-92,790) scale(0.82)");
+}
 
   let heroSunTween = null;
   let heroSunSpinTween = null;
