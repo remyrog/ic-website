@@ -1188,29 +1188,62 @@ a.premium:focus-visible::after {
 ========================= */
 @media (max-width: 760px) {
 
-  .scene,
-  #sun,
-  .section-road {
-    display: none !important;
-  }
-
   .hero {
-    min-height: auto !important;
+    min-height: 100svh;
+    overflow: clip;
   }
 
   .hero__pin {
-    min-height: auto !important;
+    min-height: 100svh;
+    overflow: clip;
+  }
+
+  .scene {
+    display: block !important;
+    position: absolute;
+    inset: auto 0 0 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* On compacte la scène pour le mobile */
+  .scene #sun {
+    transform-origin: center;
+  }
+
+  .scene #sunRays {
+    opacity: 0.92;
+  }
+
+  .scene #roadBg {
+    stroke-width: 92 !important;
+  }
+
+  .scene #roadDash {
+    stroke-width: 6 !important;
+    stroke-dasharray: 24 18 !important;
+    opacity: 0.78;
+  }
+
+  .scene #carHero {
+    transform-box: fill-box;
+    transform-origin: center;
   }
 
   .hero__content {
-    padding-bottom: 0px !important;
-    margin-bottom: 0 !important;
+    position: relative;
+    z-index: 10;
+    margin-top: clamp(74px, 12vh, 110px);
+    padding-inline: 14px;
+    padding-bottom: clamp(190px, 26vh, 260px);
   }
 
   .hero__credits {
     margin-top: 10px !important;
     margin-bottom: 0 !important;
-    padding-bottom: 40px !important;
   }
 
   .cta {
@@ -1223,19 +1256,35 @@ a.premium:focus-visible::after {
     width: 100%;
   }
 
-  .hero__content {
-    padding-bottom: clamp(220px, 30vw, 280px);
-  }
-
-  .section-road .carSprite {
-    transform: translateY(var(--carYOffset)) scale(var(--carScaleSectionsSm));
-  }
-
   h1 {
     word-break: keep-all !important;
     overflow-wrap: normal !important;
     hyphens: none !important;
     font-size: clamp(28px, 7vw, 38px) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero__pin {
+    min-height: 100svh;
+  }
+
+  .hero__content {
+    margin-top: clamp(72px, 11vh, 92px);
+    padding-bottom: clamp(170px, 24vh, 220px);
+  }
+
+  .scene #roadBg {
+    stroke-width: 82 !important;
+  }
+
+  .scene #roadDash {
+    stroke-width: 5 !important;
+    stroke-dasharray: 20 16 !important;
   }
 }
 

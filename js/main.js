@@ -13,7 +13,9 @@
   }, 3000);
 
   // 3) Scroll doux sur les liens internes
-  $$(".nav [data-scrolllink], [data-scrolllink]").forEach((a) => {
+  $$("[data-scrolllink]").forEach((a) => {
+    if (a.closest(".mnav")) return;
+
     a.addEventListener(
       "click",
       (e) => {
@@ -105,54 +107,150 @@
     });
   }
 
-  // appel initial pour tout ce qui est déjà en DOM
   initMagnets();
 
-  // Soleil : dérive lente indépendante du scroll (aller-retour)
+  function applyHeroMobileSceneTuning() {
+    const scene = document.querySelector(".scene");
+    const sun = document.getElementById("sun");
+    const car = document.getElementById("carHero");
+    const roadBg = document.getElementById("roadBg");
+    const roadDash = document.getElementById("roadDash");
+    const roadPathHero = document.getElementById("roadPathHero");
+
+    if (!scene || !sun || !car || !roadBg || !roadDash || !roadPathHero) return;
+
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
+    const isSmallMobile = window.matchMedia("(max-width: 560px)").matches;
+
+    if (!isMobile) {
+      scene.setAttribute("viewBox", "0 0 1440 810");
+
+      sun.setAttribute("data-sun-duration", "25");
+      sun.setAttribute("data-sun-arc", "15");
+      sun.setAttribute("data-sun-margin", "120");
+      sun.setAttribute("data-offset-y", "60");
+
+      roadBg.setAttribute(
+        "d",
+        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
+      );
+      roadDash.setAttribute(
+        "d",
+        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
+      );
+      roadPathHero.setAttribute(
+        "d",
+        "M-50,720 C200,660 300,700 420,680 C550,660 620,600 720,610 C850,620 930,700 1040,690 C1150,680 1300,640 1500,660"
+      );
+
+      car.setAttribute("transform", "translate(-100,720) scale(1)");
+      return;
+    }
+
+    if (isSmallMobile) {
+      scene.setAttribute("viewBox", "0 0 1440 980");
+
+      sun.setAttribute("data-sun-duration", "18");
+      sun.setAttribute("data-sun-arc", "10");
+      sun.setAttribute("data-sun-margin", "150");
+      sun.setAttribute("data-offset-y", "92");
+
+      roadBg.setAttribute(
+        "d",
+        "M-80,850 C120,810 250,800 380,780 C520,760 650,720 780,730 C930,742 1080,790 1220,800 C1320,808 1400,804 1520,790"
+      );
+      roadDash.setAttribute(
+        "d",
+        "M-80,850 C120,810 250,800 380,780 C520,760 650,720 780,730 C930,742 1080,790 1220,800 C1320,808 1400,804 1520,790"
+      );
+      roadPathHero.setAttribute(
+        "d",
+        "M-80,850 C120,810 250,800 380,780 C520,760 650,720 780,730 C930,742 1080,790 1220,800 C1320,808 1400,804 1520,790"
+      );
+
+      car.setAttribute("transform", "translate(-100,850) scale(0.78)");
+      return;
+    }
+
+    scene.setAttribute("viewBox", "0 0 1440 920");
+
+    sun.setAttribute("data-sun-duration", "20");
+    sun.setAttribute("data-sun-arc", "12");
+    sun.setAttribute("data-sun-margin", "135");
+    sun.setAttribute("data-offset-y", "82");
+
+    roadBg.setAttribute(
+      "d",
+      "M-80,800 C140,750 260,760 390,740 C540,720 650,680 790,690 C930,700 1080,748 1210,758 C1330,766 1420,760 1520,748"
+    );
+    roadDash.setAttribute(
+      "d",
+      "M-80,800 C140,750 260,760 390,740 C540,720 650,680 790,690 C930,700 1080,748 1210,758 C1330,766 1420,760 1520,748"
+    );
+    roadPathHero.setAttribute(
+      "d",
+      "M-80,800 C140,750 260,760 390,740 C540,720 650,680 790,690 C930,700 1080,748 1210,758 C1330,766 1420,760 1520,748"
+    );
+
+    car.setAttribute("transform", "translate(-100,800) scale(0.86)");
+  }
+
+  applyHeroMobileSceneTuning();
+
   (() => {
     const sun = document.getElementById("sun");
     if (!sun) return;
 
     const svg = sun.ownerSVGElement;
-    const base = sun.getAttribute("transform") || "";
-
-    // Réglages (modifiable aussi via data-attrs)
-    const duration = parseFloat(sun.dataset.sunDuration || "30"); // secondes pour l’aller (gauche -> droite)
-    const arc = parseFloat(sun.dataset.sunArc || "22"); // amplitude de l’arc vertical
-    const marginR = parseFloat(sun.dataset.sunMargin || "12"); // marge à droite
-    const offsetY = parseFloat(sun.dataset.offsetY || "108"); // “marge haute” (pousse vers le bas)
-
     let maxX = 0;
+    let base = "";
+
+    function readSettings() {
+      return {
+        duration: parseFloat(sun.dataset.sunDuration || "30"),
+        arc: parseFloat(sun.dataset.sunArc || "22"),
+        marginR: parseFloat(sun.dataset.sunMargin || "12"),
+        offsetY: parseFloat(sun.dataset.offsetY || "108"),
+      };
+    }
+
+    function refreshBaseTransform() {
+      const current = sun.getAttribute("transform") || "";
+      base = current.replace(/translate\([^)]+\)\s*rotate\([^)]+\)\s*$/i, "").trim();
+    }
 
     function computeBounds() {
       if (!svg) return;
 
+      const { marginR } = readSettings();
       const vb = svg.viewBox && svg.viewBox.baseVal ? svg.viewBox.baseVal : null;
       const width = vb ? vb.width : svg.clientWidth;
 
       let bb;
       try {
         bb = sun.getBBox();
-      } catch (e) {
-        // Chrome peut throw si pas “rendered” au moment T → on réessaie au prochain frame
+      } catch {
         requestAnimationFrame(computeBounds);
         return;
       }
 
       maxX = Math.max(0, width - marginR - (bb.x + bb.width));
+      refreshBaseTransform();
     }
 
-    // anim: on part de x=0, on va jusqu’à maxX, puis on revient (ping-pong)
     let x = 0;
     let dir = 1;
     let last = 0;
 
     function step(t) {
       if (!last) last = t;
-      const dt = (t - last) / 1000; // secondes
+      const dt = (t - last) / 1000;
       last = t;
 
-      const speed = maxX / duration; // px/s
+      const { duration, arc, offsetY } = readSettings();
+      const safeDuration = Math.max(0.1, duration);
+      const speed = maxX / safeDuration;
+
       x += dir * speed * dt;
 
       if (x >= maxX) {
@@ -164,62 +262,91 @@
         dir = 1;
       }
 
-      const p = maxX > 0 ? x / maxX : 0; // 0..1 sur l’aller
-      const y = offsetY + Math.sin(p * Math.PI) * -arc; // petit arc solaire
-      const r = p * 180; // rotation légère
+      const p = maxX > 0 ? x / maxX : 0;
+      const y = offsetY + Math.sin(p * Math.PI) * -arc;
+      const r = p * 180;
 
-      // Concatène à la transform d’origine (ne casse pas la position de base)
-      sun.setAttribute("transform", `${base} translate(${x},${y}) rotate(${r})`);
+      sun.setAttribute("transform", `${base} translate(${x},${y}) rotate(${r})`.trim());
 
       requestAnimationFrame(step);
     }
 
     computeBounds();
     window.addEventListener("resize", computeBounds, { passive: true });
-
     requestAnimationFrame(step);
   })();
 
-  // GSAP (sécurisé si MotionPathPlugin pas chargé)
   const hasGSAP = typeof window.gsap !== "undefined";
   const hasScrollTrigger = typeof window.ScrollTrigger !== "undefined";
   const hasMotionPath = typeof window.MotionPathPlugin !== "undefined";
 
+  const endEl =
+    document.querySelector("#hero + .section") ||
+    document.querySelectorAll(".section")[1] ||
+    null;
+
   if (hasGSAP && hasScrollTrigger) {
-    gsap.registerPlugin(ScrollTrigger);
-    if (hasMotionPath) gsap.registerPlugin(MotionPathPlugin);
+    gsap.registerPlugin(window.ScrollTrigger);
+  }
+  if (hasGSAP && hasMotionPath) {
+    gsap.registerPlugin(window.MotionPathPlugin);
   }
 
-  const endEl =
-    document.querySelector("#hero + .section") || document.querySelectorAll(".section")[1] || null;
+  let heroCarTween = null;
 
-  // Car hero : seulement si tout est présent + plugin disponible
-  if (hasGSAP && hasScrollTrigger && hasMotionPath) {
+  function initHeroCarMotion() {
+    if (!(hasGSAP && hasScrollTrigger && hasMotionPath)) return;
+
     const car = document.querySelector("#carHero");
     const road = document.querySelector("#roadPathHero");
     const hero = document.querySelector("#hero");
 
-    if (car && road && hero) {
-      gsap.to("#carHero", {
-        motionPath: {
-          path: "#roadPathHero",
-          align: "#roadPathHero",
-          autoRotate: true,
-          alignOrigin: [0.5, 0.5],
-        },
-        ease: "none",
-        scrollTrigger: {
-          trigger: "#hero",
-          start: "top top",
-          endTrigger: endEl || undefined,
-          end: endEl ? "top top" : "+=800",
-          scrub: true,
-          invalidateOnRefresh: true,
-          fastScrollEnd: true,
-        },
-      });
+    if (!car || !road || !hero) return;
+
+    if (heroCarTween) {
+      heroCarTween.scrollTrigger?.kill();
+      heroCarTween.kill();
+      heroCarTween = null;
     }
+
+    gsap.set(car, { clearProps: "x,y,rotation,rotationZ" });
+
+    heroCarTween = gsap.to(car, {
+      motionPath: {
+        path: road,
+        align: road,
+        autoRotate: true,
+        alignOrigin: [0.5, 0.5],
+      },
+      ease: "none",
+      scrollTrigger: {
+        trigger: hero,
+        start: "top top",
+        endTrigger: endEl || undefined,
+        end: endEl ? "top top" : "+=800",
+        scrub: true,
+        invalidateOnRefresh: true,
+        fastScrollEnd: true,
+      },
+    });
+
+    window.ScrollTrigger.refresh();
   }
+
+  initHeroCarMotion();
+
+  let heroResizeTimer = null;
+  window.addEventListener(
+    "resize",
+    () => {
+      clearTimeout(heroResizeTimer);
+      heroResizeTimer = setTimeout(() => {
+        applyHeroMobileSceneTuning();
+        initHeroCarMotion();
+      }, 120);
+    },
+    { passive: true }
+  );
 
   // =========================
   //  Avis locaux Google
@@ -727,6 +854,5 @@
     );
   })();
 
-  // (optionnel) expose pour les injections dynamiques (ex: avis)
-  // window.initMagnets = initMagnets;
+  window.initMagnets = initMagnets;
 })();
