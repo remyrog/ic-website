@@ -796,6 +796,10 @@ a.cta-primary:focus-visible {
     outline-offset: 2px;
 }
 
+.cta-call {
+    display: inline-block;
+}
+
 /* Responsive */
 @media (max-width: 720px) {
 
@@ -1086,6 +1090,14 @@ section.grid {
     /* halo seulement, zéro bordure */
     box-shadow: var(--neon-outer);
     outline: none;
+}
+
+a.cta-primary[data-magnet]:hover,
+a.cta-primary[data-magnet]:focus-visible {
+    box-shadow:
+        0 0 0 1px rgb(var(--white-rgb) / 0.06),
+        0 10px 30px rgb(var(--pink-rgb) / 0.22),
+        0 10px 26px rgb(var(--yellow-rgb) / 0.18);
 }
 
 [data-magnet]:active {
