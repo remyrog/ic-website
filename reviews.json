@@ -1,6 +1,24 @@
 {
   "reviews": [
     {
+      "author": "Chantal B.",
+      "rating": 5,
+      "comment": "intervenant trés compétent à l\u0027écoute du client, prends le temps de donner des conseils\nje recommande\n\n(Translated by Google)\nA very competent professional who listens to the client and takes the time to give advice.\nI recommend him.",
+      "date": "2026-03-09T17:15:50.600531Z"
+    },
+    {
+      "author": "Francis R.",
+      "rating": 5,
+      "comment": "Sympathique et agréable. Manifestement au service du client. Petite prestation demandée par moi mais semble très bien connaître son job. Je recommande sans hésiter. Avis précédent rectifié car il s\u0027agit d\u0027un bug de mail non reçu.\n\n(Translated by Google)\nFriendly and pleasant. Clearly focused on customer service. I requested a small service, but he seemed to know his job very well. I recommend him without hesitation. Previous review corrected as it was due to an email not being received.",
+      "date": "2026-01-22T10:58:04.763348Z"
+    },
+    {
+      "author": "JP S",
+      "rating": 5,
+      "comment": "tres efficace et agreable",
+      "date": "2025-12-12T16:31:07.305374Z"
+    },
+    {
       "author": "Angéle A.",
       "rating": 5,
       "comment": "très compétent et très attentif aux besoins des clients",
@@ -17,6 +35,12 @@
       "rating": 5,
       "comment": "Remy est très disponible! Nous avons avons eu besoin de ses services pour la réparation d'un ordinateur qui était très lent et l'achat d'un autre. Il a été très compétent et de bons conseils! Nous referons appel à lui si besoin! Je recommande!",
       "date": "2025-04-22T10:22:53.331521Z"
+    },
+    {
+      "author": "Jean-pierre V.",
+      "rating": 5,
+      "comment": "Super ! de nouveau Informatique Cerdagne m\u0027a bien rendu service, car j\u0027étais dans l\u0027impasse. Merci beaucoup.\n\n(Translated by Google)\nGreat! Cerdagne IT was very helpful again, as I was stuck. Thank you very much.",
+      "date": "2025-03-12T19:24:43.539149Z"
     },
     {
       "author": "Dominique V.",
@@ -73,6 +97,12 @@
       "date": "2024-05-17T15:14:11.963513Z"
     },
     {
+      "author": "Charles O.",
+      "rating": 5,
+      "comment": "C'est une personne très efficace et agréable.",
+      "date": "2024-02-13T11:55:51.120225Z"
+    },
+    {
       "author": "Dominique B.",
       "rating": 5,
       "comment": "Satisfaite du dépannage.",
@@ -83,12 +113,6 @@
       "rating": 5,
       "comment": "Professionnel, efficace et disponible.",
       "date": "2024-01-12T15:30:31.921334Z"
-    },
-    {
-      "author": "Jean-pierre V.",
-      "rating": 5,
-      "comment": "Super ! de nouveau Informatique Cerdagne m'a bien rendu service, car j'étais dans l'impasse. Merci beaucoup.",
-      "date": "2024-01-06T15:42:29.773924Z"
     },
     {
       "author": "Sylvie P.",
@@ -179,12 +203,6 @@
       "rating": 5,
       "comment": "Très pro",
       "date": "2023-06-25T16:48:06.893949Z"
-    },
-    {
-      "author": "Chantal B.",
-      "rating": 5,
-      "comment": "intervenant trés compétent à l'écoute du client, prends le temps de donner des conseils\nje recommande",
-      "date": "2023-06-21T15:54:40.260385Z"
     },
     {
       "author": "Lucette L.",

@@ -130,7 +130,7 @@
     const summaryStars = section.querySelectorAll(".reviews__summary-star");
 
     // Stats globales
-    const TOTAL_REVIEWS_COUNT = 52;
+    const TOTAL_REVIEWS_COUNT = 55;
     const AVERAGE_RATING = 5;
     const REVIEWS_PER_PAGE = 5;
 
