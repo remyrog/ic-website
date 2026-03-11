@@ -713,88 +713,86 @@
   <!-- OFFRES D'ACCOMPAGNEMENT -->
   <section id="offres" class="section offres" aria-labelledby="h-offres">
     <div class="container">
-      <h2 id="h-offres">
-        Offres <span class="accent">d’accompagnement</span>
-      </h2>
+      <div class="offres__head">
+        <h2 id="h-offres">
+          Offres <span class="accent">d’accompagnement</span>
+        </h2>
 
-      <p class="lead">
-        Certaines demandes méritent plus qu’une intervention ponctuelle :
-        un cadre clair, une méthode, une vision globale et un accompagnement structuré.
-      </p>
+        <p class="lead offres__lead">
+          Certaines demandes méritent plus qu’une intervention ponctuelle :
+          un cadre clair, une méthode, une vision globale et un accompagnement structuré.
+        </p>
+      </div>
 
       <div class="offers-grid">
         <article class="offer-card" data-magnet>
-          <div class="offer-card__top">
-            <span class="ic-badge">
-              <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--pulse">
-                <use href="#ic-service-dev" />
-              </svg>
-            </span>
-            <div>
-              <h3>Offre de développement</h3>
-              <p class="offer-card__tagline">Clarifier, cadrer et construire votre projet numérique.</p>
-            </div>
-          </div>
+          <div class="offer-card__eyebrow">Offre détaillée</div>
+
+          <h3>Développement</h3>
+
+          <p class="offer-card__tagline">
+            Clarifier, cadrer et construire votre projet numérique.
+          </p>
 
           <p class="offer-card__text">
             Pour les projets web, outils métier, automatisations, sites sur-mesure ou besoins techniques qui demandent
             une vraie méthode.
           </p>
 
-          <a href="https://dev.informatique-cerdagne.fr/" class="offer-card__link premium">
-            Découvrir l’offre de développement
-          </a>
+          <div class="offer-card__footer">
+            <a href="/dev.html" class="offer-card__cta">
+              <span>Découvrir l’offre</span>
+              <span class="offer-card__cta-cut" aria-hidden="true"></span>
+            </a>
+          </div>
         </article>
 
         <article class="offer-card" data-magnet>
-          <div class="offer-card__top">
-            <span class="ic-badge">
-              <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--wiggle">
-                <use href="#ic-service-advice" />
-              </svg>
-            </span>
-            <div>
-              <h3>Offre de community management</h3>
-              <p class="offer-card__tagline">Structurer votre présence, vos contenus et votre communication.</p>
-            </div>
-          </div>
+          <div class="offer-card__eyebrow">Offre détaillée</div>
+
+          <h3>Community management</h3>
+
+          <p class="offer-card__tagline">
+            Structurer votre présence, vos contenus et votre communication.
+          </p>
 
           <p class="offer-card__text">
             Pour les professionnels qui veulent gagner en visibilité, en régularité et en cohérence sur les réseaux
             sociaux.
           </p>
 
-          <a href="#" class="offer-card__link premium">
-            Découvrir l’offre de community management (en cours de rédaction)
-          </a>
+          <div class="offer-card__footer">
+            <a href="/community-management.html" class="offer-card__cta is-disabled" aria-disabled="true">
+              <span>En cours de rédaction</span>
+              <span class="offer-card__cta-cut" aria-hidden="true"></span>
+            </a>
+          </div>
         </article>
 
         <article class="offer-card" data-magnet>
-          <div class="offer-card__top">
-            <span class="ic-badge">
-              <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--bounce">
-                <use href="#ic-service-coach" />
-              </svg>
-            </span>
-            <div>
-              <h3>Offre de formation</h3>
-              <p class="offer-card__tagline">Apprendre avec méthode, clarté et pédagogie.</p>
-            </div>
-          </div>
+          <div class="offer-card__eyebrow">Offre détaillée</div>
+
+          <h3>Formation</h3>
+
+          <p class="offer-card__tagline">
+            Apprendre avec méthode, clarté et pédagogie.
+          </p>
 
           <p class="offer-card__text">
             Pour les personnes, équipes ou structures qui veulent monter en autonomie et mieux comprendre leurs outils
             numériques.
           </p>
 
-          <a href="#" class="offer-card__link premium">
-            Découvrir l’offre de formation (en cours de rédaction)
-          </a>
+          <div class="offer-card__footer">
+            <a href="/formation.html" class="offer-card__cta is-disabled" aria-disabled="true">
+              <span>En cours de rédaction</span>
+              <span class="offer-card__cta-cut" aria-hidden="true"></span>
+            </a>
+          </div>
         </article>
       </div>
     </div>
   </section>
-
   <!-- EXPERTISE -->
   <section id="expertise" class="section expertise" aria-labelledby="h-expertise">
     <div class="container">
@@ -802,15 +800,14 @@
         <div class="card glow">
           <h3>Expertise</h3>
           <ul class="tick">
-            <li data-magnet>
-              <span class="ic-badge">
-                <svg viewBox="0 0 64 64" aria-hidden="true" class="ic-svg ic-svg--pulse">
-                  <use href="#ic-service-dev" />
-                </svg>
-              </span>
-              <a href="https://dev.informatique-cerdagne.fr/" class="expertise-link">
-                Programmation web & applicative sur-mesure
-              </a>
+            <li class="tick-offer" data-magnet>
+              <div class="tick-offer__content">
+                <span class="tick-offer__title">Programmation web & applicative sur-mesure</span>
+                <a href="/dev.html" class="tick-offer__link">
+                  <span>En savoir plus</span>
+                  <span class="tick-offer__cut" aria-hidden="true"></span>
+                </a>
+              </div>
             </li>
 
             <li data-magnet>
