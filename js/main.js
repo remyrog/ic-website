@@ -669,19 +669,11 @@
 
     if (isSmall) {
       return {
-        viewBox: "0 0 1440 900",
+        viewBox: "0 0 1440 860",
         preserve: "xMidYMid slice",
-
-        // Soleil plus haut + course beaucoup plus courte
         sunPath: "M 430 92 C 610 54 820 48 1010 60 C 1140 68 1235 84 1310 106",
-
-        // Route mobile calquée sur la logique desktop :
-        // léger plat -> montée -> sommet -> redescente -> relance douce
-        road: "M-120,812 C60,780 210,790 360,790 C520,790 635,695 760,660 C900,630 1025,720 1150,760 C1270,796 1390,756 1605,730",
-
-        // voiture plus petite
-        carTransform: "translate(-118,812) scale(0.68)",
-
+        road: "M-120,842 C60,810 210,820 360,820 C520,820 635,725 760,690 C900,660 1025,750 1150,790 C1270,826 1390,786 1605,760",
+        carTransform: "translate(-118,842) scale(0.68)",
         sunScale: 0.46,
         sunStart: 0.16,
         sunEnd: 0.74,

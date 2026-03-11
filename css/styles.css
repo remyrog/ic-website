@@ -1273,9 +1273,10 @@ a.premium:focus-visible::after {
 }
 
 @media (max-width: 560px) {
+  
   .hero__content {
     margin-top: clamp(18px, 3.2vh, 30px);
-    padding-bottom: clamp(185px, 24vh, 230px);
+    padding-bottom: clamp(170px, 22vh, 210px);
   }
 
   .hero__badge {
