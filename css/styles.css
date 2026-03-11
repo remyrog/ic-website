@@ -46,6 +46,10 @@ body {
   --white-rgb: 255 255 255;
   --cream-rgb: 254 252 232;
 
+  --gold-deep-rgb: 214 152 32;
+  --gold-accent-rgb: 232 178 28;
+  --rose-deep-rgb: 201 92 138;
+
   /* Extra RGB (needed by existing design) */
   --blue-a-rgb: 120 160 255;
   --blue-b-rgb: 80 120 255;
@@ -352,6 +356,19 @@ body {
   margin-top: clamp(26px, 4vh, 44px);
   padding-bottom: clamp(236px, 31vh, 286px);
   padding-inline: clamp(16px, 5vw, 0px);
+}
+
+.hero-gradient-word {
+  background-image: linear-gradient(90deg,
+      rgb(var(--gold-accent-rgb) / 0.98) 0%,
+      rgb(var(--gold-deep-rgb) / 0.98) 28%,
+      rgb(var(--rose-deep-rgb) / 0.98) 68%,
+      rgb(var(--pink-rgb) / 0.98) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(0 0 8px rgb(var(--yellow-rgb) / 0.10)) drop-shadow(0 0 18px rgb(var(--pink-rgb) / 0.18));
 }
 
 .hero__badge {
@@ -1273,7 +1290,7 @@ a.premium:focus-visible::after {
 }
 
 @media (max-width: 560px) {
-  
+
   .hero__content {
     margin-top: clamp(18px, 3.2vh, 30px);
     padding-bottom: clamp(170px, 22vh, 210px);
