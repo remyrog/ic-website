@@ -649,6 +649,7 @@
   const mqMobile = window.matchMedia("(max-width: 760px)");
   const mqSmall = window.matchMedia("(max-width: 560px)");
 
+
   function getHeroConfig() {
     const isMobile = mqMobile.matches;
     const isSmall = mqSmall.matches;
@@ -671,13 +672,13 @@
       return {
         viewBox: "0 0 1440 860",
         preserve: "xMidYMid slice",
-        sunPath: "M 430 92 C 610 54 820 48 1010 60 C 1140 68 1235 84 1310 106",
+        sunPath: "M 340 96 C 500 62 675 54 840 60 C 950 64 1045 74 1130 92",
         road: "M-120,842 C60,810 210,820 360,820 C520,820 635,725 760,690 C900,660 1025,750 1150,790 C1270,826 1390,786 1605,760",
         carTransform: "translate(-118,842) scale(0.68)",
         sunScale: 0.46,
-        sunStart: 0.16,
-        sunEnd: 0.74,
-        sunDuration: 9.5
+        sunStart: 0.10,
+        sunEnd: 0.62,
+        sunDuration: 8.8
       };
     }
 
