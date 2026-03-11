@@ -1273,17 +1273,9 @@ a.premium:focus-visible::after {
 }
 
 @media (max-width: 560px) {
-  .hero {
-    min-height: 100svh;
-  }
-
-  .hero__pin {
-    min-height: 100svh;
-  }
-
   .hero__content {
     margin-top: clamp(18px, 3.2vh, 30px);
-    padding-bottom: clamp(220px, 29vh, 272px);
+    padding-bottom: clamp(185px, 24vh, 230px);
   }
 
   .hero__badge {
