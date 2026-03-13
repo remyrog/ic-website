@@ -349,6 +349,10 @@ header[id] {
 .hero__pin {
   position: relative;
   min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: clamp(96px, 11vh, 128px);
 }
 
 .scene {
@@ -365,10 +369,11 @@ header[id] {
 .hero__content {
   position: relative;
   z-index: 10;
+  width: 100%;
   text-align: center;
-  margin-top: clamp(26px, 4vh, 44px);
-  padding-bottom: clamp(236px, 31vh, 286px);
+  margin-top: 0;
   padding-inline: clamp(16px, 5vw, 0px);
+  padding-bottom: clamp(236px, 31vh, 286px);
 }
 
 .hero-gradient-word {
@@ -1223,8 +1228,7 @@ a.premium:focus-visible::after {
   }
 
   .hero__pin {
-    min-height: 100svh;
-    overflow: clip;
+    padding-top: clamp(88px, 12vh, 110px);
   }
 
   .scene {
@@ -1269,7 +1273,7 @@ a.premium:focus-visible::after {
   .hero__content {
     position: relative;
     z-index: 10;
-    margin-top: clamp(32px, 5.5vh, 56px);
+    margin-top: 0;
     padding-inline: 14px;
     padding-bottom: clamp(250px, 34vh, 320px);
   }
@@ -1304,8 +1308,12 @@ a.premium:focus-visible::after {
 
 @media (max-width: 560px) {
 
+  .hero__pin {
+    padding-top: clamp(78px, 10vh, 96px);
+  }
+
   .hero__content {
-    margin-top: clamp(18px, 3.2vh, 30px);
+    margin-top: 0;
     padding-bottom: clamp(170px, 22vh, 210px);
   }
 
