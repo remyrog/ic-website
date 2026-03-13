@@ -352,7 +352,7 @@ header[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: clamp(96px, 11vh, 128px);
+  padding-top: clamp(128px, 15vh, 180px);
 }
 
 .scene {
@@ -374,6 +374,7 @@ header[id] {
   margin-top: 0;
   padding-inline: clamp(16px, 5vw, 0px);
   padding-bottom: clamp(236px, 31vh, 286px);
+  transform: translateY(18px);
 }
 
 .hero-gradient-word {
@@ -1228,7 +1229,7 @@ a.premium:focus-visible::after {
   }
 
   .hero__pin {
-    padding-top: clamp(88px, 12vh, 110px);
+    padding-top: clamp(104px, 14vh, 132px);
   }
 
   .scene {
@@ -1309,7 +1310,7 @@ a.premium:focus-visible::after {
 @media (max-width: 560px) {
 
   .hero__pin {
-    padding-top: clamp(78px, 10vh, 96px);
+    padding-top: clamp(92px, 12vh, 112px);
   }
 
   .hero__content {
