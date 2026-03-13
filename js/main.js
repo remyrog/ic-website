@@ -744,13 +744,13 @@
 
     gsap.set(sunSprite, {
       scale: cfg.sunScale,
-      transformBox: "fill-box",
-      transformOrigin: "50% 50%"
+      svgOrigin: "0 0",
+      force3D: false
     });
 
     gsap.set(sunFace, {
-      transformBox: "fill-box",
-      transformOrigin: "50% 50%"
+      svgOrigin: "0 0",
+      force3D: false
     });
   }
 
@@ -770,15 +770,13 @@
 
     gsap.set(sunSprite, {
       clearProps: "rotation,rotate",
-      transformBox: "fill-box",
-      transformOrigin: "50% 50%",
+      svgOrigin: "0 0",
       force3D: false
     });
 
     gsap.set(sunFace, {
       clearProps: "rotation,rotate",
-      transformBox: "fill-box",
-      transformOrigin: "50% 50%",
+      svgOrigin: "0 0",
       force3D: false
     });
 
@@ -796,21 +794,19 @@
     });
 
     heroSunSpinTween = gsap.to(sunSprite, {
-      rotation: "+=360",
+      rotation: 360,
       duration: 18,
       repeat: -1,
       ease: "none",
-      transformOrigin: "50% 50%",
-      transformBox: "fill-box"
+      svgOrigin: "0 0"
     });
 
     heroFaceCounterTween = gsap.to(sunFace, {
-      rotation: "-=360",
+      rotation: -360,
       duration: 18,
       repeat: -1,
       ease: "none",
-      transformOrigin: "50% 50%",
-      transformBox: "fill-box"
+      svgOrigin: "0 0"
     });
   }
 

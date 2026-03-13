@@ -1247,6 +1247,14 @@ a.premium:focus-visible::after {
     will-change: transform;
   }
 
+  #sun,
+  #sunSprite,
+  #sunFace,
+  #sunRays {
+    transform-box: view-box;
+    backface-visibility: hidden;
+  }
+
   .scene #roadBg {
     stroke-width: 66 !important;
   }
