@@ -1247,13 +1247,6 @@ a.premium:focus-visible::after {
     will-change: transform;
   }
 
-  #sunRays {
-    transform-box: fill-box;
-    transform-origin: center;
-    backface-visibility: hidden;
-    will-change: transform;
-  }
-
   .scene #roadBg {
     stroke-width: 66 !important;
   }

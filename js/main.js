@@ -760,9 +760,8 @@
     });
 
     gsap.set(sunRays, {
-      clearProps: "rotation,rotate",
-      transformOrigin: "50% 50%",
-      transformBox: "fill-box",
+      clearProps: "rotation,rotate,transformOrigin,transformBox",
+      transformOrigin: "0px 0px",
       force3D: false
     });
 
