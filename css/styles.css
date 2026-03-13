@@ -1239,17 +1239,18 @@ a.premium:focus-visible::after {
     pointer-events: none;
   }
 
-  .scene #sun {
+  #sun,
+  #sunSprite,
+  #sunRays {
+    transform-box: fill-box;
     transform-origin: center;
+    backface-visibility: hidden;
+    will-change: transform;
   }
 
   .scene #sunRays {
     opacity: 0.92;
-  }
-
-  .scene #sunSprite {
-    transform-box: fill-box;
-    transform-origin: center;
+    transform-origin: 0px 0px;
   }
 
   .scene #roadBg {

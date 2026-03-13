@@ -258,7 +258,7 @@
     }
 
     function scrollToSectionTop() {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToTarget(section);
     }
 
     prevBtn.addEventListener("click", () => {
@@ -746,10 +746,18 @@
     heroSunTween?.kill();
     heroSunSpinTween?.kill();
 
-    // on nettoie seulement ce qui est nécessaire
     gsap.set(sun, {
-      clearProps: "x,y,rotation",
-      transformOrigin: "50% 50%"
+      clearProps: "x,y,rotation,transform",
+      transformOrigin: "50% 50%",
+      transformBox: "fill-box",
+      force3D: false
+    });
+
+    gsap.set(sunRays, {
+      clearProps: "rotation,transform",
+      transformOrigin: "50% 50%",
+      transformBox: "fill-box",
+      force3D: false
     });
 
     heroSunTween = gsap.to(sun, {
@@ -767,10 +775,9 @@
       }
     });
 
-    // rotation indépendante et persistante des rayons
     heroSunSpinTween = gsap.to(sunRays, {
-      rotation: 360,
-      transformOrigin: "50% 50%",
+      rotation: "+=360",
+      transformOrigin: "0px 0px",
       duration: 18,
       repeat: -1,
       ease: "none"
