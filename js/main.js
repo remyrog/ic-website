@@ -728,7 +728,6 @@
     roadBg.setAttribute("d", cfg.road);
     roadDash.setAttribute("d", cfg.road);
     roadPathHero.setAttribute("d", cfg.road);
-    car.setAttribute("transform", cfg.carTransform);
 
     gsap.set(sunSprite, {
       scale: cfg.sunScale,
@@ -746,22 +745,21 @@
     heroSunSpinTween?.kill();
 
     gsap.set(sun, {
-      clearProps: "x,y,rotation,rotate,transformOrigin,transformBox,svgOrigin",
-      transformBox: "fill-box",
-      transformOrigin: "50% 50%",
+      clearProps: "transform,x,y,rotation,rotate",
       force3D: false
     });
 
     gsap.set(sunSprite, {
-      clearProps: "rotation,rotate,transformOrigin,transformBox,svgOrigin",
+      clearProps: "rotation,rotate",
       transformBox: "fill-box",
       transformOrigin: "50% 50%",
       force3D: false
     });
 
     gsap.set(sunRays, {
-      clearProps: "rotation,rotate,x,y,transformOrigin,transformBox,svgOrigin",
-      svgOrigin: "0 0",
+      clearProps: "rotation,rotate",
+      transformBox: "fill-box",
+      transformOrigin: "50% 50%",
       force3D: false
     });
 
@@ -782,7 +780,9 @@
       rotation: "+=360",
       duration: 18,
       repeat: -1,
-      ease: "none"
+      ease: "none",
+      transformOrigin: "50% 50%",
+      transformBox: "fill-box"
     });
   }
 
