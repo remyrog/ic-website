@@ -362,8 +362,8 @@ header[id] {
   text-align: center;
   margin-top: 0;
   padding-inline: clamp(16px, 5vw, 0px);
-  padding-bottom: clamp(280px, 37vh, 360px);
-  transform: translateY(30px);
+  padding-bottom: clamp(300px, 39vh, 390px);
+  transform: translateY(34px);
 }
 
 .scene {
