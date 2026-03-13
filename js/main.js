@@ -656,13 +656,15 @@
   const scene = $(".scene");
   const sun = $("#sun");
   const sunPath = $("#sunPath");
+  const sunSprite = $("#sunSprite");
+  const sunRays = $("#sunRays");
   const roadBg = $("#roadBg");
   const roadDash = $("#roadDash");
   const roadPathHero = $("#roadPathHero");
   const car = $("#carHero");
   const hero = $("#hero");
 
-  if (!scene || !sun || !sunPath || !roadBg || !roadDash || !roadPathHero || !car || !hero) return;
+  if (!scene || !sun || !sunPath || !sunSprite || !sunRays || !roadBg || !roadDash || !roadPathHero || !car || !hero) return;
 
   let heroSunTween = null;
   let heroSunSpinTween = null;
@@ -670,7 +672,6 @@
 
   const mqMobile = window.matchMedia("(max-width: 760px)");
   const mqSmall = window.matchMedia("(max-width: 560px)");
-
 
   function getHeroConfig() {
     const isMobile = mqMobile.matches;
@@ -729,35 +730,37 @@
     roadPathHero.setAttribute("d", cfg.road);
     car.setAttribute("transform", cfg.carTransform);
 
-    const sunSprite = $("#sunSprite");
-    if (sunSprite) {
-      gsap.set(sunSprite, {
-        scale: cfg.sunScale,
-        transformOrigin: "50% 50%",
-        transformBox: "fill-box"
-      });
-    }
+    gsap.set(sunSprite, {
+      scale: cfg.sunScale,
+      transformOrigin: "50% 50%",
+      transformBox: "fill-box"
+    });
   }
 
   function initHeroSunMotion() {
     if (!(hasGSAP && hasMotionPath)) return;
 
     const cfg = getHeroConfig();
-    const sunSprite = $("#sunSprite");
-    if (!sunSprite) return;
 
     heroSunTween?.kill();
     heroSunSpinTween?.kill();
 
     gsap.set(sun, {
-      clearProps: "x,y,rotation",
+      clearProps: "x,y,rotation,rotate",
       transformOrigin: "50% 50%",
       transformBox: "fill-box",
       force3D: false
     });
 
     gsap.set(sunSprite, {
-      clearProps: "rotation",
+      clearProps: "rotation,rotate",
+      transformOrigin: "50% 50%",
+      transformBox: "fill-box",
+      force3D: false
+    });
+
+    gsap.set(sunRays, {
+      clearProps: "rotation,rotate",
       transformOrigin: "50% 50%",
       transformBox: "fill-box",
       force3D: false
@@ -770,16 +773,14 @@
       ease: "sine.inOut",
       motionPath: {
         path: sunPath,
-        align: sunPath,
-        alignOrigin: [0.5, 0.5],
         autoRotate: false,
         start: cfg.sunStart,
         end: cfg.sunEnd
       }
     });
 
-    heroSunSpinTween = gsap.to(sunSprite, {
-      rotation: "+=360",
+    heroSunSpinTween = gsap.to(sunRays, {
+      rotation: 360,
       duration: 18,
       repeat: -1,
       ease: "none"
@@ -829,9 +830,6 @@
 
   initHeroAll();
 
-  // IMPORTANT :
-  // Sur mobile, le navigateur déclenche des resize pendant le scroll
-  // (barres d’URL, viewport dynamique). On ignore ces faux resize.
   let lastWidth = window.innerWidth;
   let lastHeight = window.innerHeight;
   let resizeTimer = null;
@@ -846,11 +844,7 @@
     lastWidth = newWidth;
     lastHeight = newHeight;
 
-    // En mobile, on ne relance pas tout pour les petits changements de hauteur
-    // liés au scroll tactile / UI browser.
-    if (mqMobile.matches && !widthChanged && !heightChanged) {
-      return;
-    }
+    if (mqMobile.matches && !widthChanged && !heightChanged) return;
 
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
