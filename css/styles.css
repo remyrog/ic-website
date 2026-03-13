@@ -1240,17 +1240,11 @@ a.premium:focus-visible::after {
   }
 
   #sun,
-  #sunSprite,
-  #sunRays {
+  #sunSprite {
     transform-box: fill-box;
     transform-origin: center;
     backface-visibility: hidden;
     will-change: transform;
-  }
-
-  .scene #sunRays {
-    opacity: 0.92;
-    transform-origin: 0px 0px;
   }
 
   .scene #roadBg {
@@ -1323,10 +1317,6 @@ a.premium:focus-visible::after {
 
   .hero__badge {
     margin-bottom: 6px;
-  }
-
-  .scene #sunSprite {
-    transform: scale(0.50);
   }
 
   .scene #roadBg {

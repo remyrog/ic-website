@@ -656,14 +656,13 @@
   const scene = $(".scene");
   const sun = $("#sun");
   const sunPath = $("#sunPath");
-  const sunRays = $("#sunRays");
   const roadBg = $("#roadBg");
   const roadDash = $("#roadDash");
   const roadPathHero = $("#roadPathHero");
   const car = $("#carHero");
   const hero = $("#hero");
 
-  if (!scene || !sun || !sunPath || !sunRays || !roadBg || !roadDash || !roadPathHero || !car || !hero) return;
+  if (!scene || !sun || !sunPath || !roadBg || !roadDash || !roadPathHero || !car || !hero) return;
 
   let heroSunTween = null;
   let heroSunSpinTween = null;
@@ -732,9 +731,11 @@
 
     const sunSprite = $("#sunSprite");
     if (sunSprite) {
-      sunSprite.style.transformBox = "fill-box";
-      sunSprite.style.transformOrigin = "center";
-      sunSprite.style.transform = `scale(${cfg.sunScale})`;
+      gsap.set(sunSprite, {
+        scale: cfg.sunScale,
+        transformOrigin: "50% 50%",
+        transformBox: "fill-box"
+      });
     }
   }
 
@@ -742,19 +743,21 @@
     if (!(hasGSAP && hasMotionPath)) return;
 
     const cfg = getHeroConfig();
+    const sunSprite = $("#sunSprite");
+    if (!sunSprite) return;
 
     heroSunTween?.kill();
     heroSunSpinTween?.kill();
 
     gsap.set(sun, {
-      clearProps: "x,y,rotation,transform",
+      clearProps: "x,y,rotation",
       transformOrigin: "50% 50%",
       transformBox: "fill-box",
       force3D: false
     });
 
-    gsap.set(sunRays, {
-      clearProps: "rotation,transform",
+    gsap.set(sunSprite, {
+      clearProps: "rotation",
       transformOrigin: "50% 50%",
       transformBox: "fill-box",
       force3D: false
@@ -775,9 +778,8 @@
       }
     });
 
-    heroSunSpinTween = gsap.to(sunRays, {
+    heroSunSpinTween = gsap.to(sunSprite, {
       rotation: "+=360",
-      transformOrigin: "0px 0px",
       duration: 18,
       repeat: -1,
       ease: "none"
