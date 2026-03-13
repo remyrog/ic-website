@@ -352,7 +352,18 @@ header[id] {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: clamp(128px, 15vh, 180px);
+  padding-top: clamp(148px, 17vh, 210px);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  padding-inline: clamp(16px, 5vw, 0px);
+  padding-bottom: clamp(280px, 37vh, 360px);
+  transform: translateY(30px);
 }
 
 .scene {
@@ -364,17 +375,6 @@ header[id] {
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
-}
-
-.hero__content {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  text-align: center;
-  margin-top: 0;
-  padding-inline: clamp(16px, 5vw, 0px);
-  padding-bottom: clamp(236px, 31vh, 286px);
-  transform: translateY(18px);
 }
 
 .hero-gradient-word {
@@ -1228,10 +1228,6 @@ a.premium:focus-visible::after {
     overflow: clip;
   }
 
-  .hero__pin {
-    padding-top: clamp(104px, 14vh, 132px);
-  }
-
   .scene {
     display: block !important;
     position: absolute;
@@ -1271,12 +1267,17 @@ a.premium:focus-visible::after {
     transform-origin: center;
   }
 
+  .hero__pin {
+    padding-top: clamp(118px, 16vh, 148px);
+  }
+
   .hero__content {
     position: relative;
     z-index: 10;
     margin-top: 0;
     padding-inline: 14px;
-    padding-bottom: clamp(250px, 34vh, 320px);
+    padding-bottom: clamp(280px, 38vh, 340px);
+    transform: translateY(18px);
   }
 
   .hero__badge {
@@ -1310,12 +1311,13 @@ a.premium:focus-visible::after {
 @media (max-width: 560px) {
 
   .hero__pin {
-    padding-top: clamp(92px, 12vh, 112px);
+    padding-top: clamp(102px, 14vh, 124px);
   }
 
   .hero__content {
     margin-top: 0;
-    padding-bottom: clamp(170px, 22vh, 210px);
+    padding-bottom: clamp(210px, 28vh, 250px);
+    transform: translateY(10px);
   }
 
   .hero__badge {
