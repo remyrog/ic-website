@@ -1898,6 +1898,9 @@ a.premium:focus-visible::after {
   pointer-events: none;
   opacity: 1;
   border-radius: inherit;
+  background:
+    radial-gradient(circle at 18% 15%, rgb(100 220 255 / 0.14), transparent 26%),
+    radial-gradient(circle at 82% 88%, rgb(var(--pink-rgb) / 0.16), transparent 34%);
 }
 
 .offer-card::after {
@@ -1909,24 +1912,6 @@ a.premium:focus-visible::after {
   border: 1px solid rgb(var(--white-rgb) / 0.025);
 }
 
-.offer-card--dev::before {
-  background:
-    radial-gradient(circle at 18% 15%, rgb(var(--yellow-rgb) / 0.16), transparent 26%),
-    radial-gradient(circle at 82% 88%, rgb(var(--pink-rgb) / 0.16), transparent 34%);
-}
-
-.offer-card--cm::before {
-  background:
-    radial-gradient(circle at 18% 15%, rgb(100 220 255 / 0.14), transparent 26%),
-    radial-gradient(circle at 82% 88%, rgb(var(--pink-rgb) / 0.16), transparent 34%);
-}
-
-.offer-card--formation::before {
-  background:
-    radial-gradient(circle at 18% 15%, rgb(var(--yellow-rgb) / 0.14), transparent 26%),
-    radial-gradient(circle at 82% 88%, rgb(168 85 247 / 0.16), transparent 34%);
-}
-
 .offer-card:hover,
 .offer-card:focus-visible {
   transform: translateY(-6px);
@@ -1936,7 +1921,7 @@ a.premium:focus-visible::after {
     0 0 24px rgb(var(--yellow-rgb) / 0.08);
 }
 
-.offer-card > * {
+.offer-card>* {
   position: relative;
   z-index: 1;
 }
