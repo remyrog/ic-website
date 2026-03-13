@@ -657,17 +657,29 @@
   const sun = $("#sun");
   const sunPath = $("#sunPath");
   const sunSprite = $("#sunSprite");
-  const sunRays = $("#sunRays");
+  const sunFace = $("#sunFace");
   const roadBg = $("#roadBg");
   const roadDash = $("#roadDash");
   const roadPathHero = $("#roadPathHero");
   const car = $("#carHero");
   const hero = $("#hero");
 
-  if (!scene || !sun || !sunPath || !sunSprite || !sunRays || !roadBg || !roadDash || !roadPathHero || !car || !hero) return;
+  if (
+    !scene ||
+    !sun ||
+    !sunPath ||
+    !sunSprite ||
+    !sunFace ||
+    !roadBg ||
+    !roadDash ||
+    !roadPathHero ||
+    !car ||
+    !hero
+  ) return;
 
   let heroSunTween = null;
   let heroSunSpinTween = null;
+  let heroFaceCounterTween = null;
   let heroCarTween = null;
 
   const mqMobile = window.matchMedia("(max-width: 760px)");
@@ -728,9 +740,15 @@
     roadBg.setAttribute("d", cfg.road);
     roadDash.setAttribute("d", cfg.road);
     roadPathHero.setAttribute("d", cfg.road);
+    car.setAttribute("transform", cfg.carTransform);
 
     gsap.set(sunSprite, {
       scale: cfg.sunScale,
+      transformBox: "fill-box",
+      transformOrigin: "50% 50%"
+    });
+
+    gsap.set(sunFace, {
       transformBox: "fill-box",
       transformOrigin: "50% 50%"
     });
@@ -743,6 +761,7 @@
 
     heroSunTween?.kill();
     heroSunSpinTween?.kill();
+    heroFaceCounterTween?.kill();
 
     gsap.set(sun, {
       clearProps: "transform,x,y,rotation,rotate",
@@ -756,7 +775,7 @@
       force3D: false
     });
 
-    gsap.set(sunRays, {
+    gsap.set(sunFace, {
       clearProps: "rotation,rotate",
       transformBox: "fill-box",
       transformOrigin: "50% 50%",
@@ -776,8 +795,17 @@
       }
     });
 
-    heroSunSpinTween = gsap.to(sunRays, {
+    heroSunSpinTween = gsap.to(sunSprite, {
       rotation: "+=360",
+      duration: 18,
+      repeat: -1,
+      ease: "none",
+      transformOrigin: "50% 50%",
+      transformBox: "fill-box"
+    });
+
+    heroFaceCounterTween = gsap.to(sunFace, {
+      rotation: "-=360",
       duration: 18,
       repeat: -1,
       ease: "none",
