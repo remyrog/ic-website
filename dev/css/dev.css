@@ -1,8 +1,8 @@
 :root {
     /* DEBUG (HEX only) */
-    --bg-hex: #020617;
-    --card-hex: #050816;
-    --border-hex: #1f2937;
+    --bg-hex: #06122D;
+    --card-hex: #081024;
+    --border-hex: #26395C;
     --text-hex: #e5e7eb;
     --muted-hex: #9ca3af;
     --yellow-hex: #f7c600;
@@ -12,9 +12,9 @@
     --cream-hex: #fefce8;
 
     /* TOKENS (RGB source of truth) */
-    --bg-rgb: 2 6 23;
-    --card-rgb: 5 8 22;
-    --border-rgb: 31 41 55;
+    --bg-rgb: 6 18 45;
+    --card-rgb: 8 16 36;
+    --border-rgb: 38 57 92;
     --text-rgb: 229 231 235;
     --muted-rgb: 156 163 175;
     --yellow-rgb: 247 198 0;
