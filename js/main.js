@@ -12,7 +12,29 @@
     if (pre) pre.classList.add("is-done");
   }, 3000);
 
+
   // 3) Scroll doux sur les liens internes
+  function getScrollOffset() {
+    const nav = document.querySelector(".nav");
+    if (!nav) return 24;
+
+    const navRect = nav.getBoundingClientRect();
+    return Math.ceil(navRect.height + 24);
+  }
+
+  function scrollToTarget(target) {
+    if (!target) return;
+
+    const offset = getScrollOffset();
+    const y = window.scrollY + target.getBoundingClientRect().top - offset;
+
+    window.scrollTo({
+      top: Math.max(0, y),
+      behavior: "smooth"
+    });
+  }
+
+  // 3) Scroll doux sur les liens internes avec offset de nav
   $$("[data-scrolllink]").forEach((a) => {
     if (a.closest(".mnav")) return;
 
@@ -21,9 +43,10 @@
       (e) => {
         const href = a.getAttribute("href");
         if (!href || !href.startsWith("#")) return;
+
         e.preventDefault();
         const target = $(href);
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        scrollToTarget(target);
       },
       { passive: false }
     );
@@ -555,7 +578,7 @@
           closeMenu(() => {
             if (!targetEl) return;
             requestAnimationFrame(() => {
-              targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+              scrollToTarget(targetEl);
             });
           });
         },

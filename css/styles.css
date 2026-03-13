@@ -23,9 +23,9 @@ body {
 
 :root {
   /* DEBUG (HEX only - do not use in code) */
-  --bg-hex: #020617;
-  --card-hex: #050816;
-  --border-hex: #1f2937;
+  --bg-hex: #06122D;
+  --card-hex: #081024;
+  --border-hex: #26395C;
   --text-hex: #e5e7eb;
   --muted-hex: #9ca3af;
   --yellow-hex: #f7c600;
@@ -35,9 +35,9 @@ body {
   --white-hex: #ffffff;
 
   /* Core RGB */
-  --bg-rgb: 2 6 23;
-  --card-rgb: 5 8 22;
-  --border-rgb: 31 41 55;
+  --bg-rgb: 6 18 45;
+  --card-rgb: 8 16 36;
+  --border-rgb: 38 57 92;
   --text-rgb: 229 231 235;
   --muted-rgb: 156 163 175;
   --yellow-rgb: 247 198 0;
@@ -152,7 +152,11 @@ body {
   position: fixed;
   inset: 0;
   z-index: 1999;
-  background: radial-gradient(1200px 600px at 50% 20%, var(--bg) 0%, var(--bg) 60%);
+  background:
+    radial-gradient(1200px 700px at 50% 18%, rgb(20 48 98 / 0.28), transparent 55%),
+    radial-gradient(900px 520px at 18% 12%, rgb(247 198 0 / 0.06), transparent 50%),
+    radial-gradient(900px 520px at 82% 88%, rgb(236 72 153 / 0.08), transparent 55%),
+    var(--bg);
   display: grid;
   place-items: center;
   gap: 18px;
@@ -224,6 +228,11 @@ body {
 
 .section:not(.hero) h2 {
   margin-top: 12px;
+}
+
+section[id],
+header[id] {
+  scroll-margin-top: 110px;
 }
 
 /* =========================
@@ -329,7 +338,11 @@ body {
 .hero {
   padding: 0;
   min-height: 100svh;
-  background: var(--bg);
+  background:
+    radial-gradient(1100px 680px at 50% 10%, rgb(28 64 128 / 0.22), transparent 58%),
+    radial-gradient(800px 420px at 18% 16%, rgb(247 198 0 / 0.05), transparent 52%),
+    radial-gradient(900px 500px at 82% 84%, rgb(236 72 153 / 0.07), transparent 56%),
+    var(--bg);
   position: relative;
 }
 
