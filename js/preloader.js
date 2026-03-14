@@ -1,182 +1,154 @@
 (() => {
-    class PremiumLoader {
+    class PremiumLoaderController {
         constructor(options = {}) {
             this.options = {
                 rootSelector: "#preloader",
-                duration: 5000,
+                duration: 5200,
                 ...options
             };
 
             this.root = document.querySelector(this.options.rootSelector);
-            this.orbital = this.root?.querySelector(".loader-orbital");
-            this.outerRing = this.root?.querySelector(".loader-ring--outer");
-            this.midRing = this.root?.querySelector(".loader-ring--mid");
-            this.innerRing = this.root?.querySelector(".loader-ring--inner");
-            this.compass = this.root?.querySelector(".loader-compass");
-            this.core = this.root?.querySelector(".loader-core");
-            this.corePulse = this.root?.querySelector(".loader-core__pulse");
-            this.coreGlow = this.root?.querySelector(".loader-core__glow");
-            this.coreScan = this.root?.querySelector(".loader-core__scan");
-            this.label = this.root?.querySelector(".loader-label");
-            this.particles = this.root ? [...this.root.querySelectorAll(".loader-particle")] : [];
-
-            this.tl = null;
-            this.done = false;
+            this.timeline = null;
+            this.endTimer = null;
+            this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         }
 
         init() {
             if (!this.root || typeof gsap === "undefined") return;
-            this.setInitialState();
             this.play();
         }
 
-        setInitialState() {
-            gsap.set(this.orbital, { scale: 0.92, opacity: 0 });
-            gsap.set(this.outerRing, { rotate: 0 });
-            gsap.set(this.midRing, { rotate: 0 });
-            gsap.set(this.innerRing, { rotate: 0 });
-            gsap.set(this.compass, { rotate: 0, opacity: 0.45 });
-            gsap.set(this.core, { scale: 0.88 });
-            gsap.set(this.coreGlow, { opacity: 0.55 });
-            gsap.set(this.coreScan, { yPercent: -55 });
-            gsap.set(this.label, { y: 8, opacity: 0 });
-            gsap.set(this.particles[0], { x: 150, y: 0 });
-            gsap.set(this.particles[1], { x: -95, y: 105 });
-            gsap.set(this.particles[2], { x: -118, y: -82 });
-        }
-
         play() {
-            this.tl = gsap.timeline({
-                onComplete: () => this.finish()
-            });
+            const loader = this.root.querySelector(".magic-loader");
+            const core = this.root.querySelector(".magic-loader__core");
+            const rings = this.root.querySelectorAll(".magic-loader__ring");
+            const particles = this.root.querySelectorAll(".magic-loader__particles b");
+            const label = this.root.querySelector(".loader-label");
+            const subline = this.root.querySelector(".loader-subline");
+            const bgOrbs = this.root.querySelectorAll(".loader-bg-orb");
+            const ticks = this.root.querySelectorAll(".magic-loader__ticks span");
 
-            this.tl
-                .to(this.orbital, {
+            this.timeline = gsap.timeline();
+
+            this.timeline
+                .fromTo(
+                    loader,
+                    { scale: 0.78, opacity: 0, rotate: -10 },
+                    {
+                        scale: 1,
+                        opacity: 1,
+                        rotate: 0,
+                        duration: this.reducedMotion ? 0.45 : 1.1,
+                        ease: "power3.out"
+                    }
+                )
+                .fromTo(
+                    label,
+                    { y: 18, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: this.reducedMotion ? 0.3 : 0.8,
+                        ease: "power2.out"
+                    },
+                    "-=0.55"
+                )
+                .fromTo(
+                    subline,
+                    { y: 12, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: this.reducedMotion ? 0.25 : 0.7,
+                        ease: "power2.out"
+                    },
+                    "-=0.55"
+                )
+                .fromTo(
+                    bgOrbs,
+                    { scale: 0.8, opacity: 0 },
+                    {
+                        scale: 1,
+                        opacity: (i) => [0.22, 0.16, 0.1][i],
+                        duration: this.reducedMotion ? 0.35 : 1.4,
+                        stagger: 0.08,
+                        ease: "power2.out"
+                    },
+                    "-=0.9"
+                );
+
+            if (!this.reducedMotion) {
+                gsap.to(core, {
+                    scale: 1.05,
+                    duration: 1.6,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+
+                gsap.to(rings[0], {
+                    rotate: "+=30",
+                    duration: 2.8,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+
+                gsap.to(rings[1], {
+                    rotate: "-=24",
+                    duration: 2.2,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+
+                gsap.to(ticks, {
                     opacity: 1,
-                    scale: 1,
                     duration: 0.9,
-                    ease: "power2.out"
-                })
-                .to(this.label, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.5,
-                    ease: "power2.out"
-                }, "-=0.45");
+                    stagger: {
+                        each: 0.18,
+                        repeat: -1,
+                        yoyo: true
+                    },
+                    ease: "sine.inOut"
+                });
 
-            gsap.to(this.outerRing, {
-                rotate: 360,
-                duration: 9,
-                ease: "none",
-                repeat: -1
-            });
+                gsap.to(particles, {
+                    y: (i) => (i % 2 === 0 ? -6 : 6),
+                    x: (i) => (i % 2 === 0 ? 4 : -4),
+                    duration: 1.8,
+                    repeat: -1,
+                    yoyo: true,
+                    stagger: 0.12,
+                    ease: "sine.inOut"
+                });
+            }
 
-            gsap.to(this.midRing, {
-                rotate: -360,
-                duration: 6.4,
-                ease: "none",
-                repeat: -1
-            });
-
-            gsap.to(this.innerRing, {
-                rotate: 360,
-                duration: 14,
-                ease: "none",
-                repeat: -1
-            });
-
-            gsap.to(this.compass, {
-                rotate: 180,
-                duration: 10,
-                ease: "none",
-                repeat: -1
-            });
-
-            gsap.to(this.core, {
-                scale: 1.06,
-                duration: 1.2,
-                yoyo: true,
-                repeat: -1,
-                ease: "sine.inOut"
-            });
-
-            gsap.to(this.coreGlow, {
-                opacity: 0.9,
-                duration: 1.3,
-                yoyo: true,
-                repeat: -1,
-                ease: "sine.inOut"
-            });
-
-            gsap.to(this.coreScan, {
-                yPercent: 55,
-                duration: 1.8,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
-
-            this.animateParticle(this.particles[0], 150, 0, 5.2, 0);
-            this.animateParticle(this.particles[1], 105, 105, 6.4, 0.4);
-            this.animateParticle(this.particles[2], 118, -82, 7.2, 0.8);
-
-            this.tl.to({}, { duration: Math.max(0, this.options.duration / 1000 - 1.4) });
-
-            this.tl.to(this.orbital, {
-                scale: 0.86,
-                opacity: 0,
-                duration: 0.85,
-                ease: "power2.inOut"
-            });
-
-            this.tl.to(this.label, {
-                opacity: 0,
-                y: 6,
-                duration: 0.45,
-                ease: "power2.inOut"
-            }, "<");
-        }
-
-        animateParticle(el, radiusX, radiusY, duration, delay) {
-            if (!el) return;
-            gsap.to(el, {
-                motionPath: {
-                    path: [
-                        { x: radiusX, y: 0 },
-                        { x: 0, y: radiusY },
-                        { x: -radiusX, y: 0 },
-                        { x: 0, y: -radiusY },
-                        { x: radiusX, y: 0 }
-                    ],
-                    curviness: 1.25
-                },
-                duration,
-                delay,
-                repeat: -1,
-                ease: "none"
-            });
-
-            gsap.to(el, {
-                scale: 1.3,
-                duration: duration / 2,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut",
-                delay
-            });
+            this.endTimer = window.setTimeout(() => {
+                this.finish();
+            }, this.options.duration);
         }
 
         finish() {
-            if (this.done || !this.root) return;
-            this.done = true;
-            this.root.classList.add("is-done");
+            if (!this.root) return;
+
+            this.root.classList.add("is-handoff");
+
+            window.setTimeout(() => {
+                this.root.classList.add("is-done");
+            }, this.reducedMotion ? 350 : 900);
+        }
+
+        destroy() {
+            if (this.timeline) this.timeline.kill();
+            if (this.endTimer) clearTimeout(this.endTimer);
         }
     }
 
-    window.initPremiumLoader = function initPremiumLoader(options = {}) {
-        const loader = new PremiumLoader(options);
-        loader.init();
-        window.__premiumLoader = loader;
-        return loader;
+    window.initPreloaderScene = function initPreloaderScene(options = {}) {
+        const controller = new PremiumLoaderController(options);
+        controller.init();
+        window.__premiumLoaderController = controller;
+        return controller;
     };
 })();

@@ -1,8 +1,8 @@
 // Preloader
 (() => {
-  if (typeof window.initPremiumLoader === "function") {
-    window.initPremiumLoader({
-      duration: 5000
+  if (typeof window.initPreloaderScene === "function") {
+    window.initPreloaderScene({
+      duration: 5200
     });
   }
 })();

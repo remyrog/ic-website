@@ -197,52 +197,65 @@
     </defs>
   </svg>
 
-<!-- PRELOADER -->
-<div id="preloader" aria-hidden="true">
-  <div class="loader-shell">
-    <div class="loader-orbital" aria-hidden="true">
-      <div class="loader-ring loader-ring--outer">
-        <span class="ring-arc arc-a"></span>
-        <span class="ring-arc arc-b"></span>
+  <!-- PRELOADER -->
+  <div id="preloader" aria-hidden="true">
+    <div class="loader-scene" id="loaderScene">
+      <div class="loader-bg-orb loader-bg-orb--a" aria-hidden="true"></div>
+      <div class="loader-bg-orb loader-bg-orb--b" aria-hidden="true"></div>
+      <div class="loader-bg-orb loader-bg-orb--c" aria-hidden="true"></div>
+
+      <div class="magic-loader" aria-hidden="true">
+        <div class="magic-loader__pulse"></div>
+
+        <div class="magic-loader__ring magic-loader__ring--outer">
+          <span></span>
+        </div>
+
+        <div class="magic-loader__ring magic-loader__ring--mid">
+          <span></span>
+        </div>
+
+        <div class="magic-loader__ring magic-loader__ring--inner">
+          <span></span>
+        </div>
+
+        <div class="magic-loader__orbit magic-loader__orbit--a">
+          <i></i>
+        </div>
+
+        <div class="magic-loader__orbit magic-loader__orbit--b">
+          <i></i>
+        </div>
+
+        <div class="magic-loader__orbit magic-loader__orbit--c">
+          <i></i>
+        </div>
+
+        <div class="magic-loader__ticks" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="magic-loader__core">
+          <div class="magic-loader__core-glow"></div>
+          <div class="magic-loader__core-sheen"></div>
+        </div>
+
+        <div class="magic-loader__particles" aria-hidden="true">
+          <b></b><b></b><b></b><b></b><b></b><b></b>
+        </div>
       </div>
 
-      <div class="loader-ring loader-ring--mid">
-        <span class="ring-arc arc-c"></span>
-        <span class="ring-arc arc-d"></span>
+      <div class="loader-ui">
+        <p class="loader-label">
+          <span class="loader-label__line">Chargement de la magie</span>
+          <span class="loader-label__dots" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+        </p>
+        <p class="loader-subline">Préparation d’une expérience plus lumineuse</p>
       </div>
-
-      <div class="loader-ring loader-ring--inner">
-        <span class="ring-tick tick-1"></span>
-        <span class="ring-tick tick-2"></span>
-        <span class="ring-tick tick-3"></span>
-        <span class="ring-tick tick-4"></span>
-      </div>
-
-      <div class="loader-compass" aria-hidden="true">
-        <span class="compass-line compass-line--h"></span>
-        <span class="compass-line compass-line--v"></span>
-        <span class="compass-dot compass-dot--top"></span>
-        <span class="compass-dot compass-dot--right"></span>
-        <span class="compass-dot compass-dot--bottom"></span>
-        <span class="compass-dot compass-dot--left"></span>
-      </div>
-
-      <div class="loader-core">
-        <div class="loader-core__pulse"></div>
-        <div class="loader-core__glow"></div>
-        <div class="loader-core__scan"></div>
-      </div>
-
-      <span class="loader-particle loader-particle--1"></span>
-      <span class="loader-particle loader-particle--2"></span>
-      <span class="loader-particle loader-particle--3"></span>
-    </div>
-
-    <div class="loader-ui">
-      <p class="loader-label">Chargement de la magie…</p>
     </div>
   </div>
-</div>
 
   <!-- NAV -->
   <nav class="nav" aria-label="Navigation principale">
