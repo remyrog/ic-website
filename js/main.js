@@ -1,13 +1,13 @@
 // Preloader
 (() => {
-  if (typeof window.initPreloaderScene === "function") {
-    window.initPreloaderScene({
-      autoStart: false,
-      minDuration: 0
-    });
-  }
+  window.addEventListener("DOMContentLoaded", () => {
+    if (typeof window.initPreloaderScene === "function") {
+      window.initPreloaderScene({
+        autoStart: true
+      });
+    }
+  });
 })();
-
 
 // Main
 (() => {

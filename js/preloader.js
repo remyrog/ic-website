@@ -3,724 +3,507 @@
         constructor(options = {}) {
             this.options = {
                 rootSelector: "#preloader",
-                canvasSelector: "#loaderCanvas",
-                autoStart: false,
-                minDuration: 0,
+                stageSelector: "#loaderPixiStage",
+                labelSelector: "#loaderLabel",
+                actionSelector: "#loaderAction",
+                autoStart: true,
                 debug: false,
                 ...options
             };
 
             this.root = document.querySelector(this.options.rootSelector);
-            this.canvas = this.root?.querySelector(this.options.canvasSelector);
-            this.sceneRoot = this.root?.querySelector(".loader-scene");
+            this.stageEl = document.querySelector(this.options.stageSelector);
+            this.labelEl = document.querySelector(this.options.labelSelector);
+            this.actionEl = document.querySelector(this.options.actionSelector);
 
-            this.solicitBtn = this.root?.querySelector("#loaderSolicitBtn");
-            this.enterBtn = this.root?.querySelector("#loaderEnterBtn");
-            this.label = this.root?.querySelector("#loaderLabel");
-
-            this.renderer = null;
-            this.scene = null;
-            this.camera = null;
-            this.clock = null;
-            this.rafId = 0;
-
-            this.raycaster = null;
-            this.pointer = new THREE.Vector2();
+            this.app = null;
+            this.resizeRaf = 0;
 
             this.state = {
-                phase: "idle", // idle | greeting | ready | handoff | done
-                hasGreeted: false,
-                isTransitioning: false,
-                reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+                phase: "boot", // boot | idle | greeting | handoff | done
+                isBusy: false,
+                greeted: false
             };
 
-            this.groups = {
-                world: null,
+            this.refs = {
+                scene: null,
+                glowBack: null,
                 desk: null,
+                screen: null,
+                screenGlow: null,
                 chair: null,
-                avatar: null,
-                bubbles: [],
-                screenGlow: null
-            };
-
-            this.parts = {
+                avatarWrap: null,
                 torso: null,
+                neck: null,
                 head: null,
-                armPivot: null,
-                shoulderHit: null,
-                screen: null
+                hairBack: null,
+                hairTop: null,
+                bun: null,
+                beard: null,
+                glassesLeft: null,
+                glassesRight: null,
+                glassesBridge: null,
+                eyeLeft: null,
+                eyeRight: null,
+                mouth: null,
+                armLeft: null,
+                armRightWrap: null,
+                armRightUpper: null,
+                armRightForearm: null,
+                handRight: null,
+                bubblesWrap: null,
+                shoulderHit: null
             };
 
-            this.boundResize = this.onResize.bind(this);
-            this.boundPointerDown = this.onPointerDown.bind(this);
+            this.onResize = this.onResize.bind(this);
+            this.onAction = this.onAction.bind(this);
         }
 
-        init() {
-            if (!this.root || !this.canvas || typeof THREE === "undefined" || typeof gsap === "undefined") {
-                return;
-            }
+        async init() {
+            if (!this.root || !this.stageEl || !window.PIXI || !window.gsap) return;
 
-            this.setupRenderer();
-            this.setupScene();
-            this.setupCamera();
-            this.setupLights();
-            this.buildWorld();
+            await this.setupPixi();
+            this.buildScene();
             this.bindEvents();
             this.onResize();
-            this.startLoop();
-            this.setIdleUI();
+
+            if (this.options.autoStart) {
+                this.enterIdle();
+            }
         }
 
-        setupRenderer() {
-            this.renderer = new THREE.WebGLRenderer({
-                canvas: this.canvas,
+        async setupPixi() {
+            this.app = new PIXI.Application();
+
+            await this.app.init({
+                resizeTo: this.stageEl,
+                backgroundAlpha: 0,
                 antialias: true,
-                alpha: true,
-                powerPreference: "high-performance"
+                autoDensity: true,
+                resolution: Math.min(window.devicePixelRatio || 1, 2)
             });
 
-            this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-            this.renderer.setClearColor(0x000000, 0);
-            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.isMobile() ? 1.2 : 1.7));
-            this.clock = new THREE.Clock();
-            this.raycaster = new THREE.Raycaster();
+            this.stageEl.appendChild(this.app.canvas);
+            this.refs.scene = new PIXI.Container();
+            this.app.stage.addChild(this.refs.scene);
         }
 
-        setupScene() {
-            this.scene = new THREE.Scene();
-            this.scene.fog = new THREE.Fog(0x06122d, 8, 22);
+        buildScene() {
+            const scene = this.refs.scene;
 
-            const world = new THREE.Group();
-            world.position.set(0, -0.8, 0);
-            this.scene.add(world);
-            this.groups.world = world;
-        }
+            const glowBack = new PIXI.Graphics();
+            glowBack.circle(0, 0, 260).fill({ color: 0xf7c600, alpha: 0.08 });
+            glowBack.position.set(0, 0);
+            scene.addChild(glowBack);
+            this.refs.glowBack = glowBack;
 
-        setupCamera() {
-            this.camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-            this.camera.position.set(0, 1.15, 7.25);
-            this.camera.lookAt(0, 0.98, 0.45);
-        }
+            const desk = new PIXI.Container();
+            scene.addChild(desk);
+            this.refs.desk = desk;
 
-        setupLights() {
-            const ambient = new THREE.AmbientLight(0xffffff, 0.95);
-            this.scene.add(ambient);
+            const deskTop = new PIXI.Graphics();
+            deskTop.roundRect(-250, -18, 500, 36, 10).fill(0x2a1c18);
+            desk.addChild(deskTop);
 
-            const keyLight = new THREE.DirectionalLight(0xfff2d6, 1.1);
-            keyLight.position.set(3.6, 4.2, 5.5);
-            this.scene.add(keyLight);
-
-            const rimLight = new THREE.DirectionalLight(0x5b8cff, 0.55);
-            rimLight.position.set(-4.5, 2.6, -2.5);
-            this.scene.add(rimLight);
-
-            const pinkFill = new THREE.PointLight(0xec4899, 0.55, 10);
-            pinkFill.position.set(2.2, 1.8, 2.4);
-            this.scene.add(pinkFill);
-
-            const screenLight = new THREE.PointLight(0xf7c600, 0.95, 8);
-            screenLight.position.set(0, 1.55, 1.9);
-            this.scene.add(screenLight);
-        }
-
-        buildWorld() {
-            this.buildFloor();
-            this.buildDesk();
-            this.buildChair();
-            this.buildAvatar();
-            this.buildScreenBubbles();
-        }
-
-        buildFloor() {
-            const floor = new THREE.Mesh(
-                new THREE.CircleGeometry(7.4, 64),
-                new THREE.MeshStandardMaterial({
-                    color: 0x081024,
-                    roughness: 0.95,
-                    metalness: 0.02
-                })
-            );
-            floor.rotation.x = -Math.PI / 2;
-            floor.position.y = -1.6;
-            this.groups.world.add(floor);
-
-            const halo = new THREE.Mesh(
-                new THREE.CircleGeometry(3.1, 48),
-                new THREE.MeshBasicMaterial({
-                    color: 0xf7c600,
-                    transparent: true,
-                    opacity: 0.08
-                })
-            );
-            halo.rotation.x = -Math.PI / 2;
-            halo.position.set(0, -1.58, 0.8);
-            this.groups.world.add(halo);
-        }
-
-        buildDesk() {
-            const desk = new THREE.Group();
-
-            const top = new THREE.Mesh(
-                new THREE.BoxGeometry(3.8, 0.18, 1.7),
-                new THREE.MeshStandardMaterial({
-                    color: 0x0d1730,
-                    roughness: 0.84,
-                    metalness: 0.08
-                })
-            );
-            top.position.set(0, 0.25, 0.55);
-            desk.add(top);
-
-            const legGeometry = new THREE.BoxGeometry(0.14, 1.2, 0.14);
-            const legMaterial = new THREE.MeshStandardMaterial({
-                color: 0x182540,
-                roughness: 0.7,
-                metalness: 0.25
+            const legColor = 0x17223d;
+            [-210, -70, 70, 210].forEach((x) => {
+                const leg = new PIXI.Graphics();
+                leg.roundRect(-10, 0, 20, 140, 6).fill(legColor);
+                leg.position.set(x, 16);
+                desk.addChild(leg);
             });
 
-            const legPositions = [
-                [-1.65, -0.4, -0.05],
-                [1.65, -0.4, -0.05],
-                [-1.65, -0.4, 1.15],
-                [1.65, -0.4, 1.15]
-            ];
+            const screen = new PIXI.Container();
+            scene.addChild(screen);
+            this.refs.screen = screen;
 
-            legPositions.forEach(([x, y, z]) => {
-                const leg = new THREE.Mesh(legGeometry, legMaterial);
-                leg.position.set(x, y, z);
-                desk.add(leg);
-            });
+            const screenFrame = new PIXI.Graphics();
+            screenFrame.roundRect(-112, -70, 224, 140, 14).fill(0x1b1723);
+            screen.addChild(screenFrame);
 
-            const screenStand = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.06, 0.08, 0.5, 20),
-                new THREE.MeshStandardMaterial({
-                    color: 0x1a2540,
-                    roughness: 0.55,
-                    metalness: 0.35
-                })
-            );
-            screenStand.position.set(0, 0.68, 0.62);
-            desk.add(screenStand);
+            const screenInner = new PIXI.Graphics();
+            screenInner.roundRect(-96, -54, 192, 108, 10).fill(0x2a3361);
+            screen.addChild(screenInner);
+            this.refs.screenGlow = screenInner;
 
-            const screenFrame = new THREE.Mesh(
-                new THREE.BoxGeometry(1.55, 0.95, 0.08),
-                new THREE.MeshStandardMaterial({
-                    color: 0x0b1220,
-                    roughness: 0.45,
-                    metalness: 0.2
-                })
-            );
-            screenFrame.position.set(0, 1.22, 0.62);
-            desk.add(screenFrame);
+            const screenStand = new PIXI.Graphics();
+            screenStand.roundRect(-8, 70, 16, 46, 8).fill(0x202840);
+            screen.addChild(screenStand);
 
-            const screen = new THREE.Mesh(
-                new THREE.PlaneGeometry(1.34, 0.76),
-                new THREE.MeshBasicMaterial({
-                    color: 0x18294d
-                })
-            );
-            screen.position.set(0, 1.22, 0.665);
-            desk.add(screen);
-            this.parts.screen = screen;
+            const bubblesWrap = new PIXI.Container();
+            screen.addChild(bubblesWrap);
+            this.refs.bubblesWrap = bubblesWrap;
 
-            const glow = new THREE.Mesh(
-                new THREE.PlaneGeometry(1.55, 0.95),
-                new THREE.MeshBasicMaterial({
-                    color: 0xf7c600,
-                    transparent: true,
-                    opacity: 0.08
-                })
-            );
-            glow.position.set(0, 1.22, 0.64);
-            desk.add(glow);
-            this.groups.screenGlow = glow;
-
-            this.groups.desk = desk;
-            this.groups.world.add(desk);
-        }
-
-        buildChair() {
-            const chair = new THREE.Group();
-
-            const chairMaterial = new THREE.MeshStandardMaterial({
-                color: 0x14213d,
-                roughness: 0.72,
-                metalness: 0.08
-            });
-
-            const seat = new THREE.Mesh(
-                new THREE.BoxGeometry(0.9, 0.12, 0.9),
-                chairMaterial
-            );
-            seat.position.set(0, -0.25, 0.1);
-            chair.add(seat);
-
-            const back = new THREE.Mesh(
-                new THREE.BoxGeometry(0.88, 1.1, 0.12),
-                chairMaterial
-            );
-            back.position.set(0, 0.38, -0.28);
-            chair.add(back);
-
-            const stem = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.06, 0.08, 0.72, 16),
-                new THREE.MeshStandardMaterial({
-                    color: 0x0f172a,
-                    roughness: 0.55,
-                    metalness: 0.32
-                })
-            );
-            stem.position.set(0, -0.7, 0.05);
-            chair.add(stem);
-
-            chair.position.set(0, -0.15, 1.85);
-            this.groups.chair = chair;
-            this.groups.world.add(chair);
-        }
-
-        buildAvatar() {
-            const avatar = new THREE.Group();
-
-            const clothMaterial = new THREE.MeshStandardMaterial({
-                color: 0xf0c24f,
-                roughness: 0.7,
-                metalness: 0.12
-            });
-
-            const sleeveMaterial = new THREE.MeshStandardMaterial({
-                color: 0x1a2443,
-                roughness: 0.82,
-                metalness: 0.04
-            });
-
-            const skinMaterial = new THREE.MeshStandardMaterial({
-                color: 0xd7b49a,
-                roughness: 0.95,
-                metalness: 0.01
-            });
-
-            const hairMaterial = new THREE.MeshStandardMaterial({
-                color: 0x111827,
-                roughness: 0.92,
-                metalness: 0.02
-            });
-
-            const glassesMaterial = new THREE.MeshStandardMaterial({
-                color: 0x111111,
-                roughness: 0.4,
-                metalness: 0.6
-            });
-
-            const torso = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.33, 0.7, 8, 16),
-                clothMaterial
-            );
-            torso.position.set(0, 0.48, 0);
-            torso.scale.set(1, 1.06, 0.82);
-            avatar.add(torso);
-            this.parts.torso = torso;
-
-            const neck = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.08, 0.085, 0.14, 16),
-                skinMaterial
-            );
-            neck.position.set(0, 1.0, 0.04);
-            avatar.add(neck);
-
-            const head = new THREE.Mesh(
-                new THREE.SphereGeometry(0.29, 28, 28),
-                skinMaterial
-            );
-            head.scale.set(0.94, 1.12, 0.9);
-            head.position.set(0, 1.28, 0.08);
-            avatar.add(head);
-            this.parts.head = head;
-
-            const hairTop = new THREE.Mesh(
-                new THREE.SphereGeometry(0.285, 22, 22),
-                hairMaterial
-            );
-            hairTop.scale.set(1.0, 0.48, 0.9);
-            hairTop.position.set(0, 1.43, 0.02);
-            avatar.add(hairTop);
-
-            const hairSideL = new THREE.Mesh(
-                new THREE.SphereGeometry(0.09, 16, 16),
-                hairMaterial
-            );
-            hairSideL.scale.set(0.8, 1.25, 0.7);
-            hairSideL.position.set(-0.21, 1.29, 0.0);
-            avatar.add(hairSideL);
-
-            const hairSideR = hairSideL.clone();
-            hairSideR.position.x = 0.21;
-            avatar.add(hairSideR);
-
-            const bun = new THREE.Mesh(
-                new THREE.SphereGeometry(0.09, 16, 16),
-                hairMaterial
-            );
-            bun.position.set(0, 1.38, -0.25);
-            avatar.add(bun);
-
-            const beard = new THREE.Mesh(
-                new THREE.SphereGeometry(0.15, 18, 18),
-                hairMaterial
-            );
-            beard.scale.set(1.08, 0.55, 0.72);
-            beard.position.set(0, 1.11, 0.15);
-            avatar.add(beard);
-
-            const moustache = new THREE.Mesh(
-                new THREE.SphereGeometry(0.065, 14, 14),
-                hairMaterial
-            );
-            moustache.scale.set(1.65, 0.26, 0.4);
-            moustache.position.set(0, 1.16, 0.23);
-            avatar.add(moustache);
-
-            const leftGlasses = new THREE.Mesh(
-                new THREE.TorusGeometry(0.072, 0.008, 10, 28),
-                glassesMaterial
-            );
-            leftGlasses.position.set(-0.085, 1.29, 0.275);
-            avatar.add(leftGlasses);
-
-            const rightGlasses = leftGlasses.clone();
-            rightGlasses.position.x = 0.085;
-            avatar.add(rightGlasses);
-
-            const bridge = new THREE.Mesh(
-                new THREE.BoxGeometry(0.05, 0.008, 0.008),
-                glassesMaterial
-            );
-            bridge.position.set(0, 1.29, 0.275);
-            avatar.add(bridge);
-
-            const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x1a1a1a });
-
-            const leftEye = new THREE.Mesh(
-                new THREE.SphereGeometry(0.011, 10, 10),
-                eyeMaterial
-            );
-            leftEye.position.set(-0.085, 1.285, 0.277);
-            avatar.add(leftEye);
-
-            const rightEye = leftEye.clone();
-            rightEye.position.x = 0.085;
-            avatar.add(rightEye);
-
-            const nose = new THREE.Mesh(
-                new THREE.SphereGeometry(0.022, 12, 12),
-                skinMaterial
-            );
-            nose.scale.set(0.75, 1.15, 0.6);
-            nose.position.set(0, 1.22, 0.29);
-            avatar.add(nose);
-
-            const leftArm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.078, 0.4, 6, 12),
-                sleeveMaterial
-            );
-            leftArm.rotation.z = 0.42;
-            leftArm.position.set(-0.39, 0.72, 0.02);
-            avatar.add(leftArm);
-
-            const rightArmPivot = new THREE.Group();
-            rightArmPivot.position.set(0.37, 0.88, 0.03);
-            avatar.add(rightArmPivot);
-            this.parts.armPivot = rightArmPivot;
-
-            const rightUpperArm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.078, 0.38, 6, 12),
-                sleeveMaterial
-            );
-            rightUpperArm.rotation.z = -0.62;
-            rightUpperArm.position.set(0.14, -0.13, 0);
-            rightArmPivot.add(rightUpperArm);
-
-            const forearm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.065, 0.32, 6, 12),
-                skinMaterial
-            );
-            forearm.rotation.z = -0.84;
-            forearm.position.set(0.32, 0.0, 0.02);
-            rightArmPivot.add(forearm);
-
-            const hand = new THREE.Mesh(
-                new THREE.SphereGeometry(0.065, 14, 14),
-                skinMaterial
-            );
-            hand.scale.set(1.0, 0.82, 0.6);
-            hand.position.set(0.46, 0.11, 0.05);
-            rightArmPivot.add(hand);
-
-            const shoulderHit = new THREE.Mesh(
-                new THREE.SphereGeometry(0.22, 14, 14),
-                new THREE.MeshBasicMaterial({
-                    transparent: true,
-                    opacity: 0
-                })
-            );
-            shoulderHit.name = "shoulderHit";
-            shoulderHit.position.set(0.39, 0.88, 0.03);
-            avatar.add(shoulderHit);
-            this.parts.shoulderHit = shoulderHit;
-
-            avatar.position.set(0, -0.02, 1.85);
-            avatar.rotation.y = -0.08;
-
-            this.groups.avatar = avatar;
-            this.groups.world.add(avatar);
-        }
-
-        buildScreenBubbles() {
             const bubbleColors = [0xec4899, 0xf7c600, 0xec4899];
-            const xs = [-0.24, 0, 0.24];
+            const bubbleXs = [-38, 0, 38];
+            bubbleXs.forEach((x, index) => {
+                const b = new PIXI.Graphics();
+                b.circle(0, 0, 12).fill(bubbleColors[index]);
+                b.position.set(x, -2);
+                bubblesWrap.addChild(b);
 
-            bubbleColors.forEach((color, index) => {
-                const bubble = new THREE.Mesh(
-                    new THREE.CircleGeometry(0.055, 24),
-                    new THREE.MeshBasicMaterial({
-                        color,
-                        transparent: true,
-                        opacity: 0.92
-                    })
-                );
-                bubble.position.set(xs[index], 1.22, 0.69);
-                this.groups.world.add(bubble);
-                this.groups.bubbles.push(bubble);
-
-                gsap.to(bubble.position, {
-                    y: bubble.position.y + 0.04,
-                    duration: 0.7,
+                gsap.to(b, {
+                    pixi: { y: b.y - 8 },
+                    duration: 0.8,
                     repeat: -1,
                     yoyo: true,
                     ease: "sine.inOut",
-                    delay: index * 0.14
+                    delay: index * 0.1
                 });
 
-                gsap.to(bubble.scale, {
+                gsap.to(b.scale, {
                     x: 1.12,
                     y: 1.12,
-                    duration: 0.7,
+                    duration: 0.8,
                     repeat: -1,
                     yoyo: true,
                     ease: "sine.inOut",
-                    delay: index * 0.14
+                    delay: index * 0.1
                 });
+            });
+
+            const chair = new PIXI.Container();
+            scene.addChild(chair);
+            this.refs.chair = chair;
+
+            const chairBack = new PIXI.Graphics();
+            chairBack.roundRect(-34, -86, 68, 106, 22).fill(0x17223d);
+            chair.addChild(chairBack);
+
+            const chairSeat = new PIXI.Graphics();
+            chairSeat.roundRect(-44, 6, 88, 24, 12).fill(0x1e2946);
+            chair.addChild(chairSeat);
+
+            const chairStem = new PIXI.Graphics();
+            chairStem.roundRect(-6, 28, 12, 58, 6).fill(0x111827);
+            chair.addChild(chairStem);
+
+            const avatarWrap = new PIXI.Container();
+            scene.addChild(avatarWrap);
+            this.refs.avatarWrap = avatarWrap;
+
+            const torso = new PIXI.Graphics();
+            torso.roundRect(-48, -10, 96, 180, 46).fill(0xd9aa2f);
+            avatarWrap.addChild(torso);
+            this.refs.torso = torso;
+
+            const neck = new PIXI.Graphics();
+            neck.roundRect(-10, -34, 20, 18, 8).fill(0xd9b79f);
+            avatarWrap.addChild(neck);
+            this.refs.neck = neck;
+
+            const hairBack = new PIXI.Graphics();
+            hairBack.ellipse(0, -82, 42, 48).fill(0x1b1723);
+            avatarWrap.addChild(hairBack);
+            this.refs.hairBack = hairBack;
+
+            const head = new PIXI.Graphics();
+            head.ellipse(0, -74, 46, 58).fill(0xd9b79f);
+            avatarWrap.addChild(head);
+            this.refs.head = head;
+
+            const hairTop = new PIXI.Graphics();
+            hairTop.moveTo(-34, -98);
+            hairTop.bezierCurveTo(-28, -130, 28, -130, 34, -98);
+            hairTop.bezierCurveTo(18, -108, -18, -108, -34, -98);
+            hairTop.fill(0x1b1723);
+            avatarWrap.addChild(hairTop);
+            this.refs.hairTop = hairTop;
+
+            const bun = new PIXI.Graphics();
+            bun.circle(0, -124, 12).fill(0x1b1723);
+            avatarWrap.addChild(bun);
+            this.refs.bun = bun;
+
+            const beard = new PIXI.Graphics();
+            beard.ellipse(0, -48, 30, 18).fill(0x1b1723);
+            avatarWrap.addChild(beard);
+            this.refs.beard = beard;
+
+            const eyeLeft = new PIXI.Graphics();
+            eyeLeft.circle(0, 0, 3).fill(0x181818);
+            eyeLeft.position.set(-14, -80);
+            avatarWrap.addChild(eyeLeft);
+            this.refs.eyeLeft = eyeLeft;
+
+            const eyeRight = new PIXI.Graphics();
+            eyeRight.circle(0, 0, 3).fill(0x181818);
+            eyeRight.position.set(14, -80);
+            avatarWrap.addChild(eyeRight);
+            this.refs.eyeRight = eyeRight;
+
+            const glassesLeft = new PIXI.Graphics();
+            glassesLeft.circle(0, 0, 12).stroke({ color: 0x161616, width: 2 });
+            glassesLeft.position.set(-14, -80);
+            avatarWrap.addChild(glassesLeft);
+            this.refs.glassesLeft = glassesLeft;
+
+            const glassesRight = new PIXI.Graphics();
+            glassesRight.circle(0, 0, 12).stroke({ color: 0x161616, width: 2 });
+            glassesRight.position.set(14, -80);
+            avatarWrap.addChild(glassesRight);
+            this.refs.glassesRight = glassesRight;
+
+            const glassesBridge = new PIXI.Graphics();
+            glassesBridge.moveTo(-2, -80);
+            glassesBridge.lineTo(2, -80);
+            glassesBridge.stroke({ color: 0x161616, width: 2 });
+            avatarWrap.addChild(glassesBridge);
+            this.refs.glassesBridge = glassesBridge;
+
+            const mouth = new PIXI.Graphics();
+            mouth.arc(0, -60, 10, 0.15 * Math.PI, 0.85 * Math.PI);
+            mouth.stroke({ color: 0xea580c, width: 2.5 });
+            avatarWrap.addChild(mouth);
+            this.refs.mouth = mouth;
+
+            const armLeft = new PIXI.Container();
+            const armLeftUpper = new PIXI.Graphics();
+            armLeftUpper.roundRect(-11, -8, 22, 92, 11).fill(0x17223d);
+            armLeft.addChild(armLeftUpper);
+            armLeft.position.set(-58, 20);
+            armLeft.rotation = 0.48;
+            avatarWrap.addChild(armLeft);
+            this.refs.armLeft = armLeft;
+
+            const armRightWrap = new PIXI.Container();
+            armRightWrap.position.set(58, 18);
+            avatarWrap.addChild(armRightWrap);
+            this.refs.armRightWrap = armRightWrap;
+
+            const armRightUpper = new PIXI.Graphics();
+            armRightUpper.roundRect(-10, -8, 20, 76, 10).fill(0x17223d);
+            armRightUpper.rotation = -0.55;
+            armRightWrap.addChild(armRightUpper);
+            this.refs.armRightUpper = armRightUpper;
+
+            const armRightForearm = new PIXI.Graphics();
+            armRightForearm.roundRect(-9, -8, 18, 68, 10).fill(0xd9b79f);
+            armRightForearm.position.set(26, -8);
+            armRightForearm.rotation = -0.75;
+            armRightWrap.addChild(armRightForearm);
+            this.refs.armRightForearm = armRightForearm;
+
+            const handRight = new PIXI.Graphics();
+            handRight.ellipse(0, 0, 12, 10).fill(0xd9b79f);
+            handRight.position.set(49, -28);
+            armRightWrap.addChild(handRight);
+            this.refs.handRight = handRight;
+
+            const shoulderHit = new PIXI.Graphics();
+            shoulderHit.circle(0, 0, 26).fill({ color: 0xffffff, alpha: 0.001 });
+            shoulderHit.position.set(58, 18);
+            shoulderHit.eventMode = "static";
+            shoulderHit.cursor = "pointer";
+            avatarWrap.addChild(shoulderHit);
+            this.refs.shoulderHit = shoulderHit;
+
+            this.refs.shoulderHit.on("pointertap", () => {
+                this.handleSolicit();
             });
         }
 
         bindEvents() {
-            window.addEventListener("resize", this.boundResize, { passive: true });
-            this.canvas.addEventListener("pointerdown", this.boundPointerDown, { passive: true });
+            window.addEventListener("resize", this.onResize, { passive: true });
+            this.actionEl?.addEventListener("click", this.onAction);
+        }
 
-            this.solicitBtn?.addEventListener("click", () => this.playGreeting());
-            this.enterBtn?.addEventListener("click", () => this.playHandoff());
+        onAction() {
+            this.handleSolicit();
         }
 
         onResize() {
-            if (!this.renderer || !this.camera || !this.sceneRoot) return;
-
-            const rect = this.sceneRoot.getBoundingClientRect();
-            const width = Math.max(1, rect.width);
-            const height = Math.max(1, rect.height);
-
-            this.camera.aspect = width / height;
-            this.camera.updateProjectionMatrix();
-
-            this.renderer.setSize(width, height, false);
-            this.renderer.setPixelRatio(
-                Math.min(window.devicePixelRatio || 1, this.isMobile() ? 1.2 : 1.7)
-            );
+            cancelAnimationFrame(this.resizeRaf);
+            this.resizeRaf = requestAnimationFrame(() => {
+                this.layoutScene();
+            });
         }
 
-        onPointerDown(event) {
-            if (!this.camera || !this.scene || this.state.isTransitioning) return;
+        layoutScene() {
+            const w = this.stageEl.clientWidth;
+            const h = this.stageEl.clientHeight;
+            const cx = w * 0.5;
+            const deskY = h * 0.78;
+            const avatarY = h * 0.57;
+            const scale = Math.max(0.78, Math.min(1.15, w / 1280));
 
-            const rect = this.canvas.getBoundingClientRect();
-            this.pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-            this.pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            this.refs.glowBack.position.set(cx, h * 0.53);
+            this.refs.glowBack.scale.set(scale * 1.35);
 
-            this.raycaster.setFromCamera(this.pointer, this.camera);
+            this.refs.screen.position.set(cx, h * 0.60);
+            this.refs.screen.scale.set(scale);
 
-            const targets = [this.parts.shoulderHit].filter(Boolean);
-            const hits = this.raycaster.intersectObjects(targets, false);
-            if (!hits.length) return;
+            this.refs.desk.position.set(cx, deskY);
+            this.refs.desk.scale.set(scale * 1.05, scale);
 
-            const hitName = hits[0].object.name;
+            this.refs.chair.position.set(cx, avatarY + 64);
+            this.refs.chair.scale.set(scale);
 
-            if (hitName === "shoulderHit") {
-                this.playGreeting();
+            this.refs.avatarWrap.position.set(cx, avatarY);
+            this.refs.avatarWrap.scale.set(scale);
+        }
+
+        enterIdle() {
+            this.state.phase = "idle";
+            this.state.isBusy = false;
+
+            if (this.labelEl) {
+                this.labelEl.textContent = "Touchez Rémy pour le solliciter.";
             }
+
+            if (this.actionEl) {
+                this.actionEl.classList.remove("is-hidden");
+                this.actionEl.disabled = false;
+            }
+
+            gsap.to(this.refs.avatarWrap, {
+                pixi: { y: this.refs.avatarWrap.y - 4 },
+                duration: 1.6,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            gsap.to(this.refs.head.scale, {
+                x: 0.992,
+                y: 1.02,
+                duration: 1.7,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            gsap.to(this.refs.screenGlow, {
+                alpha: 0.92,
+                duration: 1.4,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+
+            gsap.to(this.refs.glowBack.scale, {
+                x: this.refs.glowBack.scale.x * 1.03,
+                y: this.refs.glowBack.scale.y * 1.03,
+                duration: 1.8,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
         }
 
-        startLoop() {
-            const tick = () => {
-                this.rafId = requestAnimationFrame(tick);
-                const elapsed = this.clock.getElapsedTime();
-
-                if (this.groups.avatar) {
-                    this.groups.avatar.position.y = 0.01 * Math.sin(elapsed * 1.7) - 0.02;
-                    if (this.parts.head) this.parts.head.rotation.x = 0.02 * Math.sin(elapsed * 1.2);
-                    if (this.parts.torso) this.parts.torso.rotation.z = 0.01 * Math.sin(elapsed * 1.1);
-                }
-
-                if (this.groups.screenGlow) {
-                    this.groups.screenGlow.material.opacity = 0.08 + Math.sin(elapsed * 1.8) * 0.02;
-                }
-
-                this.renderer.render(this.scene, this.camera);
-            };
-
-            tick();
+        handleSolicit() {
+            if (this.state.isBusy || this.state.phase === "handoff" || this.state.phase === "done") return;
+            this.playGreetingAndExit();
         }
 
-        setIdleUI() {
-            if (this.label) this.label.textContent = "Touchez Rémy pour le solliciter.";
-            if (this.solicitBtn) this.solicitBtn.hidden = false;
-            if (this.enterBtn) this.enterBtn.hidden = true;
-        }
-
-        setReadyUI() {
-            if (this.label) this.label.textContent = "Rémy est prêt à vous accueillir.";
-            if (this.solicitBtn) this.solicitBtn.hidden = true;
-            if (this.enterBtn) this.enterBtn.hidden = false;
-        }
-
-        playGreeting() {
-            if (this.state.isTransitioning) return;
-            if (this.state.phase === "greeting") return;
-
+        playGreetingAndExit() {
+            this.state.isBusy = true;
             this.state.phase = "greeting";
 
-            gsap.killTweensOf(this.parts.armPivot.rotation);
-            gsap.killTweensOf(this.parts.head.rotation);
-            gsap.killTweensOf(this.groups.avatar.rotation);
-            gsap.killTweensOf(this.groups.avatar.position);
-
-            if (this.label) {
-                this.label.textContent = "Rémy vous répond…";
+            if (this.actionEl) {
+                this.actionEl.disabled = true;
+                this.actionEl.classList.add("is-hidden");
             }
+
+            if (this.labelEl) {
+                this.labelEl.textContent = "Rémy vous salue…";
+            }
+
+            gsap.killTweensOf(this.refs.avatarWrap);
+            gsap.killTweensOf(this.refs.head.scale);
+            gsap.killTweensOf(this.refs.screenGlow);
+            gsap.killTweensOf(this.refs.glowBack.scale);
 
             const tl = gsap.timeline({
                 defaults: { ease: "power2.out" },
                 onComplete: () => {
-                    this.state.phase = "ready";
-                    this.state.hasGreeted = true;
-                    this.setReadyUI();
+                    this.playHandoff();
                 }
             });
 
-            tl.to(this.groups.avatar.rotation, {
-                y: 0.18,
-                duration: 0.38
+            tl.to(this.refs.avatarWrap, {
+                pixi: { x: this.refs.avatarWrap.x + 18 },
+                duration: 0.28
             });
 
-            tl.to(this.groups.avatar.position, {
-                x: 0.18,
-                z: 1.98,
-                duration: 0.38
+            tl.to(this.refs.head, {
+                rotation: -0.10,
+                duration: 0.22
             }, "<");
 
-            tl.to(this.parts.head.rotation, {
-                y: 0.12,
-                x: -0.05,
-                duration: 0.18
+            tl.to(this.refs.armRightWrap, {
+                rotation: -0.9,
+                duration: 0.32
             }, "<");
 
-            tl.to(this.parts.armPivot.rotation, {
-                z: -0.98,
-                y: 0.14,
-                duration: 0.24
-            }, "<+0.05");
-
-            tl.to(this.parts.armPivot.rotation, {
-                z: -0.62,
-                duration: 0.2,
+            tl.to(this.refs.armRightWrap, {
+                rotation: -0.62,
+                duration: 0.18,
                 repeat: 2,
                 yoyo: true,
                 ease: "sine.inOut"
             });
 
-            tl.to(this.parts.armPivot.rotation, {
-                z: -0.18,
-                y: 0,
-                duration: 0.32
+            tl.to(this.refs.head, {
+                rotation: 0,
+                duration: 0.22
+            }, "<");
+
+            tl.to(this.refs.armRightWrap, {
+                rotation: -0.12,
+                duration: 0.3
             });
 
-            tl.to(this.parts.head.rotation, {
-                x: 0,
-                y: 0.06,
-                duration: 0.22
+            tl.to(this.refs.avatarWrap, {
+                pixi: { x: this.refs.avatarWrap.x },
+                duration: 0.24
             }, "<");
         }
 
         playHandoff() {
-            if (this.state.isTransitioning || !this.root) return;
-
             this.state.phase = "handoff";
-            this.state.isTransitioning = true;
             this.root.classList.add("is-handoff");
+
+            if (this.labelEl) {
+                this.labelEl.textContent = "Bienvenue 👋";
+            }
 
             const tl = gsap.timeline({
                 defaults: { ease: "power2.inOut" },
                 onComplete: () => {
                     this.root.classList.add("is-done");
                     this.state.phase = "done";
-                    this.dispose();
+                    this.destroy();
                 }
             });
 
-            if (this.label) {
-                this.label.textContent = "Bienvenue.";
-            }
-
-            if (this.enterBtn) {
-                this.enterBtn.disabled = true;
-            }
-
-            tl.to(this.groups.screenGlow.material, {
-                opacity: 0.42,
-                duration: 0.5
+            tl.to(this.refs.bubblesWrap.children, {
+                pixi: { y: -26 },
+                alpha: 0,
+                scaleX: 2.4,
+                scaleY: 2.4,
+                duration: 0.42,
+                stagger: 0.04
             });
 
-            tl.to(this.camera.position, {
-                z: 6.8,
-                duration: 0.5
-            }, "<");
-
-            this.groups.bubbles.forEach((bubble, index) => {
-                tl.to(bubble.scale, {
-                    x: 2.8,
-                    y: 2.8,
-                    duration: 0.34
-                }, `<+${index * 0.03}`);
-
-                tl.to(bubble.material, {
-                    opacity: 0,
-                    duration: 0.38
-                }, "<");
-            });
+            tl.to(this.refs.scene, {
+                alpha: 0,
+                duration: 0.62
+            }, "-=0.12");
 
             tl.to(this.root, {
                 opacity: 0,
                 duration: 0.72
-            }, "-=0.04");
+            }, "-=0.25");
         }
 
-        isMobile() {
-            return window.matchMedia("(max-width: 760px)").matches;
-        }
+        destroy() {
+            window.removeEventListener("resize", this.onResize);
+            this.actionEl?.removeEventListener("click", this.onAction);
 
-        dispose() {
-            window.removeEventListener("resize", this.boundResize);
-            this.canvas?.removeEventListener("pointerdown", this.boundPointerDown);
-
-            if (this.rafId) {
-                cancelAnimationFrame(this.rafId);
-                this.rafId = 0;
+            if (this.app) {
+                this.app.destroy(true, { children: true, texture: true });
+                this.app = null;
             }
         }
     }

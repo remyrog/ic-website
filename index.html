@@ -18,12 +18,10 @@
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
-  <script defer src="js/reserve-modal.js"></script>
-
-
-  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@8.x/dist/pixi.min.js"></script>
 
   <script defer src="js/preloader.js"></script>
+  <script defer src="js/reserve-modal.js"></script>
   <script defer src="js/main.js"></script>
 </head>
 
@@ -202,27 +200,14 @@
   <!-- PRELOADER -->
   <div id="preloader" aria-hidden="true">
     <div class="loader-scene" id="loaderScene">
-      <canvas id="loaderCanvas"></canvas>
-
-      <button id="loaderShoulderTrigger" class="loader-shoulder-trigger" type="button"
-        aria-label="Faire saluer l’avatar">
-      </button>
-
-      <button id="loaderSeatTrigger" class="loader-seat-trigger" type="button" aria-label="Faire rasseoir l’avatar">
-      </button>
+      <div id="loaderPixiStage" class="loader-pixi-stage" aria-hidden="true"></div>
 
       <div class="loader-ui">
         <p class="loader-label" id="loaderLabel">Touchez Rémy pour le solliciter.</p>
 
-        <div class="loader-actions">
-          <button id="loaderSolicitBtn" class="loader-btn loader-btn--primary" type="button">
-            Solliciter
-          </button>
-
-          <button id="loaderEnterBtn" class="loader-btn loader-btn--ghost" type="button" hidden>
-            Entrer
-          </button>
-        </div>
+        <button id="loaderAction" class="loader-action" type="button" aria-label="Solliciter Rémy">
+          Solliciter
+        </button>
       </div>
     </div>
   </div>
