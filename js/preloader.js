@@ -13,8 +13,17 @@
             this.reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         }
 
+        lockScroll() {
+            document.body.classList.add("is-preloading");
+        }
+
+        unlockScroll() {
+            document.body.classList.remove("is-preloading");
+        }
+
         init() {
             if (!this.root || typeof gsap === "undefined") return;
+            this.lockScroll();
             this.play();
         }
 
@@ -133,6 +142,8 @@
             if (!this.root) return;
 
             this.root.classList.add("is-handoff");
+
+            this.unlockScroll();
 
             window.setTimeout(() => {
                 this.root.classList.add("is-done");

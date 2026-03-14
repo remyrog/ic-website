@@ -1,3 +1,8 @@
+body.is-preloading {
+  overflow: hidden !important;
+  height: 100svh;
+}
+
 #preloader {
     position: fixed;
     inset: 0;

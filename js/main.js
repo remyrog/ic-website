@@ -183,24 +183,44 @@
   function getHeroConfig() {
     const isMobile = mqMobile.matches;
     const isSmall = mqSmall.matches;
-    const isTablet = mqTablet.matches;
+    const isTabletPortrait = window.matchMedia("(min-width: 761px) and (max-width: 1180px) and (orientation: portrait)").matches;
+    const isTabletLandscape = window.matchMedia("(min-width: 761px) and (max-width: 1180px) and (orientation: landscape)").matches;
 
-    if (isTablet) {
+    if (isTabletPortrait) {
       return {
-        viewBox: "0 0 1440 900",
+        viewBox: "0 0 1440 940",
+        preserve: "xMidYMid meet",
+
+        /* Soleil plus bas que ton dernier essai, mais encore hors du titre */
+        sunPath: "M 760 118 C 860 108 980 112 1095 132 C 1185 148 1260 170 1328 204",
+
+        /* Route remontée et moins zoomée */
+        road: "M-60,865 C130,842 300,828 470,804 C640,780 790,760 940,768 C1080,776 1225,804 1375,828 C1490,846 1580,854 1660,846",
+
+        carTransform: "translate(-90,865) scale(0.78)",
+        sunScale: 0.74,
+        sunStart: 0.04,
+        sunEnd: 0.92,
+        sunDuration: 10.6
+      };
+    }
+
+    if (isTabletLandscape) {
+      return {
+        viewBox: "0 0 1440 860",
         preserve: "xMidYMid slice",
 
-        /* Soleil plus haut pour éviter le titre */
-        sunPath: "M 300 95 C 520 20 860 18 1160 92 C 1240 112 1310 132 1375 160",
+        /* Paysage : bon actuellement, juste un peu moins intrusif */
+        sunPath: "M 860 118 C 980 100 1110 104 1245 140 C 1310 158 1360 182 1410 208",
 
-        /* Route plus basse pour libérer le texte et réduire le vide sous elle */
-        road: "M-120,860 C60,842 220,846 390,844 C560,842 690,788 830,782 C975,776 1095,816 1220,826 C1350,836 1470,818 1605,804",
+        /* Un peu plus de marge entre texte et route */
+        road: "M-110,850 C70,826 220,820 380,812 C545,804 675,758 808,748 C948,738 1078,770 1205,792 C1320,812 1435,820 1605,808",
 
-        carTransform: "translate(-118,860) scale(0.84)",
-        sunScale: 0.66,
-        sunStart: 0.10,
-        sunEnd: 0.74,
-        sunDuration: 10.8
+        carTransform: "translate(-108,850) scale(0.74)",
+        sunScale: 0.56,
+        sunStart: 0.06,
+        sunEnd: 0.82,
+        sunDuration: 10.2
       };
     }
 
