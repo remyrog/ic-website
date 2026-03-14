@@ -212,7 +212,17 @@
       </button>
 
       <div class="loader-ui">
-        <p class="loader-label">Chargement de la magie…</p>
+        <p class="loader-label" id="loaderLabel">Touchez Rémy pour le solliciter.</p>
+
+        <div class="loader-actions">
+          <button id="loaderSolicitBtn" class="loader-btn loader-btn--primary" type="button">
+            Solliciter
+          </button>
+
+          <button id="loaderEnterBtn" class="loader-btn loader-btn--ghost" type="button" hidden>
+            Entrer
+          </button>
+        </div>
       </div>
     </div>
   </div>

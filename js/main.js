@@ -2,8 +2,8 @@
 (() => {
   if (typeof window.initPreloaderScene === "function") {
     window.initPreloaderScene({
-      autoStart: true,
-      minDuration: 4200
+      autoStart: false,
+      minDuration: 0
     });
   }
 })();

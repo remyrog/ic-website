@@ -4,8 +4,8 @@
             this.options = {
                 rootSelector: "#preloader",
                 canvasSelector: "#loaderCanvas",
-                autoStart: true,
-                minDuration: 4200,
+                autoStart: false,
+                minDuration: 0,
                 debug: false,
                 ...options
             };
@@ -13,6 +13,10 @@
             this.root = document.querySelector(this.options.rootSelector);
             this.canvas = this.root?.querySelector(this.options.canvasSelector);
             this.sceneRoot = this.root?.querySelector(".loader-scene");
+
+            this.solicitBtn = this.root?.querySelector("#loaderSolicitBtn");
+            this.enterBtn = this.root?.querySelector("#loaderEnterBtn");
+            this.label = this.root?.querySelector("#loaderLabel");
 
             this.renderer = null;
             this.scene = null;
@@ -24,11 +28,9 @@
             this.pointer = new THREE.Vector2();
 
             this.state = {
-                phase: "boot", // boot | loading | greeting | standing | reseating | handoff | done
-                canReplayGreeting: false,
-                canReplaySeating: false,
+                phase: "idle", // idle | greeting | ready | handoff | done
+                hasGreeted: false,
                 isTransitioning: false,
-                hasPlayedIntro: false,
                 reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches
             };
 
@@ -42,13 +44,10 @@
             };
 
             this.parts = {
-                chairSeat: null,
-                chairBack: null,
                 torso: null,
                 head: null,
                 armPivot: null,
                 shoulderHit: null,
-                chairHit: null,
                 screen: null
             };
 
@@ -69,10 +68,7 @@
             this.bindEvents();
             this.onResize();
             this.startLoop();
-
-            if (this.options.autoStart) {
-                this.playIntro();
-            }
+            this.setIdleUI();
         }
 
         setupRenderer() {
@@ -102,8 +98,8 @@
 
         setupCamera() {
             this.camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-            this.camera.position.set(0, 1.18, 7.35);
-            this.camera.lookAt(0, 1.0, 0.4);
+            this.camera.position.set(0, 1.15, 7.25);
+            this.camera.lookAt(0, 0.98, 0.45);
         }
 
         setupLights() {
@@ -122,7 +118,7 @@
             pinkFill.position.set(2.2, 1.8, 2.4);
             this.scene.add(pinkFill);
 
-            const screenLight = new THREE.PointLight(0xf7c600, 0.8, 8);
+            const screenLight = new THREE.PointLight(0xf7c600, 0.95, 8);
             screenLight.position.set(0, 1.55, 1.9);
             this.scene.add(screenLight);
         }
@@ -167,9 +163,9 @@
             const top = new THREE.Mesh(
                 new THREE.BoxGeometry(3.8, 0.18, 1.7),
                 new THREE.MeshStandardMaterial({
-                    color: 0x231912,
-                    roughness: 0.88,
-                    metalness: 0.06
+                    color: 0x0d1730,
+                    roughness: 0.84,
+                    metalness: 0.08
                 })
             );
             top.position.set(0, 0.25, 0.55);
@@ -177,7 +173,7 @@
 
             const legGeometry = new THREE.BoxGeometry(0.14, 1.2, 0.14);
             const legMaterial = new THREE.MeshStandardMaterial({
-                color: 0x131c2e,
+                color: 0x182540,
                 roughness: 0.7,
                 metalness: 0.25
             });
@@ -198,7 +194,7 @@
             const screenStand = new THREE.Mesh(
                 new THREE.CylinderGeometry(0.06, 0.08, 0.5, 20),
                 new THREE.MeshStandardMaterial({
-                    color: 0x131c2e,
+                    color: 0x1a2540,
                     roughness: 0.55,
                     metalness: 0.35
                 })
@@ -220,7 +216,7 @@
             const screen = new THREE.Mesh(
                 new THREE.PlaneGeometry(1.34, 0.76),
                 new THREE.MeshBasicMaterial({
-                    color: 0x0f2448
+                    color: 0x18294d
                 })
             );
             screen.position.set(0, 1.22, 0.665);
@@ -246,29 +242,25 @@
         buildChair() {
             const chair = new THREE.Group();
 
+            const chairMaterial = new THREE.MeshStandardMaterial({
+                color: 0x14213d,
+                roughness: 0.72,
+                metalness: 0.08
+            });
+
             const seat = new THREE.Mesh(
                 new THREE.BoxGeometry(0.9, 0.12, 0.9),
-                new THREE.MeshStandardMaterial({
-                    color: 0x1a2236,
-                    roughness: 0.72,
-                    metalness: 0.08
-                })
+                chairMaterial
             );
             seat.position.set(0, -0.25, 0.1);
             chair.add(seat);
-            this.parts.chairSeat = seat;
 
             const back = new THREE.Mesh(
                 new THREE.BoxGeometry(0.88, 1.1, 0.12),
-                new THREE.MeshStandardMaterial({
-                    color: 0x1a2236,
-                    roughness: 0.72,
-                    metalness: 0.08
-                })
+                chairMaterial
             );
             back.position.set(0, 0.38, -0.28);
             chair.add(back);
-            this.parts.chairBack = back;
 
             const stem = new THREE.Mesh(
                 new THREE.CylinderGeometry(0.06, 0.08, 0.72, 16),
@@ -281,20 +273,7 @@
             stem.position.set(0, -0.7, 0.05);
             chair.add(stem);
 
-            const chairHit = new THREE.Mesh(
-                new THREE.BoxGeometry(1.2, 1.8, 1.4),
-                new THREE.MeshBasicMaterial({
-                    transparent: true,
-                    opacity: 0
-                })
-            );
-            chairHit.name = "chairHit";
-            chairHit.position.set(0, 0.05, 0);
-            chair.add(chairHit);
-            this.parts.chairHit = chairHit;
-
             chair.position.set(0, -0.15, 1.85);
-
             this.groups.chair = chair;
             this.groups.world.add(chair);
         }
@@ -302,10 +281,16 @@
         buildAvatar() {
             const avatar = new THREE.Group();
 
-            const bodyMaterial = new THREE.MeshStandardMaterial({
-                color: 0x111318,
-                roughness: 0.86,
-                metalness: 0.03
+            const clothMaterial = new THREE.MeshStandardMaterial({
+                color: 0xf0c24f,
+                roughness: 0.7,
+                metalness: 0.12
+            });
+
+            const sleeveMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1a2443,
+                roughness: 0.82,
+                metalness: 0.04
             });
 
             const skinMaterial = new THREE.MeshStandardMaterial({
@@ -315,173 +300,163 @@
             });
 
             const hairMaterial = new THREE.MeshStandardMaterial({
-                color: 0x2a1b16,
-                roughness: 0.9,
+                color: 0x111827,
+                roughness: 0.92,
                 metalness: 0.02
             });
 
             const glassesMaterial = new THREE.MeshStandardMaterial({
                 color: 0x111111,
-                roughness: 0.45,
-                metalness: 0.55
+                roughness: 0.4,
+                metalness: 0.6
             });
 
-            // Torse plus fin
             const torso = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.34, 0.72, 8, 16),
-                bodyMaterial
+                new THREE.CapsuleGeometry(0.33, 0.7, 8, 16),
+                clothMaterial
             );
             torso.position.set(0, 0.48, 0);
-            torso.scale.set(1, 1.08, 0.82);
+            torso.scale.set(1, 1.06, 0.82);
             avatar.add(torso);
             this.parts.torso = torso;
 
-            // Cou
             const neck = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.085, 0.09, 0.16, 16),
+                new THREE.CylinderGeometry(0.08, 0.085, 0.14, 16),
                 skinMaterial
             );
-            neck.position.set(0, 1.02, 0.04);
+            neck.position.set(0, 1.0, 0.04);
             avatar.add(neck);
 
-            // Tête plus ovale
             const head = new THREE.Mesh(
-                new THREE.SphereGeometry(0.31, 28, 28),
+                new THREE.SphereGeometry(0.29, 28, 28),
                 skinMaterial
             );
-            head.scale.set(0.95, 1.12, 0.92);
-            head.position.set(0, 1.3, 0.08);
+            head.scale.set(0.94, 1.12, 0.9);
+            head.position.set(0, 1.28, 0.08);
             avatar.add(head);
             this.parts.head = head;
 
-            // Cheveux haut de tête, moins "casque"
             const hairTop = new THREE.Mesh(
-                new THREE.SphereGeometry(0.29, 20, 20),
+                new THREE.SphereGeometry(0.285, 22, 22),
                 hairMaterial
             );
-            hairTop.scale.set(0.98, 0.62, 0.92);
-            hairTop.position.set(0, 1.47, 0.02);
+            hairTop.scale.set(1.0, 0.48, 0.9);
+            hairTop.position.set(0, 1.43, 0.02);
             avatar.add(hairTop);
 
-            // Arrière cheveux attachés
-            const hairBack = new THREE.Mesh(
-                new THREE.SphereGeometry(0.18, 16, 16),
+            const hairSideL = new THREE.Mesh(
+                new THREE.SphereGeometry(0.09, 16, 16),
                 hairMaterial
             );
-            hairBack.scale.set(0.95, 1.05, 0.8);
-            hairBack.position.set(0, 1.32, -0.18);
-            avatar.add(hairBack);
+            hairSideL.scale.set(0.8, 1.25, 0.7);
+            hairSideL.position.set(-0.21, 1.29, 0.0);
+            avatar.add(hairSideL);
 
-            // Chignon plus lisible
+            const hairSideR = hairSideL.clone();
+            hairSideR.position.x = 0.21;
+            avatar.add(hairSideR);
+
             const bun = new THREE.Mesh(
-                new THREE.SphereGeometry(0.11, 16, 16),
+                new THREE.SphereGeometry(0.09, 16, 16),
                 hairMaterial
             );
-            bun.position.set(0, 1.48, -0.28);
+            bun.position.set(0, 1.38, -0.25);
             avatar.add(bun);
 
-            // Barbe plus discrète et réaliste
             const beard = new THREE.Mesh(
-                new THREE.SphereGeometry(0.18, 18, 18),
+                new THREE.SphereGeometry(0.15, 18, 18),
                 hairMaterial
             );
-            beard.scale.set(1.02, 0.58, 0.82);
-            beard.position.set(0, 1.12, 0.16);
+            beard.scale.set(1.08, 0.55, 0.72);
+            beard.position.set(0, 1.11, 0.15);
             avatar.add(beard);
 
-            // Moustache légère
             const moustache = new THREE.Mesh(
-                new THREE.SphereGeometry(0.09, 14, 14),
+                new THREE.SphereGeometry(0.065, 14, 14),
                 hairMaterial
             );
-            moustache.scale.set(1.5, 0.35, 0.45);
-            moustache.position.set(0, 1.18, 0.24);
+            moustache.scale.set(1.65, 0.26, 0.4);
+            moustache.position.set(0, 1.16, 0.23);
             avatar.add(moustache);
 
-            // Lunettes rondes
             const leftGlasses = new THREE.Mesh(
-                new THREE.TorusGeometry(0.078, 0.009, 10, 28),
+                new THREE.TorusGeometry(0.072, 0.008, 10, 28),
                 glassesMaterial
             );
-            leftGlasses.position.set(-0.09, 1.31, 0.285);
+            leftGlasses.position.set(-0.085, 1.29, 0.275);
             avatar.add(leftGlasses);
 
             const rightGlasses = leftGlasses.clone();
-            rightGlasses.position.x = 0.09;
+            rightGlasses.position.x = 0.085;
             avatar.add(rightGlasses);
 
             const bridge = new THREE.Mesh(
                 new THREE.BoxGeometry(0.05, 0.008, 0.008),
                 glassesMaterial
             );
-            bridge.position.set(0, 1.31, 0.285);
+            bridge.position.set(0, 1.29, 0.275);
             avatar.add(bridge);
 
-            // Petits yeux visibles derrière les lunettes
             const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x1a1a1a });
 
             const leftEye = new THREE.Mesh(
-                new THREE.SphereGeometry(0.012, 10, 10),
+                new THREE.SphereGeometry(0.011, 10, 10),
                 eyeMaterial
             );
-            leftEye.position.set(-0.09, 1.305, 0.285);
+            leftEye.position.set(-0.085, 1.285, 0.277);
             avatar.add(leftEye);
 
             const rightEye = leftEye.clone();
-            rightEye.position.x = 0.09;
+            rightEye.position.x = 0.085;
             avatar.add(rightEye);
 
-            // Nez léger
             const nose = new THREE.Mesh(
-                new THREE.SphereGeometry(0.026, 12, 12),
+                new THREE.SphereGeometry(0.022, 12, 12),
                 skinMaterial
             );
-            nose.scale.set(0.75, 1.1, 0.65);
-            nose.position.set(0, 1.24, 0.305);
+            nose.scale.set(0.75, 1.15, 0.6);
+            nose.position.set(0, 1.22, 0.29);
             avatar.add(nose);
 
-            // Bras gauche posé
-            const leftArmBase = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.08, 0.42, 6, 12),
-                bodyMaterial
+            const leftArm = new THREE.Mesh(
+                new THREE.CapsuleGeometry(0.078, 0.4, 6, 12),
+                sleeveMaterial
             );
-            leftArmBase.rotation.z = 0.42;
-            leftArmBase.position.set(-0.39, 0.72, 0.02);
-            avatar.add(leftArmBase);
+            leftArm.rotation.z = 0.42;
+            leftArm.position.set(-0.39, 0.72, 0.02);
+            avatar.add(leftArm);
 
-            // Bras droit animé
             const rightArmPivot = new THREE.Group();
             rightArmPivot.position.set(0.37, 0.88, 0.03);
             avatar.add(rightArmPivot);
             this.parts.armPivot = rightArmPivot;
 
             const rightUpperArm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.078, 0.4, 6, 12),
-                bodyMaterial
+                new THREE.CapsuleGeometry(0.078, 0.38, 6, 12),
+                sleeveMaterial
             );
             rightUpperArm.rotation.z = -0.62;
-            rightUpperArm.position.set(0.15, -0.14, 0);
+            rightUpperArm.position.set(0.14, -0.13, 0);
             rightArmPivot.add(rightUpperArm);
 
             const forearm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.068, 0.34, 6, 12),
+                new THREE.CapsuleGeometry(0.065, 0.32, 6, 12),
                 skinMaterial
             );
             forearm.rotation.z = -0.84;
-            forearm.position.set(0.34, 0.0, 0.02);
+            forearm.position.set(0.32, 0.0, 0.02);
             rightArmPivot.add(forearm);
 
             const hand = new THREE.Mesh(
-                new THREE.SphereGeometry(0.07, 14, 14),
+                new THREE.SphereGeometry(0.065, 14, 14),
                 skinMaterial
             );
-            hand.scale.set(1.0, 0.85, 0.62);
-            hand.position.set(0.49, 0.12, 0.05);
+            hand.scale.set(1.0, 0.82, 0.6);
+            hand.position.set(0.46, 0.11, 0.05);
             rightArmPivot.add(hand);
 
-            // Zone cliquable épaule
             const shoulderHit = new THREE.Mesh(
-                new THREE.SphereGeometry(0.2, 14, 14),
+                new THREE.SphereGeometry(0.22, 14, 14),
                 new THREE.MeshBasicMaterial({
                     transparent: true,
                     opacity: 0
@@ -540,6 +515,9 @@
         bindEvents() {
             window.addEventListener("resize", this.boundResize, { passive: true });
             this.canvas.addEventListener("pointerdown", this.boundPointerDown, { passive: true });
+
+            this.solicitBtn?.addEventListener("click", () => this.playGreeting());
+            this.enterBtn?.addEventListener("click", () => this.playHandoff());
         }
 
         onResize() {
@@ -567,18 +545,14 @@
 
             this.raycaster.setFromCamera(this.pointer, this.camera);
 
-            const targets = [this.parts.shoulderHit, this.parts.chairHit].filter(Boolean);
+            const targets = [this.parts.shoulderHit].filter(Boolean);
             const hits = this.raycaster.intersectObjects(targets, false);
             if (!hits.length) return;
 
             const hitName = hits[0].object.name;
 
-            if (hitName === "shoulderHit" && this.state.canReplayGreeting) {
+            if (hitName === "shoulderHit") {
                 this.playGreeting();
-            }
-
-            if (hitName === "chairHit" && this.state.canReplaySeating) {
-                this.playReseat();
             }
         }
 
@@ -588,9 +562,9 @@
                 const elapsed = this.clock.getElapsedTime();
 
                 if (this.groups.avatar) {
-                    this.groups.avatar.position.y = 0.01 * Math.sin(elapsed * 1.7) + 0.02;
-                    this.parts.head.rotation.x = 0.03 * Math.sin(elapsed * 1.2);
-                    this.parts.torso.rotation.z = 0.015 * Math.sin(elapsed * 1.1);
+                    this.groups.avatar.position.y = 0.01 * Math.sin(elapsed * 1.7) - 0.02;
+                    if (this.parts.head) this.parts.head.rotation.x = 0.02 * Math.sin(elapsed * 1.2);
+                    if (this.parts.torso) this.parts.torso.rotation.z = 0.01 * Math.sin(elapsed * 1.1);
                 }
 
                 if (this.groups.screenGlow) {
@@ -603,151 +577,84 @@
             tick();
         }
 
-        playIntro() {
-            if (this.state.hasPlayedIntro) return;
+        setIdleUI() {
+            if (this.label) this.label.textContent = "Touchez Rémy pour le solliciter.";
+            if (this.solicitBtn) this.solicitBtn.hidden = false;
+            if (this.enterBtn) this.enterBtn.hidden = true;
+        }
 
-            this.state.phase = "loading";
-            this.state.hasPlayedIntro = true;
-
-            const tl = gsap.timeline({
-                delay: this.state.reducedMotion ? 0.4 : 1.0,
-                defaults: { ease: "power2.out" }
-            });
-
-            tl.to(this.camera.position, {
-                z: 6.95,
-                y: 1.14,
-                duration: 1.2
-            });
-
-            tl.to(this.parts.head.rotation, {
-                y: 0.45,
-                duration: 0.35
-            });
-
-            tl.to(this.groups.chair.position, {
-                x: -0.12,
-                z: 2.15,
-                duration: 0.45
-            }, "<");
-
-            tl.to(this.groups.avatar.rotation, {
-                y: 0.18,
-                duration: 0.5
-            }, "<");
-
-            tl.to(this.groups.avatar.position, {
-                x: 0.42,
-                z: 2.08,
-                duration: 0.55
-            }, "<");
-
-            tl.add(() => this.playGreeting(), "-=0.05");
-
-            tl.add(() => {
-                this.state.phase = "standing";
-                this.state.canReplayGreeting = true;
-                this.state.canReplaySeating = true;
-            });
-
-            tl.add(() => {
-                setTimeout(() => this.playHandoff(), Math.max(1200, this.options.minDuration - 2200));
-            });
+        setReadyUI() {
+            if (this.label) this.label.textContent = "Rémy est prêt à vous accueillir.";
+            if (this.solicitBtn) this.solicitBtn.hidden = true;
+            if (this.enterBtn) this.enterBtn.hidden = false;
         }
 
         playGreeting() {
             if (this.state.isTransitioning) return;
+            if (this.state.phase === "greeting") return;
 
             this.state.phase = "greeting";
-            this.state.canReplayGreeting = false;
 
             gsap.killTweensOf(this.parts.armPivot.rotation);
             gsap.killTweensOf(this.parts.head.rotation);
+            gsap.killTweensOf(this.groups.avatar.rotation);
+            gsap.killTweensOf(this.groups.avatar.position);
+
+            if (this.label) {
+                this.label.textContent = "Rémy vous répond…";
+            }
 
             const tl = gsap.timeline({
                 defaults: { ease: "power2.out" },
                 onComplete: () => {
-                    if (!this.state.isTransitioning) {
-                        this.state.phase = "standing";
-                        this.state.canReplayGreeting = true;
-                        this.state.canReplaySeating = true;
-                    }
+                    this.state.phase = "ready";
+                    this.state.hasGreeted = true;
+                    this.setReadyUI();
                 }
             });
 
-            tl.to(this.parts.head.rotation, {
-                y: 0.15,
-                x: -0.06,
-                duration: 0.2
+            tl.to(this.groups.avatar.rotation, {
+                y: 0.18,
+                duration: 0.38
             });
 
-            tl.to(this.parts.armPivot.rotation, {
-                z: -0.95,
+            tl.to(this.groups.avatar.position, {
+                x: 0.18,
+                z: 1.98,
+                duration: 0.38
+            }, "<");
+
+            tl.to(this.parts.head.rotation, {
                 y: 0.12,
-                duration: 0.3
+                x: -0.05,
+                duration: 0.18
             }, "<");
 
             tl.to(this.parts.armPivot.rotation, {
+                z: -0.98,
+                y: 0.14,
+                duration: 0.24
+            }, "<+0.05");
+
+            tl.to(this.parts.armPivot.rotation, {
                 z: -0.62,
-                duration: 0.18,
+                duration: 0.2,
                 repeat: 2,
                 yoyo: true,
                 ease: "sine.inOut"
             });
 
             tl.to(this.parts.armPivot.rotation, {
-                z: -0.15,
+                z: -0.18,
                 y: 0,
-                duration: 0.35
+                duration: 0.32
             });
 
             tl.to(this.parts.head.rotation, {
                 x: 0,
-                y: 0.08,
-                duration: 0.25
+                y: 0.06,
+                duration: 0.22
             }, "<");
-        }
-
-        playReseat() {
-            if (this.state.isTransitioning) return;
-
-            this.state.phase = "reseating";
-            this.state.canReplayGreeting = false;
-            this.state.canReplaySeating = false;
-
-            const tl = gsap.timeline({
-                defaults: { ease: "power2.inOut" },
-                onComplete: () => {
-                    if (!this.state.isTransitioning) {
-                        this.state.phase = "standing";
-                        this.state.canReplayGreeting = true;
-                        this.state.canReplaySeating = true;
-                    }
-                }
-            });
-
-            tl.to(this.groups.avatar.position, {
-                x: 0.04,
-                z: 1.88,
-                duration: 0.5
-            });
-
-            tl.to(this.groups.avatar.rotation, {
-                y: -0.12,
-                duration: 0.45
-            }, "<");
-
-            tl.to(this.groups.chair.position, {
-                x: 0,
-                z: 1.85,
-                duration: 0.45
-            }, "<");
-
-            tl.to(this.parts.head.rotation, {
-                y: 0.04,
-                x: 0,
-                duration: 0.3
-            }, "<+0.08");
         }
 
         playHandoff() {
@@ -766,33 +673,41 @@
                 }
             });
 
+            if (this.label) {
+                this.label.textContent = "Bienvenue.";
+            }
+
+            if (this.enterBtn) {
+                this.enterBtn.disabled = true;
+            }
+
             tl.to(this.groups.screenGlow.material, {
                 opacity: 0.42,
-                duration: 0.55
+                duration: 0.5
             });
 
             tl.to(this.camera.position, {
                 z: 6.8,
-                duration: 0.55
+                duration: 0.5
             }, "<");
 
             this.groups.bubbles.forEach((bubble, index) => {
                 tl.to(bubble.scale, {
                     x: 2.8,
                     y: 2.8,
-                    duration: 0.38
+                    duration: 0.34
                 }, `<+${index * 0.03}`);
 
                 tl.to(bubble.material, {
                     opacity: 0,
-                    duration: 0.42
+                    duration: 0.38
                 }, "<");
             });
 
             tl.to(this.root, {
                 opacity: 0,
-                duration: 0.75
-            }, "-=0.05");
+                duration: 0.72
+            }, "-=0.04");
         }
 
         isMobile() {
