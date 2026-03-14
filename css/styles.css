@@ -2090,3 +2090,38 @@ a.premium:focus-visible::after {
     font-size: 0.86rem;
   }
 }
+
+
+
+/* =========================
+   Hero - Tablet / grand écran tactile
+   ========================= */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .hero {
+    min-height: 100svh;
+    overflow: clip;
+  }
+
+  .hero__pin {
+    padding-top: clamp(126px, 12vh, 164px);
+  }
+
+  .hero__content {
+    padding-inline: clamp(18px, 4vw, 28px);
+    padding-bottom: clamp(360px, 40vh, 430px);
+    transform: translateY(8px);
+  }
+
+  h1 {
+    font-size: clamp(42px, 5.2vw, 58px);
+    line-height: 1.02;
+  }
+
+  .hero__sub {
+    max-width: 860px;
+  }
+
+  .hero__credits {
+    margin-top: 12px;
+  }
+}

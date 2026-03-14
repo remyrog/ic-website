@@ -178,10 +178,31 @@
 
   const mqMobile = window.matchMedia("(max-width: 760px)");
   const mqSmall = window.matchMedia("(max-width: 560px)");
+  const mqTablet = window.matchMedia("(min-width: 761px) and (max-width: 1180px)");
 
   function getHeroConfig() {
     const isMobile = mqMobile.matches;
     const isSmall = mqSmall.matches;
+    const isTablet = mqTablet.matches;
+
+    if (isTablet) {
+      return {
+        viewBox: "0 0 1440 900",
+        preserve: "xMidYMid slice",
+
+        /* Soleil plus haut pour éviter le titre */
+        sunPath: "M 300 95 C 520 20 860 18 1160 92 C 1240 112 1310 132 1375 160",
+
+        /* Route plus basse pour libérer le texte et réduire le vide sous elle */
+        road: "M-120,860 C60,842 220,846 390,844 C560,842 690,788 830,782 C975,776 1095,816 1220,826 C1350,836 1470,818 1605,804",
+
+        carTransform: "translate(-118,860) scale(0.84)",
+        sunScale: 0.66,
+        sunStart: 0.10,
+        sunEnd: 0.74,
+        sunDuration: 10.8
+      };
+    }
 
     if (!isMobile) {
       return {
@@ -361,7 +382,7 @@
     lastWidth = newWidth;
     lastHeight = newHeight;
 
-    if (mqMobile.matches && !widthChanged && !heightChanged) return;
+    if ((mqMobile.matches || mqTablet.matches) && !widthChanged && !heightChanged) return;
 
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
