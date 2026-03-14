@@ -11,6 +11,7 @@
   <!-- CSS -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/preloader.css" />
   <link rel="stylesheet" href="../css/reserve-modal.css">
 
   <!-- Libs: GSAP (+ plugins) -->
@@ -19,7 +20,10 @@
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
   <script defer src="js/reserve-modal.js"></script>
 
-  <!-- App -->
+
+  <script defer src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+  <script defer src="js/preloader.js"></script>
   <script defer src="js/main.js"></script>
 </head>
 
@@ -197,10 +201,20 @@
 
   <!-- PRELOADER -->
   <div id="preloader" aria-hidden="true">
-    <div class="spinner" aria-label="Chargement">
-      <span></span><span></span><span></span>
+    <div class="loader-scene" id="loaderScene">
+      <canvas id="loaderCanvas"></canvas>
+
+      <button id="loaderShoulderTrigger" class="loader-shoulder-trigger" type="button"
+        aria-label="Faire saluer l’avatar">
+      </button>
+
+      <button id="loaderSeatTrigger" class="loader-seat-trigger" type="button" aria-label="Faire rasseoir l’avatar">
+      </button>
+
+      <div class="loader-ui">
+        <p class="loader-label">Chargement de la magie…</p>
+      </div>
     </div>
-    <p>Chargement de la magie…</p>
   </div>
 
   <!-- NAV -->
