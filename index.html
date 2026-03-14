@@ -8,8 +8,9 @@
   <meta name="description"
     content="Dépannage, sécurité, sauvegardes, formations, création de site et conseils en Cerdagne. Un service informatique, patient et pédagogue." />
 
-  <!-- CSS -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+  <!-- CSS -->
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/preloader.css" />
   <link rel="stylesheet" href="../css/reserve-modal.css">
@@ -18,7 +19,6 @@
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.js"></script>
 
   <script defer src="js/preloader.js"></script>
   <script defer src="js/reserve-modal.js"></script>
@@ -197,19 +197,52 @@
     </defs>
   </svg>
 
-  <!-- PRELOADER -->
-  <div id="preloader" aria-hidden="false">
-    <div class="loader-scene" id="loaderScene">
-      <canvas id="loaderCanvas"></canvas>
-
-      <div class="loader-ui">
-        <p class="loader-label">Touchez Rémy pour le solliciter.</p>
-        <button id="loaderCta" class="loader-cta" type="button">
-          Solliciter
-        </button>
+<!-- PRELOADER -->
+<div id="preloader" aria-hidden="true">
+  <div class="loader-shell">
+    <div class="loader-orbital" aria-hidden="true">
+      <div class="loader-ring loader-ring--outer">
+        <span class="ring-arc arc-a"></span>
+        <span class="ring-arc arc-b"></span>
       </div>
+
+      <div class="loader-ring loader-ring--mid">
+        <span class="ring-arc arc-c"></span>
+        <span class="ring-arc arc-d"></span>
+      </div>
+
+      <div class="loader-ring loader-ring--inner">
+        <span class="ring-tick tick-1"></span>
+        <span class="ring-tick tick-2"></span>
+        <span class="ring-tick tick-3"></span>
+        <span class="ring-tick tick-4"></span>
+      </div>
+
+      <div class="loader-compass" aria-hidden="true">
+        <span class="compass-line compass-line--h"></span>
+        <span class="compass-line compass-line--v"></span>
+        <span class="compass-dot compass-dot--top"></span>
+        <span class="compass-dot compass-dot--right"></span>
+        <span class="compass-dot compass-dot--bottom"></span>
+        <span class="compass-dot compass-dot--left"></span>
+      </div>
+
+      <div class="loader-core">
+        <div class="loader-core__pulse"></div>
+        <div class="loader-core__glow"></div>
+        <div class="loader-core__scan"></div>
+      </div>
+
+      <span class="loader-particle loader-particle--1"></span>
+      <span class="loader-particle loader-particle--2"></span>
+      <span class="loader-particle loader-particle--3"></span>
+    </div>
+
+    <div class="loader-ui">
+      <p class="loader-label">Chargement de la magie…</p>
     </div>
   </div>
+</div>
 
   <!-- NAV -->
   <nav class="nav" aria-label="Navigation principale">
