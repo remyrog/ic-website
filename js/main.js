@@ -1,12 +1,10 @@
 // Preloader
 (() => {
-  window.addEventListener("DOMContentLoaded", () => {
-    if (typeof window.initPreloaderScene === "function") {
-      window.initPreloaderScene({
-        autoStart: true
-      });
-    }
-  });
+  if (typeof window.initPreloaderScene === "function") {
+    window.initPreloaderScene({
+      autoStart: true
+    });
+  }
 })();
 
 // Main

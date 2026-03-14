@@ -18,7 +18,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@8.x/dist/pixi.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/pixi.js@8/dist/pixi.min.js"></script>
 
   <script defer src="js/preloader.js"></script>
   <script defer src="js/reserve-modal.js"></script>
@@ -198,14 +198,13 @@
   </svg>
 
   <!-- PRELOADER -->
-  <div id="preloader" aria-hidden="true">
+  <div id="preloader" aria-hidden="false">
     <div class="loader-scene" id="loaderScene">
-      <div id="loaderPixiStage" class="loader-pixi-stage" aria-hidden="true"></div>
+      <canvas id="loaderCanvas"></canvas>
 
       <div class="loader-ui">
-        <p class="loader-label" id="loaderLabel">Touchez Rémy pour le solliciter.</p>
-
-        <button id="loaderAction" class="loader-action" type="button" aria-label="Solliciter Rémy">
+        <p class="loader-label">Touchez Rémy pour le solliciter.</p>
+        <button id="loaderCta" class="loader-cta" type="button">
           Solliciter
         </button>
       </div>
