@@ -102,8 +102,8 @@
 
         setupCamera() {
             this.camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-            this.camera.position.set(0, 1.3, 8.2);
-            this.camera.lookAt(0, 1.1, 0);
+            this.camera.position.set(0, 1.18, 7.35);
+            this.camera.lookAt(0, 1.0, 0.4);
         }
 
         setupLights() {
@@ -303,145 +303,197 @@
             const avatar = new THREE.Group();
 
             const bodyMaterial = new THREE.MeshStandardMaterial({
-                color: 0x0b0f16,
-                roughness: 0.82,
+                color: 0x111318,
+                roughness: 0.86,
                 metalness: 0.03
             });
 
             const skinMaterial = new THREE.MeshStandardMaterial({
-                color: 0xd9b79f,
-                roughness: 0.92,
+                color: 0xd7b49a,
+                roughness: 0.95,
                 metalness: 0.01
             });
 
             const hairMaterial = new THREE.MeshStandardMaterial({
-                color: 0x221712,
-                roughness: 0.84,
+                color: 0x2a1b16,
+                roughness: 0.9,
                 metalness: 0.02
             });
 
-            const torso = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.42, 0.82, 8, 16),
-                bodyMaterial
-            );
-            torso.position.set(0, 0.55, 0);
-            avatar.add(torso);
-            this.parts.torso = torso;
-
-            const neck = new THREE.Mesh(
-                new THREE.CylinderGeometry(0.11, 0.11, 0.18, 16),
-                skinMaterial
-            );
-            neck.position.set(0, 1.18, 0.04);
-            avatar.add(neck);
-
-            const head = new THREE.Mesh(
-                new THREE.SphereGeometry(0.34, 24, 24),
-                skinMaterial
-            );
-            head.scale.set(1, 1.08, 0.98);
-            head.position.set(0, 1.48, 0.08);
-            avatar.add(head);
-            this.parts.head = head;
-
-            const beard = new THREE.Mesh(
-                new THREE.SphereGeometry(0.23, 18, 18),
-                hairMaterial
-            );
-            beard.scale.set(1.12, 0.65, 1.02);
-            beard.position.set(0, 1.29, 0.2);
-            avatar.add(beard);
-
-            const hairCap = new THREE.Mesh(
-                new THREE.SphereGeometry(0.345, 18, 18),
-                hairMaterial
-            );
-            hairCap.scale.set(1.02, 0.72, 1);
-            hairCap.position.set(0, 1.65, 0.03);
-            avatar.add(hairCap);
-
-            const bun = new THREE.Mesh(
-                new THREE.SphereGeometry(0.12, 14, 14),
-                hairMaterial
-            );
-            bun.position.set(0, 1.72, -0.24);
-            avatar.add(bun);
-
             const glassesMaterial = new THREE.MeshStandardMaterial({
                 color: 0x111111,
-                roughness: 0.48,
+                roughness: 0.45,
                 metalness: 0.55
             });
 
+            // Torse plus fin
+            const torso = new THREE.Mesh(
+                new THREE.CapsuleGeometry(0.34, 0.72, 8, 16),
+                bodyMaterial
+            );
+            torso.position.set(0, 0.48, 0);
+            torso.scale.set(1, 1.08, 0.82);
+            avatar.add(torso);
+            this.parts.torso = torso;
+
+            // Cou
+            const neck = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.085, 0.09, 0.16, 16),
+                skinMaterial
+            );
+            neck.position.set(0, 1.02, 0.04);
+            avatar.add(neck);
+
+            // Tête plus ovale
+            const head = new THREE.Mesh(
+                new THREE.SphereGeometry(0.31, 28, 28),
+                skinMaterial
+            );
+            head.scale.set(0.95, 1.12, 0.92);
+            head.position.set(0, 1.3, 0.08);
+            avatar.add(head);
+            this.parts.head = head;
+
+            // Cheveux haut de tête, moins "casque"
+            const hairTop = new THREE.Mesh(
+                new THREE.SphereGeometry(0.29, 20, 20),
+                hairMaterial
+            );
+            hairTop.scale.set(0.98, 0.62, 0.92);
+            hairTop.position.set(0, 1.47, 0.02);
+            avatar.add(hairTop);
+
+            // Arrière cheveux attachés
+            const hairBack = new THREE.Mesh(
+                new THREE.SphereGeometry(0.18, 16, 16),
+                hairMaterial
+            );
+            hairBack.scale.set(0.95, 1.05, 0.8);
+            hairBack.position.set(0, 1.32, -0.18);
+            avatar.add(hairBack);
+
+            // Chignon plus lisible
+            const bun = new THREE.Mesh(
+                new THREE.SphereGeometry(0.11, 16, 16),
+                hairMaterial
+            );
+            bun.position.set(0, 1.48, -0.28);
+            avatar.add(bun);
+
+            // Barbe plus discrète et réaliste
+            const beard = new THREE.Mesh(
+                new THREE.SphereGeometry(0.18, 18, 18),
+                hairMaterial
+            );
+            beard.scale.set(1.02, 0.58, 0.82);
+            beard.position.set(0, 1.12, 0.16);
+            avatar.add(beard);
+
+            // Moustache légère
+            const moustache = new THREE.Mesh(
+                new THREE.SphereGeometry(0.09, 14, 14),
+                hairMaterial
+            );
+            moustache.scale.set(1.5, 0.35, 0.45);
+            moustache.position.set(0, 1.18, 0.24);
+            avatar.add(moustache);
+
+            // Lunettes rondes
             const leftGlasses = new THREE.Mesh(
-                new THREE.TorusGeometry(0.1, 0.012, 10, 24),
+                new THREE.TorusGeometry(0.078, 0.009, 10, 28),
                 glassesMaterial
             );
-            leftGlasses.position.set(-0.11, 1.49, 0.35);
+            leftGlasses.position.set(-0.09, 1.31, 0.285);
             avatar.add(leftGlasses);
 
             const rightGlasses = leftGlasses.clone();
-            rightGlasses.position.x = 0.11;
+            rightGlasses.position.x = 0.09;
             avatar.add(rightGlasses);
 
             const bridge = new THREE.Mesh(
-                new THREE.BoxGeometry(0.08, 0.01, 0.01),
+                new THREE.BoxGeometry(0.05, 0.008, 0.008),
                 glassesMaterial
             );
-            bridge.position.set(0, 1.49, 0.35);
+            bridge.position.set(0, 1.31, 0.285);
             avatar.add(bridge);
 
+            // Petits yeux visibles derrière les lunettes
+            const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x1a1a1a });
+
+            const leftEye = new THREE.Mesh(
+                new THREE.SphereGeometry(0.012, 10, 10),
+                eyeMaterial
+            );
+            leftEye.position.set(-0.09, 1.305, 0.285);
+            avatar.add(leftEye);
+
+            const rightEye = leftEye.clone();
+            rightEye.position.x = 0.09;
+            avatar.add(rightEye);
+
+            // Nez léger
+            const nose = new THREE.Mesh(
+                new THREE.SphereGeometry(0.026, 12, 12),
+                skinMaterial
+            );
+            nose.scale.set(0.75, 1.1, 0.65);
+            nose.position.set(0, 1.24, 0.305);
+            avatar.add(nose);
+
+            // Bras gauche posé
             const leftArmBase = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.1, 0.5, 6, 12),
+                new THREE.CapsuleGeometry(0.08, 0.42, 6, 12),
                 bodyMaterial
             );
-            leftArmBase.rotation.z = 0.35;
-            leftArmBase.position.set(-0.48, 0.78, 0.02);
+            leftArmBase.rotation.z = 0.42;
+            leftArmBase.position.set(-0.39, 0.72, 0.02);
             avatar.add(leftArmBase);
 
+            // Bras droit animé
             const rightArmPivot = new THREE.Group();
-            rightArmPivot.position.set(0.46, 0.96, 0.02);
+            rightArmPivot.position.set(0.37, 0.88, 0.03);
             avatar.add(rightArmPivot);
             this.parts.armPivot = rightArmPivot;
 
             const rightUpperArm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.1, 0.48, 6, 12),
+                new THREE.CapsuleGeometry(0.078, 0.4, 6, 12),
                 bodyMaterial
             );
-            rightUpperArm.rotation.z = -0.55;
-            rightUpperArm.position.set(0.18, -0.16, 0);
+            rightUpperArm.rotation.z = -0.62;
+            rightUpperArm.position.set(0.15, -0.14, 0);
             rightArmPivot.add(rightUpperArm);
 
             const forearm = new THREE.Mesh(
-                new THREE.CapsuleGeometry(0.085, 0.4, 6, 12),
+                new THREE.CapsuleGeometry(0.068, 0.34, 6, 12),
                 skinMaterial
             );
-            forearm.rotation.z = -0.8;
-            forearm.position.set(0.42, -0.03, 0.03);
+            forearm.rotation.z = -0.84;
+            forearm.position.set(0.34, 0.0, 0.02);
             rightArmPivot.add(forearm);
 
             const hand = new THREE.Mesh(
-                new THREE.SphereGeometry(0.09, 14, 14),
+                new THREE.SphereGeometry(0.07, 14, 14),
                 skinMaterial
             );
-            hand.scale.set(1.1, 0.9, 0.6);
-            hand.position.set(0.61, 0.12, 0.08);
+            hand.scale.set(1.0, 0.85, 0.62);
+            hand.position.set(0.49, 0.12, 0.05);
             rightArmPivot.add(hand);
 
+            // Zone cliquable épaule
             const shoulderHit = new THREE.Mesh(
-                new THREE.SphereGeometry(0.22, 14, 14),
+                new THREE.SphereGeometry(0.2, 14, 14),
                 new THREE.MeshBasicMaterial({
                     transparent: true,
                     opacity: 0
                 })
             );
             shoulderHit.name = "shoulderHit";
-            shoulderHit.position.set(0.48, 0.95, 0.04);
+            shoulderHit.position.set(0.39, 0.88, 0.03);
             avatar.add(shoulderHit);
             this.parts.shoulderHit = shoulderHit;
 
             avatar.position.set(0, -0.02, 1.85);
-            avatar.rotation.y = -0.12;
+            avatar.rotation.y = -0.08;
 
             this.groups.avatar = avatar;
             this.groups.world.add(avatar);
@@ -563,7 +615,8 @@
             });
 
             tl.to(this.camera.position, {
-                z: 7.4,
+                z: 6.95,
+                y: 1.14,
                 duration: 1.2
             });
 
