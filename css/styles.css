@@ -625,9 +625,17 @@ a.accent,
 }
 
 .expertise .tick .ic-badge {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3.1rem;
+  height: 3.1rem;
+  min-width: 3.1rem;
+  min-height: 3.1rem;
   margin-right: 0;
+  border-radius: 1rem;
+}
+
+.expertise .tick .ic-svg {
+  width: 2.15rem;
+  height: 2.15rem;
 }
 
 .chips {
@@ -1025,10 +1033,24 @@ a.premium:focus-visible::after {
   gap: 0.5rem;
 }
 
+.prestations .service h3 {
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
 .prestations .service h3 .ic-badge {
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  min-width: 3.6rem;
+  min-height: 3.6rem;
   flex-shrink: 0;
+  margin-top: -0.1rem;
+  border-radius: 1.1rem;
+}
+
+.prestations .service h3 .ic-svg {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .prestations .service p {
@@ -1129,9 +1151,9 @@ a.premium:focus-visible::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border-radius: var(--radius-full);
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 0.95rem;
   background: radial-gradient(circle at 30% 20%, rgb(var(--slate-900-rgb)), var(--bg));
   box-shadow:
     0 0 0 1px var(--border),
@@ -1139,8 +1161,8 @@ a.premium:focus-visible::after {
 }
 
 .ic-badge .ic-svg {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.95rem;
+  height: 1.95rem;
 }
 
 .ic-svg {
@@ -1464,9 +1486,9 @@ a.premium:focus-visible::after {
 }
 
 .mnav__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
   display: grid;
   place-items: center;
   box-shadow: var(--shadow-chip);
@@ -1476,8 +1498,8 @@ a.premium:focus-visible::after {
 }
 
 .mnav__icon svg {
-  width: 26px;
-  height: 26px;
+  width: 34px;
+  height: 34px;
   display: block;
 }
 
@@ -2066,5 +2088,41 @@ a.premium:focus-visible::after {
   .hero__content {
     padding-bottom: clamp(235px, 24vh, 285px);
     transform: translateY(10px);
+  }
+}
+
+@media (max-width: 760px) {
+  .prestations .service h3 .ic-badge {
+    width: 3rem;
+    height: 3rem;
+    min-width: 3rem;
+    min-height: 3rem;
+  }
+
+  .prestations .service h3 .ic-svg {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .expertise .tick .ic-badge {
+    width: 2.8rem;
+    height: 2.8rem;
+    min-width: 2.8rem;
+    min-height: 2.8rem;
+  }
+
+  .expertise .tick .ic-svg {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .mnav__icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .mnav__icon svg {
+    width: 31px;
+    height: 31px;
   }
 }
