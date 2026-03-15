@@ -32,29 +32,6 @@
   <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
     focusable="false">
     <defs>
-      <!-- Personnage qui fait coucou -->
-      <symbol id="ic-smile" viewBox="0 0 64 64">
-        <!-- Halo -->
-        <circle cx="32" cy="32" r="30" fill="url(#grad-smile-bg)" opacity="0.9" />
-        <!-- Corps -->
-        <circle class="smile-body" cx="32" cy="40" r="12" fill="#111827" />
-        <!-- Tête -->
-        <circle class="smile-face" cx="28" cy="24" r="9" fill="#fde68a" />
-        <!-- Yeux -->
-        <circle cx="25" cy="23" r="1.2" fill="#111827" />
-        <circle cx="31" cy="23" r="1.2" fill="#111827" />
-        <!-- Sourire -->
-        <path d="M24 26 Q28 29 32 26" stroke="#111827" stroke-width="1.6" stroke-linecap="round" fill="none" />
-        <!-- Bras fixe -->
-        <path d="M21 33 Q18 34 18 37" stroke="#fde68a" stroke-width="3" stroke-linecap="round" />
-        <!-- Bras qui fait coucou -->
-        <g class="smile-arm">
-          <path d="M30 28 Q36 24 40 18" stroke="#fde68a" stroke-width="3.2" stroke-linecap="round" />
-          <circle cx="40.5" cy="17" r="2.3" fill="#fde68a" />
-        </g>
-        <!-- Petite étincelle -->
-        <circle class="smile-sparkle" cx="44" cy="12" r="2" fill="#fbbf24" />
-      </symbol>
 
       <symbol id="icx-repair" viewBox="0 0 64 64">
         <defs>
@@ -450,6 +427,46 @@
         </g>
       </symbol>
 
+      <symbol id="icx-review" viewBox="0 0 64 64">
+        <defs>
+          <linearGradient id="icx-review-card" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#111827" />
+            <stop offset="100%" stop-color="#020617" />
+          </linearGradient>
+          <linearGradient id="icx-review-star" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f7c600" />
+            <stop offset="100%" stop-color="#ec4899" />
+          </linearGradient>
+        </defs>
+
+        <g class="icx-review">
+          <rect x="10" y="14" width="28" height="22" rx="5" fill="url(#icx-review-card)" stroke="#e5e7eb"
+            stroke-width="2" />
+          <path d="M16 21 H31" stroke="#e5e7eb" stroke-width="2" stroke-linecap="round" />
+          <path d="M16 26 H27" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+          <path d="M16 31 H24" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+
+          <g class="icx-review__stars">
+            <path
+              d="M45 18 L46.3 20.8 L49.3 21.3 L47.1 23.4 L47.6 26.4 L45 25 L42.4 26.4 L42.9 23.4 L40.7 21.3 L43.7 20.8 Z"
+              fill="url(#icx-review-star)" />
+            <path
+              d="M52 25 L53.1 27.2 L55.5 27.7 L53.7 29.4 L54.1 31.8 L52 30.7 L49.9 31.8 L50.3 29.4 L48.5 27.7 L50.9 27.2 Z"
+              fill="#f7c600" opacity="0.95" />
+          </g>
+
+          <g class="icx-review__heart">
+            <path d="M43 39
+               C43 36.8 44.8 35.4 46.7 35.4
+               C48 35.4 49.1 36 49.8 37
+               C50.5 36 51.6 35.4 52.9 35.4
+               C54.8 35.4 56.6 36.8 56.6 39
+               C56.6 42.6 52.8 45.1 49.8 47
+               C46.8 45.1 43 42.6 43 39 Z" fill="#ec4899" />
+          </g>
+        </g>
+      </symbol>
+
     </defs>
   </svg>
 
@@ -587,7 +604,7 @@
           <a data-scrolllink href="#expertise" class="mnav__item" data-magnet>
             <span class="mnav__icon">
               <svg viewBox="0 0 64 64" aria-hidden="true">
-                <use href="#ic-shield" />
+                <use href="#icx-security" />
               </svg>
             </span>
             <span class="mnav__label">Expertise</span>
@@ -597,13 +614,14 @@
           <a data-scrolllink href="#avis" class="mnav__item" data-magnet>
             <span class="mnav__icon">
               <svg viewBox="0 0 64 64" aria-hidden="true">
-                <use href="#ic-smile" />
+                <use href="#icx-review" />
               </svg>
             </span>
             <span class="mnav__label">Avis</span>
             <span class="mnav__chev">›</span>
           </a>
         </nav>
+
         <div class="mnav__cta">
           <button class="mnav__cta-profile" type="button" data-reserve-trigger>
             <img src="img/profile.png" alt="" class="mnav__cta-avatar" aria-hidden="true">

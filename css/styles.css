@@ -2299,3 +2299,114 @@ a.premium:focus-visible::after {
     height: 2.8rem;
   }
 }
+
+/* =========================
+   Mobile menu — premium icon rows
+   ========================= */
+
+.mnav__item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(var(--white-rgb) / 0.10);
+  background:
+    linear-gradient(180deg, rgb(var(--white-rgb) / 0.018), rgb(var(--white-rgb) / 0.008)),
+    var(--card);
+  box-shadow:
+    0 18px 42px rgb(var(--black-rgb) / 0.34),
+    0 0 0 1px rgb(var(--white-rgb) / 0.018) inset;
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease;
+}
+
+.mnav__item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgb(var(--yellow-rgb) / 0.11), transparent 22%),
+    radial-gradient(circle at 88% 82%, rgb(var(--pink-rgb) / 0.10), transparent 30%);
+  opacity: 0.95;
+}
+
+.mnav__item::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgb(var(--white-rgb) / 0.02);
+}
+
+.mnav__item>* {
+  position: relative;
+  z-index: 1;
+}
+
+.mnav__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 30% 20%, rgb(var(--slate-900-rgb)), rgb(var(--bg-rgb) / 0.96));
+  border: 1px solid rgb(var(--white-rgb) / 0.10);
+  box-shadow:
+    0 12px 28px rgb(var(--black-rgb) / 0.34),
+    0 0 0 1px rgb(var(--white-rgb) / 0.02) inset;
+}
+
+.mnav__icon svg {
+  width: 38px;
+  height: 38px;
+  display: block;
+  filter:
+    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
+}
+
+.mnav__label {
+  font-size: 1rem;
+  font-weight: 850;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+}
+
+.mnav__chev {
+  color: rgb(var(--text-rgb) / 0.7);
+  transition: transform 0.22s ease, color 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mnav__item:hover {
+    transform: translateY(-3px);
+    border-color: rgb(var(--yellow-rgb) / 0.16);
+    box-shadow:
+      0 24px 58px rgb(var(--black-rgb) / 0.42),
+      0 0 18px rgb(var(--pink-rgb) / 0.07),
+      0 0 14px rgb(var(--yellow-rgb) / 0.05);
+  }
+
+  .mnav__item:hover .mnav__chev {
+    transform: translateX(3px);
+    color: var(--yellow);
+  }
+}
+
+@media (max-width: 760px) {
+  .mnav__icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+  }
+
+  .mnav__icon svg {
+    width: 33px;
+    height: 33px;
+  }
+
+  .mnav__label {
+    font-size: 0.98rem;
+  }
+}
