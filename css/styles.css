@@ -2092,8 +2092,8 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   HERO — LARGE TABLETS (portrait + paysage)
-   Cible : grandes tablettes tactiles type Xiaomi Pad 6S Pro
+   HERO — LARGE TABLETS
+   Recalé sur la logique desktop/mobile
    ========================= */
 @media (min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse) and (orientation: portrait) {
   .hero {
@@ -2102,13 +2102,13 @@ a.premium:focus-visible::after {
   }
 
   .hero__pin {
-    padding-top: clamp(112px, 9vh, 132px);
+    padding-top: clamp(114px, 10vh, 136px);
   }
 
   .hero__content {
-    padding-inline: clamp(20px, 4vw, 32px);
-    padding-bottom: clamp(210px, 24vh, 270px);
-    transform: translateY(-4px);
+    padding-inline: clamp(20px, 4vw, 30px);
+    padding-bottom: clamp(235px, 26vh, 285px);
+    transform: translateY(8px);
   }
 
   h1 {
@@ -2127,11 +2127,11 @@ a.premium:focus-visible::after {
 
 @media (min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse) and (orientation: landscape) {
   .hero__pin {
-    padding-top: clamp(114px, 10vh, 138px);
+    padding-top: clamp(118px, 11vh, 144px);
   }
 
   .hero__content {
-    padding-bottom: clamp(250px, 28vh, 310px);
-    transform: translateY(0);
+    padding-bottom: clamp(235px, 24vh, 285px);
+    transform: translateY(10px);
   }
 }

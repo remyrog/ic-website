@@ -197,38 +197,36 @@
         viewBox: "0 0 1440 860",
         preserve: "xMidYMid slice",
 
-        /* Soleil remonté et décalé à droite, avec une trajectoire plus longue */
-        sunPath: "M 860 88 C 980 78 1100 84 1225 116 C 1330 144 1420 182 1505 230",
+        /* Soleil recentré, course large comme desktop/mobile */
+        sunPath: "M 320 150 C 560 108 820 98 1060 114 C 1210 124 1330 146 1435 176",
 
-        /* Route remontée et légèrement plus présente visuellement */
-        road: "M-80,790 C90,774 250,770 420,760 C590,750 740,724 900,722 C1055,720 1195,742 1340,764 C1470,784 1570,790 1660,782",
+        /* Route moins zoomée, moins haute, avec vrai dénivelé */
+        road: "M-120,830 C70,802 230,816 390,814 C550,812 670,728 800,694 C940,658 1065,734 1188,778 C1305,820 1418,800 1608,770",
 
-        carTransform: "translate(-90,790) scale(0.80)",
-        sunScale: 0.68,
-
-        /* course plus large pour éviter l'aller-retour au milieu du titre */
-        sunStart: 0.02,
-        sunEnd: 0.98,
-        sunDuration: 11.2
+        carTransform: "translate(-110,830) scale(0.74)",
+        sunScale: 0.54,
+        sunStart: 0.10,
+        sunEnd: 0.88,
+        sunDuration: 10.6
       };
     }
 
     if (isTabletLandscape) {
       return {
-        viewBox: "0 0 1440 820",
+        viewBox: "0 0 1440 830",
         preserve: "xMidYMid slice",
 
-        /* Paysage : on conserve un rendu proche de celui que tu valides */
-        sunPath: "M 860 106 C 980 92 1110 98 1240 132 C 1315 152 1375 178 1430 208",
+        /* Soleil de nouveau étalé sur l'écran, plus centré */
+        sunPath: "M 260 142 C 530 94 840 96 1115 128 C 1255 144 1365 170 1450 198",
 
-        /* Route légèrement abaissée pour créer plus d'air sous le texte */
-        road: "M-100,790 C80,776 240,774 400,768 C560,762 700,730 845,724 C990,718 1125,736 1260,754 C1380,770 1495,778 1620,770",
+        /* Route un peu plus basse, moins plate, moins zoomée */
+        road: "M-100,790 C120,748 300,766 455,748 C595,732 690,662 800,650 C930,636 1035,706 1155,734 C1275,762 1395,744 1560,722",
 
         carTransform: "translate(-100,790) scale(0.76)",
-        sunScale: 0.56,
-        sunStart: 0.08,
-        sunEnd: 0.84,
-        sunDuration: 10.2
+        sunScale: 0.60,
+        sunStart: 0.06,
+        sunEnd: 0.94,
+        sunDuration: 10.8
       };
     }
 
