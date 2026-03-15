@@ -208,7 +208,7 @@
 
         /* fin de course un peu raccourcie */
         sunStart: 0.10,
-        sunEnd: 0.78,
+        sunEnd: 0.70,
         sunDuration: 10.6
       };
     }
