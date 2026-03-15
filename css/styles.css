@@ -2284,3 +2284,88 @@ a.premium:focus-visible::after {
     transform: translateY(10px);
   }
 }
+
+
+
+/* =========================
+   FIX OFFRES MOBILE
+   ========================= */
+
+.offres,
+.offres .container,
+.offers-grid,
+.offer-card,
+.offer-card__inner {
+  min-width: 0;
+}
+
+.offers-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.offer-card {
+  min-width: 0;
+  width: 100%;
+}
+
+.offer-card__tagline,
+.offer-card__text,
+.offer-card h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .offres {
+    overflow: clip;
+  }
+
+  .offres .container {
+    width: min(1120px, calc(100vw - 24px));
+    overflow-x: clip;
+  }
+
+  .offers-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .offer-card {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    border-radius: 22px;
+    transform: none;
+  }
+
+  .offer-card::after {
+    border-radius: 21px;
+  }
+
+  .offer-card__inner {
+    width: 100%;
+    min-width: 0;
+    padding: 22px 18px 18px;
+  }
+
+  .offer-card h3 {
+    font-size: 1.55rem;
+    line-height: 1.02;
+  }
+
+  .offer-card__tagline {
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+
+  .offer-card__text {
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .offer-card__link {
+    margin-bottom: 18px;
+    font-size: 0.86rem;
+  }
+}
