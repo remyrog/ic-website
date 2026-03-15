@@ -1,0 +1,686 @@
+/* =========================
+   New premium service icons
+   ========================= */
+
+.icx-repair .icx-repair__scan-ring {
+    transform-origin: 27px 28px;
+    animation: icxRepairScan 2.6s linear infinite;
+}
+
+.icx-repair .icx-repair__tool {
+    transform-origin: 46px 38px;
+    animation: icxRepairTool 2.2s ease-in-out infinite;
+}
+
+.icx-repair .icx-repair__boost rect:nth-child(1) {
+    animation: icxRepairBoostA 1.6s ease-in-out infinite;
+}
+
+.icx-repair .icx-repair__boost rect:nth-child(2) {
+    animation: icxRepairBoostB 1.6s ease-in-out infinite;
+}
+
+.icx-repair .icx-repair__boost rect:nth-child(3) {
+    animation: icxRepairBoostC 1.6s ease-in-out infinite;
+}
+
+.icx-repair .icx-repair__spark {
+    transform-origin: 49px 23.5px;
+    animation: icxRepairSpark 1.9s ease-in-out infinite;
+}
+
+@keyframes icxRepairScan {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes icxRepairTool {
+
+    0%,
+    100% {
+        transform: rotate(0deg) translateY(0);
+    }
+
+    35% {
+        transform: rotate(-10deg) translateY(-0.5px);
+    }
+
+    65% {
+        transform: rotate(6deg) translateY(0.5px);
+    }
+}
+
+@keyframes icxRepairBoostA {
+
+    0%,
+    100% {
+        transform: translateY(2px);
+        opacity: 0.72;
+    }
+
+    50% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes icxRepairBoostB {
+
+    0%,
+    100% {
+        transform: translateY(1px);
+        opacity: 0.84;
+    }
+
+    50% {
+        transform: translateY(-1px);
+        opacity: 1;
+    }
+}
+
+@keyframes icxRepairBoostC {
+
+    0%,
+    100% {
+        transform: translateY(3px);
+        opacity: 0.68;
+    }
+
+    50% {
+        transform: translateY(-2px);
+        opacity: 1;
+    }
+}
+
+@keyframes icxRepairSpark {
+
+    0%,
+    100% {
+        transform: scale(0.92) rotate(0deg);
+        opacity: 0.72;
+    }
+
+    50% {
+        transform: scale(1.08) rotate(12deg);
+        opacity: 1;
+    }
+}
+
+.icx-dev .icx-dev__cursor-line {
+    animation: icxDevCursor 1.15s steps(1) infinite;
+}
+
+.icx-dev .icx-dev__growth-line {
+    stroke-dasharray: 28;
+    stroke-dashoffset: 28;
+    animation: icxDevGrowth 2.4s ease-in-out infinite;
+}
+
+.icx-dev .icx-dev__node--a {
+    animation: icxDevNodeA 2.4s ease-in-out infinite;
+}
+
+.icx-dev .icx-dev__node--b {
+    animation: icxDevNodeB 2.4s ease-in-out infinite;
+}
+
+.icx-dev .icx-dev__node--c {
+    animation: icxDevNodeC 2.4s ease-in-out infinite;
+}
+
+.icx-dev .icx-dev__signal {
+    transform-origin: 49px 15px;
+    animation: icxDevSignal 2.2s ease-in-out infinite;
+}
+
+@keyframes icxDevCursor {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0.22;
+    }
+}
+
+@keyframes icxDevGrowth {
+
+    0%,
+    18% {
+        stroke-dashoffset: 28;
+        opacity: 0.4;
+    }
+
+    45%,
+    75% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.88;
+    }
+}
+
+@keyframes icxDevNodeA {
+
+    0%,
+    30%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.55;
+    }
+
+    42%,
+    72% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+@keyframes icxDevNodeB {
+
+    0%,
+    42%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.55;
+    }
+
+    54%,
+    78% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+@keyframes icxDevNodeC {
+
+    0%,
+    52%,
+    100% {
+        transform: scale(0.85);
+        opacity: 0.55;
+    }
+
+    64%,
+    84% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+
+@keyframes icxDevSignal {
+
+    0%,
+    100% {
+        opacity: 0.62;
+        transform: scale(0.96);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.04);
+    }
+}
+
+/* Accessibilité : réduit l'agitation si l'utilisateur le demande */
+@media (prefers-reduced-motion: reduce) {
+
+    .icx-repair .icx-repair__scan-ring,
+    .icx-repair .icx-repair__tool,
+    .icx-repair .icx-repair__boost rect,
+    .icx-repair .icx-repair__spark,
+    .icx-dev .icx-dev__cursor-line,
+    .icx-dev .icx-dev__growth-line,
+    .icx-dev .icx-dev__node,
+    .icx-dev .icx-dev__signal {
+        animation: none !important;
+    }
+}
+
+/* =========================
+   New premium icons — security / setup
+   ========================= */
+
+.icx-security .icx-security__shield-glow {
+    stroke-dasharray: 88;
+    stroke-dashoffset: 88;
+    animation: icxSecurityShield 2.8s ease-in-out infinite;
+}
+
+.icx-security .icx-security__check path {
+    stroke-dasharray: 18;
+    stroke-dashoffset: 18;
+    animation: icxSecurityCheck 2.8s ease-in-out infinite;
+}
+
+.icx-security .icx-security__transfer {
+    animation: icxSecurityTransfer 2.4s ease-in-out infinite;
+}
+
+.icx-security .icx-security__storage {
+    animation: icxSecurityStorage 2.5s ease-in-out infinite;
+}
+
+.icx-security .icx-security__spark {
+    transform-origin: 51px 17px;
+    animation: icxSecuritySpark 1.9s ease-in-out infinite;
+}
+
+@keyframes icxSecurityShield {
+
+    0%,
+    15% {
+        stroke-dashoffset: 88;
+        opacity: 0.28;
+    }
+
+    35%,
+    78% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.82;
+    }
+}
+
+@keyframes icxSecurityCheck {
+
+    0%,
+    35% {
+        stroke-dashoffset: 18;
+        opacity: 0;
+    }
+
+    48%,
+    82% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.9;
+    }
+}
+
+@keyframes icxSecurityTransfer {
+
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: translateX(-1px);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(1px);
+    }
+}
+
+@keyframes icxSecurityStorage {
+
+    0%,
+    100% {
+        opacity: 0.82;
+        transform: translateY(1px);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-1px);
+    }
+}
+
+@keyframes icxSecuritySpark {
+
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+.icx-setup .icx-setup__knob--a {
+    animation: icxSetupKnobA 2.3s ease-in-out infinite;
+}
+
+.icx-setup .icx-setup__knob--b {
+    animation: icxSetupKnobB 2.3s ease-in-out infinite;
+}
+
+.icx-setup .icx-setup__knob--c {
+    animation: icxSetupKnobC 2.3s ease-in-out infinite;
+}
+
+.icx-setup .icx-setup__link {
+    animation: icxSetupLink 2.2s ease-in-out infinite;
+}
+
+.icx-setup .icx-setup__device {
+    animation: icxSetupDevice 2.4s ease-in-out infinite;
+}
+
+.icx-setup .icx-setup__check {
+    transform-origin: 50px 16px;
+    animation: icxSetupCheck 2.2s ease-in-out infinite;
+}
+
+@keyframes icxSetupKnobA {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    45% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes icxSetupKnobB {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    45% {
+        transform: translateX(-5px);
+    }
+}
+
+@keyframes icxSetupKnobC {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    45% {
+        transform: translateX(6px);
+    }
+}
+
+@keyframes icxSetupLink {
+
+    0%,
+    100% {
+        opacity: 0.45;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes icxSetupDevice {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.92;
+    }
+
+    50% {
+        transform: translateY(-1px);
+        opacity: 1;
+    }
+}
+
+@keyframes icxSetupCheck {
+
+    0%,
+    100% {
+        transform: scale(0.94);
+        opacity: 0.82;
+    }
+
+    50% {
+        transform: scale(1.06);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .icx-security .icx-security__shield-glow,
+    .icx-security .icx-security__check path,
+    .icx-security .icx-security__transfer,
+    .icx-security .icx-security__storage,
+    .icx-security .icx-security__spark,
+    .icx-setup .icx-setup__knob,
+    .icx-setup .icx-setup__link,
+    .icx-setup .icx-setup__device,
+    .icx-setup .icx-setup__check {
+        animation: none !important;
+    }
+}
+
+/* =========================
+   New premium icons — advice / coach
+   ========================= */
+
+.icx-advice .icx-advice__magnifier {
+    transform-origin: 42px 31px;
+    animation: icxAdviceMagnifier 2.6s ease-in-out infinite;
+}
+
+.icx-advice .icx-advice__highlight {
+    animation: icxAdviceHighlight 2.6s ease-in-out infinite;
+}
+
+.icx-advice .icx-advice__check path {
+    stroke-dasharray: 10;
+    stroke-dashoffset: 10;
+    animation: icxAdviceCheck 2.6s ease-in-out infinite;
+}
+
+@keyframes icxAdviceMagnifier {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(0.98);
+    }
+
+    25% {
+        transform: translate(-2px, -1px) scale(1);
+    }
+
+    55% {
+        transform: translate(-6px, -3px) scale(1.02);
+    }
+
+    80% {
+        transform: translate(-2px, -1px) scale(1);
+    }
+}
+
+@keyframes icxAdviceHighlight {
+
+    0%,
+    20%,
+    100% {
+        opacity: 0.35;
+        transform: scaleX(0.82);
+        transform-origin: left center;
+    }
+
+    40%,
+    75% {
+        opacity: 1;
+        transform: scaleX(1);
+        transform-origin: left center;
+    }
+}
+
+@keyframes icxAdviceCheck {
+
+    0%,
+    48% {
+        stroke-dashoffset: 10;
+        opacity: 0;
+    }
+
+    62%,
+    86% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.92;
+    }
+}
+
+.icx-coach .icx-coach__line--1 {
+    stroke-dasharray: 17;
+    stroke-dashoffset: 17;
+    animation: icxCoachLine1 2.8s ease-in-out infinite;
+}
+
+.icx-coach .icx-coach__line--2 {
+    stroke-dasharray: 13;
+    stroke-dashoffset: 13;
+    animation: icxCoachLine2 2.8s ease-in-out infinite;
+}
+
+.icx-coach .icx-coach__line--3 {
+    stroke-dasharray: 8;
+    stroke-dashoffset: 8;
+    animation: icxCoachLine3 2.8s ease-in-out infinite;
+}
+
+.icx-coach .icx-coach__pointer {
+    transform-origin: 36px 28px;
+    animation: icxCoachPointer 2.2s ease-in-out infinite;
+}
+
+.icx-coach .icx-coach__progress-bar {
+    transform-origin: left center;
+    animation: icxCoachProgress 2.8s ease-in-out infinite;
+}
+
+.icx-coach .icx-coach__star {
+    transform-origin: 56px 19px;
+    animation: icxCoachStar 1.9s ease-in-out infinite;
+}
+
+@keyframes icxCoachLine1 {
+
+    0%,
+    12% {
+        stroke-dashoffset: 17;
+        opacity: 0.35;
+    }
+
+    25%,
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes icxCoachLine2 {
+
+    0%,
+    24% {
+        stroke-dashoffset: 13;
+        opacity: 0.3;
+    }
+
+    38%,
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.95;
+    }
+}
+
+@keyframes icxCoachLine3 {
+
+    0%,
+    36% {
+        stroke-dashoffset: 8;
+        opacity: 0.25;
+    }
+
+    50%,
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes icxCoachPointer {
+
+    0%,
+    100% {
+        transform: translateX(0) translateY(0);
+        opacity: 0.75;
+    }
+
+    50% {
+        transform: translateX(-1px) translateY(1px);
+        opacity: 1;
+    }
+}
+
+@keyframes icxCoachProgress {
+
+    0%,
+    42% {
+        transform: scaleX(0.18);
+        opacity: 0.45;
+    }
+
+    62%,
+    100% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+@keyframes icxCoachStar {
+
+    0%,
+    100% {
+        transform: scale(0.92) rotate(0deg);
+        opacity: 0.72;
+    }
+
+    50% {
+        transform: scale(1.08) rotate(8deg);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .icx-advice .icx-advice__magnifier,
+    .icx-advice .icx-advice__highlight,
+    .icx-advice .icx-advice__check path,
+    .icx-coach .icx-coach__line,
+    .icx-coach .icx-coach__pointer,
+    .icx-coach .icx-coach__progress-bar,
+    .icx-coach .icx-coach__star {
+        animation: none !important;
+    }
+}
