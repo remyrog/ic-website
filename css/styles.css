@@ -1457,21 +1457,23 @@ a.premium:focus-visible::after {
 }
 
 .mnav__icon {
+  width: 60px;
+  height: 60px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 56px;
-  height: 56px;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: rgb(var(--bg-rgb) / 0.88);
-  box-shadow: var(--shadow-chip);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .mnav__icon svg {
+  width: 38px;
+  height: 38px;
   display: block;
-  width: 34px;
-  height: 34px;
+  filter:
+    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
 }
 
 .mnav__label {
@@ -1980,13 +1982,13 @@ a.premium:focus-visible::after {
   }
 
   .mnav__icon {
-    width: 52px;
-    height: 52px;
+    width: 54px;
+    height: 54px;
   }
 
   .mnav__icon svg {
-    width: 31px;
-    height: 31px;
+    width: 33px;
+    height: 33px;
   }
 
   .nav {
