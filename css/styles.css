@@ -786,15 +786,15 @@ a.accent,
 
 .prestations .service h3 {
   display: grid;
-  grid-template-columns: 4.8rem minmax(0, 1fr);
+  grid-template-columns: 4.15rem minmax(0, 1fr);
   align-items: center;
-  column-gap: 1rem;
-  min-height: 4.8rem;
-  margin: 0 0 18px;
+  column-gap: 0.72rem;
+  min-height: 4.15rem;
+  margin: 0 0 12px;
   font-size: clamp(1.55rem, 1.55vw, 1.95rem);
   font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
   text-shadow:
     0 1px 0 rgb(var(--white-rgb) / 0.03),
     0 10px 20px rgb(var(--black-rgb) / 0.18);
@@ -812,10 +812,10 @@ a.accent,
   place-items: center;
   align-self: center;
   justify-self: center;
-  width: 4.8rem;
-  height: 4.8rem;
-  min-width: 4.8rem;
-  min-height: 4.8rem;
+  width: 4.15rem;
+  height: 4.15rem;
+  min-width: 4.15rem;
+  min-height: 4.15rem;
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -823,17 +823,15 @@ a.accent,
   box-shadow: none;
 }
 
+.prestations .service h3 .ic-svg {
+  display: block;
+  width: 3.55rem;
+  height: 3.55rem;
+}
+
 .prestations .service h3 .ic-badge::before,
 .prestations .service h3 .ic-badge::after {
   display: none !important;
-}
-
-.prestations .service h3 .ic-svg {
-  display: block;
-  width: 4.15rem;
-  height: 4.15rem;
-  filter:
-    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.26)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.06));
 }
 
 .prestations .service-tagline {
@@ -1941,23 +1939,24 @@ a.premium:focus-visible::after {
   }
 
   .prestations .service h3 {
-    grid-template-columns: 4rem minmax(0, 1fr);
-    column-gap: 0.85rem;
-    min-height: 4rem;
-    margin-bottom: 14px;
+    grid-template-columns: 3.55rem minmax(0, 1fr);
+    column-gap: 0.68rem;
+    min-height: 3.55rem;
+    margin-bottom: 10px;
     font-size: 1.35rem;
+    line-height: 1.03;
   }
 
   .prestations .service h3 .ic-badge {
-    width: 4rem;
-    height: 4rem;
-    min-width: 4rem;
-    min-height: 4rem;
+    width: 3.55rem;
+    height: 3.55rem;
+    min-width: 3.55rem;
+    min-height: 3.55rem;
   }
 
   .prestations .service h3 .ic-svg {
-    width: 3.35rem;
-    height: 3.35rem;
+    width: 3rem;
+    height: 3rem;
   }
 
   .prestations .service-tagline {
