@@ -21,6 +21,25 @@
             document.body.classList.remove("is-preloading");
         }
 
+        destroyPreloader() {
+            const preloader = document.getElementById("preloader");
+            if (!preloader) return;
+
+            preloader.classList.add("is-hidden");
+
+            // stop toute animation CSS résiduelle dans le preloader
+            preloader.querySelectorAll("*").forEach((el) => {
+                el.style.animation = "none";
+                el.style.transition = "none";
+                el.style.willChange = "auto";
+            });
+
+            // retrait réel du DOM après disparition
+            setTimeout(() => {
+                preloader.remove();
+            }, 80);
+        }
+
         init() {
             if (!this.root || typeof gsap === "undefined") return;
             this.lockScroll();
@@ -144,6 +163,7 @@
             this.root.classList.add("is-handoff");
 
             this.unlockScroll();
+            this.destroyPreloader();
 
             window.setTimeout(() => {
                 this.root.classList.add("is-done");

@@ -968,14 +968,14 @@ a.accent,
   width: 3.3rem;
   height: 3.3rem;
   filter:
-    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
+    drop-shadow(0 6px 12px rgb(var(--black-rgb) / 0.22));
 }
 
 .expertise .tick .ic-svg {
   width: 3.35rem;
   height: 3.35rem;
   filter:
-    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
+    drop-shadow(0 6px 12px rgb(var(--black-rgb) / 0.22));
 }
 
 /* =========================
@@ -1576,7 +1576,7 @@ a.premium:focus-visible::after {
   height: 38px;
   display: block;
   filter:
-    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
+    drop-shadow(0 6px 12px rgb(var(--black-rgb) / 0.22));
 }
 
 .mnav__label {
@@ -2375,5 +2375,15 @@ a.premium:focus-visible::after {
   .offer-card__link {
     margin-bottom: 18px !important;
     font-size: 0.86rem !important;
+  }
+}
+
+@media (max-width: 760px) {
+
+  .values .ic-svg,
+  .expertise .tick .ic-svg,
+  .mnav__icon svg,
+  .prestations .service h3 .ic-svg {
+    filter: none !important;
   }
 }

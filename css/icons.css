@@ -920,3 +920,8 @@
         animation: none !important;
     }
 }
+
+.is-paused,
+.is-paused * {
+    animation-play-state: paused !important;
+}

@@ -929,3 +929,34 @@
       });
   })();
 })();
+
+(() => {
+  const animatedSelectors = [
+    ".icx-repair",
+    ".icx-dev",
+    ".icx-security",
+    ".icx-setup",
+    ".icx-advice",
+    ".icx-coach",
+    ".review__avatar-svg .avatar-arm",
+    "#preloader *"
+  ];
+
+  const items = [...document.querySelectorAll(animatedSelectors.join(","))];
+  if (!items.length || !("IntersectionObserver" in window)) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        el.classList.remove("is-paused");
+      } else {
+        el.classList.add("is-paused");
+      }
+    });
+  }, {
+    rootMargin: "120px 0px"
+  });
+
+  items.forEach((el) => io.observe(el));
+})();
