@@ -2055,6 +2055,11 @@ a.premium:focus-visible::after {
   .offer-card {
     grid-column: span 6;
   }
+
+  /* Si nombre impair de cartes, la dernière seule se centre sur la ligne */
+  .offers-grid>.offer-card:last-child:nth-child(odd) {
+    grid-column: 4 / 10;
+  }
 }
 
 @media (max-width: 760px) {
