@@ -197,16 +197,18 @@
         viewBox: "0 0 1440 860",
         preserve: "xMidYMid slice",
 
-        /* Soleil recentré, course large comme desktop/mobile */
-        sunPath: "M 320 150 C 560 108 820 98 1060 114 C 1210 124 1330 146 1435 176",
+        /* Soleil recentré, avec fin de course un peu moins à droite */
+        sunPath: "M 320 150 C 560 108 820 98 1045 114 C 1175 124 1285 142 1370 170",
 
-        /* Route moins zoomée, moins haute, avec vrai dénivelé */
+        /* Route inchangée */
         road: "M-120,830 C70,802 230,816 390,814 C550,812 670,728 800,694 C940,658 1065,734 1188,778 C1305,820 1418,800 1608,770",
 
         carTransform: "translate(-110,830) scale(0.74)",
         sunScale: 0.54,
+
+        /* fin de course un peu raccourcie */
         sunStart: 0.10,
-        sunEnd: 0.88,
+        sunEnd: 0.84,
         sunDuration: 10.6
       };
     }
