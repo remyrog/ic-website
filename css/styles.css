@@ -2156,3 +2156,146 @@ a.premium:focus-visible::after {
     transform: translateY(10px);
   }
 }
+
+
+/* =========================
+   Démarche + Expertise — premium icon rows
+   ========================= */
+
+.values li,
+.expertise .tick li {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(var(--white-rgb) / 0.10);
+  background:
+    linear-gradient(180deg, rgb(var(--white-rgb) / 0.018), rgb(var(--white-rgb) / 0.008)),
+    var(--card);
+  box-shadow:
+    0 18px 45px rgb(var(--black-rgb) / 0.34),
+    0 0 0 1px rgb(var(--white-rgb) / 0.018) inset;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.values li::before,
+.expertise .tick li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgb(var(--yellow-rgb) / 0.10), transparent 22%),
+    radial-gradient(circle at 88% 82%, rgb(var(--pink-rgb) / 0.10), transparent 28%);
+  opacity: 0.95;
+}
+
+.values li::after,
+.expertise .tick li::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgb(var(--white-rgb) / 0.02);
+}
+
+.values li:hover,
+.values li:focus-within,
+.expertise .tick li:hover,
+.expertise .tick li:focus-within {
+  transform: translateY(-4px);
+  border-color: rgb(var(--yellow-rgb) / 0.16);
+  box-shadow:
+    0 24px 58px rgb(var(--black-rgb) / 0.42),
+    0 0 20px rgb(var(--pink-rgb) / 0.07),
+    0 0 16px rgb(var(--yellow-rgb) / 0.05);
+}
+
+.values li>*,
+.expertise .tick li>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* Démarche */
+.values li {
+  gap: 0.9rem;
+  min-height: 78px;
+  padding: 14px 16px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.values .ic-badge {
+  width: 4rem;
+  height: 4rem;
+  min-width: 4rem;
+  min-height: 4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.values .ic-svg {
+  width: 3.3rem;
+  height: 3.3rem;
+  filter:
+    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
+}
+
+/* Expertise */
+.expertise .tick li {
+  gap: 0.9rem;
+  min-height: 82px;
+  padding: 14px 16px;
+  line-height: 1.22;
+  font-weight: 700;
+}
+
+.expertise .tick .ic-badge {
+  width: 4rem;
+  height: 4rem;
+  min-width: 4rem;
+  min-height: 4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.expertise .tick .ic-svg {
+  width: 3.35rem;
+  height: 3.35rem;
+  filter:
+    drop-shadow(0 8px 18px rgb(var(--black-rgb) / 0.24)) drop-shadow(0 0 10px rgb(var(--yellow-rgb) / 0.05)) drop-shadow(0 0 12px rgb(var(--pink-rgb) / 0.05));
+}
+
+@media (max-width: 760px) {
+
+  .values li,
+  .expertise .tick li {
+    min-height: 72px;
+    padding: 12px 14px;
+    gap: 0.75rem;
+  }
+
+  .values .ic-badge,
+  .expertise .tick .ic-badge {
+    width: 3.35rem;
+    height: 3.35rem;
+    min-width: 3.35rem;
+    min-height: 3.35rem;
+  }
+
+  .values .ic-svg,
+  .expertise .tick .ic-svg {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+}

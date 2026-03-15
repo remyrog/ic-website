@@ -674,6 +674,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .icx-advice .icx-advice__magnifier,
     .icx-advice .icx-advice__highlight,
     .icx-advice .icx-advice__check path,
@@ -681,6 +682,191 @@
     .icx-coach .icx-coach__pointer,
     .icx-coach .icx-coach__progress-bar,
     .icx-coach .icx-coach__star {
+        animation: none !important;
+    }
+}
+
+/* =========================
+   New premium icons — human / time / adapt / trust
+   ========================= */
+
+.icx-human .icx-human__face {
+    transform-origin: 39px 28px;
+    animation: icxHumanFace 2.1s ease-in-out infinite;
+}
+
+@keyframes icxHumanFace {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-0.4px) scale(1.02);
+    }
+}
+
+.icx-human .icx-human__spark {
+    transform-origin: 50px 16.5px;
+    animation: icxHumanSpark 1.8s ease-in-out infinite;
+}
+
+@keyframes icxHumanSpark {
+
+    0%,
+    100% {
+        transform: scale(0.92) rotate(0deg);
+        opacity: 0.72;
+    }
+
+    50% {
+        transform: scale(1.08) rotate(10deg);
+        opacity: 1;
+    }
+}
+
+.icx-time .icx-time__hand {
+    transform-origin: 32px 32px;
+    animation: icxTimeHand 4s linear infinite;
+}
+
+.icx-time .icx-time__check {
+    transform-origin: 47px 18px;
+    animation: icxTimeCheck 2.2s ease-in-out infinite;
+}
+
+@keyframes icxTimeHand {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes icxTimeCheck {
+
+    0%,
+    100% {
+        transform: scale(0.94);
+        opacity: 0.82;
+    }
+
+    50% {
+        transform: scale(1.06);
+        opacity: 1;
+    }
+}
+
+.icx-adapt .icx-adapt__bulb {
+    transform-origin: 32px 29px;
+    animation: icxAdaptBulb 2s ease-in-out infinite;
+}
+
+.icx-adapt .icx-adapt__orbit {
+    animation: icxAdaptOrbit 2.4s ease-in-out infinite;
+}
+
+.icx-adapt .icx-adapt__rays {
+    animation: icxAdaptRays 1.8s ease-in-out infinite;
+}
+
+@keyframes icxAdaptBulb {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.92;
+    }
+
+    50% {
+        transform: translateY(-0.5px) scale(1.04);
+        opacity: 1;
+    }
+}
+
+@keyframes icxAdaptOrbit {
+
+    0%,
+    100% {
+        opacity: 0.72;
+        transform: rotate(0deg);
+        transform-origin: 32px 32px;
+    }
+
+    50% {
+        opacity: 1;
+        transform: rotate(6deg);
+        transform-origin: 32px 32px;
+    }
+}
+
+@keyframes icxAdaptRays {
+
+    0%,
+    100% {
+        opacity: 0.62;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.icx-trust .icx-trust__shackle {
+    transform-origin: 32px 24px;
+    animation: icxTrustShackle 2.5s ease-in-out infinite;
+}
+
+.icx-trust .icx-trust__shine {
+    animation: icxTrustShine 2.5s ease-in-out infinite;
+}
+
+@keyframes icxTrustShackle {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    22% {
+        transform: rotate(-18deg);
+    }
+
+    40% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes icxTrustShine {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0.35;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .icx-human .icx-human__smile,
+    .icx-human .icx-human__spark,
+    .icx-time .icx-time__hand,
+    .icx-time .icx-time__check,
+    .icx-adapt .icx-adapt__bulb,
+    .icx-adapt .icx-adapt__orbit,
+    .icx-adapt .icx-adapt__rays,
+    .icx-trust .icx-trust__shackle,
+    .icx-trust .icx-trust__shine {
         animation: none !important;
     }
 }
