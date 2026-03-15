@@ -2092,27 +2092,28 @@ a.premium:focus-visible::after {
 }
 
 /* =========================
-   HERO — TABLET PORTRAIT
+   HERO — LARGE TABLETS (portrait + paysage)
+   Cible : grandes tablettes tactiles type Xiaomi Pad 6S Pro
    ========================= */
-@media (min-width: 761px) and (max-width: 1180px) and (orientation: portrait) {
+@media (min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse) and (orientation: portrait) {
   .hero {
     min-height: 100svh;
     overflow: clip;
   }
 
   .hero__pin {
-    padding-top: clamp(118px, 10vh, 138px);
+    padding-top: clamp(112px, 9vh, 132px);
   }
 
   .hero__content {
-    padding-inline: clamp(18px, 4vw, 28px);
-    padding-bottom: clamp(270px, 28vh, 320px);
-    transform: translateY(0);
+    padding-inline: clamp(20px, 4vw, 32px);
+    padding-bottom: clamp(210px, 24vh, 270px);
+    transform: translateY(-4px);
   }
 
   h1 {
-    font-size: clamp(42px, 5vw, 56px);
-    line-height: 1.03;
+    font-size: clamp(40px, 4.9vw, 54px);
+    line-height: 1.04;
   }
 
   .hero__sub {
@@ -2124,16 +2125,13 @@ a.premium:focus-visible::after {
   }
 }
 
-/* =========================
-   HERO — TABLET LANDSCAPE
-   ========================= */
-@media (min-width: 761px) and (max-width: 1180px) and (orientation: landscape) {
+@media (min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse) and (orientation: landscape) {
   .hero__pin {
-    padding-top: clamp(118px, 11vh, 150px);
+    padding-top: clamp(114px, 10vh, 138px);
   }
 
   .hero__content {
-    padding-bottom: clamp(300px, 33vh, 360px);
-    transform: translateY(6px);
+    padding-bottom: clamp(250px, 28vh, 310px);
+    transform: translateY(0);
   }
 }

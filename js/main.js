@@ -178,48 +178,56 @@
 
   const mqMobile = window.matchMedia("(max-width: 760px)");
   const mqSmall = window.matchMedia("(max-width: 560px)");
-  const mqTablet = window.matchMedia("(min-width: 761px) and (max-width: 1180px)");
+  const mqTablet = window.matchMedia("(min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse)");
 
   function getHeroConfig() {
     const isMobile = mqMobile.matches;
     const isSmall = mqSmall.matches;
-    const isTabletPortrait = window.matchMedia("(min-width: 761px) and (max-width: 1180px) and (orientation: portrait)").matches;
-    const isTabletLandscape = window.matchMedia("(min-width: 761px) and (max-width: 1180px) and (orientation: landscape)").matches;
+
+    const isTabletPortrait = window.matchMedia(
+      "(min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse) and (orientation: portrait)"
+    ).matches;
+
+    const isTabletLandscape = window.matchMedia(
+      "(min-width: 761px) and (max-width: 1400px) and (hover: none) and (pointer: coarse) and (orientation: landscape)"
+    ).matches;
 
     if (isTabletPortrait) {
       return {
-        viewBox: "0 0 1440 940",
-        preserve: "xMidYMid meet",
+        viewBox: "0 0 1440 860",
+        preserve: "xMidYMid slice",
 
-        /* Soleil plus bas que ton dernier essai, mais encore hors du titre */
-        sunPath: "M 760 118 C 860 108 980 112 1095 132 C 1185 148 1260 170 1328 204",
+        /* Soleil remonté et décalé à droite, avec une trajectoire plus longue */
+        sunPath: "M 860 88 C 980 78 1100 84 1225 116 C 1330 144 1420 182 1505 230",
 
-        /* Route remontée et moins zoomée */
-        road: "M-60,865 C130,842 300,828 470,804 C640,780 790,760 940,768 C1080,776 1225,804 1375,828 C1490,846 1580,854 1660,846",
+        /* Route remontée et légèrement plus présente visuellement */
+        road: "M-80,790 C90,774 250,770 420,760 C590,750 740,724 900,722 C1055,720 1195,742 1340,764 C1470,784 1570,790 1660,782",
 
-        carTransform: "translate(-90,865) scale(0.78)",
-        sunScale: 0.74,
-        sunStart: 0.04,
-        sunEnd: 0.92,
-        sunDuration: 10.6
+        carTransform: "translate(-90,790) scale(0.80)",
+        sunScale: 0.68,
+
+        /* course plus large pour éviter l'aller-retour au milieu du titre */
+        sunStart: 0.02,
+        sunEnd: 0.98,
+        sunDuration: 11.2
       };
     }
 
     if (isTabletLandscape) {
       return {
-        viewBox: "0 0 1440 860",
+        viewBox: "0 0 1440 820",
         preserve: "xMidYMid slice",
 
-        /* Paysage : bon actuellement, juste un peu moins intrusif */
-        sunPath: "M 860 118 C 980 100 1110 104 1245 140 C 1310 158 1360 182 1410 208",
+        /* Paysage : on conserve un rendu proche de celui que tu valides */
+        sunPath: "M 860 106 C 980 92 1110 98 1240 132 C 1315 152 1375 178 1430 208",
 
-        /* Un peu plus de marge entre texte et route */
-        road: "M-110,850 C70,826 220,820 380,812 C545,804 675,758 808,748 C948,738 1078,770 1205,792 C1320,812 1435,820 1605,808",
+        /* Route légèrement abaissée pour créer plus d'air sous le texte */
+        road: "M-100,790 C80,776 240,774 400,768 C560,762 700,730 845,724 C990,718 1125,736 1260,754 C1380,770 1495,778 1620,770",
 
-        carTransform: "translate(-108,850) scale(0.74)",
+        carTransform: "translate(-100,790) scale(0.76)",
         sunScale: 0.56,
-        sunStart: 0.06,
-        sunEnd: 0.82,
+        sunStart: 0.08,
+        sunEnd: 0.84,
         sunDuration: 10.2
       };
     }
